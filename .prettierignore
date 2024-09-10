@@ -3,6 +3,7 @@
 .eslintcache
 .eslintignore
 .gitattributes
+.nvmrc
 node_modules/
 public/
 
