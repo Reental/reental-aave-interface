@@ -23,12 +23,16 @@ import {
   AaveV3Polygon,
   AaveV3Scroll,
   AaveV3ScrollSepolia,
-  AaveV3Sepolia,
+  AaveV3Sepolia as AaveV3Sepolia_Old,
   AaveV3Soneium,
   AaveV3Sonic,
   AaveV3ZkSync,
 } from '@bgd-labs/aave-address-book';
 import { ReactNode } from 'react';
+
+import { AaveV3Sepolia } from './custom';
+
+console.log(`AaveV3Sepolia`, AaveV3Sepolia, AaveV3Sepolia_Old);
 
 // Enable for premissioned market
 // import { PermissionView } from 'src/components/transactions/FlowCommons/PermissionView';
