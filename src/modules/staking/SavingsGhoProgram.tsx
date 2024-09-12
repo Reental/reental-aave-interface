@@ -11,6 +11,7 @@ export const SavingsGhoProgram = () => {
   const currentMarket = useRootStore((store) => store.currentMarket);
 
   const ghoTokenAddress = marketsData[
+    CustomMarket.reental_polygon_v3,
     CustomMarket.reental_sepolia_v3
   ].addresses.GHO_TOKEN_ADDRESS?.toLowerCase() as string;
 
