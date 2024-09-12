@@ -14,7 +14,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { JSX, useState } from 'react';
 import { useRootStore } from 'src/store/root';
 import { BaseNetworkConfig } from 'src/ui-config/networksConfig';
 import { DASHBOARD } from 'src/utils/events';
@@ -31,6 +31,13 @@ import {
 } from '../utils/marketsAndNetworksConfig';
 import StyledToggleButton from './StyledToggleButton';
 import StyledToggleButtonGroup from './StyledToggleButtonGroup';
+
+export const MULTIPLE_MARKET_OPTIONS = [
+  CustomMarket.reental_polygon_v3,
+  CustomMarket.reental_sepolia_v3,
+  'fork_proto_lido_v3',
+  'fork_proto_mainnet_v3',
+];
 
 export const getMarketInfoById = (marketId: CustomMarket) => {
   const market: MarketDataType = marketsData[marketId as CustomMarket];
@@ -185,10 +192,10 @@ export const MarketSwitcher = () => {
   };
 
   const marketBlurbs: { [key: string]: JSX.Element } = {
-    proto_mainnet_v3: (
+    reental_polygon_v3: (
       <Trans>Main Ethereum market with the largest selection of assets and yield options</Trans>
     ),
-    proto_lido_v3: (
+    reental_sepolia_v3: (
       <Trans>Optimized for efficiency and risk by supporting blue-chip collateral assets</Trans>
     ),
   };
@@ -233,7 +240,8 @@ export const MarketSwitcher = () => {
                   >
                     {getMarketHelpData(market.marketTitle).name} {market.isFork ? 'Fork' : ''}
                     {upToLG &&
-                    (currentMarket === 'proto_mainnet_v3' || currentMarket === 'proto_lido_v3')
+                    (currentMarket === 'reental_polygon_v3' ||
+                      currentMarket === 'reental_sepolia_v3')
                       ? 'Instance'
                       : ' Market'}
                   </Typography>
