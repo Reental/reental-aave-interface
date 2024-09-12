@@ -68,7 +68,6 @@ export const networkConfigs: Record<string, BaseNetworkConfig> = {
     baseAssetDecimals: 18,
     explorerLink: 'https://sepolia.etherscan.io',
     // usdMarket: true,
-    isTestnet: true,
     networkLogoPath: '/icons/networks/ethereum.svg',
   },
   [ChainId.goerli]: {
