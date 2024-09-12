@@ -31,8 +31,8 @@ import StyledToggleButton from './StyledToggleButton';
 import StyledToggleButtonGroup from './StyledToggleButtonGroup';
 
 export const MULTIPLE_MARKET_OPTIONS = [
-  CustomMarket.proto_mainnet_v3,
-  CustomMarket.proto_lido_v3,
+  CustomMarket.reental_polygon_v3,
+  CustomMarket.reental_sepolia_v3,
   'fork_proto_lido_v3',
   'fork_proto_mainnet_v3',
 ];
