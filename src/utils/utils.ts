@@ -1,8 +1,6 @@
 import { ChainId, ProtocolAction } from '@aave/contract-helpers';
 import { BigNumberValue, USD_DECIMALS, valueToBigNumber } from '@aave/math-utils';
 
-import { CustomMarket } from './marketsAndNetworksConfig';
-
 export function hexToAscii(_hex: string): string {
   const hex = _hex.toString();
   let str = '';
@@ -74,6 +72,7 @@ export const roundToTokenDecimals = (inputValue: string, tokenDecimals: number) 
   // Combine the whole and adjusted decimal parts
   return whole + '.' + adjustedDecimals;
 };
+<<<<<<< HEAD
 
 export type ExternalIncentivesTooltipsConfig = {
   superFestRewards: boolean;
@@ -144,4 +143,16 @@ export const convertAprToApy = (apr: number): number => {
   const monthlyRate = apr / 12;
   const apy = Math.pow(1 + monthlyRate, 12) - 1;
   return apy;
+=======
+export enum Side {
+  SUPPLY = 'supply',
+  BORROW = 'borrow',
+}
+export const showSuperFestTooltip = (symbol: string, currentMarket: string, side?: Side) => {
+  return (
+    false && currentMarket === '' && // Falsy condition
+    side === Side.SUPPLY &&
+    (symbol == 'ETH' || symbol == 'WETH' || symbol == 'wstETH')
+  );
+>>>>>>> 8ea45008 (chore (clean): remove markets build problems)
 };
