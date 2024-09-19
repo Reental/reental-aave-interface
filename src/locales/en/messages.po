@@ -176,8 +176,6 @@ msgid "Reward Token"
 msgstr "Reward Token"
 
 #: src/modules/history/HistoryFilterMenu.tsx
-#: src/modules/migration/MigrationList.tsx
-#: src/modules/migration/MigrationListMobileItem.tsx
 msgid "Collateral change"
 msgstr "Collateral change"
 
