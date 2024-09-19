@@ -150,7 +150,8 @@ export enum Side {
 }
 export const showSuperFestTooltip = (symbol: string, currentMarket: string, side?: Side) => {
   return (
-    false && currentMarket === '' && // Falsy condition
+    false &&
+    currentMarket === '' && // Falsy condition
     side === Side.SUPPLY &&
     (symbol == 'ETH' || symbol == 'WETH' || symbol == 'wstETH')
   );

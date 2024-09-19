@@ -32,10 +32,7 @@ import {
 import StyledToggleButton from './StyledToggleButton';
 import StyledToggleButtonGroup from './StyledToggleButtonGroup';
 
-export const MULTIPLE_MARKET_OPTIONS = [
-  'fork_proto_lido_v3',
-  'fork_proto_mainnet_v3',
-];
+export const MULTIPLE_MARKET_OPTIONS = ['fork_proto_lido_v3', 'fork_proto_mainnet_v3'];
 
 export const getMarketInfoById = (marketId: CustomMarket) => {
   const market: MarketDataType = marketsData[marketId as CustomMarket];

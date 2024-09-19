@@ -27,8 +27,7 @@ const wrappedTokenConfig: {
     tokenWrapperContractAddress: string;
   }>;
 } = {
-  [CustomMarket.reental_polygon_v3]: [
-  ],
+  [CustomMarket.reental_polygon_v3]: [],
   // [CustomMarket.proto_mainnet_v3]: [
   //   {
   //     tokenIn: AaveV3Ethereum.ASSETS.DAI.UNDERLYING.toLowerCase(),
