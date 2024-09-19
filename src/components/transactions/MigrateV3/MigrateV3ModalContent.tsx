@@ -1,7 +1,8 @@
 import { Trans } from '@lingui/macro';
 import { Box, Button } from '@mui/material';
-import { useRouter } from 'next/router';
 import { useMemo } from 'react';
+// import { useRouter } from 'next/router';
+// import { useCallback } from 'react';
 import { UserMigrationReserves } from 'src/hooks/migration/useUserMigrationReserves';
 import { UserSummaryForMigration } from 'src/hooks/migration/useUserSummaryForMigration';
 import { useModalContext } from 'src/hooks/useModal';
@@ -11,7 +12,7 @@ import {
   selectedUserSupplyReservesForMigration,
   selectSelectedBorrowReservesForMigrationV3,
 } from 'src/store/v3MigrationSelectors';
-import { CustomMarket, getNetworkConfig } from 'src/utils/marketsAndNetworksConfig';
+import { /*CustomMarket,*/ getNetworkConfig } from 'src/utils/marketsAndNetworksConfig';
 import { useShallow } from 'zustand/shallow';
 
 import { TxErrorView } from '../FlowCommons/Error';
@@ -33,12 +34,12 @@ export const MigrateV3ModalContent = ({
   userMigrationReserves,
 }: MigrationV3ModalContentProps) => {
   const currentChainId = useRootStore((store) => store.currentChainId);
-  const setCurrentMarket = useRootStore((store) => store.setCurrentMarket);
-  const currentMarket = useRootStore((store) => store.currentMarket);
+  // const setCurrentMarket = useRootStore((store) => store.setCurrentMarket);
+  // const currentMarket = useRootStore((store) => store.currentMarket);
 
   const { gasLimit, mainTxState: migrateTxState, txError, closeWithCb } = useModalContext();
   const { chainId: connectedChainId, readOnlyModeAddress } = useWeb3Context();
-  const router = useRouter();
+  // const router = useRouter();
   const networkConfig = getNetworkConfig(currentChainId);
 
   const { selectedMigrationSupplyAssets, selectedMigrationBorrowAssets } = useRootStore(
@@ -95,21 +96,22 @@ export const MigrateV3ModalContent = ({
     return <TxErrorView txError={txError} />;
   }
 
-  const handleRoute = (market: CustomMarket) => {
-    if (market === CustomMarket.proto_polygon) {
-      setCurrentMarket('proto_polygon_v3' as CustomMarket);
-      router.push(`/?marketName=${CustomMarket.proto_polygon_v3}`);
-    } else if (market === CustomMarket.proto_avalanche) {
-      setCurrentMarket('proto_avalanche_v3' as CustomMarket);
-      router.push(`/?marketName=${CustomMarket.proto_avalanche_v3}`);
-    } else {
-      setCurrentMarket('proto_mainnet_v3' as CustomMarket);
-      router.push(`/?marketName=${CustomMarket.proto_mainnet_v3}`);
-    }
+  const handleRoute = (/*market: CustomMarket*/) => {
+    // TODO Eliminados al borrar todos los markets menos Reental
+    // if (market === CustomMarket.proto_polygon) {
+    //   setCurrentMarket('proto_polygon_v3' as CustomMarket);
+    //   router.push(`/?marketName=${CustomMarket.proto_polygon_v3}`);
+    // } else if (market === CustomMarket.proto_avalanche) {
+    //   setCurrentMarket('proto_avalanche_v3' as CustomMarket);
+    //   router.push(`/?marketName=${CustomMarket.proto_avalanche_v3}`);
+    // } else {
+    //   setCurrentMarket('proto_mainnet_v3' as CustomMarket);
+    //   router.push(`/?marketName=${CustomMarket.proto_mainnet_v3}`);
+    // }
   };
 
   const handleGoToDashboard = () => {
-    closeWithCb(() => handleRoute(currentMarket));
+    closeWithCb(() => handleRoute(/*currentMarket*/));
   };
 
   if (migrateTxState.success) {
