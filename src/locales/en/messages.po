@@ -70,23 +70,12 @@ msgstr "APR"
 msgid "APY"
 msgstr "APY"
 
-#: src/modules/migration/MigrationList.tsx
-#: src/modules/migration/MigrationList.tsx
-#: src/modules/migration/MigrationListMobileItem.tsx
-msgid "APY change"
-msgstr "APY change"
-
 #: src/components/transactions/DebtSwitch/DebtSwitchModalDetails.tsx
 #: src/modules/dashboard/lists/BorrowedPositionsList/BorrowedPositionsList.tsx
 #: src/modules/dashboard/lists/BorrowedPositionsList/BorrowedPositionsListItem.tsx
 #: src/modules/dashboard/lists/BorrowedPositionsList/GhoBorrowedPositionsListItem.tsx
 msgid "APY type"
 msgstr "APY type"
-
-#: src/modules/migration/MigrationList.tsx
-#: src/modules/migration/MigrationListMobileItem.tsx
-msgid "APY type change"
-msgstr "APY type change"
 
 #: src/modules/reserve-overview/Gho/GhoDiscountCalculator.tsx
 msgid "APY with discount applied"
@@ -349,7 +338,6 @@ msgid "Asset supply is limited to a certain amount to reduce protocol exposure t
 msgstr "Asset supply is limited to a certain amount to reduce protocol exposure to the asset and to help manage risks involved."
 
 #: src/modules/dashboard/lists/SupplyAssetsList/SupplyAssetsList.tsx
-#: src/modules/migration/MigrationList.tsx
 msgid "Assets"
 msgstr "Assets"
 
@@ -380,7 +368,6 @@ msgstr "At a discount"
 #: src/components/transactions/Withdraw/WithdrawModalContent.tsx
 #: src/modules/dashboard/lists/BorrowAssetsList/BorrowAssetsList.tsx
 #: src/modules/dashboard/lists/BorrowAssetsList/GhoBorrowAssetsListItem.tsx
-#: src/modules/markets/MarketsTopPanel.tsx
 msgid "Available"
 msgstr "Available"
 
@@ -436,10 +423,6 @@ msgstr "Balancer Pool"
 #: src/modules/dashboard/lists/BorrowAssetsList/BorrowAssetsList.tsx
 msgid "Be careful - You are very close to liquidation. Consider depositing more collateral or paying down some of your borrowed positions"
 msgstr "Be careful - You are very close to liquidation. Consider depositing more collateral or paying down some of your borrowed positions"
-
-#: src/modules/migration/MigrationBottomPanel.tsx
-msgid "Be mindful of the network congestion and gas prices."
-msgstr "Be mindful of the network congestion and gas prices."
 
 #: src/modules/reserve-overview/ReserveActions.tsx
 msgid "Because this asset is paused, no actions can be taken until further notice"
@@ -547,10 +530,6 @@ msgstr "Borrowed"
 msgid "Borrowed asset amount"
 msgstr "Borrowed asset amount"
 
-#: src/modules/migration/MigrationLists.tsx
-msgid "Borrowed assets"
-msgstr "Borrowed assets"
-
 #: src/components/transactions/Borrow/BorrowModalContent.tsx
 #: src/components/transactions/Borrow/GhoBorrowModalContent.tsx
 msgid "Borrowing is currently unavailable for {0}."
@@ -591,10 +570,6 @@ msgstr "Borrowing this amount will reduce your health factor and increase risk o
 #: src/components/transactions/Borrow/BorrowActions.tsx
 msgid "Borrowing {symbol}"
 msgstr "Borrowing {symbol}"
-
-#: src/modules/markets/MarketsTopPanel.tsx
-msgid "Borrows"
-msgstr "Borrows"
 
 #: src/components/transactions/GovDelegation/DelegationTypeSelector.tsx
 msgid "Both"
@@ -731,8 +706,6 @@ msgid "Collateral balance after repay"
 msgstr "Collateral balance after repay"
 
 #: src/modules/history/HistoryFilterMenu.tsx
-#: src/modules/migration/MigrationList.tsx
-#: src/modules/migration/MigrationListMobileItem.tsx
 msgid "Collateral change"
 msgstr "Collateral change"
 
@@ -838,15 +811,6 @@ msgstr "Current LTV"
 #: src/modules/governance/proposal/VotingResults.tsx
 msgid "Current differential"
 msgstr "Current differential"
-
-#: src/modules/migration/MigrationListMobileItem.tsx
-msgid "Current v2 Balance"
-msgstr "Current v2 Balance"
-
-#: src/modules/migration/MigrationList.tsx
-#: src/modules/migration/MigrationList.tsx
-msgid "Current v2 balance"
-msgstr "Current v2 balance"
 
 #: src/modules/governance/proposal/VotingResults.tsx
 msgid "Current votes"
@@ -1103,11 +1067,6 @@ msgstr "Estimated compounding interest, including discount for Staking {0}AAVE i
 msgid "Estimated time"
 msgstr "Estimated time"
 
-#: src/modules/dashboard/DashboardContentWrapper.tsx
-#: src/modules/markets/MarketsTopPanel.tsx
-msgid "Ethereum Main"
-msgstr "Ethereum Main"
-
 #: src/modules/reserve-overview/Gho/GhoPieChartContainer.tsx
 msgid "Exceeds the discount"
 msgstr "Exceeds the discount"
@@ -1228,7 +1187,6 @@ msgid "Global settings"
 msgstr "Global settings"
 
 #: src/modules/governance/proposal/ProposalTopPanel.tsx
-#: src/modules/migration/MigrationTopPanel.tsx
 #: src/modules/reserve-overview/ReserveTopDetailsWrapper.tsx
 msgid "Go Back"
 msgstr "Go Back"
@@ -1276,10 +1234,6 @@ msgstr "Holders of stkAAVE receive a discount on the GHO borrowing rate"
 #: src/components/transactions/Withdraw/WithdrawModalContent.tsx
 msgid "I acknowledge the risks involved."
 msgstr "I acknowledge the risks involved."
-
-#: src/modules/migration/MigrationBottomPanel.tsx
-msgid "I fully understand the risks of migrating."
-msgstr "I fully understand the risks of migrating."
 
 #: src/components/transactions/StakeCooldown/StakeCooldownModalContent.tsx
 msgid "I understand how cooldown ({0}) and unstaking ({1}) work"
@@ -1414,11 +1368,6 @@ msgstr "Learn more."
 msgid "Let us know how we can make the app better for you. For user support related inquiries please reach out on"
 msgstr "Let us know how we can make the app better for you. For user support related inquiries please reach out on"
 
-#: src/modules/dashboard/DashboardContentWrapper.tsx
-#: src/modules/markets/MarketsTopPanel.tsx
-msgid "Lido"
-msgstr "Lido"
-
 #: src/modules/governance/RepresentativesInfoPanel.tsx
 msgid "Linked addresses"
 msgstr "Linked addresses"
@@ -1443,12 +1392,7 @@ msgstr "Liquidation"
 msgid "Liquidation <0/> threshold"
 msgstr "Liquidation <0/> threshold"
 
-#: src/modules/migration/MigrationList.tsx
-msgid "Liquidation Threshold"
-msgstr "Liquidation Threshold"
-
 #: src/components/transactions/FlowCommons/TxModalDetails.tsx
-#: src/modules/migration/HFChange.tsx
 msgid "Liquidation at"
 msgstr "Liquidation at"
 
@@ -1466,7 +1410,6 @@ msgid "Liquidation risk parameters"
 msgstr "Liquidation risk parameters"
 
 #: src/components/transactions/Swap/SwapModalDetails.tsx
-#: src/modules/migration/MigrationListMobileItem.tsx
 #: src/modules/reserve-overview/ReserveEModePanel.tsx
 #: src/modules/reserve-overview/SupplyInfo.tsx
 msgid "Liquidation threshold"
@@ -1492,20 +1435,14 @@ msgstr "MAI has been paused due to a community decision. Supply, borrows and rep
 msgid "MAX"
 msgstr "MAX"
 
-#: src/modules/markets/MarketsTopPanel.tsx
-msgid "Main"
-msgstr "Main"
-
 #: src/layouts/AppFooter.tsx
 msgid "Manage analytics"
 msgstr "Manage analytics"
 
-#: src/modules/markets/MarketsTopPanel.tsx
 #: src/modules/reserve-overview/ReserveTopDetailsWrapper.tsx
 msgid "Market"
 msgstr "Market"
 
-#: src/modules/markets/MarketsTopPanel.tsx
 #: src/ui-config/menu-items/index.tsx
 msgid "Markets"
 msgstr "Markets"
@@ -1515,8 +1452,6 @@ msgstr "Markets"
 msgid "Max"
 msgstr "Max"
 
-#: src/modules/migration/MigrationList.tsx
-#: src/modules/migration/MigrationListMobileItem.tsx
 #: src/modules/reserve-overview/ReserveEModePanel.tsx
 #: src/modules/reserve-overview/SupplyInfo.tsx
 msgid "Max LTV"
@@ -1606,10 +1541,6 @@ msgstr "Migrate to v3"
 msgid "Migrate to {0} v3 Market"
 msgstr "Migrate to {0} v3 Market"
 
-#: src/modules/migration/MigrationBottomPanel.tsx
-msgid "Migrate your assets"
-msgstr "Migrate your assets"
-
 #: src/components/transactions/MigrateV3/MigrateV3ModalContent.tsx
 #: src/components/transactions/StakingMigrate/StakingMigrateModalContent.tsx
 msgid "Migrated"
@@ -1619,14 +1550,6 @@ msgstr "Migrated"
 #: src/components/transactions/StakingMigrate/StakingMigrateActions.tsx
 msgid "Migrating"
 msgstr "Migrating"
-
-#: src/modules/migration/MigrationBottomPanel.tsx
-msgid "Migrating multiple collaterals and borrowed assets at the same time can be an expensive operation and might fail in certain situations.<0>Therefore it’s not recommended to migrate positions with more than 5 assets (deposited + borrowed) at the same time.</0>"
-msgstr "Migrating multiple collaterals and borrowed assets at the same time can be an expensive operation and might fail in certain situations.<0>Therefore it’s not recommended to migrate positions with more than 5 assets (deposited + borrowed) at the same time.</0>"
-
-#: src/modules/migration/MigrationBottomPanel.tsx
-msgid "Migration risks"
-msgstr "Migration risks"
 
 #: src/modules/reserve-overview/Gho/GhoDiscountCalculator.tsx
 msgid "Minimum GHO borrow amount"
@@ -1694,10 +1617,6 @@ msgstr "Network not supported for this wallet"
 msgid "New APY"
 msgstr "New APY"
 
-#: src/modules/migration/MigrationBottomPanel.tsx
-msgid "No assets selected to migrate."
-msgstr "No assets selected to migrate."
-
 #: src/components/transactions/Switch/SwitchAssetInput.tsx
 msgid "No results found. You can import a custom token with a contract address"
 msgstr "No results found. You can import a custom token with a contract address"
@@ -1753,7 +1672,6 @@ msgstr "Not enough voting power to participate in this proposal"
 msgid "Not reached"
 msgstr "Not reached"
 
-#: pages/v3-migration.page.tsx
 #: src/modules/dashboard/lists/BorrowedPositionsList/BorrowedPositionsList.tsx
 msgid "Nothing borrowed yet"
 msgstr "Nothing borrowed yet"
@@ -1767,7 +1685,6 @@ msgstr "Nothing found"
 msgid "Nothing staked"
 msgstr "Nothing staked"
 
-#: pages/v3-migration.page.tsx
 #: src/modules/dashboard/lists/SuppliedPositionsList/SuppliedPositionsList.tsx
 msgid "Nothing supplied yet"
 msgstr "Nothing supplied yet"
@@ -1809,10 +1726,6 @@ msgstr "Per the community, the Fantom market has been frozen."
 msgid "Per the community, the V2 AMM market has been deprecated."
 msgstr "Per the community, the V2 AMM market has been deprecated."
 
-#: src/modules/migration/MigrationBottomPanel.tsx
-msgid "Please always be aware of your <0>Health Factor (HF)</0> when partially migrating a position and that your rates will be updated to V3 rates."
-msgstr "Please always be aware of your <0>Health Factor (HF)</0> when partially migrating a position and that your rates will be updated to V3 rates."
-
 #: src/modules/governance/UserGovernanceInfo.tsx
 #: src/modules/reserve-overview/ReserveActions.tsx
 msgid "Please connect a wallet to view your personal information here."
@@ -1830,10 +1743,6 @@ msgstr "Please connect your wallet to be able to switch your tokens."
 #: src/modules/faucet/FaucetAssetsList.tsx
 msgid "Please connect your wallet to get free testnet assets."
 msgstr "Please connect your wallet to get free testnet assets."
-
-#: pages/v3-migration.page.tsx
-msgid "Please connect your wallet to see migration tool."
-msgstr "Please connect your wallet to see migration tool."
 
 #: src/components/ConnectWalletPaper.tsx
 #: src/components/ConnectWalletPaperStaking.tsx
@@ -1865,10 +1774,6 @@ msgstr "Pool addresses provider is not registered"
 #: src/modules/dashboard/lists/SlippageList.tsx
 msgid "Powered by"
 msgstr "Powered by"
-
-#: src/modules/migration/MigrationBottomPanel.tsx
-msgid "Preview tx and migrate"
-msgstr "Preview tx and migrate"
 
 #: src/modules/reserve-overview/Gho/GhoReserveTopDetails.tsx
 msgid "Price"
@@ -2239,10 +2144,6 @@ msgstr "Slippage"
 msgid "Slippage is the difference between the quoted and received amounts from changing market conditions between the moment the transaction is submitted and its verification."
 msgstr "Slippage is the difference between the quoted and received amounts from changing market conditions between the moment the transaction is submitted and its verification."
 
-#: src/modules/migration/MigrationList.tsx
-msgid "Some migrated assets will not be used as collateral due to enabled isolation mode in {marketName} V3 Market. Visit <0>{marketName} V3 Dashboard</0> to manage isolation mode."
-msgstr "Some migrated assets will not be used as collateral due to enabled isolation mode in {marketName} V3 Market. Visit <0>{marketName} V3 Dashboard</0> to manage isolation mode."
-
 #: pages/500.page.tsx
 #: src/modules/reserve-overview/graphs/ApyGraphContainer.tsx
 msgid "Something went wrong"
@@ -2370,10 +2271,6 @@ msgstr "Supplied"
 #: src/components/transactions/Swap/SwapModalContent.tsx
 msgid "Supplied asset amount"
 msgstr "Supplied asset amount"
-
-#: src/modules/migration/MigrationLists.tsx
-msgid "Supplied assets"
-msgstr "Supplied assets"
 
 #: pages/index.page.tsx
 #: src/components/transactions/Supply/SupplyModal.tsx
@@ -2595,10 +2492,6 @@ msgstr "The cooldown period is {0}. After {1} of cooldown, you will enter unstak
 msgid "The current incentives period, decided on by the Aave community, has ended. Governance is in the process on renewing, check for updates. <0>Learn more</0>."
 msgstr "The current incentives period, decided on by the Aave community, has ended. Governance is in the process on renewing, check for updates. <0>Learn more</0>."
 
-#: src/modules/migration/MigrationBottomPanel.tsx
-msgid "The loan to value of the migrated positions would cause liquidation. Increase migrated collateral or reduce migrated borrow to continue."
-msgstr "The loan to value of the migrated positions would cause liquidation. Increase migrated collateral or reduce migrated borrow to continue."
-
 #: src/ui-config/errorMapping.tsx
 msgid "The requested amount is greater than the max loan size in stable rate mode"
 msgstr "The requested amount is greater than the max loan size in stable rate mode"
@@ -2650,14 +2543,6 @@ msgstr "These assets are temporarily frozen or paused by Aave community decision
 #: src/components/transactions/Withdraw/WithdrawError.tsx
 msgid "These funds have been borrowed and are not available for withdrawal at this time."
 msgstr "These funds have been borrowed and are not available for withdrawal at this time."
-
-#: src/modules/migration/MigrationBottomPanel.tsx
-msgid "This action will reduce V2 health factor below liquidation threshold. retain collateral or migrate borrow position to continue."
-msgstr "This action will reduce V2 health factor below liquidation threshold. retain collateral or migrate borrow position to continue."
-
-#: src/modules/migration/MigrationBottomPanel.tsx
-msgid "This action will reduce health factor of V3 below liquidation threshold. Increase migrated collateral or reduce migrated borrow to continue."
-msgstr "This action will reduce health factor of V3 below liquidation threshold. Increase migrated collateral or reduce migrated borrow to continue."
 
 #: src/components/transactions/Emode/EmodeModalContent.tsx
 msgid "This action will reduce your health factor. Please be mindful of the increased risk of collateral liquidation."
@@ -2780,10 +2665,6 @@ msgstr "To submit a proposal for minor changes to the protocol, you'll need at l
 msgid "Top 10 addresses"
 msgstr "Top 10 addresses"
 
-#: src/modules/markets/MarketsTopPanel.tsx
-msgid "Total available"
-msgstr "Total available"
-
 #: src/modules/markets/Gho/GhoBanner.tsx
 #: src/modules/markets/MarketAssetsList.tsx
 #: src/modules/markets/MarketAssetsListMobileItem.tsx
@@ -2795,10 +2676,6 @@ msgstr "Total available"
 msgid "Total borrowed"
 msgstr "Total borrowed"
 
-#: src/modules/markets/MarketsTopPanel.tsx
-msgid "Total borrows"
-msgstr "Total borrows"
-
 #: src/modules/staking/StakingHeader.tsx
 msgid "Total emission per day"
 msgstr "Total emission per day"
@@ -2806,10 +2683,6 @@ msgstr "Total emission per day"
 #: src/modules/reserve-overview/Gho/GhoInterestRateGraph.tsx
 msgid "Total interest accrued"
 msgstr "Total interest accrued"
-
-#: src/modules/markets/MarketsTopPanel.tsx
-msgid "Total market size"
-msgstr "Total market size"
 
 #: src/modules/markets/MarketAssetsList.tsx
 #: src/modules/markets/MarketAssetsListMobileItem.tsx
@@ -3430,10 +3303,6 @@ msgstr "repaid"
 msgid "stETH supplied as collateral will continue to accrue staking rewards provided by daily rebases."
 msgstr "stETH supplied as collateral will continue to accrue staking rewards provided by daily rebases."
 
-#: src/modules/migration/StETHMigrationWarning.tsx
-msgid "stETH tokens will be migrated to Wrapped stETH using Lido Protocol wrapper which leads to supply balance change after migration: {0}"
-msgstr "stETH tokens will be migrated to Wrapped stETH using Lido Protocol wrapper which leads to supply balance change after migration: {0}"
-
 #: src/components/transactions/Warnings/AAVEWarning.tsx
 msgid "staking view"
 msgstr "staking view"
@@ -3524,10 +3393,6 @@ msgstr "{networkName} Faucet"
 #: src/layouts/TopBarNotify.tsx
 msgid "{notifyText}"
 msgstr "{notifyText}"
-
-#: src/modules/migration/MigrationMobileList.tsx
-msgid "{numSelected}/{numAvailable} assets selected"
-msgstr "{numSelected}/{numAvailable} assets selected"
 
 #: src/modules/governance/proposal/ProposalLifecycle.tsx
 msgid "{stepName}"

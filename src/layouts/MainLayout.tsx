@@ -8,18 +8,32 @@ import { AppFooter } from './AppFooter';
 import { AppHeader } from './AppHeader';
 import TopBarNotify from './TopBarNotify';
 
+const parseJSON = (jsonString = '') => {
+  try {
+    const json = JSON.parse(jsonString);
+    return json;
+  } catch (error) {
+    return {};
+  }
+};
+const NOTIFY_BAR = parseJSON(process.env.NEXT_PUBLIC_NOTIFY_BAR || '{}');
+
 export function MainLayout({ children }: { children: ReactNode }) {
   const APP_BANNER_VERSION = '1.0.0';
 
+  const { visible = false, learnMoreLink, buttonText, notifyText, icon } = NOTIFY_BAR;
+
   return (
     <>
-      <TopBarNotify
-        learnMoreLink="/markets/?marketName=proto_lido_v3"
-        buttonText="View Market"
-        notifyText="Aave Governance has deployed a new Lido market on Ethereum V3"
-        bannerVersion={APP_BANNER_VERSION}
-        icon={'/icons/tokens/ldo.svg'}
-      />
+      {visible && (
+        <TopBarNotify
+          learnMoreLink={learnMoreLink}
+          buttonText={buttonText}
+          notifyText={notifyText}
+          bannerVersion={APP_BANNER_VERSION}
+          icon={icon}
+        />
+      )}
       <AppHeader />
       <Box component="main" sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
         {children}
