@@ -1,7 +1,6 @@
 import { ChainId } from '@aave/contract-helpers';
 import { Trans } from '@lingui/macro';
-import { Theme } from '@mui/material';
-import { SxProps } from '@mui/system';
+import { SxProps, Theme } from '@mui/material/styles';
 import { Warning } from 'src/components/primitives/Warning';
 import { useRootStore } from 'src/store/root';
 import { NetworkConfig } from 'src/ui-config/networksConfig';
