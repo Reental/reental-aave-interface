@@ -3,11 +3,11 @@ import { useLingui } from '@lingui/react';
 import { Button, List, ListItem, Typography, useMediaQuery, useTheme } from '@mui/material';
 import * as React from 'react';
 import { useRootStore } from 'src/store/root';
+import { navigation } from 'src/ui-config/menu-items';
 import { NAV_BAR } from 'src/utils/events';
 import { useShallow } from 'zustand/shallow';
 
 import { Link, ROUTES } from '../../components/primitives/Link';
-import { navigation } from '../../ui-config/menu-items';
 import { MoreMenu } from '../MoreMenu';
 import { StakingMenu } from './StakingMenu';
 
