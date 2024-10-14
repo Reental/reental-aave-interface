@@ -7,9 +7,10 @@ import {
 import { t } from '@lingui/macro';
 import { ReactNode } from 'react';
 import { ROUTES } from 'src/components/primitives/Link';
-import { ENABLE_TESTNET } from 'src/utils/marketsAndNetworksConfig';
 
 import { MarketDataType } from '../marketsConfig';
+
+const ENABLE_TESTNET = process.env.NEXT_PUBLIC_ENABLE_TESTNET === 'true';
 
 interface Navigation {
   link: string;
