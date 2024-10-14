@@ -1,12 +1,16 @@
 import { Trans } from '@lingui/macro';
-import { GitHub, Twitter } from '@mui/icons-material';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import TelegramIcon from '@mui/icons-material/Telegram';
+import XIcon from '@mui/icons-material/X';
+import YouTubeIcon from '@mui/icons-material/YouTube';
 import { Box, styled, SvgIcon, Typography } from '@mui/material';
 import { Link } from 'src/components/primitives/Link';
 import { useRootStore } from 'src/store/root';
 import { useShallow } from 'zustand/shallow';
 
 import DiscordIcon from '/public/icons/discord.svg';
-import LensLogoIcon from '/public/icons/lens-logo.svg';
 
 interface StyledLinkProps {
   onClick?: React.MouseEventHandler<HTMLAnchorElement>;
@@ -23,24 +27,39 @@ const StyledLink = styled(Link)<StyledLinkProps>(({ theme }) => ({
 
 const FOOTER_ICONS = [
   {
-    href: 'https://hey.xyz/u/aave',
-    icon: <LensLogoIcon />,
-    title: 'Aave',
+    href: 'https://www.youtube.com/channel/UCyZespLYqbv-Cxs19ASFalw',
+    icon: <YouTubeIcon />,
+    title: 'YouTube',
   },
   {
-    href: 'https://twitter.com/aave',
-    icon: <Twitter />,
-    title: 'Lens',
+    href: 'https://www.linkedin.com/company/reental/',
+    icon: <LinkedInIcon />,
+    title: 'LinkedIn',
   },
   {
-    href: 'https://discord.com/invite/aave',
+    href: 'https://www.instagram.com/reental.co',
+    icon: <InstagramIcon />,
+    title: 'Instagram',
+  },
+  {
+    href: 'https://x.com/Reental_co',
+    icon: <XIcon />,
+    title: 'X',
+  },
+  {
+    href: 'https://www.facebook.com/Reental/',
+    icon: <FacebookIcon />,
+    title: 'Facebook',
+  },
+  {
+    href: 'https://discord.gg/QnU76B9PbP',
     icon: <DiscordIcon />,
     title: 'Discord',
   },
   {
-    href: 'https://github.com/aave',
-    icon: <GitHub />,
-    title: 'Github',
+    href: 'https://t.me/reental',
+    icon: <TelegramIcon />,
+    title: 'Telegram',
   },
 ];
 
@@ -108,7 +127,7 @@ export function AppFooter() {
     >
       <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
         {FOOTER_LINKS.map((link) => (
-          <StyledLink onClick={link.onClick} key={link.key} href={link.href}>
+          <StyledLink key={link.key} href={link.href} target="_blank">
             <Typography variant="caption">{link.label}</Typography>
           </StyledLink>
         ))}
