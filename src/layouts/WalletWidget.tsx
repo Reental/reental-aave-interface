@@ -180,7 +180,7 @@ export default function WalletWidget({ open, setOpen, headerHeight }: WalletWidg
               mb: 1,
             }}
           >
-            <Typography variant="caption" color={{ xs: '#FFFFFFB2', md: 'text.secondary' }}>
+            <Typography variant="caption" sx={{ color: { xs: '#FFFFFFB2', md: 'text.secondary' } }}>
               <Trans>Network</Trans>
             </Typography>
           </Box>
@@ -195,7 +195,7 @@ export default function WalletWidget({ open, setOpen, headerHeight }: WalletWidg
                 borderRadius: '50%',
               }}
             />
-            <Typography color={{ xs: '#F1F1F3', md: 'text.primary' }} variant="subheader1">
+            <Typography sx={{ color: { xs: '#F1F1F3', md: 'text.primary' } }} variant="subheader1">
               {networkConfig.name}
             </Typography>
           </Box>

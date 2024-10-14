@@ -1,5 +1,5 @@
 import { Box, Theme } from '@mui/material';
-import { SxProps } from '@mui/system';
+import { SxProps } from '@mui/material/styles';
 import { Fragment } from 'react';
 import { ProposalVote } from 'src/hooks/governance/useProposalVotes';
 
