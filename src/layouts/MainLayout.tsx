@@ -19,7 +19,7 @@ const parseJSON = (jsonString = '') => {
 const NOTIFY_BAR = parseJSON(process.env.NEXT_PUBLIC_NOTIFY_BAR || '{}');
 
 export function MainLayout({ children }: { children: ReactNode }) {
-  const APP_BANNER_VERSION = '1.0.0';
+  const APP_BANNER_VERSION = 'r1.0.1';
 
   const { visible = false, learnMoreLink, buttonText, notifyText, icon } = NOTIFY_BAR;
 
