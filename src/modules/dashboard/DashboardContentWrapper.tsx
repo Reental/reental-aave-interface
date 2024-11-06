@@ -1,16 +1,12 @@
 import { ChainId } from '@aave/contract-helpers';
 import { Trans } from '@lingui/macro';
-import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Button, useMediaQuery, useTheme } from '@mui/material';
 import { useRouter } from 'next/router';
-import { MULTIPLE_MARKET_OPTIONS } from 'src/components/MarketSwitcher';
 import { ROUTES } from 'src/components/primitives/Link';
-import { TokenIcon } from 'src/components/primitives/TokenIcon';
-import { StyledTxModalToggleButton } from 'src/components/StyledToggleButton';
-import { StyledTxModalToggleGroup } from 'src/components/StyledToggleButtonGroup';
 import { useWeb3Context } from 'src/libs/hooks/useWeb3Context';
 import { useRootStore } from 'src/store/root';
-import { CustomMarket } from 'src/utils/marketsAndNetworksConfig';
-import { AUTH, DASHBOARD } from 'src/utils/mixPanelEvents';
+// import { CustomMarket } from 'src/utils/marketsAndNetworksConfig';
+import { AUTH } from 'src/utils/mixPanelEvents';
 
 import { BorrowAssetsList } from './lists/BorrowAssetsList/BorrowAssetsList';
 import { BorrowedPositionsList } from './lists/BorrowedPositionsList/BorrowedPositionsList';
@@ -26,11 +22,11 @@ export const DashboardContentWrapper = ({ isBorrow }: DashboardContentWrapperPro
   const { currentAccount } = useWeb3Context();
   const router = useRouter();
   const trackEvent = useRootStore((store) => store.trackEvent);
-  const [currentMarket, setCurrentMarket] = useRootStore((store) => [
-    store.currentMarket,
-    store.setCurrentMarket,
-  ]);
-  const currentNetworkConfig = useRootStore((store) => store.currentNetworkConfig);
+  // const [currentMarket, setCurrentMarket] = useRootStore((store) => [
+  //   store.currentMarket,
+  //   store.setCurrentMarket,
+  // ]);
+  // const currentNetworkConfig = useRootStore((store) => store.currentNetworkConfig);
 
   const currentMarketData = useRootStore((store) => store.currentMarketData);
   const isDesktop = useMediaQuery(breakpoints.up('lg'));
@@ -38,15 +34,15 @@ export const DashboardContentWrapper = ({ isBorrow }: DashboardContentWrapperPro
 
   const downToLg = useMediaQuery(breakpoints.down('lg'));
 
-  const upFromSm = useMediaQuery(breakpoints.up('xsm'));
+  // const upFromSm = useMediaQuery(breakpoints.up('xsm'));
 
-  const handleUpdateEthMarket = (market: CustomMarket) => {
-    setCurrentMarket(market);
-  };
+  // const handleUpdateEthMarket = (market: CustomMarket) => {
+  //   setCurrentMarket(market);
+  // };
 
   return (
     <Box>
-      {currentAccount && MULTIPLE_MARKET_OPTIONS.includes(currentMarket) && (
+      {/* {currentAccount && MULTIPLE_MARKET_OPTIONS.includes(currentMarket) && (
         <Box pb={2} sx={{ width: upFromSm ? '320px' : '100%' }}>
           <StyledTxModalToggleGroup
             color="secondary"
@@ -95,7 +91,7 @@ export const DashboardContentWrapper = ({ isBorrow }: DashboardContentWrapperPro
             </StyledTxModalToggleButton>
           </StyledTxModalToggleGroup>
         </Box>
-      )}
+      )} */}
 
       {currentMarketData.chainId === ChainId.polygon && !currentMarketData.v3}
       <Box

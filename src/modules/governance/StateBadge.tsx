@@ -1,4 +1,5 @@
-import { alpha, experimental_sx, Skeleton, styled } from '@mui/material';
+import { alpha, Skeleton, styled } from '@mui/material';
+import { Theme } from '@mui/material/styles';
 import invariant from 'tiny-invariant';
 
 import { ProposalLifecycleStep, ProposalVoteInfo } from './utils/formatProposal';
@@ -44,29 +45,31 @@ export const lifecycleToBadge = (
   }
 };
 
-const Badge = styled('span')<BadgeProps>(({ theme, state }) => {
-  const COLOR_MAP = {
-    [ProposalBadgeState.Created]: theme.palette.primary.light,
-    [ProposalBadgeState.OpenForVoting]: theme.palette.success.main,
-    [ProposalBadgeState.Passed]: theme.palette.success.main,
-    [ProposalBadgeState.Executed]: theme.palette.success.main,
-    [ProposalBadgeState.Cancelled]: theme.palette.error.main,
-    [ProposalBadgeState.Expired]: theme.palette.error.main,
-    [ProposalBadgeState.Failed]: theme.palette.error.main,
-  };
-  const color = COLOR_MAP[state] || '#000';
-  return experimental_sx({
-    ...theme.typography.subheader2,
-    color,
-    border: '1px solid',
-    borderColor: alpha(color, 0.5),
-    py: 0.5,
-    px: 2,
-    borderRadius: 1,
-    display: 'inline-flex',
-    alignItems: 'center',
-  });
-});
+const Badge = styled('span')<BadgeProps>(
+  ({ theme, state }: { theme: Theme; state: ProposalBadgeState }) => {
+    const COLOR_MAP = {
+      [ProposalBadgeState.Created]: theme.palette.primary.light,
+      [ProposalBadgeState.OpenForVoting]: theme.palette.success.main,
+      [ProposalBadgeState.Passed]: theme.palette.success.main,
+      [ProposalBadgeState.Executed]: theme.palette.success.main,
+      [ProposalBadgeState.Cancelled]: theme.palette.error.main,
+      [ProposalBadgeState.Expired]: theme.palette.error.main,
+      [ProposalBadgeState.Failed]: theme.palette.error.main,
+    };
+    const color = COLOR_MAP[state] || '#000';
+    return theme.unstable_sx({
+      ...theme.typography.subheader2,
+      color,
+      border: '1px solid',
+      borderColor: alpha(color, 0.5),
+      py: 0.5,
+      px: 2,
+      borderRadius: 1,
+      display: 'inline-flex',
+      alignItems: 'center',
+    });
+  }
+);
 
 export function StateBadge({ state, loading }: StateBadgeProps) {
   if (loading || !state) return <Skeleton width={70} />;

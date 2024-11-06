@@ -2,7 +2,6 @@ import { Box, Container } from '@mui/material';
 import { ReactNode, useEffect } from 'react';
 import { MainLayout } from 'src/layouts/MainLayout';
 import { MarketAssetsListContainer } from 'src/modules/markets/MarketAssetsListContainer';
-import { MarketsTopPanel } from 'src/modules/markets/MarketsTopPanel';
 import { useRootStore } from 'src/store/root';
 
 interface MarketContainerProps {
@@ -47,14 +46,13 @@ export default function Markets() {
   }, [trackEvent]);
   return (
     <>
-      <MarketsTopPanel />
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           flex: 1,
-          mt: { xs: '-32px', lg: '-46px', xl: '-44px', xxl: '-48px' },
+          marginTop: '48px',
         }}
       >
         <MarketContainer>
