@@ -39,6 +39,8 @@ interface ListItemWrapperProps {
   showExternalIncentivesTooltips?: ExternalIncentivesTooltipsConfig;
 }
 
+const REENTAL_PREFIX = 'Reental-';
+
 export const ListItemWrapper = ({
   symbol,
   iconSymbol,
@@ -88,7 +90,7 @@ export const ListItemWrapper = ({
           <TokenIcon symbol={iconSymbol} fontSize="large" />
           <Tooltip title={`${name} (${symbol})`} arrow placement="top">
             <Typography variant="subheader1" sx={{ ml: 3 }} noWrap data-cy={`assetName`}>
-              {symbol}
+              {symbol.startsWith(REENTAL_PREFIX) ? symbol.slice(REENTAL_PREFIX.length) : symbol}
             </Typography>
           </Tooltip>
         </Link>
