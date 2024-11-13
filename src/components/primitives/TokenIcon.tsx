@@ -125,7 +125,9 @@ export const ATokenIcon = forwardRef<SVGSVGElement, ATokenIconProps>(({ symbol }
           <image
             x="25"
             y="25"
-            href={`/icons/tokens/${symbol.toLowerCase()}.svg`}
+            href={`/icons/tokens/${
+              symbol.startsWith('reental-') ? 'default' : symbol.toLowerCase()
+            }.svg`}
             width="206"
             height="206"
           />
