@@ -3551,3 +3551,6 @@ msgstr "{title}"
 msgid "{tooltipText}"
 msgstr "{tooltipText}"
 
+#: src/components/terms/TermsPage.tsx
+msgid "Terms of use"
+msgstr "Términos de uso"

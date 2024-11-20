@@ -64,7 +64,7 @@ const FOOTER_ICONS = [
 export function AppFooter() {
   const FOOTER_LINKS = [
     {
-      href: 'https://reentalp2p.com/terms',
+      href: '/terms',
       label: <Trans>Terms</Trans>,
       key: 'Terms',
     },
