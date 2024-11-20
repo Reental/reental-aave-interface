@@ -1,6 +1,6 @@
 {
   "name": "aave-ui",
-  "version": "r1.0.2",
+  "version": "r1.0.3",
   "private": true,
   "license": "BSD-3-Clause",
   "scripts": {
