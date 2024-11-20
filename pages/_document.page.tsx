@@ -10,13 +10,11 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <meta name="theme-color" content="#1B2030" />
-          <link rel="icon" href="/favicon.ico" sizes="any" />
-          <link rel="shortcut icon" href="/favicon.ico" />
-          {/* <link rel="apple-touch-icon" sizes="16x16" href="/favicon.png" />
-          <link rel="apple-touch-icon" sizes="32x32" href="/favicon32.png" />
-          <link rel="shortcut icon" sizes="32x32" href="/favicon32.ico" />
-          <link rel="apple-touch-icon" sizes="64x64" href="/favicon64.png" />
-          <link rel="apple-touch-icon" sizes="180x180" href="/aave_icon180.png" /> */}
+          <link
+            rel="icon"
+            type="image/png"
+            href="https://d37o222i0yqhd1.cloudfront.net/images/favicon_reental.png"
+          />
 
           <link rel="manifest" href="/manifest.json" />
           {
