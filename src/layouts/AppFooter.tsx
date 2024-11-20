@@ -70,7 +70,7 @@ export function AppFooter() {
 
   const FOOTER_LINKS = [
     {
-      href: 'https://aave.com/terms-of-service',
+      href: '/terms',
       label: <Trans>Terms</Trans>,
       key: 'Terms',
     },
