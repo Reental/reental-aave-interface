@@ -1143,10 +1143,6 @@ msgstr "Fork mode is ON"
 msgid "Forum discussion"
 msgstr "Forum discussion"
 
-#: src/layouts/components/LanguageSwitcher.tsx
-msgid "French"
-msgstr "French"
-
 #: src/modules/staking/StakingHeader.tsx
 msgid "Funds in the Safety Module"
 msgstr "Funds in the Safety Module"
@@ -1189,10 +1185,6 @@ msgstr "Go to Balancer Pool"
 #: src/components/transactions/MigrateV3/MigrateV3ModalContent.tsx
 msgid "Go to V3 Dashboard"
 msgstr "Go to V3 Dashboard"
-
-#: src/layouts/components/LanguageSwitcher.tsx
-msgid "Greek"
-msgstr "Greek"
 
 #: src/components/transactions/FlowCommons/TxModalDetails.tsx
 #: src/modules/dashboard/DashboardTopPanel.tsx
