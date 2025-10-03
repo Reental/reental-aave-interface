@@ -363,7 +363,6 @@ msgstr "View Transactions"
 msgid "MAX"
 msgstr "MAX"
 
-#: src/layouts/AppFooter.tsx
 #: src/ui-config/menu-items/index.tsx
 msgid "Terms"
 msgstr "Terms"
