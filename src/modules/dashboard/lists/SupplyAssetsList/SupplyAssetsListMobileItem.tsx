@@ -34,7 +34,8 @@ export const SupplyAssetsListMobileItem = ({
   underlyingAsset,
   detailsAddress,
   isPaused,
-}: DashboardReserve) => {
+  is2FAEnabled,
+}: DashboardReserve & { is2FAEnabled: boolean }) => {
   const currentMarket = useRootStore((state) => state.currentMarket);
   const { openSupply } = useModalContext();
 
@@ -42,8 +43,15 @@ export const SupplyAssetsListMobileItem = ({
   const { supplyCap: supplyCapUsage } = useAssetCaps();
   const isMaxCapReached = supplyCapUsage.isMaxed;
 
+  const requires2FAandIsNotEnabled = usageAsCollateralEnabledOnUser && !is2FAEnabled;
+
   const disableSupply =
-    !isActive || isPaused || isFreezed || Number(walletBalance) <= 0 || isMaxCapReached;
+    !isActive ||
+    isPaused ||
+    isFreezed ||
+    Number(walletBalance) <= 0 ||
+    isMaxCapReached ||
+    requires2FAandIsNotEnabled;
 
   return (
     <ListMobileItemWrapper

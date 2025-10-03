@@ -24,7 +24,8 @@ export const SuppliedPositionsListItem = ({
   underlyingBalanceUSD,
   usageAsCollateralEnabledOnUser,
   underlyingAsset,
-}: DashboardReserve) => {
+  is2FAEnabled,
+}: DashboardReserve & { is2FAEnabled: boolean }) => {
   const { user } = useAppDataContext();
   const { isIsolated, aIncentivesData, aTokenAddress, isFrozen, isActive, isPaused } = reserve;
   const { openSupply, openWithdraw, openCollateralChange, openCollateralSwap } = useModalContext();
@@ -45,7 +46,10 @@ export const SuppliedPositionsListItem = ({
 
   const disableSwap = !isActive || isPaused || reserve.symbol == 'stETH';
   const disableWithdraw = !isActive || isPaused;
-  const disableSupply = !isActive || isFrozen || isPaused;
+
+  const requires2FAandIsNotEnabled = usageAsCollateralEnabledOnUser && !is2FAEnabled;
+
+  const disableSupply = !isActive || isFrozen || isPaused || requires2FAandIsNotEnabled;
 
   return (
     <ListItemWrapper

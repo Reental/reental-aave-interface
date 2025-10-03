@@ -43,7 +43,7 @@ const calculateMaxAmount = (token: TokenInfoWithBalance, chainId: number) => {
   return normalize(maxAmount.toString(), nativeDecimals).toString();
 };
 
-const defaultNetwork = marketsData[CustomMarket.proto_arbitrum_v3];
+const defaultNetwork = marketsData[CustomMarket.reental_polygon_v3];
 
 interface SwitchLimitOrdersInputsProps {
   chainId: number;

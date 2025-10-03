@@ -12,6 +12,7 @@ import { Warning } from 'src/components/primitives/Warning';
 import { AssetCapsProvider } from 'src/hooks/useAssetCaps';
 import { useCoingeckoCategories } from 'src/hooks/useCoinGeckoCategories';
 import { useWrappedTokens } from 'src/hooks/useWrappedTokens';
+import { useReentalDataContext } from 'src/libs/reental/ReentalDataProvider';
 import { AssetCategory, isAssetInCategoryDynamic } from 'src/modules/markets/utils/assetCategories';
 import { useRootStore } from 'src/store/root';
 import { fetchIconSymbolAndName } from 'src/ui-config/reservePatches';
@@ -49,6 +50,11 @@ const head = [
 ];
 
 export const SupplyAssetsList = () => {
+  const {
+    twoFA: {
+      global: { status: is2FAEnabled },
+    },
+  } = useReentalDataContext();
   const { data, isLoading, error } = useCoingeckoCategories();
   const [selectedCategories, setSelectedCategories] = useState<AssetCategory[]>([]);
 
@@ -371,7 +377,12 @@ export const SupplyAssetsList = () => {
         {sortedReserves.map((item) => (
           <Fragment key={item.underlyingAsset}>
             <AssetCapsProvider asset={item.reserve}>
-              <SupplyAssetsListItem {...item} key={item.id} walletBalances={walletBalances} />
+              <SupplyAssetsListItem
+                {...item}
+                key={item.id}
+                walletBalances={walletBalances}
+                is2FAEnabled={is2FAEnabled}
+              />
             </AssetCapsProvider>
           </Fragment>
         ))}

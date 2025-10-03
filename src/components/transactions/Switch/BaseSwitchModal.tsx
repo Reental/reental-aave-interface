@@ -10,7 +10,7 @@ import { CustomMarket, getNetworkConfig, marketsData } from 'src/utils/marketsAn
 
 import { BaseSwitchModalContent, SwitchModalCustomizableProps } from './BaseSwitchModalContent';
 
-const defaultNetwork = marketsData[CustomMarket.proto_mainnet_v3];
+const defaultNetwork = marketsData[CustomMarket.reental_polygon_v3];
 
 export const getFilteredTokensForSwitch = (chainId: number): TokenInfoWithBalance[] => {
   let customTokenList = TOKEN_LIST.tokens;
