@@ -7,7 +7,7 @@ import { useRootStore } from '../../store/root';
 import { selectIsMigrationAvailable } from '../../store/v3MigrationSelectors';
 import { NetworkConfig } from '../../ui-config/networksConfig';
 // import { BridgeButton } from '../BridgeButton';
-import { MarketSwitcher } from '../MarketSwitcher';
+// import { MarketSwitcher } from '../MarketSwitcher';
 import { Link, ROUTES } from '../primitives/Link';
 
 export interface PageTitleProps extends Pick<NetworkConfig, 'bridge'> {
@@ -76,7 +76,7 @@ export const PageTitle = ({
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'flex-start', flexWrap: 'wrap' }}>
-          {withMarketSwitcher && <MarketSwitcher />}
+          {/* {withMarketSwitcher && <MarketSwitcher />} */}
           {/* <BridgeButton bridge={bridge} variant="surface" withoutIcon={!upToMD} /> */}
           {/* NOTE:// Removing for now  */}
           {isMigrateToV3Available && withMigrateButton && (

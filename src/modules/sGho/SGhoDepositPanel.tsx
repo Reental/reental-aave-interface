@@ -243,7 +243,10 @@ export const SGHODepositPanel: React.FC<SGHODepositPanelProps> = ({
                       <Trans>Current APY</Trans>
                     </Typography>
 
-                    <MeritIncentivesButton symbol={'GHO'} market={CustomMarket.proto_mainnet_v3} />
+                    <MeritIncentivesButton
+                      symbol={'GHO'}
+                      market={CustomMarket.reental_polygon_v3}
+                    />
                   </Box>
 
                   {!xsm && +availableToStake > 0 && (

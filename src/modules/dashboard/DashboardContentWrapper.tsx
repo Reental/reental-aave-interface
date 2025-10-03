@@ -86,7 +86,7 @@ export const DashboardContentWrapper = ({ isBorrow }: DashboardContentWrapperPro
             width: paperWidth,
           }}
         >
-          {currentAccount && (
+          {/* {currentAccount && (
             <Box
               sx={{
                 position: { xs: 'static', md: 'absolute' },
@@ -107,7 +107,7 @@ export const DashboardContentWrapper = ({ isBorrow }: DashboardContentWrapperPro
                 <Trans>View Transactions</Trans>
               </Button>
             </Box>
-          )}
+          )} */}
 
           <BorrowedPositionsList />
           <BorrowAssetsList />

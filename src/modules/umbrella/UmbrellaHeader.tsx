@@ -12,7 +12,7 @@ import { useShallow } from 'zustand/shallow';
 
 import { Link } from '../../components/primitives/Link';
 import { TopInfoPanelItem } from '../../components/TopInfoPanel/TopInfoPanelItem';
-import { MarketSwitcher } from './UmbrellaMarketSwitcher';
+// import { MarketSwitcher } from './UmbrellaMarketSwitcher';
 
 export const UmbrellaHeader: React.FC = () => {
   const theme = useTheme();
@@ -44,7 +44,7 @@ export const UmbrellaHeader: React.FC = () => {
             >
               <Trans>Staking</Trans>
             </Typography>
-            <MarketSwitcher />
+            {/* <MarketSwitcher /> */}
           </Box>
 
           <Typography sx={{ color: '#8E92A3', maxWidth: '824px' }}>

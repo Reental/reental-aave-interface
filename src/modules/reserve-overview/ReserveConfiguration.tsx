@@ -1,4 +1,4 @@
-import { AaveV2Ethereum } from '@bgd-labs/aave-address-book';
+// import { AaveV2Ethereum } from '@bgd-labs/aave-address-book';
 import { ExternalLinkIcon } from '@heroicons/react/solid';
 import { Trans } from '@lingui/macro';
 import { Box, Button, Divider, SvgIcon } from '@mui/material';
@@ -31,11 +31,11 @@ import { SupplyInfo } from './SupplyInfo';
  * Each item represents the ID of the asset, not the underlying address it's deployed to, appended with LendingPoolAddressProvider
  * contract address it is held in. So each item in the array is essentially [underlyingAssetId + LendingPoolAddressProvider address].
  */
-const BROKEN_ASSETS = [
-  // ampl https://governance.aave.com/t/arc-fix-ui-bugs-in-reserve-overview-for-ampl/5885/5?u=sakulstra
-  AaveV2Ethereum.ASSETS.AMPL.UNDERLYING.toLowerCase(),
-  AaveV2Ethereum.ASSETS.FEI.UNDERLYING.toLowerCase(),
-];
+// const BROKEN_ASSETS = [
+//   // ampl https://governance.aave.com/t/arc-fix-ui-bugs-in-reserve-overview-for-ampl/5885/5?u=sakulstra
+//   AaveV2Ethereum.ASSETS.AMPL.UNDERLYING.toLowerCase(),
+//   AaveV2Ethereum.ASSETS.FEI.UNDERLYING.toLowerCase(),
+// ];
 
 type ReserveConfigurationProps = {
   reserve: ComputedReserveData;
@@ -50,7 +50,8 @@ export const ReserveConfiguration: React.FC<ReserveConfigurationProps> = ({ rese
       store.currentMarket,
     ])
   );
-  const renderCharts = !BROKEN_ASSETS.includes(reserve.underlyingAsset);
+  // const renderCharts = !BROKEN_ASSETS.includes(reserve.underlyingAsset);
+  const renderCharts = false;
   const { supplyCap, borrowCap, debtCeiling } = useAssetCaps();
   const showSupplyCapStatus: boolean = reserve.supplyCap !== '0';
   const showBorrowCapStatus: boolean = reserve.borrowCap !== '0';
