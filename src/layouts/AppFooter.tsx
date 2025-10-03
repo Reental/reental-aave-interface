@@ -7,9 +7,9 @@ import XIcon from '@mui/icons-material/X';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import { Box, styled, SvgIcon, Typography } from '@mui/material';
 import { Link } from 'src/components/primitives/Link';
-import { useRootStore } from 'src/store/root';
-import { useShallow } from 'zustand/shallow';
 
+// import { useRootStore } from 'src/store/root';
+// import { useShallow } from 'zustand/shallow';
 import DiscordIcon from '/public/icons/discord.svg';
 
 interface StyledLinkProps {
@@ -64,9 +64,9 @@ const FOOTER_ICONS = [
 ];
 
 export function AppFooter() {
-  const [setAnalyticsConfigOpen, setFeedbackOpen] = useRootStore(
-    useShallow((store) => [store.setAnalyticsConfigOpen, store.setFeedbackOpen])
-  );
+  // const [setAnalyticsConfigOpen, setFeedbackOpen] = useRootStore(
+  //   useShallow((store) => [store.setAnalyticsConfigOpen, store.setFeedbackOpen])
+  // );
 
   const FOOTER_LINKS = [
     {
@@ -74,39 +74,39 @@ export function AppFooter() {
       label: <Trans>Terms</Trans>,
       key: 'Terms',
     },
-    {
-      href: 'https://aave.com/privacy-policy/',
-      label: <Trans>Privacy</Trans>,
-      key: 'Privacy',
-    },
-    {
-      href: 'https://docs.aave.com/hub/',
-      label: <Trans>Docs</Trans>,
-      key: 'Docs',
-    },
-    {
-      href: 'https://docs.aave.com/faq/',
-      label: <Trans>FAQS</Trans>,
-      key: 'FAQS',
-    },
-    {
-      href: 'https://discord.com/invite/aave',
-      label: <Trans>Get Support</Trans>,
-      key: 'Get Support',
-      onClick: (event: React.MouseEvent) => {
-        event.preventDefault();
-        setFeedbackOpen(true);
-      },
-    },
-    {
-      href: '/',
-      label: <Trans>Manage analytics</Trans>,
-      key: 'Manage analytics',
-      onClick: (event: React.MouseEvent) => {
-        event.preventDefault();
-        setAnalyticsConfigOpen(true);
-      },
-    },
+    // {
+    //   href: 'https://aave.com/privacy-policy/',
+    //   label: <Trans>Privacy</Trans>,
+    //   key: 'Privacy',
+    // },
+    // {
+    //   href: 'https://docs.aave.com/hub/',
+    //   label: <Trans>Docs</Trans>,
+    //   key: 'Docs',
+    // },
+    // {
+    //   href: 'https://docs.aave.com/faq/',
+    //   label: <Trans>FAQS</Trans>,
+    //   key: 'FAQS',
+    // },
+    // {
+    //   href: 'https://discord.com/invite/aave',
+    //   label: <Trans>Get Support</Trans>,
+    //   key: 'Get Support',
+    //   onClick: (event: React.MouseEvent) => {
+    //     event.preventDefault();
+    //     setFeedbackOpen(true);
+    //   },
+    // },
+    // {
+    //   href: '/',
+    //   label: <Trans>Manage analytics</Trans>,
+    //   key: 'Manage analytics',
+    //   onClick: (event: React.MouseEvent) => {
+    //     event.preventDefault();
+    //     setAnalyticsConfigOpen(true);
+    //   },
+    // },
   ];
 
   return (

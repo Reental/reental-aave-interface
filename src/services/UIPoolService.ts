@@ -6,8 +6,8 @@ import {
   UserReserveDataHumanized,
 } from '@aave/contract-helpers';
 import { Provider } from '@ethersproject/providers';
-import { CustomMarket, MarketDataType } from 'src/ui-config/marketsConfig';
-import { ENABLE_TESTNET } from 'src/utils/marketsAndNetworksConfig';
+import { MarketDataType } from 'src/ui-config/marketsConfig';
+// import { ENABLE_TESTNET } from 'src/utils/marketsAndNetworksConfig';
 
 export type UserReservesDataHumanized = {
   userReserves: UserReserveDataHumanized[];
@@ -19,7 +19,7 @@ export class UiPoolService {
 
   private async getUiPoolDataService(marketData: MarketDataType) {
     const provider = this.getProvider(marketData.chainId);
-    if (this.useLegacyUiPoolDataProvider(marketData)) {
+    if (this.useLegacyUiPoolDataProvider()) {
       return new LegacyUiPoolDataProvider({
         uiPoolDataProviderAddress: marketData.addresses.UI_POOL_DATA_PROVIDER,
         provider,
@@ -34,20 +34,21 @@ export class UiPoolService {
     }
   }
 
-  private useLegacyUiPoolDataProvider(marketData: MarketDataType) {
-    if (
-      marketData.market === CustomMarket.proto_base_sepolia_v3 ||
-      marketData.market === CustomMarket.proto_sepolia_horizon_v3
-    ) {
-      return false;
-    }
+  private useLegacyUiPoolDataProvider() {
+    return true;
+    // if (
+    //   marketData.market === CustomMarket.reental_polygon_v3 ||
+    //   marketData.market === CustomMarket.reental_sepolia_v3
+    // ) {
+    //   return false;
+    // }
 
-    if (ENABLE_TESTNET || !marketData.v3) {
-      // it's a v2 market, or it does not have v3.1 upgrade
-      return true;
-    }
+    // if (ENABLE_TESTNET || !marketData.v3) {
+    //   // it's a v2 market, or it does not have v3.1 upgrade
+    //   return true;
+    // }
 
-    return false;
+    // return false;
   }
 
   async getReservesHumanized(marketData: MarketDataType): Promise<ReservesDataHumanized> {

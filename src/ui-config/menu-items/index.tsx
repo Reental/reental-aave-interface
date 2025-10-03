@@ -10,7 +10,7 @@ import { ROUTES } from 'src/components/primitives/Link';
 
 import { MarketDataType } from '../marketsConfig';
 
-const ENABLE_TESTNET = process.env.NEXT_PUBLIC_ENABLE_TESTNET === 'true';
+// const ENABLE_TESTNET = process.env.NEXT_PUBLIC_ENABLE_TESTNET === 'true';
 
 interface Navigation {
   link: string;
@@ -31,20 +31,25 @@ export const navigation: Navigation[] = [
     dataCy: 'menuMarkets',
   },
   {
-    link: ROUTES.governance,
-    title: t`Governance`,
-    dataCy: 'menuGovernance',
-    // isVisible: () =>
-    //   process.env.NEXT_PUBLIC_ENABLE_GOVERNANCE === 'true' &&
-    //   process.env.NEXT_PUBLIC_ENV === 'prod' &&
-    //   !ENABLE_TESTNET,
+    link: ROUTES.terms,
+    title: t`Terms`,
+    dataCy: 'menuTerms',
   },
+  // {
+  //   link: ROUTES.governance,
+  //   title: t`Governance`,
+  //   dataCy: 'menuGovernance',
+  //   // isVisible: () =>
+  //   //   process.env.NEXT_PUBLIC_ENABLE_GOVERNANCE === 'true' &&
+  //   //   process.env.NEXT_PUBLIC_ENV === 'prod' &&
+  //   //   !ENABLE_TESTNET,
+  // },
 
-  {
-    link: ROUTES.faucet,
-    title: t`Faucet`,
-    isVisible: () => process.env.NEXT_PUBLIC_ENV === 'staging' || ENABLE_TESTNET,
-  },
+  // {
+  //   link: ROUTES.faucet,
+  //   title: t`Faucet`,
+  //   isVisible: () => process.env.NEXT_PUBLIC_ENV === 'staging' || ENABLE_TESTNET,
+  // },
 ];
 
 interface MoreMenuItem extends Navigation {

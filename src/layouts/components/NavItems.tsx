@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro';
+// import { Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { Button, List, ListItem, Typography, useMediaQuery, useTheme } from '@mui/material';
 import * as React from 'react';
@@ -7,9 +7,9 @@ import { navigation } from 'src/ui-config/menu-items';
 import { NAV_BAR } from 'src/utils/events';
 import { useShallow } from 'zustand/shallow';
 
-import { Link, ROUTES } from '../../components/primitives/Link';
-import { MoreMenu } from '../MoreMenu';
-import { StakingMenu } from './StakingMenu';
+import { Link } from '../../components/primitives/Link';
+// import { MoreMenu } from '../MoreMenu';
+// import { StakingMenu } from './StakingMenu';
 
 interface NavItemsProps {
   setOpen?: (value: boolean) => void;
@@ -95,7 +95,7 @@ export const NavItems = ({ setOpen }: NavItemsProps) => {
           </ListItem>
         ))}
 
-      <ListItem
+      {/* <ListItem
         sx={{
           width: { xs: '100%', md: 'unset' },
           mr: { xs: 0, md: 2 },
@@ -189,11 +189,11 @@ export const NavItems = ({ setOpen }: NavItemsProps) => {
             <Trans>Safety Module</Trans>
           </Typography>
         </ListItem>
-      )}
+      )} */}
 
-      <ListItem sx={{ display: { xs: 'none', md: 'flex' }, width: 'unset' }} disablePadding>
+      {/* <ListItem sx={{ display: { xs: 'none', md: 'flex' }, width: 'unset' }} disablePadding>
         <MoreMenu />
-      </ListItem>
+      </ListItem> */}
     </List>
   );
 };

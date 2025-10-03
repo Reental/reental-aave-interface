@@ -258,7 +258,7 @@ export const GhoStakingPanel: React.FC<GhoStakingPanelProps> = ({
             </Typography>
           </Stack>
           <Stack direction="row" alignItems="center">
-            <MeritIncentivesButton symbol={stakedToken} market={CustomMarket.proto_mainnet_v3} />
+            <MeritIncentivesButton symbol={stakedToken} market={CustomMarket.reental_polygon_v3} />
           </Stack>
         </Box>
         <Box
