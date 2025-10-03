@@ -1,4 +1,5 @@
-import { ChainId } from '@aave/contract-helpers';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { ChainId, ProtocolAction } from '@aave/contract-helpers';
 import { BigNumberValue, USD_DECIMALS, valueToBigNumber } from '@aave/math-utils';
 // import { CustomMarket } from './marketsAndNetworksConfig';
 
@@ -80,7 +81,7 @@ export type ExternalIncentivesTooltipsConfig = {
   kernelPoints: boolean;
 };
 
-export const showExternalIncentivesTooltip = () => {
+export const showExternalIncentivesTooltip = (_: string, __: string, ___?: ProtocolAction) => {
   const tooltipsConfig: ExternalIncentivesTooltipsConfig = {
     superFestRewards: false,
     spkAirdrop: false,

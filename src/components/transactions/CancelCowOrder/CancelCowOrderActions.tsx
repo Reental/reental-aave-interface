@@ -36,7 +36,7 @@ export const CancelCowOrderActions = ({ cowOrder, blocked }: CancelCowOrderActio
         signature,
         signingScheme,
       });
-      queryClient.invalidateQueries({ queryKey: 'transactionHistory' });
+      queryClient.invalidateQueries({ queryKey: ['transactionHistory'] });
       setTimeout(() => {
         setMainTxState({
           ...mainTxState,

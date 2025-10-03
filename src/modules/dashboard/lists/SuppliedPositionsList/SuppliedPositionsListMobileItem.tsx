@@ -22,7 +22,8 @@ export const SuppliedPositionsListMobileItem = ({
   underlyingBalanceUSD,
   usageAsCollateralEnabledOnUser,
   underlyingAsset,
-}: DashboardReserve) => {
+  is2FAEnabled,
+}: DashboardReserve & { is2FAEnabled: boolean }) => {
   const { user } = useAppDataContext();
   const [currentMarketData, currentMarket] = useRootStore(
     useShallow((state) => [state.currentMarketData, state.currentMarket])
@@ -53,7 +54,10 @@ export const SuppliedPositionsListMobileItem = ({
 
   const disableSwap = !isActive || isPaused || reserve.symbol == 'stETH';
   const disableWithdraw = !isActive || isPaused;
-  const disableSupply = !isActive || isFrozen || isPaused;
+
+  const requires2FAandIsNotEnabled = usageAsCollateralEnabledOnUser && !is2FAEnabled;
+
+  const disableSupply = !isActive || isFrozen || isPaused || requires2FAandIsNotEnabled;
 
   return (
     <ListMobileItemWrapper
