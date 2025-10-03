@@ -106,7 +106,7 @@ export const StakingPanelNoWallet: React.FC<StakingPanelNoWalletProps> = ({
             <Typography variant="subheader2" color="text.secondary">
               <Trans>Incentives APR</Trans>
             </Typography>
-            <MeritIncentivesButton symbol={stakedToken} market={CustomMarket.proto_mainnet_v3} />
+            <MeritIncentivesButton symbol={stakedToken} market={CustomMarket.reental_polygon_v3} />
           </Box>
         )}
       </Box>

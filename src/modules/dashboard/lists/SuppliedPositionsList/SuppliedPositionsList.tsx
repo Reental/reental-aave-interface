@@ -6,6 +6,7 @@ import { ListColumn } from 'src/components/lists/ListColumn';
 import { ListHeaderTitle } from 'src/components/lists/ListHeaderTitle';
 import { ListHeaderWrapper } from 'src/components/lists/ListHeaderWrapper';
 import { AssetCapsProvider } from 'src/hooks/useAssetCaps';
+import { useReentalDataContext } from 'src/libs/reental/ReentalDataProvider';
 import { useRootStore } from 'src/store/root';
 import { fetchIconSymbolAndName } from 'src/ui-config/reservePatches';
 import { DASHBOARD, GENERAL } from 'src/utils/events';
@@ -64,6 +65,11 @@ export const SMALL_BALANCE_THRESHOLD = 0.001;
 
 export const SuppliedPositionsList = () => {
   const { user, loading, marketReferencePriceInUsd } = useAppDataContext();
+  const {
+    twoFA: {
+      global: { status: is2FAEnabled },
+    },
+  } = useReentalDataContext();
   const currentNetworkConfig = useRootStore((store) => store.currentNetworkConfig);
   const currentMarketData = useRootStore((store) => store.currentMarketData);
   const theme = useTheme();
@@ -239,9 +245,9 @@ export const SuppliedPositionsList = () => {
             <Fragment key={item.underlyingAsset}>
               <AssetCapsProvider asset={item.reserve}>
                 {downToXSM ? (
-                  <SuppliedPositionsListMobileItem {...item} />
+                  <SuppliedPositionsListMobileItem {...item} is2FAEnabled={is2FAEnabled} />
                 ) : (
-                  <SuppliedPositionsListItem {...item} />
+                  <SuppliedPositionsListItem {...item} is2FAEnabled={is2FAEnabled} />
                 )}
               </AssetCapsProvider>
             </Fragment>

@@ -450,10 +450,6 @@ msgstr "To continue, you need to grant smart contracts permission to move your f
 msgid "View all votes"
 msgstr "View all votes"
 
-#: pages/reserve-overview.page.tsx
-msgid "Overview"
-msgstr "Overview"
-
 #: src/modules/history/HistoryFilterMenu.tsx
 #: src/modules/history/HistoryFilterMenu.tsx
 msgid "All transactions"
@@ -869,10 +865,6 @@ msgstr "Max"
 msgid "Claim {symbol}"
 msgstr "Claim {symbol}"
 
-#: pages/v3-migration.page.tsx
-msgid "Please connect your wallet to see migration tool."
-msgstr "Please connect your wallet to see migration tool."
-
 #: src/hooks/useReserveActionState.tsx
 #: src/hooks/useReserveActionState.tsx
 #: src/modules/dashboard/lists/SupplyAssetsList/SupplyAssetsList.tsx
@@ -970,10 +962,6 @@ msgstr "Withdrawing {symbol}"
 #: src/modules/governance/RepresentativesInfoPanel.tsx
 msgid "None"
 msgstr "None"
-
-#: pages/safety-module.page.tsx
-msgid "We couldn't detect a wallet. Connect a wallet to stake and view your balance."
-msgstr "We couldn't detect a wallet. Connect a wallet to stake and view your balance."
 
 #: src/components/terms/TermsPage.tsx
 msgid "Terms of use"
@@ -1601,10 +1589,6 @@ msgstr "Underlying asset does not exist in {marketName} v3 Market, hence this po
 msgid "When a liquidation occurs, liquidators repay up to 50% of the outstanding borrowed amount on behalf of the borrower. In return, they can buy the collateral at a discount and keep the difference (liquidation penalty) as a bonus."
 msgstr "When a liquidation occurs, liquidators repay up to 50% of the outstanding borrowed amount on behalf of the borrower. In return, they can buy the collateral at a discount and keep the difference (liquidation penalty) as a bonus."
 
-#: pages/safety-module.page.tsx
-msgid "Stake ABPT"
-msgstr "Stake ABPT"
-
 #: src/components/infoTooltips/TotalBorrowAPYTooltip.tsx
 msgid "The weighted average of APY for all borrowed assets, including incentives."
 msgstr "The weighted average of APY for all borrowed assets, including incentives."
@@ -1960,7 +1944,6 @@ msgstr "Claiming all merit rewards only"
 msgid "Review tx details"
 msgstr "Review tx details"
 
-#: pages/v3-migration.page.tsx
 #: src/modules/dashboard/lists/SuppliedPositionsList/SuppliedPositionsList.tsx
 msgid "Nothing supplied yet"
 msgstr "Nothing supplied yet"
@@ -2432,10 +2415,6 @@ msgstr "Slippage is the difference between the quoted and received amounts from 
 #: src/modules/governance/RepresentativesInfoPanel.tsx
 msgid "Edit"
 msgstr "Edit"
-
-#: pages/sgho.page.tsx
-msgid "Please connect a wallet to view your balance here."
-msgstr "Please connect a wallet to view your balance here."
 
 #: src/modules/reserve-overview/SupplyInfo.tsx
 #: src/modules/umbrella/StakingApyItem.tsx
@@ -2936,10 +2915,6 @@ msgstr "Total emission per day"
 msgid "Selected borrow assets"
 msgstr "Selected borrow assets"
 
-#: pages/safety-module.page.tsx
-msgid "Balancer Pool"
-msgstr "Balancer Pool"
-
 #: src/components/transactions/Repay/CollateralRepayModalContent.tsx
 msgid "Expected amount to repay"
 msgstr "Expected amount to repay"
@@ -2968,17 +2943,12 @@ msgstr "Favourite"
 msgid "Buy {cryptoSymbol} with Fiat"
 msgstr "Buy {cryptoSymbol} with Fiat"
 
-#: pages/safety-module.page.tsx
-msgid "Stake AAVE"
-msgstr "Stake AAVE"
-
 #: src/components/transactions/FlowCommons/BaseCancelled.tsx
 #: src/components/transactions/FlowCommons/BaseSuccess.tsx
 #: src/components/transactions/FlowCommons/BaseWaiting.tsx
 msgid "Ok, Close"
 msgstr "Ok, Close"
 
-#: pages/sgho.page.tsx
 #: src/modules/sGho/SavingsGhoCard.tsx
 msgid "Savings GHO (sGHO)"
 msgstr "Savings GHO (sGHO)"
@@ -3433,7 +3403,6 @@ msgstr "The address of the pool addresses provider is invalid"
 msgid "Your voting info"
 msgstr "Your voting info"
 
-#: pages/v3-migration.page.tsx
 #: src/modules/dashboard/lists/BorrowedPositionsList/BorrowedPositionsList.tsx
 msgid "Nothing borrowed yet"
 msgstr "Nothing borrowed yet"
@@ -3667,10 +3636,6 @@ msgstr "Get ABP v2 Token"
 msgid "This asset is eligible for {0} Sonic Rewards."
 msgstr "This asset is eligible for {0} Sonic Rewards."
 
-#: pages/safety-module.page.tsx
-msgid "As a result of governance decisions, this ABPT staking pool is now deprecated. You have the flexibility to either migrate all of your tokens to v2 or unstake them without any cooldown period."
-msgstr "As a result of governance decisions, this ABPT staking pool is now deprecated. You have the flexibility to either migrate all of your tokens to v2 or unstake them without any cooldown period."
-
 #: src/components/transactions/DebtSwitch/DebtSwitchModal.tsx
 msgid "Swap borrow position"
 msgstr "Swap borrow position"
@@ -3709,8 +3674,6 @@ msgid "{0} Faucet"
 msgstr "{0} Faucet"
 
 #: pages/governance/index.governance.tsx
-#: pages/reserve-overview.page.tsx
-#: pages/sgho.page.tsx
 #: src/modules/governance/UserGovernanceInfo.tsx
 #: src/modules/governance/VotingPowerInfoPanel.tsx
 #: src/modules/reserve-overview/ReserveActions.tsx

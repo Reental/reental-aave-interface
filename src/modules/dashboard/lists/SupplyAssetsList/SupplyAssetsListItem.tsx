@@ -44,7 +44,7 @@ import { ListValueColumn } from '../ListValueColumn';
 import { ListValueRow } from '../ListValueRow';
 
 export const SupplyAssetsListItem = (
-  params: DashboardReserve & { walletBalances: WalletBalancesMap }
+  params: DashboardReserve & { walletBalances: WalletBalancesMap; is2FAEnabled: boolean }
 ) => {
   const theme = useTheme();
   const downToXSM = useMediaQuery(theme.breakpoints.down('xsm'));
@@ -61,11 +61,14 @@ export const SupplyAssetsListItem = (
     wrappedToken &&
     params.walletBalances[wrappedToken.tokenIn.underlyingAsset.toLowerCase()].amount !== '0';
 
+  const requires2FAandIsNotEnabled = params.usageAsCollateralEnabled && !params.is2FAEnabled;
+
   const disableSupply =
     !isActive ||
     isFreezed ||
     (Number(walletBalance) <= 0 && !canSupplyAsWrappedToken) ||
-    supplyCap.isMaxed;
+    supplyCap.isMaxed ||
+    requires2FAandIsNotEnabled;
 
   const props: SupplyAssetsListItemProps = {
     ...params,
