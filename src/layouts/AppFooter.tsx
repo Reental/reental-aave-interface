@@ -1,11 +1,11 @@
-import { Trans } from '@lingui/macro';
+// import { Trans } from '@lingui/macro';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import XIcon from '@mui/icons-material/X';
 import YouTubeIcon from '@mui/icons-material/YouTube';
-import { Box, styled, SvgIcon, Typography } from '@mui/material';
+import { Box, styled, SvgIcon } from '@mui/material';
 import { Link } from 'src/components/primitives/Link';
 
 // import { useRootStore } from 'src/store/root';
@@ -68,46 +68,46 @@ export function AppFooter() {
   //   useShallow((store) => [store.setAnalyticsConfigOpen, store.setFeedbackOpen])
   // );
 
-  const FOOTER_LINKS = [
-    {
-      href: '/terms',
-      label: <Trans>Terms</Trans>,
-      key: 'Terms',
-    },
-    // {
-    //   href: 'https://aave.com/privacy-policy/',
-    //   label: <Trans>Privacy</Trans>,
-    //   key: 'Privacy',
-    // },
-    // {
-    //   href: 'https://docs.aave.com/hub/',
-    //   label: <Trans>Docs</Trans>,
-    //   key: 'Docs',
-    // },
-    // {
-    //   href: 'https://docs.aave.com/faq/',
-    //   label: <Trans>FAQS</Trans>,
-    //   key: 'FAQS',
-    // },
-    // {
-    //   href: 'https://discord.com/invite/aave',
-    //   label: <Trans>Get Support</Trans>,
-    //   key: 'Get Support',
-    //   onClick: (event: React.MouseEvent) => {
-    //     event.preventDefault();
-    //     setFeedbackOpen(true);
-    //   },
-    // },
-    // {
-    //   href: '/',
-    //   label: <Trans>Manage analytics</Trans>,
-    //   key: 'Manage analytics',
-    //   onClick: (event: React.MouseEvent) => {
-    //     event.preventDefault();
-    //     setAnalyticsConfigOpen(true);
-    //   },
-    // },
-  ];
+  // const FOOTER_LINKS = [
+  //   {
+  //     href: '/terms',
+  //     label: <Trans>Terms</Trans>,
+  //     key: 'Terms',
+  //   },
+  //   // {
+  //   //   href: 'https://aave.com/privacy-policy/',
+  //   //   label: <Trans>Privacy</Trans>,
+  //   //   key: 'Privacy',
+  //   // },
+  //   // {
+  //   //   href: 'https://docs.aave.com/hub/',
+  //   //   label: <Trans>Docs</Trans>,
+  //   //   key: 'Docs',
+  //   // },
+  //   // {
+  //   //   href: 'https://docs.aave.com/faq/',
+  //   //   label: <Trans>FAQS</Trans>,
+  //   //   key: 'FAQS',
+  //   // },
+  //   // {
+  //   //   href: 'https://discord.com/invite/aave',
+  //   //   label: <Trans>Get Support</Trans>,
+  //   //   key: 'Get Support',
+  //   //   onClick: (event: React.MouseEvent) => {
+  //   //     event.preventDefault();
+  //   //     setFeedbackOpen(true);
+  //   //   },
+  //   // },
+  //   // {
+  //   //   href: '/',
+  //   //   label: <Trans>Manage analytics</Trans>,
+  //   //   key: 'Manage analytics',
+  //   //   onClick: (event: React.MouseEvent) => {
+  //   //     event.preventDefault();
+  //   //     setAnalyticsConfigOpen(true);
+  //   //   },
+  //   // },
+  // ];
 
   return (
     <Box
@@ -125,13 +125,13 @@ export function AppFooter() {
             : 'inset 0px 1px 0px rgba(255, 255, 255, 0.12)',
       })}
     >
-      <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+      {/* <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
         {FOOTER_LINKS.map((link) => (
           <StyledLink key={link.key} href={link.href} target="_blank">
             <Typography variant="caption">{link.label}</Typography>
           </StyledLink>
         ))}
-      </Box>
+      </Box> */}
       <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
         {FOOTER_ICONS.map((icon) => (
           <StyledLink href={icon.href} key={icon.title}>
