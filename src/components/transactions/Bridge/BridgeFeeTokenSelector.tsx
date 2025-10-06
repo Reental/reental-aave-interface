@@ -100,7 +100,7 @@ export const BridgeFeeTokenSelector = ({
               key={token.symbol}
               value={token.symbol}
               sx={{
-                backgroundColor: theme.palette.mode === 'dark' ? '#383D51' : '#FFFFFF',
+                backgroundColor: theme.palette.mode === 'dark' ? '#1F2937' : '#FFFFFF',
                 '&:hover': {
                   backgroundColor: theme.palette.mode === 'dark' ? '#292E41' : '#EAEBEF',
                 },

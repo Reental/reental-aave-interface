@@ -17,6 +17,7 @@ import {
 import { useWalletBalances } from 'src/hooks/app-data-provider/useWalletBalances';
 import { useModalContext } from 'src/hooks/useModal';
 import { useWeb3Context } from 'src/libs/hooks/useWeb3Context';
+import { useReentalDataContext } from 'src/libs/reental/ReentalDataProvider';
 import { BuyWithFiat } from 'src/modules/staking/BuyWithFiat';
 import { useRootStore } from 'src/store/root';
 import { GENERAL } from 'src/utils/events';
@@ -47,6 +48,11 @@ interface ReserveActionsProps {
 }
 
 export const ReserveActions = ({ reserve }: ReserveActionsProps) => {
+  const {
+    twoFA: {
+      global: { status: is2FAEnabled },
+    },
+  } = useReentalDataContext();
   const [selectedAsset, setSelectedAsset] = useState<string>(reserve.symbol);
 
   const { currentAccount } = useWeb3Context();
@@ -101,6 +107,9 @@ export const ReserveActions = ({ reserve }: ReserveActionsProps) => {
     reserve,
   });
 
+  const requires2FAandIsNotEnabled = reserve.usageAsCollateralEnabled && !is2FAEnabled;
+  const disabledSupplyButton = disableSupplyButton || requires2FAandIsNotEnabled;
+
   if (!currentAccount) {
     return <ConnectWallet />;
   }
@@ -147,7 +156,7 @@ export const ReserveActions = ({ reserve }: ReserveActionsProps) => {
               value={maxAmountToSupply.toString()}
               usdValue={maxAmountToSupplyUsd}
               symbol={selectedAsset}
-              disable={disableSupplyButton}
+              disable={disabledSupplyButton}
               onActionClicked={onSupplyClicked}
             />
             {reserve.borrowingEnabled && (

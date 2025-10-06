@@ -271,7 +271,7 @@ export const MarketSwitcher = () => {
                           color: '#A5A8B6',
                           px: 2,
                           borderRadius: '12px',
-                          backgroundColor: '#383D51',
+                          backgroundColor: '#1F2937',
                           display: 'flex',
                           alignItems: 'center',
                         }}
@@ -372,7 +372,7 @@ export const MarketSwitcher = () => {
               value={SelectedMarketVersion.V3}
               data-cy={`markets_switch_button_v3`}
               sx={{
-                backgroundColor: theme.palette.mode === 'dark' ? '#EAEBEF' : '#383D51',
+                backgroundColor: theme.palette.mode === 'dark' ? '#EAEBEF' : '#1F2937',
                 '&.Mui-selected, &.Mui-selected:hover': {
                   backgroundColor: theme.palette.mode === 'dark' ? '#292E41' : '#FFFFFF',
                   boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.05)',
@@ -401,7 +401,7 @@ export const MarketSwitcher = () => {
               value={SelectedMarketVersion.V2}
               data-cy={`markets_switch_button_v2`}
               sx={{
-                backgroundColor: theme.palette.mode === 'dark' ? '#EAEBEF' : '#383D51',
+                backgroundColor: theme.palette.mode === 'dark' ? '#EAEBEF' : '#1F2937',
                 '&.Mui-selected, &.Mui-selected:hover': {
                   backgroundColor: theme.palette.mode === 'dark' ? '#292E41' : '#FFFFFF',
                   boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.05)',

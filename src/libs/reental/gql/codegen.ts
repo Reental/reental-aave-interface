@@ -3,6 +3,7 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 const config: CodegenConfig = {
   overwrite: true,
   schema: ['https://reental-ponder-server-production.up.railway.app'],
+  // schema: ['http://localhost:42069'],
   documents: './src/libs/reental/gql/documents/**/*.ts',
   generates: {
     './src/libs/reental/gql/types/': {

@@ -14,10 +14,10 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-  '\n  query GetTwoFaAccount($chainId: Float!, $asset: String!, $user: String!) {\n    twoFaAccount(asset: $asset, chainId: $chainId, user: $user) {\n      chainId\n      user\n      asset\n      expiresAt\n    }\n  }\n': typeof types.GetTwoFaAccountDocument;
+  '\n  query GetTwoFaAccount($chainId: Float!, $asset: String!, $user: String!) {\n    twoFaAccount(asset: $asset, chainId: $chainId, user: $user) {\n      chainId\n      user\n      asset\n      expiresAt\n      updatedAt\n      createdAt\n    }\n  }\n': typeof types.GetTwoFaAccountDocument;
 };
 const documents: Documents = {
-  '\n  query GetTwoFaAccount($chainId: Float!, $asset: String!, $user: String!) {\n    twoFaAccount(asset: $asset, chainId: $chainId, user: $user) {\n      chainId\n      user\n      asset\n      expiresAt\n    }\n  }\n':
+  '\n  query GetTwoFaAccount($chainId: Float!, $asset: String!, $user: String!) {\n    twoFaAccount(asset: $asset, chainId: $chainId, user: $user) {\n      chainId\n      user\n      asset\n      expiresAt\n      updatedAt\n      createdAt\n    }\n  }\n':
     types.GetTwoFaAccountDocument,
 };
 
@@ -39,8 +39,8 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query GetTwoFaAccount($chainId: Float!, $asset: String!, $user: String!) {\n    twoFaAccount(asset: $asset, chainId: $chainId, user: $user) {\n      chainId\n      user\n      asset\n      expiresAt\n    }\n  }\n'
-): (typeof documents)['\n  query GetTwoFaAccount($chainId: Float!, $asset: String!, $user: String!) {\n    twoFaAccount(asset: $asset, chainId: $chainId, user: $user) {\n      chainId\n      user\n      asset\n      expiresAt\n    }\n  }\n'];
+  source: '\n  query GetTwoFaAccount($chainId: Float!, $asset: String!, $user: String!) {\n    twoFaAccount(asset: $asset, chainId: $chainId, user: $user) {\n      chainId\n      user\n      asset\n      expiresAt\n      updatedAt\n      createdAt\n    }\n  }\n'
+): (typeof documents)['\n  query GetTwoFaAccount($chainId: Float!, $asset: String!, $user: String!) {\n    twoFaAccount(asset: $asset, chainId: $chainId, user: $user) {\n      chainId\n      user\n      asset\n      expiresAt\n      updatedAt\n      createdAt\n    }\n  }\n'];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

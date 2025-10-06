@@ -8,7 +8,7 @@ import { TrackEventProps } from 'src/store/analyticsSlice';
 import { TxAction } from 'src/ui-config/errorMapping';
 
 import { ApprovalTooltip } from '../infoTooltips/ApprovalTooltip';
-import { RightHelperText } from './FlowCommons/RightHelperText';
+// import { RightHelperText } from './FlowCommons/RightHelperText';
 
 interface TxActionsWrapperProps extends BoxProps {
   actionInProgressText: ReactNode;
@@ -141,11 +141,11 @@ export const TxActionsWrapper = ({
   const approvalParams = getApprovalParams();
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', mt: 12, ...sx }} {...rest}>
-      {approvalParams && !readOnlyModeAddress && (
+      {/* {approvalParams && !readOnlyModeAddress && (
         <Box sx={{ display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
           <RightHelperText approvalHash={approvalTxState?.txHash} tryPermit={tryPermit} />
         </Box>
-      )}
+      )} */}
 
       {approvalParams && !readOnlyModeAddress && (
         <Button

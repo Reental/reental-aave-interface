@@ -197,7 +197,7 @@ export default function TopBarNotify({ campaigns }: TopBarNotifyProps) {
                   minWidth: '90px',
                   marginLeft: 5,
                   height: '24px',
-                  background: '#383D51',
+                  background: '#1F2937',
                   color: '#EAEBEF',
                 }}
               >

@@ -22,17 +22,26 @@ interface Navigation {
 export const navigation: Navigation[] = [
   {
     link: ROUTES.dashboard,
-    title: t`Dashboard`,
+    title: t({
+      id: 'Dashboard',
+      message: 'Dashboard',
+    }),
     dataCy: 'menuDashboard',
   },
   {
     link: ROUTES.markets,
-    title: t`Markets`,
+    title: t({
+      id: 'Markets',
+      message: 'Markets',
+    }),
     dataCy: 'menuMarkets',
   },
   {
     link: ROUTES.terms,
-    title: t`Terms`,
+    title: t({
+      id: 'Terms',
+      message: 'Terms',
+    }),
     dataCy: 'menuTerms',
   },
   // {

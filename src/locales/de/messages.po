@@ -3527,3 +3527,18 @@ msgstr "Achten Sie auf die Überlastung des Netzes und die Gaspreise."
 msgid "Merit Program rewards are claimed through the"
 msgstr ""
 
+#: src/components/Reental/TwoFABanner/TwoFABanner.tsx
+msgid "In order to perform operations with your real estate tokens, you must first open your time window on the app.reental.co platform"
+msgstr "In order to perform operations with your real estate tokens, you must first open your time window on the app.reental.co platform"
+
+#: src/components/Reental/TwoFABanner/TwoFABanner.tsx
+msgid "What is the time window?"
+msgstr "What is the time window?"
+
+#: src/components/Reental/TwoFABanner/TwoFABanner.tsx
+msgid "Go to Reental"
+msgstr "Go to Reental"
+
+#: src/components/Reental/TwoFACoundown/TwoFACountdown.tsx
+msgid "Time to operate"
+msgstr "Time to operate"
