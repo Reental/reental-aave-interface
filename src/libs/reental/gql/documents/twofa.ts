@@ -7,6 +7,8 @@ export const GetTwoFaAccount = gql`
       user
       asset
       expiresAt
+      updatedAt
+      createdAt
     }
   }
 `;

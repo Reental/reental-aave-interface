@@ -1,13 +1,13 @@
 // import { Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
+import { Trans } from '@lingui/macro';
 import { Button, List, ListItem, Typography, useMediaQuery, useTheme } from '@mui/material';
 import * as React from 'react';
 import { useRootStore } from 'src/store/root';
-import { navigation } from 'src/ui-config/menu-items';
 import { NAV_BAR } from 'src/utils/events';
 import { useShallow } from 'zustand/shallow';
 
-import { Link } from '../../components/primitives/Link';
+import { Link, ROUTES } from '../../components/primitives/Link';
+
 // import { MoreMenu } from '../MoreMenu';
 // import { StakingMenu } from './StakingMenu';
 
@@ -16,12 +16,45 @@ interface NavItemsProps {
 }
 
 export const NavItems = ({ setOpen }: NavItemsProps) => {
-  const { i18n } = useLingui();
+  // const { i18n } = useLingui();
   const { breakpoints } = useTheme();
   const md = useMediaQuery(breakpoints.down('md'));
-  const [trackEvent, currentMarketData] = useRootStore(
+  const [trackEvent] = useRootStore(
     useShallow((store) => [store.trackEvent, store.currentMarketData])
   );
+
+  const navigation = [
+    {
+      link: ROUTES.dashboard,
+      title: <Trans>Dashboard</Trans>,
+      dataCy: 'menuDashboard',
+    },
+    {
+      link: ROUTES.markets,
+      title: <Trans>Markets</Trans>,
+      dataCy: 'menuMarkets',
+    },
+    {
+      link: ROUTES.terms,
+      title: <Trans>Terms</Trans>,
+      dataCy: 'menuTerms',
+    },
+    // {
+    //   link: ROUTES.governance,
+    //   title: t`Governance`,
+    //   dataCy: 'menuGovernance',
+    //   // isVisible: () =>
+    //   //   process.env.NEXT_PUBLIC_ENABLE_GOVERNANCE === 'true' &&
+    //   //   process.env.NEXT_PUBLIC_ENV === 'prod' &&
+    //   //   !ENABLE_TESTNET,
+    // },
+    // {
+    //   link: ROUTES.faucet,
+    //   title: t`Faucet`,
+    //   isVisible: () => process.env.NEXT_PUBLIC_ENV === 'staging' || ENABLE_TESTNET,
+    // },
+  ];
+
   const handleClick = (title: string, isMd: boolean) => {
     if (isMd && setOpen) {
       trackEvent(NAV_BAR.MAIN_MENU, { nav_link: title });
@@ -40,7 +73,7 @@ export const NavItems = ({ setOpen }: NavItemsProps) => {
       disablePadding
     >
       {navigation
-        .filter((item) => !item.isVisible || item.isVisible(currentMarketData))
+        // .filter((item) => !item.isVisible || item.isVisible(currentMarketData))
         .map((item, index) => (
           <ListItem
             sx={{
@@ -58,14 +91,14 @@ export const NavItems = ({ setOpen }: NavItemsProps) => {
                 variant="h2"
                 color="#F1F1F3"
                 sx={{ width: '100%', p: 4 }}
-                onClick={() => handleClick(item.title, true)}
+                onClick={() => handleClick(item.title.toString(), true)}
               >
-                {i18n._(item.title)}
+                {item.title}
               </Typography>
             ) : (
               <Button
                 component={Link}
-                onClick={() => handleClick(item.title, false)}
+                onClick={() => handleClick(item.title.toString(), false)}
                 href={item.link}
                 sx={(theme) => ({
                   color: '#F1F1F3',
@@ -89,7 +122,7 @@ export const NavItems = ({ setOpen }: NavItemsProps) => {
                   },
                 })}
               >
-                {i18n._(item.title)}
+                {item.title}
               </Button>
             )}
           </ListItem>

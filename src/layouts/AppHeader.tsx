@@ -176,7 +176,7 @@ export function AppHeader() {
           }}
           onClick={() => setMobileMenuOpen(false)}
         >
-          <img src={uiConfig.appLogo} alt="AAVE" width={115} />
+          <img src={uiConfig.appLogo} alt="Reenlever" width={115} />
         </Box>
         <Box sx={{ mr: sm ? 1 : 3 }}>
           {ENABLE_TESTNET && (
@@ -222,7 +222,6 @@ export function AppHeader() {
         <Box sx={{ display: { xs: 'none', md: 'block' } }}>
           <NavItems />
         </Box>
-
         <Box sx={{ flexGrow: 1 }} />
 
         {/* <NoSsr>

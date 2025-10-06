@@ -105,7 +105,7 @@ export const StakingDropdown = ({ stakeData }: { stakeData: MergedStakeData }) =
           <IconButton
             style={{
               width: isMobile ? '100%' : 'auto',
-              backgroundColor: theme.palette.mode === 'light' ? '#F7F7F9' : '#383D51',
+              backgroundColor: theme.palette.mode === 'light' ? '#F7F7F9' : '#1F2937',
               borderRadius: 4,
             }}
             aria-label="more"

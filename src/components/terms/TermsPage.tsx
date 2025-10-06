@@ -18,7 +18,7 @@ const TermsPage = () => {
         paddingTop: '64px',
       }}
     >
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', marginTop: '24px' }}>
         <Typography variant="h1">
           <Trans>Terms of use</Trans>
         </Typography>
