@@ -13130,6 +13130,11 @@ react-cookie-consent@^8.0.1:
   dependencies:
     js-cookie "^2.2.1"
 
+react-countdown-hook@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/react-countdown-hook/-/react-countdown-hook-1.1.3.tgz#04609f3243ee71aadceb5ddfcd538a813a3443ea"
+  integrity sha512-MY4Kr8wXMtCjDF45kehMP7R/OwekilHxznK1RRnuvgelOVqT0noaW9Fqm2A9J2AZIEnfJHpe47KEVEEq212R8w==
+
 react-dom@^18.0.0:
   version "18.3.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.3.1.tgz#c2265d79511b57d479b3dd3fdfa51536494c5cb4"

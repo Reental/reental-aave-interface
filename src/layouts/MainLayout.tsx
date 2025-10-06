@@ -128,7 +128,10 @@ export function MainLayout({ children }: { children: ReactNode }) {
       <TopBarNotify campaigns={campaignConfigs} />
 
       <AppHeader />
-      <Box component="main" sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+      <Box
+        component="main"
+        sx={{ display: 'flex', flexDirection: 'column', flex: 1, marginTop: '-16px' }}
+      >
         {children}
       </Box>
       <AppFooter />

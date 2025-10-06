@@ -355,15 +355,11 @@ msgstr "Migrate to {0} v3 Market"
 msgid "Voting results"
 msgstr "Voting results"
 
-#: src/modules/dashboard/DashboardContentWrapper.tsx
-msgid "View Transactions"
-msgstr "View Transactions"
-
 #: src/modules/dashboard/LiquidationRiskParametresModal/components/LTVContent.tsx
 msgid "MAX"
 msgstr "MAX"
 
-#: src/ui-config/menu-items/index.tsx
+#: src/layouts/components/NavItems.tsx
 msgid "Terms"
 msgstr "Terms"
 
@@ -449,6 +445,10 @@ msgstr "To continue, you need to grant smart contracts permission to move your f
 msgid "View all votes"
 msgstr "View all votes"
 
+#: pages/reserve-overview.page.tsx
+msgid "Overview"
+msgstr "Overview"
+
 #: src/modules/history/HistoryFilterMenu.tsx
 #: src/modules/history/HistoryFilterMenu.tsx
 msgid "All transactions"
@@ -491,7 +491,7 @@ msgstr "Cooling down..."
 msgid "Voting power"
 msgstr "Voting power"
 
-#: src/ui-config/menu-items/index.tsx
+#: src/layouts/components/NavItems.tsx
 msgid "Markets"
 msgstr "Markets"
 
@@ -586,8 +586,8 @@ msgstr "Time remaining until the withdraw period ends."
 msgid "Data couldn't be fetched, please reload graph."
 msgstr "Data couldn't be fetched, please reload graph."
 
+#: src/layouts/components/NavItems.tsx
 #: src/modules/dashboard/DashboardTopPanel.tsx
-#: src/ui-config/menu-items/index.tsx
 msgid "Dashboard"
 msgstr "Dashboard"
 
@@ -649,6 +649,10 @@ msgstr "Balance to revoke"
 #: src/modules/reserve-overview/ReserveTopDetails.tsx
 msgid "Utilization Rate"
 msgstr "Utilization Rate"
+
+#: src/components/Reental/TwoFABanner/TwoFABanner.tsx
+msgid "What is the time window?"
+msgstr "What is the time window?"
 
 #: src/modules/reserve-overview/ReserveFactorOverview.tsx
 msgid "View contract"
@@ -913,6 +917,11 @@ msgstr "Supply balance after switch"
 #: src/components/infoTooltips/MigrationDisabledTooltip.tsx
 msgid "Asset cannot be migrated to {marketName} V3 Market due to E-mode restrictions. You can disable or manage E-mode categories in your <0>V3 Dashboard</0>"
 msgstr "Asset cannot be migrated to {marketName} V3 Market due to E-mode restrictions. You can disable or manage E-mode categories in your <0>V3 Dashboard</0>"
+
+#. js-lingui-explicit-id
+#: src/ui-config/menu-items/index.tsx
+msgid "Dashboard"
+msgstr "Dashboard"
 
 #: src/modules/umbrella/UmbrellaHeader.tsx
 msgid "Stake your Aave aTokens or underlying assets to earn rewards. In case of a shortfall event, your stake may be slashed to cover the deficit."
@@ -1278,6 +1287,10 @@ msgstr "Withdraw & Switch"
 msgid "Protocol debt ceiling is at 100% for this asset. Further borrowing against this asset is unavailable."
 msgstr "Protocol debt ceiling is at 100% for this asset. Further borrowing against this asset is unavailable."
 
+#: src/components/Reental/TwoFACoundown/TwoFACountdown.tsx
+msgid "Time to operate"
+msgstr "Time to operate"
+
 #: src/components/transactions/Bridge/BridgeDestinationInput.tsx
 msgid "Use connected account"
 msgstr "Use connected account"
@@ -1414,6 +1427,11 @@ msgstr "No results found."
 #: src/components/transactions/Warnings/AAVEWarning.tsx
 msgid "staking view"
 msgstr "staking view"
+
+#. js-lingui-explicit-id
+#: src/ui-config/menu-items/index.tsx
+msgid "Markets"
+msgstr "Markets"
 
 #: src/modules/dashboard/lists/BorrowAssetsList/BorrowAssetsList.tsx
 #: src/modules/dashboard/lists/BorrowAssetsList/BorrowAssetsListMobileItem.tsx
@@ -1654,6 +1672,10 @@ msgstr "Merit Rewards"
 msgid "Withdrawing"
 msgstr "Withdrawing"
 
+#: src/components/Reental/TwoFABanner/TwoFABanner.tsx
+msgid "Go to Reental"
+msgstr "Go to Reental"
+
 #: src/modules/governance/proposal/VotingResults.tsx
 #: src/modules/governance/proposal/VotingResults.tsx
 msgid "Not reached"
@@ -1824,6 +1846,11 @@ msgstr "User does not have outstanding stable rate debt on this reserve"
 #: src/modules/history/actions/ActionDetails.tsx
 msgid "Borrow rate change"
 msgstr "Borrow rate change"
+
+#. js-lingui-explicit-id
+#: src/ui-config/menu-items/index.tsx
+msgid "Terms"
+msgstr "Terms"
 
 #: src/modules/bridge/BridgeTopPanel.tsx
 msgid "Bridge history"
@@ -3539,6 +3566,10 @@ msgstr "Language"
 msgid "Allows you to decide whether to use a supplied asset as collateral. An asset used as collateral will affect your borrowing power and health factor."
 msgstr "Allows you to decide whether to use a supplied asset as collateral. An asset used as collateral will affect your borrowing power and health factor."
 
+#: src/components/Reental/TwoFABanner/TwoFABanner.tsx
+msgid "In order to perform operations with your real estate tokens, you must first open your time window on the app.reental.co platform"
+msgstr "In order to perform operations with your real estate tokens, you must first open your time window on the app.reental.co platform"
+
 #: src/modules/history/actions/ActionDetails.tsx
 #: src/modules/history/actions/ActionDetails.tsx
 msgid "Cancelled"
@@ -3655,6 +3686,7 @@ msgid "{0} Faucet"
 msgstr "{0} Faucet"
 
 #: pages/governance/index.governance.tsx
+#: pages/reserve-overview.page.tsx
 #: src/modules/governance/UserGovernanceInfo.tsx
 #: src/modules/governance/VotingPowerInfoPanel.tsx
 #: src/modules/reserve-overview/ReserveActions.tsx

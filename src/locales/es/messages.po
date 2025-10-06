@@ -3527,3 +3527,37 @@ msgstr "Ten en cuenta la congestión de la red y los precios del gas."
 msgid "Merit Program rewards are claimed through the"
 msgstr ""
 
+#: src/components/Reental/TwoFABanner/TwoFABanner.tsx
+msgid "In order to perform operations with your real estate tokens, you must first open your time window on the app.reental.co platform"
+msgstr "Para poder realizar operaciones con tus tokens de inmuebles, primero debes abrir tu ventana de tiempo en la plataforma app.reental.co"
+
+#: src/components/Reental/TwoFABanner/TwoFABanner.tsx
+msgid "What is the time window?"
+msgstr "¿Qué es la ventana de tiempo?"
+
+#: src/components/Reental/TwoFABanner/TwoFABanner.tsx
+msgid "Go to Reental"
+msgstr "Ir a Reental"
+
+#: src/components/Reental/TwoFACoundown/TwoFACountdown.tsx
+msgid "Time to operate"
+msgstr "Tiempo para operar"
+
+#: src/components/terms/TermsPage.tsx
+msgid "Terms of use"
+msgstr "Términos de uso"
+
+#: src/layouts/components/NavItems.tsx
+#: src/ui-config/menu-items/index.tsx
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: src/layouts/components/NavItems.tsx
+#: src/ui-config/menu-items/index.tsx
+msgid "Markets"
+msgstr "Mercados"
+
+#: src/layouts/components/NavItems.tsx
+#: src/ui-config/menu-items/index.tsx
+msgid "Terms"
+msgstr "Términos"

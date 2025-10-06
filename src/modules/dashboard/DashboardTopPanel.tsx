@@ -163,6 +163,7 @@ export const DashboardTopPanel = () => {
           </Link>
         </Box>
       )}
+
       <TopInfoPanel
         titleComponent={
           <Box sx={{ display: 'flex', alignItems: 'center' }}>

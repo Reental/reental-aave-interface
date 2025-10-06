@@ -1,0 +1,94 @@
+.layout {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 24px;
+  padding: 16px;
+  position: relative;
+  margin: 10px;
+  max-width: 600px;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contentText {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.contentButtons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.closeIcon {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.warningIcon {
+  background: #fedaa0;
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  padding: 6px;
+}
+
+.warningIconSvg {
+  width: 100%;
+  height: 100%;
+}
+
+.contentButton {
+  background: #fca311;
+  color: #111827;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  font-family: 'Fustat', Arial;
+  font-weight: 600;
+}
+
+.contentButton:hover {
+  opacity: 0.8;
+}
+
+.contentButton:active {
+  background: #fca311;
+}
+
+.linkButton {
+  color: #fca311;
+  cursor: pointer;
+}
+
+.linkButton:hover {
+  text-decoration: underline;
+}

@@ -26,7 +26,7 @@ export default function Dashboard() {
       'Page Name': 'Dashboard',
       Market: currentMarket,
     });
-  }, [trackEvent]);
+  }, [trackEvent, currentMarket]);
 
   return (
     <>

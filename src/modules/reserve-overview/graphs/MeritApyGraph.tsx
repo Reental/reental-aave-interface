@@ -62,7 +62,7 @@ export const MeritApyGraph = withTooltip<MeritApyGraphProps, TooltipData>(
     const theme = useTheme();
 
     // Tooltip Styles
-    const accentColorDark = theme.palette.mode === 'light' ? '#383D511F' : '#a5a8b647';
+    const accentColorDark = theme.palette.mode === 'light' ? '#1F29371F' : '#a5a8b647';
     const tooltipStyles = {
       ...defaultStyles,
       padding: '8px 12px',

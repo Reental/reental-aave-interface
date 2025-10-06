@@ -325,7 +325,7 @@ export const HistoryWrapperMobile = () => {
               justifyContent: 'center',
             }}
           >
-            <CircularProgress size={20} style={{ color: '#383D51' }} />
+            <CircularProgress size={20} style={{ color: '#1F2937' }} />
           </Box>
         )}
       </Box>

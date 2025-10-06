@@ -62,7 +62,9 @@ export type TwoFaAccount = {
   __typename?: 'twoFaAccount';
   asset: Scalars['String']['output'];
   chainId: Scalars['Int']['output'];
+  createdAt: Scalars['BigInt']['output'];
   expiresAt: Scalars['BigInt']['output'];
+  updatedAt: Scalars['BigInt']['output'];
   user: Scalars['String']['output'];
 };
 
@@ -87,6 +89,14 @@ export type TwoFaAccountFilter = {
   chainId_lte?: InputMaybe<Scalars['Int']['input']>;
   chainId_not?: InputMaybe<Scalars['Int']['input']>;
   chainId_not_in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  createdAt?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAt_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAt_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAt_in?: InputMaybe<Array<InputMaybe<Scalars['BigInt']['input']>>>;
+  createdAt_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAt_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAt_not?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['BigInt']['input']>>>;
   expiresAt?: InputMaybe<Scalars['BigInt']['input']>;
   expiresAt_gt?: InputMaybe<Scalars['BigInt']['input']>;
   expiresAt_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -95,6 +105,14 @@ export type TwoFaAccountFilter = {
   expiresAt_lte?: InputMaybe<Scalars['BigInt']['input']>;
   expiresAt_not?: InputMaybe<Scalars['BigInt']['input']>;
   expiresAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['BigInt']['input']>>>;
+  updatedAt?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt_in?: InputMaybe<Array<InputMaybe<Scalars['BigInt']['input']>>>;
+  updatedAt_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt_not?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['BigInt']['input']>>>;
   user?: InputMaybe<Scalars['String']['input']>;
   user_contains?: InputMaybe<Scalars['String']['input']>;
   user_ends_with?: InputMaybe<Scalars['String']['input']>;
@@ -128,6 +146,8 @@ export type GetTwoFaAccountQuery = {
     user: string;
     asset: string;
     expiresAt: any;
+    updatedAt: any;
+    createdAt: any;
   } | null;
 };
 
@@ -194,6 +214,8 @@ export const GetTwoFaAccountDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'user' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'asset' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'expiresAt' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
               ],
             },
           },

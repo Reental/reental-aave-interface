@@ -65,7 +65,7 @@ export const useTransactionHandler = ({
 
   const [
     signPoolERC20Approval,
-    walletApprovalMethodPreference,
+    // walletApprovalMethodPreference,
     generateCreditDelegationSignatureRequest,
     generatePermitPayloadForMigrationSupplyAsset,
     addTransaction,
@@ -74,7 +74,7 @@ export const useTransactionHandler = ({
   ] = useRootStore(
     useShallow((state) => [
       state.signERC20Approval,
-      state.walletApprovalMethodPreference,
+      // state.walletApprovalMethodPreference,
       state.generateCreditDelegationSignatureRequest,
       state.generatePermitPayloadForMigrationSupplyAsset,
       state.addTransaction,
@@ -83,6 +83,7 @@ export const useTransactionHandler = ({
     ])
   );
 
+  const walletApprovalMethodPreference = ApprovalMethod.APPROVE;
   const [approvalTxes, setApprovalTxes] = useState<EthereumTransactionTypeExtended[] | undefined>();
   const [actionTx, setActionTx] = useState<EthereumTransactionTypeExtended | undefined>();
   const [usePermit, setUsePermit] = useState(false);
@@ -363,15 +364,16 @@ export const useTransactionHandler = ({
             } else {
               setApprovalTxes(undefined);
             }
-            const preferPermit =
-              tryPermit &&
-              walletApprovalMethodPreference === ApprovalMethod.PERMIT &&
-              handleGetPermitTxns &&
-              permitAction;
+            // const preferPermit =
+            //   tryPermit &&
+            //   walletApprovalMethodPreference === ApprovalMethod.PERMIT &&
+            //   handleGetPermitTxns &&
+            //   permitAction;
+            const preferPermit = false;
             if (approvalTransactions.length > 0 && preferPermit) {
               // For permit flow, just use recommendation for gas limit as estimation will always fail without signature and tx must be rebuilt with signature anyways
               setUsePermit(true);
-              const gas = gasLimitRecommendations[permitAction];
+              const gas = gasLimitRecommendations[permitAction || ''];
               setGasLimit(gas.limit || '');
               setMainTxState({
                 txHash: undefined,

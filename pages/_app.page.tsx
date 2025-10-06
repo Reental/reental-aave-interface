@@ -1,4 +1,5 @@
 import '/public/fonts/inter/inter.css';
+import '/public/fonts/fustat/index.css';
 import '/src/styles/variables.css';
 
 import { AaveClient, AaveProvider } from '@aave/react';
@@ -20,6 +21,7 @@ import { CowOrderToast } from 'src/components/transactions/Switch/cowprotocol/Co
 import { AppDataProvider } from 'src/hooks/app-data-provider/useAppDataProvider';
 import { CowOrderToastProvider } from 'src/hooks/useCowOrderToast';
 import { ModalContextProvider } from 'src/hooks/useModal';
+import { ReentalDataProvider } from 'src/libs/reental/ReentalDataProvider';
 import { Web3ContextProvider } from 'src/libs/web3-data-provider/Web3Provider';
 import { useRootStore } from 'src/store/root';
 import { SharedDependenciesProvider } from 'src/ui-config/SharedDependenciesProvider';
@@ -158,38 +160,40 @@ export default function MyApp(props: MyAppProps) {
                   onConnect={({ connectorId }) => setWalletType(connectorId)}
                 >
                   <Web3ContextProvider>
-                    <AppGlobalStyles>
-                      <AddressBlocked>
-                        <CowOrderToastProvider>
-                          <ModalContextProvider>
-                            <SharedDependenciesProvider>
-                              <AppDataProvider>
-                                <GasStationProvider>
-                                  {getLayout(<Component {...pageProps} />)}
-                                  <SupplyModal />
-                                  <WithdrawModal />
-                                  <BorrowModal />
-                                  <RepayModal />
-                                  <CollateralChangeModal />
-                                  <DebtSwitchModal />
-                                  <ClaimRewardsModal />
-                                  <EmodeModal />
-                                  <FaucetModal />
-                                  <TransactionEventHandler />
-                                  <SwitchModal />
-                                  <CollateralSwapModal />
-                                  <StakingMigrateModal />
-                                  <BridgeModal />
-                                  <ReadOnlyModal />
-                                  <CowOrderToast />
-                                  <CancelCowOrderModal />
-                                </GasStationProvider>
-                              </AppDataProvider>
-                            </SharedDependenciesProvider>
-                          </ModalContextProvider>
-                        </CowOrderToastProvider>
-                      </AddressBlocked>
-                    </AppGlobalStyles>
+                    <ReentalDataProvider>
+                      <AppGlobalStyles>
+                        <AddressBlocked>
+                          <CowOrderToastProvider>
+                            <ModalContextProvider>
+                              <SharedDependenciesProvider>
+                                <AppDataProvider>
+                                  <GasStationProvider>
+                                    {getLayout(<Component {...pageProps} />)}
+                                    <SupplyModal />
+                                    <WithdrawModal />
+                                    <BorrowModal />
+                                    <RepayModal />
+                                    <CollateralChangeModal />
+                                    <DebtSwitchModal />
+                                    <ClaimRewardsModal />
+                                    <EmodeModal />
+                                    <FaucetModal />
+                                    <TransactionEventHandler />
+                                    <SwitchModal />
+                                    <CollateralSwapModal />
+                                    <StakingMigrateModal />
+                                    <BridgeModal />
+                                    <ReadOnlyModal />
+                                    <CowOrderToast />
+                                    <CancelCowOrderModal />
+                                  </GasStationProvider>
+                                </AppDataProvider>
+                              </SharedDependenciesProvider>
+                            </ModalContextProvider>
+                          </CowOrderToastProvider>
+                        </AddressBlocked>
+                      </AppGlobalStyles>
+                    </ReentalDataProvider>
                   </Web3ContextProvider>
                 </ConnectKitProvider>
                 <ReactQueryDevtools initialIsOpen={false} />
