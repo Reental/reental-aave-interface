@@ -1,15 +1,10 @@
-import {
-  APYSample,
-  chainId,
-  evmAddress,
-  TimeWindow,
-  useBorrowAPYHistory,
-  useSupplyAPYHistory,
-} from '@aave/react';
+import { APYSample, bigDecimal, bigIntString, dateTime, TimeWindow } from '@aave/react';
 import { Trans } from '@lingui/macro';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { ParentSize } from '@visx/responsive';
+import { ethers } from 'ethers';
 import { useState } from 'react';
+import { useAllTokenHistory } from 'src/libs/reental/aave/services';
 
 import { ApyGraph, FormattedReserveHistoryItem, PlaceholderChart } from './ApyGraph';
 import { GraphLegend } from './GraphLegend';
@@ -40,46 +35,66 @@ type ApyGraphProps = {
   market: string;
 };
 
-export const SupplyApyGraph = ({ chain, underlyingToken, market }: ApyGraphProps) => {
+export const SupplyApyGraph = ({ chain, underlyingToken }: ApyGraphProps) => {
   const [selectedTimeRange, setSelectedTimeRange] = useState<TimeWindow>(TimeWindow.LastWeek);
-
-  const { data, loading, error } = useSupplyAPYHistory({
-    chainId: chainId(chain),
-    underlyingToken: evmAddress(underlyingToken),
-    market: evmAddress(market),
-    window: selectedTimeRange,
+  const { data, isLoading, isError, isFetching } = useAllTokenHistory({
+    chainId: chain,
+    asset: underlyingToken,
+    timeWindow: selectedTimeRange,
   });
+  const parsedData: APYSample[] =
+    data?.map((item) => ({
+      __typename: 'APYSample',
+      date: dateTime(new Date(item.timestamp * 1000).toISOString()),
+      avgRate: {
+        __typename: 'PercentValue',
+        raw: bigIntString(ethers.utils.formatUnits(item.liquidityRate, 27)),
+        decimals: item.reserve.decimals,
+        value: bigDecimal(ethers.utils.formatUnits(item.liquidityRate, 27)),
+        formatted: bigDecimal(ethers.utils.formatUnits(item.liquidityRate, 27)),
+      },
+    })) || [];
 
   return (
     <ApyGraphContainer
       label="Supply APR"
       color="#2EBAC6"
-      data={transformApyData(data)}
-      loading={loading}
-      error={error || false}
+      data={transformApyData(parsedData)}
+      loading={isLoading || isFetching}
+      error={isError || false}
       selectedTimeRange={selectedTimeRange}
       onSelectedTimeRangeChanged={setSelectedTimeRange}
     />
   );
 };
 
-export const BorrowApyGraph = ({ chain, underlyingToken, market }: ApyGraphProps) => {
+export const BorrowApyGraph = ({ chain, underlyingToken }: ApyGraphProps) => {
   const [selectedTimeRange, setSelectedTimeRange] = useState<TimeWindow>(TimeWindow.LastWeek);
-
-  const { data, loading, error } = useBorrowAPYHistory({
-    chainId: chainId(chain),
-    underlyingToken: evmAddress(underlyingToken),
-    market: evmAddress(market),
-    window: selectedTimeRange,
+  const { data, isLoading, isError, isFetching } = useAllTokenHistory({
+    chainId: chain,
+    asset: underlyingToken,
+    timeWindow: selectedTimeRange,
   });
+  const parsedData: APYSample[] =
+    data?.map((item) => ({
+      __typename: 'APYSample',
+      date: dateTime(new Date(item.timestamp * 1000).toISOString()),
+      avgRate: {
+        __typename: 'PercentValue',
+        raw: bigIntString(ethers.utils.formatUnits(item.variableBorrowRate, 27)),
+        decimals: item.reserve.decimals,
+        value: bigDecimal(ethers.utils.formatUnits(item.variableBorrowRate, 27)),
+        formatted: bigDecimal(ethers.utils.formatUnits(item.variableBorrowRate, 27)),
+      },
+    })) || [];
 
   return (
     <ApyGraphContainer
       label="Borrow APR, variable"
       color="#B6509E"
-      data={transformApyData(data)}
-      loading={loading}
-      error={error || false}
+      data={transformApyData(parsedData)}
+      loading={isLoading || isFetching}
+      error={isError || false}
       selectedTimeRange={selectedTimeRange}
       onSelectedTimeRangeChanged={setSelectedTimeRange}
     />

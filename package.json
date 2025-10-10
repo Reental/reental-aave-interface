@@ -149,7 +149,8 @@
     "Nikita Bokarev <nikita@aave.com>",
     "Oleksandr Tkach <oleksandr@aave.com>",
     "Pol Sendra <pol@aave.com>",
-    "Vladimir Konstantinovich Yumatov <vladimir@aave.com>"
+    "Vladimir Konstantinovich Yumatov <vladimir@aave.com>",
+    "Victor Merino <victor@reental.co>"
   ],
   "lint-staged": {
     "!(.prettierignore)*.*": "yarn lint:fix",
@@ -159,5 +160,6 @@
     "budget": null,
     "budgetPercentIncreaseRed": 20,
     "showDetails": true
-  }
+  },
+  "postinstall": "husky install"
 }
