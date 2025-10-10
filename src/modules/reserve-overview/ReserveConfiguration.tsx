@@ -51,7 +51,7 @@ export const ReserveConfiguration: React.FC<ReserveConfigurationProps> = ({ rese
     ])
   );
   // const renderCharts = !BROKEN_ASSETS.includes(reserve.underlyingAsset);
-  const renderCharts = false;
+  const renderCharts = true;
   const { supplyCap, borrowCap, debtCeiling } = useAssetCaps();
   const showSupplyCapStatus: boolean = reserve.supplyCap !== '0';
   const showBorrowCapStatus: boolean = reserve.borrowCap !== '0';

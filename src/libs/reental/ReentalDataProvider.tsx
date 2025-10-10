@@ -1,11 +1,4 @@
-import React, {
-  PropsWithChildren,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { PropsWithChildren, useContext, useMemo } from 'react';
 import { TwoFABanner } from 'src/components/Reental/TwoFABanner/TwoFABanner';
 import { TwoFACountdown } from 'src/components/Reental/TwoFACoundown/TwoFACountdown';
 import { useRootStore } from 'src/store/root';
@@ -14,8 +7,7 @@ import { maxUint160 } from 'viem';
 import { useShallow } from 'zustand/shallow';
 
 import { useWeb3Context } from '../hooks/useWeb3Context';
-import { request } from './gql/client';
-import { GetTwoFaAccountDocument, GetTwoFaAccountQueryVariables } from './gql/types/graphql';
+import { use2FA } from './2fa/services';
 
 export interface ReentalDataProvider {
   twoFA: {
@@ -30,7 +22,8 @@ export interface ReentalDataProvider {
       windowTime: number;
     };
   };
-  fetchGlobal2FA: () => Promise<void>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fetchGlobal2FA: () => Promise<any>;
 }
 
 const Wrapper = ({
@@ -69,11 +62,6 @@ const ReentalDataContext = React.createContext<ReentalDataProvider>({
 } as ReentalDataProvider);
 
 export const ReentalDataProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [global2FA, setGlobal2FA] = useState<ReentalDataProvider['twoFA']['global']>({
-    status: false,
-    expiresAt: new Date(),
-    windowTime: 0,
-  });
   const [, , currentMarketData] = useRootStore(
     useShallow((store) => [
       store.trackEvent,
@@ -84,55 +72,37 @@ export const ReentalDataProvider: React.FC<PropsWithChildren> = ({ children }) =
     ])
   );
   const { currentAccount } = useWeb3Context();
+  const defaultEveryTokenAddress = `0x${maxUint160.toString(16)}`;
+  const { data: global2FAData, refetch: refetchGlobal2FA } = use2FA({
+    chainId: currentMarketData.chainId,
+    asset: defaultEveryTokenAddress,
+    user: currentAccount,
+  });
 
-  // TODO: add per asset twoFA status
-
-  const fetchGlobal2FA = useCallback(async () => {
-    const defaultEveryTokenAddress = `0x${maxUint160.toString(16)}`;
-    const variables: GetTwoFaAccountQueryVariables = {
-      chainId: currentMarketData.chainId,
-      asset: defaultEveryTokenAddress,
-      user: currentAccount,
+  const value = useMemo(() => {
+    const global2FA = {
+      status: false,
+      expiresAt: new Date(),
+      windowTime: 0,
     };
-    const response = await request(GetTwoFaAccountDocument, variables);
 
-    if (!response.twoFaAccount) {
-      setGlobal2FA({
-        status: false,
-        expiresAt: new Date(),
-        windowTime: 0,
-      });
-      return;
+    if (global2FAData?.twoFaAccount) {
+      const expiresAt = new Date(global2FAData.twoFaAccount.expiresAt * 1000);
+      const updatedAt = new Date(global2FAData.twoFaAccount.updatedAt * 1000);
+      const windowTime = expiresAt.getTime() - updatedAt.getTime();
+      const status = expiresAt > new Date() ? true : false;
+      global2FA.status = status;
+      global2FA.expiresAt = expiresAt;
+      global2FA.windowTime = windowTime;
     }
 
-    const expiresAt = new Date(response.twoFaAccount.expiresAt * 1000);
-    const updatedAt = new Date(response.twoFaAccount.updatedAt * 1000);
-    console.log(expiresAt, updatedAt);
-    const windowTime = expiresAt.getTime() - updatedAt.getTime();
-    const status = expiresAt > new Date() ? true : false;
-    setGlobal2FA({
-      status,
-      expiresAt,
-      windowTime,
-    });
-  }, [currentAccount, currentMarketData.chainId]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      fetchGlobal2FA();
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [fetchGlobal2FA]);
-
-  const value = useMemo(
-    () => ({
+    return {
       twoFA: {
         global: global2FA,
       },
-      fetchGlobal2FA,
-    }),
-    [global2FA, fetchGlobal2FA]
-  );
+      fetchGlobal2FA: refetchGlobal2FA,
+    };
+  }, [global2FAData, refetchGlobal2FA]);
 
   return (
     <ReentalDataContext.Provider value={value}>

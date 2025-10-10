@@ -3866,11 +3866,3 @@ msgstr "Learn more"
 #: src/components/infoTooltips/MigrationDisabledTooltip.tsx
 msgid "Asset is frozen in {marketName} v3 market, hence this position cannot be migrated."
 msgstr "Asset is frozen in {marketName} v3 market, hence this position cannot be migrated."
-
-#: src/modules/migration/MigrationBottomPanel.tsx
-msgid "Be mindful of the network congestion and gas prices."
-msgstr "Be mindful of the network congestion and gas prices."
-
-#: src/components/incentives/MeritIncentivesTooltipContent.tsx
-msgid "Merit Program rewards are claimed through the"
-msgstr "Merit Program rewards are claimed through the"
