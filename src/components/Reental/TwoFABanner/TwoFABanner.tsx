@@ -75,7 +75,7 @@ export const TwoFABanner = () => {
 
             <div
               className={styles.linkButton}
-              onClick={() => window.open('https://app.reental.co', '_blank')}
+              onClick={() => window.open('https://www.reental.co/ayuda', '_blank')}
             >
               <Trans>What is the time window?</Trans>
             </div>
