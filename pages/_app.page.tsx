@@ -160,40 +160,40 @@ export default function MyApp(props: MyAppProps) {
                   onConnect={({ connectorId }) => setWalletType(connectorId)}
                 >
                   <Web3ContextProvider>
-                    <ReentalDataProvider>
-                      <AppGlobalStyles>
-                        <AddressBlocked>
-                          <CowOrderToastProvider>
-                            <ModalContextProvider>
-                              <SharedDependenciesProvider>
-                                <AppDataProvider>
-                                  <GasStationProvider>
+                    <AppGlobalStyles>
+                      <AddressBlocked>
+                        <CowOrderToastProvider>
+                          <ModalContextProvider>
+                            <SharedDependenciesProvider>
+                              <AppDataProvider>
+                                <GasStationProvider>
+                                  <ReentalDataProvider>
                                     {getLayout(<Component {...pageProps} />)}
-                                    <SupplyModal />
-                                    <WithdrawModal />
-                                    <BorrowModal />
-                                    <RepayModal />
-                                    <CollateralChangeModal />
-                                    <DebtSwitchModal />
-                                    <ClaimRewardsModal />
-                                    <EmodeModal />
-                                    <FaucetModal />
-                                    <TransactionEventHandler />
-                                    <SwitchModal />
-                                    <CollateralSwapModal />
-                                    <StakingMigrateModal />
-                                    <BridgeModal />
-                                    <ReadOnlyModal />
-                                    <CowOrderToast />
-                                    <CancelCowOrderModal />
-                                  </GasStationProvider>
-                                </AppDataProvider>
-                              </SharedDependenciesProvider>
-                            </ModalContextProvider>
-                          </CowOrderToastProvider>
-                        </AddressBlocked>
-                      </AppGlobalStyles>
-                    </ReentalDataProvider>
+                                  </ReentalDataProvider>
+                                  <SupplyModal />
+                                  <WithdrawModal />
+                                  <BorrowModal />
+                                  <RepayModal />
+                                  <CollateralChangeModal />
+                                  <DebtSwitchModal />
+                                  <ClaimRewardsModal />
+                                  <EmodeModal />
+                                  <FaucetModal />
+                                  <TransactionEventHandler />
+                                  <SwitchModal />
+                                  <CollateralSwapModal />
+                                  <StakingMigrateModal />
+                                  <BridgeModal />
+                                  <ReadOnlyModal />
+                                  <CowOrderToast />
+                                  <CancelCowOrderModal />
+                                </GasStationProvider>
+                              </AppDataProvider>
+                            </SharedDependenciesProvider>
+                          </ModalContextProvider>
+                        </CowOrderToastProvider>
+                      </AddressBlocked>
+                    </AppGlobalStyles>
                   </Web3ContextProvider>
                 </ConnectKitProvider>
                 <ReactQueryDevtools initialIsOpen={false} />

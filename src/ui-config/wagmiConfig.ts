@@ -46,10 +46,10 @@ if (FORK_ENABLED) {
 
 const defaultConfig = {
   walletConnectProjectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID as string,
-  appName: 'Aave',
-  appDescription: 'Non-custodial liquidity protocol',
-  appUrl: 'https://app.aave.com',
-  appIcon: 'https://avatars.githubusercontent.com/u/47617460?s=200&v=4',
+  appName: 'Reenlever',
+  appDescription: 'Collateralization platform',
+  appUrl: 'https://reenlever.com',
+  // appIcon: 'https://avatars.githubusercontent.com/u/47617460?s=200&v=4',
 };
 
 const cypressConfig = createConfig(

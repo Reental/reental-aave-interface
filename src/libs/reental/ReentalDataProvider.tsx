@@ -1,6 +1,8 @@
 import React, { PropsWithChildren, useContext, useMemo } from 'react';
 import { TwoFABanner } from 'src/components/Reental/TwoFABanner/TwoFABanner';
 import { TwoFACountdown } from 'src/components/Reental/TwoFACoundown/TwoFACountdown';
+import { useAppDataContext } from 'src/hooks/app-data-provider/useAppDataProvider';
+import { useWalletBalances } from 'src/hooks/app-data-provider/useWalletBalances';
 import { useRootStore } from 'src/store/root';
 import { selectIsMigrationAvailable } from 'src/store/v3MigrationSelectors';
 import { maxUint160 } from 'viem';
@@ -33,13 +35,30 @@ const Wrapper = ({
   children: React.ReactNode;
   value: ReentalDataProvider;
 }) => {
-  const { currentAccount } = useWeb3Context();
+  const currentMarketData = useRootStore((store) => store.currentMarketData);
+  const { walletBalances, loading } = useWalletBalances(currentMarketData);
+  const { userReserves, loading: loadingUserReserves } = useAppDataContext();
+
+  const asCollateralEnabled = userReserves.filter(
+    (userReserve) => userReserve.usageAsCollateralEnabledOnUser
+  );
+  const enable2FA = asCollateralEnabled.some((userReserve) => {
+    const underlyingAsset = userReserve.underlyingAsset;
+    const hasBalance = walletBalances[underlyingAsset]?.amount !== '0';
+    const hasReserve = userReserve.scaledATokenBalance !== '0';
+    return hasBalance && hasReserve;
+  });
+
   const { fetchGlobal2FA } = value;
   const { status: isTwoFAEnabled, expiresAt, windowTime } = value.twoFA.global;
+
+  const showBanner = loading || loadingUserReserves || (enable2FA && !isTwoFAEnabled);
+  const showCountdown = enable2FA && isTwoFAEnabled;
+
   return (
     <div>
-      {currentAccount && !isTwoFAEnabled && <TwoFABanner />}
-      {currentAccount && isTwoFAEnabled && expiresAt && (
+      {showBanner && <TwoFABanner />}
+      {showCountdown && expiresAt && (
         <TwoFACountdown
           windowTime={windowTime}
           expirationDate={expiresAt}

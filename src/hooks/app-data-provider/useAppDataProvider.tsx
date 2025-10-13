@@ -1,5 +1,5 @@
 import { UserReserveData } from '@aave/math-utils';
-import React, { PropsWithChildren, useContext } from 'react';
+import React, { PropsWithChildren, useContext, useMemo } from 'react';
 import { EmodeCategory } from 'src/helpers/types';
 import { useWeb3Context } from 'src/libs/hooks/useWeb3Context';
 import { useRootStore } from 'src/store/root';
@@ -81,21 +81,28 @@ export const AppDataProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const isReservesLoading = reservesDataLoading || formattedPoolReservesLoading;
   const isUserDataLoading = userReservesDataLoading || userSummaryLoading;
 
-  return (
-    <AppDataContext.Provider
-      value={{
-        loading: isReservesLoading || (!!currentAccount && isUserDataLoading),
-        reserves: formattedPoolReserves || [],
-        eModes,
-        user: userSummary,
-        userReserves: userReserves || [],
-        marketReferencePriceInUsd: baseCurrencyData?.marketReferenceCurrencyPriceInUsd || '0',
-        marketReferenceCurrencyDecimals: baseCurrencyData?.marketReferenceCurrencyDecimals || 0,
-      }}
-    >
-      {children}
-    </AppDataContext.Provider>
-  );
+  const value = useMemo(() => {
+    return {
+      loading: isReservesLoading || (!!currentAccount && isUserDataLoading),
+      reserves: formattedPoolReserves || [],
+      eModes,
+      user: userSummary,
+      userReserves: userReserves || [],
+      marketReferencePriceInUsd: baseCurrencyData?.marketReferenceCurrencyPriceInUsd || '0',
+      marketReferenceCurrencyDecimals: baseCurrencyData?.marketReferenceCurrencyDecimals || 0,
+    };
+  }, [
+    isReservesLoading,
+    isUserDataLoading,
+    formattedPoolReserves,
+    eModes,
+    userSummary,
+    userReserves,
+    baseCurrencyData,
+    currentAccount,
+  ]);
+
+  return <AppDataContext.Provider value={value}>{children}</AppDataContext.Provider>;
 };
 
 export const useAppDataContext = () => useContext(AppDataContext);
