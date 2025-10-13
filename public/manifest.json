@@ -1,8 +1,8 @@
 {
-  "short_name": "Reental / Aave",
-  "name": "Reental / Aave",
-  "description": "Non-custodial liquidity protocol",
-  "iconPath": "aave.svg",
+  "short_name": "Reenlever",
+  "name": "Reenlever",
+  "description": "Collateralization platform",
+  "iconPath": "reental.svg",
   "icons": [
     {
       "src": "favicon32.png",
@@ -12,6 +12,6 @@
   ],
   "start_url": "./index.html",
   "display": "standalone",
-  "theme_color": "#1B2030",
-  "background_color": "#ffffff"
+  "theme_color": "#FCA311",
+  "background_color": "#111827"
 }

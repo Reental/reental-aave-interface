@@ -1,3 +1,3 @@
 export const uiConfig = {
-  appLogo: '/ReentalWithRNaranjaLogo.webp',
+  appLogo: '/Reenlever.svg',
 };

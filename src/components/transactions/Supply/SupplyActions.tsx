@@ -12,7 +12,7 @@ import { usePoolApprovedAmount } from 'src/hooks/useApprovedAmount';
 import { useModalContext } from 'src/hooks/useModal';
 import { useWeb3Context } from 'src/libs/hooks/useWeb3Context';
 import { useRootStore } from 'src/store/root';
-import { ApprovalMethod } from 'src/store/walletSlice';
+// import { ApprovalMethod } from 'src/store/walletSlice';
 import { getErrorTextFromError, TxAction } from 'src/ui-config/errorMapping';
 import { queryKeysFactory } from 'src/ui-config/queries';
 import { useShallow } from 'zustand/shallow';
@@ -51,7 +51,7 @@ export const SupplyActions = React.memo(
       tryPermit,
       supply,
       supplyWithPermit,
-      walletApprovalMethodPreference,
+      // walletApprovalMethodPreference,
       estimateGasLimit,
       addTransaction,
       currentMarketData,
@@ -60,7 +60,7 @@ export const SupplyActions = React.memo(
         state.tryPermit,
         state.supply,
         state.supplyWithPermit,
-        state.walletApprovalMethodPreference,
+        // state.walletApprovalMethodPreference,
         state.estimateGasLimit,
         state.addTransaction,
         state.currentMarketData,
@@ -106,7 +106,8 @@ export const SupplyActions = React.memo(
       setApprovalTxState({});
     }
 
-    const usePermit = permitAvailable && walletApprovalMethodPreference === ApprovalMethod.PERMIT;
+    // const usePermit = permitAvailable && walletApprovalMethodPreference === ApprovalMethod.PERMIT;
+    const usePermit = false;
 
     const { approval, requiresApprovalReset } = useApprovalTx({
       usePermit,
