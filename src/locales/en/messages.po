@@ -355,7 +355,7 @@ msgstr "Voting results"
 msgid "MAX"
 msgstr "MAX"
 
-#: src/layouts/components/NavItems.tsx
+#: src/layouts/AppFooter.tsx
 msgid "Terms"
 msgstr "Terms"
 
