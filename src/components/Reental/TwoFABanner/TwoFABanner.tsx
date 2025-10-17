@@ -75,7 +75,12 @@ export const TwoFABanner = () => {
 
             <div
               className={styles.linkButton}
-              onClick={() => window.open('https://www.reental.co/ayuda', '_blank')}
+              onClick={() =>
+                window.open(
+                  'https://www.reental.co/ayuda/guia-de-acceso-temporal-y-activacion-de-la-ventana-de-tiempo-en-reenlever',
+                  '_blank'
+                )
+              }
             >
               <Trans>What is the time window?</Trans>
             </div>
