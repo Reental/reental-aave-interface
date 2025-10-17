@@ -33,7 +33,9 @@ const Wrapper = ({
   const { reserves, userReserves } = useAppDataContext();
 
   const userCollateralTokens = reserves.filter((reserve) => {
-    const hasBalance = walletBalances[reserve.underlyingAsset]?.amount !== '0';
+    const hasBalance =
+      walletBalances[reserve.underlyingAsset] &&
+      walletBalances[reserve.underlyingAsset].amount !== '0';
     const userReserve = userReserves.find(
       (userReserve) => userReserve.underlyingAsset === reserve.underlyingAsset
     );
