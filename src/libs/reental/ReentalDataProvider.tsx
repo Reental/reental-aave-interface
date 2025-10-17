@@ -8,7 +8,6 @@ import { selectIsMigrationAvailable } from 'src/store/v3MigrationSelectors';
 import { maxUint160 } from 'viem';
 import { useShallow } from 'zustand/shallow';
 
-import { useWeb3Context } from '../hooks/useWeb3Context';
 import { use2FA } from './2fa/services';
 
 export interface ReentalDataProvider {
@@ -37,17 +36,19 @@ const Wrapper = ({
 }) => {
   const currentMarketData = useRootStore((store) => store.currentMarketData);
   const { walletBalances, loading } = useWalletBalances(currentMarketData);
-  const { userReserves, loading: loadingUserReserves } = useAppDataContext();
+  const { reserves, userReserves, loading: loadingUserReserves } = useAppDataContext();
 
-  const asCollateralEnabled = userReserves.filter(
-    (userReserve) => userReserve.usageAsCollateralEnabledOnUser
-  );
-  const enable2FA = asCollateralEnabled.some((userReserve) => {
-    const underlyingAsset = userReserve.underlyingAsset;
-    const hasBalance = walletBalances[underlyingAsset]?.amount !== '0';
-    const hasReserve = userReserve.scaledATokenBalance !== '0';
-    return hasBalance && hasReserve;
+  const userCollateralTokens = reserves.filter((reserve) => {
+    const hasBalance = walletBalances[reserve.underlyingAsset]?.amount !== '0';
+    const userReserve = userReserves.find(
+      (userReserve) => userReserve.underlyingAsset === reserve.underlyingAsset
+    );
+    const hasReserve = userReserve ? userReserve.scaledATokenBalance !== '0' : false;
+    const hasTokens = hasBalance || hasReserve;
+    return hasTokens && reserve.usageAsCollateralEnabled;
   });
+
+  const enable2FA = userCollateralTokens.length > 0;
 
   const { fetchGlobal2FA } = value;
   const { status: isTwoFAEnabled, expiresAt, windowTime } = value.twoFA.global;
@@ -81,16 +82,16 @@ const ReentalDataContext = React.createContext<ReentalDataProvider>({
 } as ReentalDataProvider);
 
 export const ReentalDataProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [, , currentMarketData] = useRootStore(
+  const [, currentAccount, , currentMarketData] = useRootStore(
     useShallow((store) => [
       store.trackEvent,
+      store.account,
       store.currentNetworkConfig,
       store.currentMarketData,
       store.currentMarket,
       selectIsMigrationAvailable(store),
     ])
   );
-  const { currentAccount } = useWeb3Context();
   const defaultEveryTokenAddress = `0x${maxUint160.toString(16)}`;
   const { data: global2FAData, refetch: refetchGlobal2FA } = use2FA({
     chainId: currentMarketData.chainId,
