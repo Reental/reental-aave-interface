@@ -10,8 +10,7 @@ export function use2FA({ chainId, asset, user }: { chainId: number; asset: strin
     select: (data) => data,
     retry: (failureCount) => failureCount < 3,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 15_000),
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: true,
+    refetchOnWindowFocus: 'always',
     refetchInterval: (query) => {
       if (
         !query.state.data?.twoFaAccount ||

@@ -2,6 +2,7 @@ import { Trans } from '@lingui/macro';
 import { CircularProgress, circularProgressClasses, CircularProgressProps } from '@mui/material';
 import React from 'react';
 
+import { TwoFABanner } from '../TwoFABanner/TwoFABanner';
 import styles from './TwoFACountdown.module.css';
 
 function useVisibleCountdown(expirationDate: Date, stepMs = 1000) {
@@ -86,7 +87,9 @@ export const TwoFACountdown = ({
   const secondsLeft = String(Math.floor((timeLeft % 60000) / 1000)).padStart(2, '0');
   const progress = 100 - Math.max(0, Math.min(100, (timeLeft / totalMs) * 100));
 
-  console.log(minutesLeft, secondsLeft, progress);
+  if (timeLeft <= 0) {
+    return <TwoFABanner />;
+  }
 
   return (
     <div className={styles.container}>
@@ -95,7 +98,7 @@ export const TwoFACountdown = ({
           <Trans>Time to operate</Trans>
         </span>
         <div className={styles.timeLeft}>
-          -{minutesLeft}:{secondsLeft}
+          {minutesLeft}:{secondsLeft}
         </div>
         <MyCircularProgress
           sx={{
