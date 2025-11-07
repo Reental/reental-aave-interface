@@ -74,11 +74,7 @@ export const testnetConfig: Record<string, BaseNetworkConfig> = {
   [ChainId.sepolia]: {
     name: 'Ethereum Sepolia',
     publicJsonRPCUrl: [
-      'https://eth-sepolia.public.blastapi.io',
-      'https://rpc.sepolia.org',
-      'https://rpc2.sepolia.org',
-      'https://rpc.sepolia.online',
-      'https://www.sepoliarpc.space',
+      `https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`,
     ],
     baseUniswapAdapter: '0x0',
     baseAssetSymbol: 'ETH',
@@ -192,12 +188,7 @@ export const prodNetworkConfig: Record<string, BaseNetworkConfig> = {
     name: 'Polygon POS',
     displayName: 'Polygon',
     publicJsonRPCUrl: [
-      'https://gateway.tenderly.co/public/polygon',
-      'https://polygon-pokt.nodies.app',
-      'https://polygon-bor-rpc.publicnode.com',
-      'https://polygon-rpc.com',
-      'https://polygon-mainnet.public.blastapi.io',
-      'https://rpc-mainnet.matic.quiknode.pro',
+      `https://polygon-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`,
     ],
     baseAssetSymbol: 'POL',
     wrappedBaseAssetSymbol: 'WPOL',
