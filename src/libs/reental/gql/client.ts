@@ -8,7 +8,7 @@ export const request = async <T = any, S = any>(
   variables: S & { [key: string]: unknown }
 ): Promise<T> => {
   try {
-    const client = new GraphQLClient('https://reental-ponder-server-production.up.railway.app', {
+    const client = new GraphQLClient('https://ponder-pro.reental.eu/graphql', {
       headers: {
         'Content-Type': 'application/json',
       },
