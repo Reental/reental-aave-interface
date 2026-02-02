@@ -68,7 +68,7 @@ export const TwoFABanner = () => {
           <div className={styles.contentButtons}>
             <button
               className={styles.contentButton}
-              onClick={() => window.open('https://app.reental.co', '_blank')}
+              onClick={() => window.open('https://app.reental.co/dashboard/rnt', '_blank')}
             >
               <Trans>Go to Reental</Trans>
             </button>
