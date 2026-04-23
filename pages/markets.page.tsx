@@ -1,5 +1,6 @@
 import { Box, Container } from '@mui/material';
 import { ReactNode, useEffect } from 'react';
+import { MarketSwitcher } from 'src/components/MarketSwitcher';
 import { MainLayout } from 'src/layouts/MainLayout';
 import { MarketAssetsListContainer } from 'src/modules/markets/MarketAssetsListContainer';
 import { MarketsTopPanel } from 'src/modules/markets/MarketsTopPanel';
@@ -58,6 +59,9 @@ export default function Markets() {
         }}
       >
         <MarketContainer>
+          <Box sx={{ mb: 4, width: 'fit-content' }}>
+            <MarketSwitcher />
+          </Box>
           <MarketsTopPanel />
           <MarketAssetsListContainer />
         </MarketContainer>

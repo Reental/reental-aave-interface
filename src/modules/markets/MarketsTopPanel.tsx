@@ -202,6 +202,8 @@ export const MarketsTopPanel = () => {
     <Paper
       sx={{
         mb: 4,
+        border: 1,
+        borderColor: 'divider',
         mx: { xs: '1.6px', xsm: '1.6px', sm: 0 },
         px: { xs: 4, xsm: 6 },
         py: { xs: 3, xsm: 4 },
@@ -266,18 +268,27 @@ export const MarketsTopPanel = () => {
       <Box
         sx={{
           mt: 3,
-          pt: 3,
-          borderTop: (themeValue) => `1px solid ${themeValue.palette.divider}`,
         }}
       >
+        <Box
+          sx={{
+            mx: { xs: -4, xsm: -6 },
+            borderTop: (themeValue) => `1px solid ${themeValue.palette.divider}`,
+          }}
+        />
         <ButtonBase
           onClick={() => setExpanded((prev) => !prev)}
+          disableRipple
           sx={{
             width: '100%',
             justifyContent: 'space-between',
             alignItems: 'center',
             color: 'text.secondary',
             borderRadius: 1,
+            pt: 3,
+            '&:hover': {
+              backgroundColor: 'transparent',
+            },
           }}
         >
           <Typography variant="description">

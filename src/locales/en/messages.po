@@ -645,11 +645,6 @@ msgstr "Invalid amount to mint"
 msgid "Disconnect Wallet"
 msgstr "Disconnect Wallet"
 
-#: src/modules/markets/MarketAssetsListContainer.tsx
-#: src/modules/markets/MarketAssetsListContainer.tsx
-msgid "assets"
-msgstr "assets"
-
 #: src/components/transactions/GovDelegation/GovDelegationModalContent.tsx
 msgid "Balance to revoke"
 msgstr "Balance to revoke"
@@ -836,10 +831,6 @@ msgstr "This asset is frozen due to an Aave community decision. <0>More details<
 msgid "Faucet"
 msgstr "Faucet"
 
-#: src/components/MarketSwitcher.tsx
-msgid "Optimized for efficiency and risk by supporting blue-chip collateral assets"
-msgstr "Optimized for efficiency and risk by supporting blue-chip collateral assets"
-
 #: src/components/transactions/Bridge/BridgeFeeTokenSelector.tsx
 msgid "The fee includes the gas cost to complete the transaction on the destination chain and the fee paid to Chainlink CCIP service providers. You can chose to pay in the network token or GHO. <0>Learn more</0>"
 msgstr "The fee includes the gas cost to complete the transaction on the destination chain and the fee paid to Chainlink CCIP service providers. You can chose to pay in the network token or GHO. <0>Learn more</0>"
@@ -955,10 +946,6 @@ msgstr "Collateralization"
 msgid "You can report incident to our <0>Discord</0> or<1>Github</1>."
 msgstr "You can report incident to our <0>Discord</0> or<1>Github</1>."
 
-#: src/components/MarketSwitcher.tsx
-msgid "Main Ethereum market with the largest selection of assets and yield options"
-msgstr "Main Ethereum market with the largest selection of assets and yield options"
-
 #: src/components/ReserveSubheader.tsx
 #: src/components/transactions/FlowCommons/TxModalDetails.tsx
 msgid "Disabled"
@@ -1072,6 +1059,7 @@ msgid "This asset is frozen due to an Aave Protocol Governance decision. On the 
 msgstr "This asset is frozen due to an Aave Protocol Governance decision. On the 20th of December 2022, renFIL will no longer be supported and cannot be bridged back to its native network. It is recommended to withdraw supply positions and repay borrow positions so that renFIL can be bridged back to FIL before the deadline. After this date, it will no longer be possible to convert renFIL to FIL. <0>More details</0>"
 
 #: src/modules/dashboard/lists/SupplyAssetsList/SupplyAssetsList.tsx
+#: src/modules/markets/MarketAssetsListContainer.tsx
 msgid "Assets"
 msgstr "Assets"
 
@@ -2365,6 +2353,10 @@ msgstr "Staking APY"
 msgid "Vote YAE"
 msgstr "Vote YAE"
 
+#: src/components/MarketSwitcher.tsx
+msgid "There are no additional RWA markets available on Reenlever yet."
+msgstr "There are no additional RWA markets available on Reenlever yet."
+
 #: src/components/transactions/Repay/CollateralRepayActions.tsx
 #: src/components/transactions/Repay/RepayActions.tsx
 msgid "Repaying {symbol}"
@@ -2425,6 +2417,11 @@ msgstr "Assets to borrow"
 #: src/modules/reserve-overview/graphs/ApyGraphContainer.tsx
 msgid "Data couldn't be loaded."
 msgstr "Data couldn't be loaded."
+
+#: src/components/MarketSwitcher.tsx
+#: src/components/MarketSwitcher.tsx
+msgid "RWA market focused on real estate assets."
+msgstr "RWA market focused on real estate assets."
 
 #: src/components/Warnings/BorrowDisabledWarning.tsx
 msgid "Borrowing is disabled due to an Aave community decision. <0>More details</0>"

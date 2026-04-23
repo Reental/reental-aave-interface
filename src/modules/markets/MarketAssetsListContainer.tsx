@@ -2,15 +2,12 @@ import { API_ETH_MOCK_ADDRESS } from '@aave/contract-helpers';
 import { Trans } from '@lingui/macro';
 import { Box, Switch, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useState } from 'react';
-import { AssetCategoryMultiSelect } from 'src/components/AssetCategoryMultiselect';
 import { ListWrapper } from 'src/components/lists/ListWrapper';
 import { NoSearchResults } from 'src/components/NoSearchResults';
 import { Link } from 'src/components/primitives/Link';
 import { Warning } from 'src/components/primitives/Warning';
-import { TitleWithFiltersAndSearchBar } from 'src/components/TitleWithFiltersAndSearchBar';
 import { TitleWithSearchBar } from 'src/components/TitleWithSearchBar';
 import { useAppDataContext } from 'src/hooks/app-data-provider/useAppDataProvider';
-import { useCoingeckoCategories } from 'src/hooks/useCoinGeckoCategories';
 import MarketAssetsList from 'src/modules/markets/MarketAssetsList';
 import { useRootStore } from 'src/store/root';
 import { fetchIconSymbolAndName } from 'src/ui-config/reservePatches';
@@ -20,7 +17,6 @@ import { useShallow } from 'zustand/shallow';
 import { GENERAL } from '../../utils/events';
 import { isAssetHidden } from '../dashboard/lists/constants';
 import { SavingsGhoBanner } from './Gho/GhoBanner';
-import { AssetCategory, isAssetInCategoryDynamic } from './utils/assetCategories';
 
 function shouldDisplayGhoBanner(marketTitle: string, searchTerm: string): boolean {
   // GHO banner is only displayed on markets where new GHO is mintable (i.e. Ethereum)
@@ -40,8 +36,6 @@ function shouldDisplayGhoBanner(marketTitle: string, searchTerm: string): boolea
 }
 
 export const MarketAssetsListContainer = () => {
-  const { data, isLoading, error } = useCoingeckoCategories();
-
   const { reserves, loading } = useAppDataContext();
   const [trackEvent, currentMarket, currentMarketData, currentNetworkConfig] = useRootStore(
     useShallow((store) => [
@@ -52,7 +46,6 @@ export const MarketAssetsListContainer = () => {
     ])
   );
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategories, setSelectedCategories] = useState<AssetCategory[]>([]);
 
   const { breakpoints } = useTheme();
 
@@ -75,19 +68,6 @@ export const MarketAssetsListContainer = () => {
         res.underlyingAsset.toLowerCase().includes(term)
       );
     })
-    // Filter by category
-    .filter(
-      (res) =>
-        selectedCategories.length === 0 ||
-        selectedCategories.some((category) =>
-          isAssetInCategoryDynamic(
-            res.symbol,
-            category,
-            data?.stablecoinSymbols,
-            data?.ethCorrelatedSymbols
-          )
-        )
-    )
     // Transform the object for list to consume it
     .map((reserve) => ({
       ...reserve,
@@ -114,48 +94,11 @@ export const MarketAssetsListContainer = () => {
     <ListWrapper
       wrapperSx={{ pt: { xs: '6px', xsm: '6px', sm: 3.5 } }}
       titleComponent={
-        sm ? (
-          <Box
-            sx={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 2,
-              px: { xs: '1.6px', xsm: '1.6px' },
-            }}
-          >
-            <TitleWithSearchBar
-              onSearchTermChange={setSearchTerm}
-              title={
-                <>
-                  {currentMarketData.marketTitle} <Trans>assets</Trans>
-                </>
-              }
-              searchPlaceholder={sm ? 'Search asset' : 'Search asset name, symbol, or address'}
-            />
-
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <AssetCategoryMultiSelect
-                selectedCategories={selectedCategories}
-                onCategoriesChange={setSelectedCategories}
-                disabled={isLoading || !!error}
-              />
-            </Box>
-          </Box>
-        ) : (
-          <TitleWithFiltersAndSearchBar
-            onSearchTermChange={setSearchTerm}
-            title={
-              <>
-                {currentMarketData.marketTitle} <Trans>assets</Trans>
-              </>
-            }
-            searchPlaceholder={sm ? 'Search asset' : 'Search asset name, symbol, or address'}
-            selectedCategories={selectedCategories}
-            onCategoriesChange={setSelectedCategories}
-            disabled={isLoading || !!error}
-          />
-        )
+        <TitleWithSearchBar
+          onSearchTermChange={setSearchTerm}
+          title={<Trans>Assets</Trans>}
+          searchPlaceholder={sm ? 'Search asset' : 'Search asset name, symbol, or address'}
+        />
       }
     >
       {displayGhoBanner && (
