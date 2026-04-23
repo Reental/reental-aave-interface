@@ -39,6 +39,40 @@ export const GetTokenHistoryValues = `
   }
 `;
 
+export const GetMarketHistoryValues = `
+  query GetMarketHistoryValues(
+    $underlyingAssets: [Bytes!]!
+    $startDate: Int!
+    $endDate: Int!
+    $first: Int!
+    $skip: Int!
+    $orderBy: ReserveParamsHistoryItem_orderBy!
+    $orderDirection: OrderDirection!
+  ) {
+    reserveParamsHistoryItems(
+      where: {
+        reserve_: { underlyingAsset_in: $underlyingAssets }
+        timestamp_gte: $startDate
+        timestamp_lte: $endDate
+      }
+      first: $first
+      skip: $skip
+      orderBy: $orderBy
+      orderDirection: $orderDirection
+    ) {
+      reserve {
+        id
+        underlyingAsset
+        decimals
+      }
+      totalLiquidity
+      availableLiquidity
+      priceInUsd
+      timestamp
+    }
+  }
+`;
+
 export type ReserveParamsHistoryItem = {
   reserve: {
     id: string;
@@ -47,4 +81,16 @@ export type ReserveParamsHistoryItem = {
   liquidityRate: string;
   variableBorrowRate: string;
   timestamp: string;
+};
+
+export type MarketReserveParamsHistoryItem = {
+  reserve: {
+    id: string;
+    underlyingAsset: string;
+    decimals: number;
+  };
+  totalLiquidity: string;
+  availableLiquidity: string;
+  priceInUsd: string;
+  timestamp: number;
 };

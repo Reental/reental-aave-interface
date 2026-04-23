@@ -391,6 +391,10 @@ msgstr "For swapping safety module assets please unstake your position <0>here</
 msgid "Fees help support the user experience and security of the Aave application. <0>Learn more.</0>"
 msgstr "Fees help support the user experience and security of the Aave application. <0>Learn more.</0>"
 
+#: src/modules/markets/MarketsTopPanel.tsx
+msgid "The total outstanding debt across all reserves, i.e. the sum of all assets that users have borrowed from the protocol and have not yet repaid."
+msgstr "The total outstanding debt across all reserves, i.e. the sum of all assets that users have borrowed from the protocol and have not yet repaid."
+
 #: src/modules/dashboard/lists/SupplyAssetsList/SupplyAssetsList.tsx
 msgid "Your {networkName} wallet is empty. Get free test assets at"
 msgstr "Your {networkName} wallet is empty. Get free test assets at"
@@ -428,6 +432,10 @@ msgstr "Minimum {0} received"
 #: src/components/transactions/FlowCommons/PermissionView.tsx
 msgid "Allowance required action"
 msgstr "Allowance required action"
+
+#: src/modules/markets/MarketsTopPanel.tsx
+msgid "The amount of capital currently locked in the protocol, calculated as the total supplied minus the total borrowed. It reflects the liquidity that is actually available in the pool at this moment."
+msgstr "The amount of capital currently locked in the protocol, calculated as the total supplied minus the total borrowed. It reflects the liquidity that is actually available in the pool at this moment."
 
 #: src/modules/dashboard/DashboardTopPanel.tsx
 #: src/modules/umbrella/UmbrellaHeader.tsx
@@ -609,6 +617,7 @@ msgstr "Your {name} wallet is empty. Purchase or transfer assets."
 msgid "Page not found"
 msgstr "Page not found"
 
+#: src/modules/markets/MarketsTopPanel.tsx
 #: src/modules/reserve-overview/graphs/ApyGraphContainer.tsx
 #: src/modules/reserve-overview/graphs/MeritApyGraphContainer.tsx
 msgid "Loading data..."
@@ -971,6 +980,10 @@ msgstr "Withdrawing {symbol}"
 #: src/modules/governance/RepresentativesInfoPanel.tsx
 msgid "None"
 msgstr "None"
+
+#: src/modules/markets/MarketsTopPanel.tsx
+msgid "The total value of all assets supplied to the protocol across every reserve. It represents the overall size of the market and includes both the liquidity currently available in the pool and the portion that has been borrowed."
+msgstr "The total value of all assets supplied to the protocol across every reserve. It represents the overall size of the market and includes both the liquidity currently available in the pool and the portion that has been borrowed."
 
 #: src/components/terms/TermsPage.tsx
 msgid "Terms of use"
@@ -1456,6 +1469,10 @@ msgstr "You cancelled the transaction."
 msgid "Borrow info"
 msgstr "Borrow info"
 
+#: src/modules/markets/MarketsTopPanel.tsx
+msgid "Hide metrics"
+msgstr "Hide metrics"
+
 #: src/components/transactions/Bridge/BridgeModalContent.tsx
 msgid "View Bridge Transactions"
 msgstr "View Bridge Transactions"
@@ -1467,6 +1484,10 @@ msgstr "Invalid return value of the flashloan executor function"
 #: src/components/infoTooltips/KernelAirdropTooltip.tsx
 msgid "Learn more about the Kernel points distribution"
 msgstr "Learn more about the Kernel points distribution"
+
+#: src/modules/markets/MarketsTopPanel.tsx
+msgid "Historical data is not available for this market."
+msgstr "Historical data is not available for this market."
 
 #: src/components/AssetCategoryMultiselect.tsx
 #: src/components/MarketAssetCategoryFilter.tsx
@@ -1681,6 +1702,11 @@ msgstr "Withdrawing"
 #: src/components/Reental/TwoFABanner/TwoFABanner.tsx
 msgid "Go to Reental"
 msgstr "Go to Reental"
+
+#: src/modules/markets/MarketsTopPanel.tsx
+#: src/modules/markets/MarketsTopPanel.tsx
+msgid "Total value locked"
+msgstr "Total value locked"
 
 #: src/modules/governance/proposal/VotingResults.tsx
 #: src/modules/governance/proposal/VotingResults.tsx
@@ -2395,6 +2421,7 @@ msgstr "You don’t have enough funds in your wallet to repay the full amount. I
 msgid "Assets to borrow"
 msgstr "Assets to borrow"
 
+#: src/modules/markets/MarketsTopPanel.tsx
 #: src/modules/reserve-overview/graphs/ApyGraphContainer.tsx
 msgid "Data couldn't be loaded."
 msgstr "Data couldn't be loaded."
@@ -2459,6 +2486,8 @@ msgstr "No transactions yet."
 
 #: src/modules/markets/MarketAssetsList.tsx
 #: src/modules/markets/MarketAssetsListMobileItem.tsx
+#: src/modules/markets/MarketsTopPanel.tsx
+#: src/modules/markets/MarketsTopPanel.tsx
 #: src/modules/reserve-overview/BorrowInfo.tsx
 #: src/modules/reserve-overview/BorrowInfo.tsx
 #: src/modules/reserve-overview/Gho/GhoReserveTopDetails.tsx
@@ -2860,6 +2889,10 @@ msgstr "To repay on behalf of a user an explicit amount to repay is needed"
 msgid "Repayment amount to reach {0}% utilization"
 msgstr "Repayment amount to reach {0}% utilization"
 
+#: src/modules/markets/MarketsTopPanel.tsx
+msgid "Show metrics"
+msgstr "Show metrics"
+
 #: src/modules/umbrella/UmbrellaModalContent.tsx
 msgid "You can not stake this amount because it will cause collateral call"
 msgstr "You can not stake this amount because it will cause collateral call"
@@ -3031,6 +3064,7 @@ msgid "After the cooldown is initiated, you will be able to withdraw your assets
 msgstr "After the cooldown is initiated, you will be able to withdraw your assets immediatley."
 
 #: pages/500.page.tsx
+#: src/modules/markets/MarketsTopPanel.tsx
 #: src/modules/reserve-overview/graphs/ApyGraphContainer.tsx
 #: src/modules/reserve-overview/graphs/MeritApyGraphContainer.tsx
 msgid "Something went wrong"
@@ -3733,6 +3767,11 @@ msgstr "Enable {symbol} as collateral"
 #: src/layouts/components/DarkModeSwitcher.tsx
 msgid "Dark mode"
 msgstr "Dark mode"
+
+#: src/modules/markets/MarketsTopPanel.tsx
+#: src/modules/markets/MarketsTopPanel.tsx
+msgid "Total market size"
+msgstr "Total market size"
 
 #: src/components/transactions/FlowCommons/TxModalDetails.tsx
 msgid "Transaction overview"
