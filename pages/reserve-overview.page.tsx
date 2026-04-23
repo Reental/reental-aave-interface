@@ -73,7 +73,7 @@ export default function ReserveOverview() {
     <AssetCapsProvider asset={reserve}>
       <ReserveTopDetailsWrapper underlyingAsset={underlyingAsset} />
 
-      <ContentContainer>
+      <ContentContainer wrapperSx={{ mt: { xs: 4, md: 6 } }}>
         <Box
           sx={{
             display: { xs: 'flex', lg: 'none' },

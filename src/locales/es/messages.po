@@ -3317,7 +3317,7 @@ msgstr ""
 
 #: src/components/infoTooltips/VariableAPYTooltip.tsx
 msgid "Variable interest rate will <0>fluctuate</0> based on the market conditions."
-msgstr ""
+msgstr "El tipo de interés variable <0>fluctuará</0> en función de las condiciones del mercado."
 
 #: src/ui-config/errorMapping.tsx
 msgid "User is in isolation mode or LTV is zero"

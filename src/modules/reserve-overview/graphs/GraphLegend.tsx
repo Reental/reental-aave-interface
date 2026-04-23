@@ -2,6 +2,7 @@ import { Box, Typography } from '@mui/material';
 
 interface GraphLegendProps {
   labels: { text: string; color: string }[];
+  textColor?: string;
 }
 
 export function GraphLegend({
@@ -9,6 +10,7 @@ export function GraphLegend({
     { text: 'test', color: '#000' },
     { text: 'bla', color: '#ff0' },
   ],
+  textColor,
 }: GraphLegendProps) {
   return (
     <Box>
@@ -23,7 +25,10 @@ export function GraphLegend({
               borderRadius: '50%',
             }}
           />
-          <Typography variant="description" color="text.secondary">
+          <Typography
+            variant="description"
+            sx={{ color: textColor || 'text.secondary', opacity: 1 }}
+          >
             {label.text}
           </Typography>
         </Box>

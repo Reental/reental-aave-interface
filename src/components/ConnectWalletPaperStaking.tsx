@@ -25,6 +25,8 @@ export const ConnectWalletPaperStaking = ({
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
+        border: 1,
+        borderColor: 'divider',
         p: 4,
         flex: 1,
         ...sx,

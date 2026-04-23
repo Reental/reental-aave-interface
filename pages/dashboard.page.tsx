@@ -32,7 +32,7 @@ export default function Dashboard() {
     <>
       <DashboardTopPanel />
 
-      <ContentContainer>
+      <ContentContainer wrapperSx={{ mt: { xs: 4, md: 6 } }}>
         {currentAccount && (
           <Box
             sx={{

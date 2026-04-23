@@ -1,6 +1,7 @@
 import { Box, Container } from '@mui/material';
 import { ReactNode, useEffect } from 'react';
 import { MarketSwitcher } from 'src/components/MarketSwitcher';
+import { TopInfoPanel } from 'src/components/TopInfoPanel/TopInfoPanel';
 import { MainLayout } from 'src/layouts/MainLayout';
 import { MarketAssetsListContainer } from 'src/modules/markets/MarketAssetsListContainer';
 import { MarketsTopPanel } from 'src/modules/markets/MarketsTopPanel';
@@ -49,20 +50,29 @@ export default function Markets() {
 
   return (
     <>
+      <TopInfoPanel
+        containerProps={marketContainerProps}
+        wrapperSx={{ pb: { xs: 8, md: 9, lg: 10, xl: 10, xxl: 10 } }}
+        titleComponent={
+          <Box sx={{ mb: 4, width: 'fit-content' }}>
+            <MarketSwitcher />
+          </Box>
+        }
+      >
+        <MarketsTopPanel showDetails={false} />
+      </TopInfoPanel>
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
           flex: 1,
-          marginTop: '48px',
+          mt: { xs: 4, md: 6 },
         }}
       >
         <MarketContainer>
-          <Box sx={{ mb: 4, width: 'fit-content' }}>
-            <MarketSwitcher />
+          <Box sx={{ mb: 4 }}>
+            <MarketsTopPanel showSummary={false} />
           </Box>
-          <MarketsTopPanel />
           <MarketAssetsListContainer />
         </MarketContainer>
       </Box>

@@ -206,6 +206,10 @@ msgstr "USDT on Ethereum requires approval reset before a new approval. This wil
 msgid "After the cooldown period ends, you will enter the unstake window of {0}. You will continue receiving rewards during cooldown and the unstake period."
 msgstr "After the cooldown period ends, you will enter the unstake window of {0}. You will continue receiving rewards during cooldown and the unstake period."
 
+#: src/modules/dashboard/lists/BorrowAssetsList/BorrowAssetsList.tsx
+msgid "There are no assets available to borrow in this market right now."
+msgstr "There are no assets available to borrow in this market right now."
+
 #: src/modules/dashboard/lists/SupplyAssetsList/SupplyAssetsListItem.tsx
 msgid "..."
 msgstr "..."
@@ -398,11 +402,6 @@ msgstr "The total outstanding debt across all reserves, i.e. the sum of all asse
 #: src/modules/dashboard/lists/SupplyAssetsList/SupplyAssetsList.tsx
 msgid "Your {networkName} wallet is empty. Get free test assets at"
 msgstr "Your {networkName} wallet is empty. Get free test assets at"
-
-#: src/modules/dashboard/lists/BorrowAssetsList/BorrowAssetsList.tsx
-#: src/modules/dashboard/lists/SupplyAssetsList/SupplyAssetsList.tsx
-msgid "We couldn't find any assets related to your search. Try again with a different category."
-msgstr "We couldn't find any assets related to your search. Try again with a different category."
 
 #: src/modules/governance/GovernanceTopPanel.tsx
 msgid "documentation"
@@ -1163,6 +1162,10 @@ msgstr "This asset is planned to be offboarded due to an Aave Protocol Governanc
 #: src/modules/umbrella/StakeCooldownModalContent.tsx
 msgid "Cooldown period"
 msgstr "Cooldown period"
+
+#: src/modules/dashboard/lists/SupplyAssetsList/SupplyAssetsList.tsx
+msgid "There are no assets available to supply in this market right now."
+msgstr "There are no assets available to supply in this market right now."
 
 #: src/components/transactions/FlowCommons/TxModalDetails.tsx
 msgid "Liquidation at"
@@ -2983,10 +2986,6 @@ msgstr "Version 2"
 #: src/modules/dashboard/DashboardEModeButton.tsx
 msgid "E-Mode increases your LTV for a selected category of assets. <0>Learn more</0>"
 msgstr "E-Mode increases your LTV for a selected category of assets. <0>Learn more</0>"
-
-#: src/modules/dashboard/lists/SupplyAssetsList/WalletEmptyInfo.tsx
-msgid "Your {name} wallet is empty. Purchase or transfer assets or use <0>{0}</0> to transfer your {network} assets."
-msgstr "Your {name} wallet is empty. Purchase or transfer assets or use <0>{0}</0> to transfer your {network} assets."
 
 #: src/components/transactions/Switch/SwitchActions.tsx
 msgid "Checking approval"

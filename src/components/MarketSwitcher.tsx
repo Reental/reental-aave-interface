@@ -215,7 +215,6 @@ export const MarketSwitcher = () => {
           aria-disabled="true"
           sx={{
             cursor: 'not-allowed',
-            opacity: 0.72,
             width: 'fit-content',
             display: 'inline-flex',
           }}

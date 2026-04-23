@@ -88,6 +88,7 @@ export const ReserveTopDetailsWrapper = ({ underlyingAsset }: ReserveTopDetailsP
 
   return (
     <TopInfoPanel
+      wrapperSx={{ pb: { xs: 8, md: 9, lg: 10, xl: 10, xxl: 10 } }}
       titleComponent={
         <Box>
           <Box

@@ -165,6 +165,7 @@ export const DashboardTopPanel = () => {
       )}
 
       <TopInfoPanel
+        wrapperSx={{ pb: { xs: 8, md: 9, lg: 10, xl: 10, xxl: 10 } }}
         titleComponent={
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <PageTitle
