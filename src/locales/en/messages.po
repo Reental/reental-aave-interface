@@ -1075,6 +1075,11 @@ msgstr "ends"
 msgid "Borrowing is unavailable because you’ve enabled Efficiency Mode (E-Mode) for {0} category. To manage E-Mode categories visit your <0>Dashboard</0>."
 msgstr "Borrowing is unavailable because you’ve enabled Efficiency Mode (E-Mode) for {0} category. To manage E-Mode categories visit your <0>Dashboard</0>."
 
+#. js-lingui-explicit-id
+#: src/ui-config/menu-items/index.tsx
+msgid "Guide"
+msgstr "Guide"
+
 #: src/components/transactions/Switch/BaseSwitchModalContent.tsx
 msgid "Your health factor after this swap will be critically low and may result in liquidation. Please choose a different asset or reduce the swap amount to stay safe."
 msgstr "Your health factor after this swap will be critically low and may result in liquidation. Please choose a different asset or reduce the swap amount to stay safe."
@@ -1311,6 +1316,10 @@ msgstr "This represents the threshold at which a borrow position will be conside
 #: src/components/isolationMode/IsolatedBadge.tsx
 msgid "Isolated"
 msgstr "Isolated"
+
+#: src/layouts/AppFooter.tsx
+msgid "Guide"
+msgstr "Guide"
 
 #: src/components/transactions/Emode/EmodeActions.tsx
 msgid "Switching E-Mode"
@@ -2356,10 +2365,6 @@ msgstr "Staking APY"
 msgid "Vote YAE"
 msgstr "Vote YAE"
 
-#: src/components/MarketSwitcher.tsx
-msgid "There are no additional RWA markets available on Reenlever yet."
-msgstr "There are no additional RWA markets available on Reenlever yet."
-
 #: src/components/transactions/Repay/CollateralRepayActions.tsx
 #: src/components/transactions/Repay/RepayActions.tsx
 msgid "Repaying {symbol}"
@@ -2537,6 +2542,10 @@ msgstr "Received"
 #: src/modules/dashboard/LiquidationRiskParametresModal/LiquidationRiskParametresModal.tsx
 msgid "Your current loan to value based on your collateral supplied."
 msgstr "Your current loan to value based on your collateral supplied."
+
+#: src/components/MarketSwitcher.tsx
+msgid "There are no additional RWA markets available on RNT Lend yet."
+msgstr "There are no additional RWA markets available on RNT Lend yet."
 
 #: src/components/transactions/AssetInput.tsx
 #: src/modules/dashboard/lists/BorrowedPositionsList/BorrowedPositionsList.tsx

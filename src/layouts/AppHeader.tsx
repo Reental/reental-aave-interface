@@ -26,7 +26,6 @@ import { ENABLE_TESTNET, FORK_ENABLED } from 'src/utils/marketsAndNetworksConfig
 import { useShallow } from 'zustand/shallow';
 
 import { Link } from '../components/primitives/Link';
-import { uiConfig } from '../uiConfig';
 import { NavItems } from './components/NavItems';
 import { MobileMenu } from './MobileMenu';
 import { SettingsMenu } from './SettingsMenu';
@@ -176,7 +175,18 @@ export function AppHeader() {
           }}
           onClick={() => setMobileMenuOpen(false)}
         >
-          <img src={uiConfig.appLogo} alt="Reenlever" width={115} />
+          <Typography
+            variant="h2"
+            sx={{
+              color: '#FCA311',
+              fontWeight: 700,
+              fontSize: { xs: '20px', sm: '24px' },
+              lineHeight: 1,
+              whiteSpace: 'nowrap',
+            }}
+          >
+            RNT Lend
+          </Typography>
         </Box>
         <Box sx={{ mr: sm ? 1 : 3 }}>
           {ENABLE_TESTNET && (

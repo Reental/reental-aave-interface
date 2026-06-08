@@ -44,6 +44,14 @@ export const navigation: Navigation[] = [
     }),
     dataCy: 'menuTerms',
   },
+  {
+    link: ROUTES.guide,
+    title: t({
+      id: 'Guide',
+      message: 'Guide',
+    }),
+    dataCy: 'menuGuide',
+  },
   // {
   //   link: ROUTES.governance,
   //   title: t`Governance`,

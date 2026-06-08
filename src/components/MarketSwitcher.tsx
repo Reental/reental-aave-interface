@@ -205,7 +205,7 @@ export const MarketSwitcher = () => {
         disableFocusListener
         disableHoverListener
         disableTouchListener
-        title={<Trans>There are no additional RWA markets available on Reenlever yet.</Trans>}
+        title={<Trans>There are no additional RWA markets available on RNT Lend yet.</Trans>}
         arrow
       >
         <Box

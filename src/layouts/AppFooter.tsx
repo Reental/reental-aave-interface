@@ -75,6 +75,11 @@ export function AppFooter() {
       label: <Trans>Terms</Trans>,
       key: 'Terms',
     },
+    {
+      href: '/guide',
+      label: <Trans>Guide</Trans>,
+      key: 'Guide',
+    },
     // {
     //   href: 'https://aave.com/privacy-policy/',
     //   label: <Trans>Privacy</Trans>,

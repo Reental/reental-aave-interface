@@ -1,13 +1,13 @@
 export const terms_en = `
-## 1. Welcome to reenlever.com and the Interface!
+## 1. Welcome to lend.rnt.finance and the Interface!
 
-These Terms of Use ("Terms") govern your access to the reenlever.com website. The Services are provided by Reental DAO ("we," "us," or "our"). reenlever.com offers information and resources about the fundamentals of the decentralized and non-custodial peer-to-peer exchange protocol called the RNT Protocol. It is composed of self-executing open-source smart contracts deployed on the permissionless public Polygon blockchain. Reental DAO does not control or operate any version of the RNT Protocol on any blockchain network.
+These Terms of Use ("Terms") govern your access to the lend.rnt.finance website. The Services are provided by Reental DAO ("we," "us," or "our"). lend.rnt.finance offers information and resources about the fundamentals of the decentralized and non-custodial peer-to-peer exchange protocol called the RNT Protocol. It is composed of self-executing open-source smart contracts deployed on the permissionless public Polygon blockchain. Reental DAO does not control or operate any version of the RNT Protocol on any blockchain network.
 
 The Interface provides an application through which users, through their self-custodied wallets, interact with the RNT Protocol.
 
 ### You are entering into a binding agreement.
 
-BY ACCESSING OR USING OUR SERVICES, WHICH INCLUDE OUR VARIOUS WEBSITES, INCLUDING, WITHOUT LIMITATION, reenlever.com (AND ANY RESPECTIVE SUBDOMAIN); APPLICATIONS, AND OTHER SERVICES THAT LINK TO THESE TERMS, AS WELL AS ANY INFORMATION, TEXT, LINKS, GRAPHICS, PHOTOS, AUDIO, VIDEO, OR OTHER MATERIALS STORED, RETRIEVED, OR APPEARING THEREIN, WHETHER ACCESSED THROUGH THE SITE OR OTHERWISE
+BY ACCESSING OR USING OUR SERVICES, WHICH INCLUDE OUR VARIOUS WEBSITES, INCLUDING, WITHOUT LIMITATION, lend.rnt.finance (AND ANY RESPECTIVE SUBDOMAIN); APPLICATIONS, AND OTHER SERVICES THAT LINK TO THESE TERMS, AS WELL AS ANY INFORMATION, TEXT, LINKS, GRAPHICS, PHOTOS, AUDIO, VIDEO, OR OTHER MATERIALS STORED, RETRIEVED, OR APPEARING THEREIN, WHETHER ACCESSED THROUGH THE SITE OR OTHERWISE
 
 (COLLECTIVELY, THE "SERVICES"), YOU ARE ENTERING INTO A BINDING AGREEMENT WITH US THAT INCLUDES THESE TERMS, THE PRIVACY POLICY (LOCATED HERE) AND OTHER POLICIES REFERENCED HERE (COLLECTIVELY, THE "AGREEMENT").
 In the event there is a conflict between these Terms and any applicable additional terms, these Terms will control unless expressly stated otherwise. If you do not agree to these Terms, you should not use the Services or visit the Site or interact with the Services.
@@ -22,7 +22,7 @@ We may change or update the Services, the Agreement, and any part of the Terms a
 
 ## 2. Services
 
-reenlever.com is an information resource about the Protocol; however, it is not the exclusive or only source. All information provided in connection with your access and use of the Services is for informational purposes only. While we strive to provide accurate and reliable information, we cannot guarantee the accuracy, completeness, or timeliness of the information provided. Information may be outdated or subject to errors or omissions. The codebases of all versions of the RNT Protocol are maintained at each full node of the relevant blockchain network. You should not take, nor refrain from taking, any action based on the information contained in reenlever.com, or any other information we make available at any time, including blog posts, data, articles, links to third-party content, content in Discord, news, tutorials, tweets, and videos. Additionally, you acknowledge and agree that we will not be liable or assume any responsibility, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of or reliance on any content, goods, or services available on or through such site or resource.
+lend.rnt.finance is an information resource about the Protocol; however, it is not the exclusive or only source. All information provided in connection with your access and use of the Services is for informational purposes only. While we strive to provide accurate and reliable information, we cannot guarantee the accuracy, completeness, or timeliness of the information provided. Information may be outdated or subject to errors or omissions. The codebases of all versions of the RNT Protocol are maintained at each full node of the relevant blockchain network. You should not take, nor refrain from taking, any action based on the information contained in lend.rnt.finance, or any other information we make available at any time, including blog posts, data, articles, links to third-party content, content in Discord, news, tutorials, tweets, and videos. Additionally, you acknowledge and agree that we will not be liable or assume any responsibility, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of or reliance on any content, goods, or services available on or through such site or resource.
 
 ### Users maintain full control over their cryptoassets.
 
@@ -208,5 +208,5 @@ These Terms and any separate agreements whereby we provide you Services shall be
 
 ## 16. Contact Us
 
-You can contact us with questions about your use of the Services at hello@reenlever.com.
+You can contact us with questions about your use of the Services at hello@lend.rnt.finance.
 `;

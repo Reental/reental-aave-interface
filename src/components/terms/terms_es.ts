@@ -1,14 +1,14 @@
 export const terms_es = `
-## 1. ¡Bienvenido a reenlever.com y a la Interfaz!
-Estos Términos de Uso ("Términos") rigen su acceso del sitio web reenlever.com. Los Servicios son proporcionados por Reental DAO ("nosotros", "nos" o "nuestro").
+## 1. ¡Bienvenido a lend.rnt.finance y a la Interfaz!
+Estos Términos de Uso ("Términos") rigen su acceso del sitio web lend.rnt.finance. Los Servicios son proporcionados por Reental DAO ("nosotros", "nos" o "nuestro").
 
-reenlever.com ofrece información y recursos sobre los fundamentos del protocolo de intercambio p2p descentralizado y no custodial llamado Protocolo RNT, compuesto por contratos inteligentes autoejecutables de código abierto desplegados en la blockchain pública Polygon sin permisos. Reental DAO no controla ni opera ninguna versión del Protocolo RNT en ninguna red blockchain.
+lend.rnt.finance ofrece información y recursos sobre los fundamentos del protocolo de intercambio p2p descentralizado y no custodial llamado Protocolo RNT, compuesto por contratos inteligentes autoejecutables de código abierto desplegados en la blockchain pública Polygon sin permisos. Reental DAO no controla ni opera ninguna versión del Protocolo RNT en ninguna red blockchain.
 
 La Interfaz proporciona una de las aplicaciones disponibles a través de las cuales los usuarios, mediante sus billeteras auto custodiadas, interactúan con el Protocolo RNT.
 
 Está entrando en un acuerdo vinculante.
 
-AL ACCEDER O UTILIZAR NUESTROS SERVICIOS, QUE INCLUYEN NUESTROS DIVERSOS SITIOS WEB, INCLUYENDO, SIN LIMITACIÓN, reenlever.com (Y CUALQUIER SUBDOMINIO RESPECTIVO); APLICACIONES, Y OTROS SERVICIOS QUE ENLACEN A ESTOS TÉRMINOS, ASÍ COMO CUALQUIER INFORMACIÓN, TEXTO, ENLACES, GRÁFICOS, FOTOS, AUDIO, VIDEO U OTROS MATERIALES ALMACENADOS, RECUPERADOS O QUE APAREZCAN ALLÍ, YA SEA ACCEDIDO A TRAVÉS DEL SITIO O DE OTRA MANERA (COLECTIVAMENTE, LOS "SERVICIOS"), USTED ESTÁ ENTRANDO EN UN ACUERDO VINCULANTE CON NOSOTROS QUE INCLUYE ESTOS TÉRMINOS, LA POLÍTICA DE PRIVACIDAD (QUE SE ENCUENTRA AQUÍ) Y OTRAS POLÍTICAS REFERENCIADAS AQUÍ (COLECTIVAMENTE, EL "ACUERDO").
+AL ACCEDER O UTILIZAR NUESTROS SERVICIOS, QUE INCLUYEN NUESTROS DIVERSOS SITIOS WEB, INCLUYENDO, SIN LIMITACIÓN, lend.rnt.finance (Y CUALQUIER SUBDOMINIO RESPECTIVO); APLICACIONES, Y OTROS SERVICIOS QUE ENLACEN A ESTOS TÉRMINOS, ASÍ COMO CUALQUIER INFORMACIÓN, TEXTO, ENLACES, GRÁFICOS, FOTOS, AUDIO, VIDEO U OTROS MATERIALES ALMACENADOS, RECUPERADOS O QUE APAREZCAN ALLÍ, YA SEA ACCEDIDO A TRAVÉS DEL SITIO O DE OTRA MANERA (COLECTIVAMENTE, LOS "SERVICIOS"), USTED ESTÁ ENTRANDO EN UN ACUERDO VINCULANTE CON NOSOTROS QUE INCLUYE ESTOS TÉRMINOS, LA POLÍTICA DE PRIVACIDAD (QUE SE ENCUENTRA AQUÍ) Y OTRAS POLÍTICAS REFERENCIADAS AQUÍ (COLECTIVAMENTE, EL "ACUERDO").
 
 En la medida en que haya un conflicto entre estos Términos y cualquier término adicional aplicable, estos Términos se controlarán a menos que se indique expresamente lo contrario. Si no está de acuerdo con estos Términos, no debe utilizar los Servicios ni visitar el Sitio ni interactuar con los Servicios.
 
@@ -22,9 +22,9 @@ Para usar los Servicios, debe estar legalmente capacitado para celebrar el Acuer
 Podemos cambiar o actualizar los Servicios, el Acuerdo y cualquier parte de los Términos en cualquier momento, por cualquier motivo, a nuestra sola discreción. Una vez que cualquier parte del Acuerdo esté actualizada y en vigor, usted estará sujeto a los Términos si continúa utilizando los Servicios. Podemos, en cualquier momento y sin responsabilidad para usted, modificar o descontinuar total o parcialmente los Servicios (incluido el acceso a los Servicios a través de cualquier enlace de terceros).
 
 ## 2. Servicios
-reenlever.com es un recurso informativo sobre el Protocolo; sin embargo, no es la fuente exclusiva o única.
+lend.rnt.finance es un recurso informativo sobre el Protocolo; sin embargo, no es la fuente exclusiva o única.
 
-Toda la información proporcionada en relación con su acceso y uso de los Servicios tiene fines informativos únicamente. Si bien nos esforzamos por proporcionar información precisa y confiable, no podemos garantizar la exactitud, integridad o puntualidad de la información proporcionada. Es posible que la información esté desactualizada o sea susceptible a errores u omisiones. Las bases de código de todas las versiones del Protocolo RNT se mantienen en cada nodo completo de la red blockchain relevante. No debe tomar, ni abstenerse de tomar, ninguna acción basada en la información contenida en reenlever.com, o cualquier otra información que pongamos a disposición en cualquier momento, incluidos publicaciones en blogs, datos, artículos, enlaces a contenido de terceros, contenido en Discord, noticias, tutoriales, tweets y videos. Además, reconoce y acepta que no seremos responsables ni asumimos ninguna responsabilidad, directa o indirectamente, por cualquier daño o pérdida causado o supuestamente causado por o en conexión con el uso de o la confianza en cualquier contenido, bienes o servicios disponibles en o a través de dicho sitio o recurso.
+Toda la información proporcionada en relación con su acceso y uso de los Servicios tiene fines informativos únicamente. Si bien nos esforzamos por proporcionar información precisa y confiable, no podemos garantizar la exactitud, integridad o puntualidad de la información proporcionada. Es posible que la información esté desactualizada o sea susceptible a errores u omisiones. Las bases de código de todas las versiones del Protocolo RNT se mantienen en cada nodo completo de la red blockchain relevante. No debe tomar, ni abstenerse de tomar, ninguna acción basada en la información contenida en lend.rnt.finance, o cualquier otra información que pongamos a disposición en cualquier momento, incluidos publicaciones en blogs, datos, artículos, enlaces a contenido de terceros, contenido en Discord, noticias, tutoriales, tweets y videos. Además, reconoce y acepta que no seremos responsables ni asumimos ninguna responsabilidad, directa o indirectamente, por cualquier daño o pérdida causado o supuestamente causado por o en conexión con el uso de o la confianza en cualquier contenido, bienes o servicios disponibles en o a través de dicho sitio o recurso.
 
 ### Los usuarios mantienen el control total sobre sus criptoactivos.
 
@@ -213,5 +213,5 @@ Estos Términos y cualquier acuerdo separado por el cual te proporcionamos Servi
 
 ## 16. Contáctanos
 
-Puedes contactarnos con preguntas sobre tu uso de los Servicios en hello@reenlever.com.
+Puedes contactarnos con preguntas sobre tu uso de los Servicios en hello@lend.rnt.finance.
 `;

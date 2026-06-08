@@ -124,6 +124,7 @@ export const ROUTES = {
   dashboard: '/dashboard',
   markets: '/markets',
   terms: '/terms',
+  guide: '/guide',
   staking: '/staking',
   governance: '/governance',
   faucet: '/faucet',

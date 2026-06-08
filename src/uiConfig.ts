@@ -1,3 +1,3 @@
 export const uiConfig = {
-  appLogo: '/Reenlever.svg',
+  appLogo: '/RNTLend.png',
 };
