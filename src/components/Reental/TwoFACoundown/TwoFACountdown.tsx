@@ -1,5 +1,11 @@
 import { Trans } from '@lingui/macro';
-import { CircularProgress, circularProgressClasses, CircularProgressProps } from '@mui/material';
+import {
+  Box,
+  CircularProgress,
+  circularProgressClasses,
+  CircularProgressProps,
+  useTheme,
+} from '@mui/material';
 import React from 'react';
 
 import { TwoFABanner } from '../TwoFABanner/TwoFABanner';
@@ -40,6 +46,10 @@ function useVisibleCountdown(expirationDate: Date, stepMs = 1000) {
 }
 
 export default function MyCircularProgress(props: CircularProgressProps) {
+  const theme = useTheme();
+  const trackColor =
+    theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.16)' : 'rgba(14, 18, 1, 0.12)';
+
   return (
     <div className={styles.circularProgress}>
       <CircularProgress
@@ -49,7 +59,7 @@ export default function MyCircularProgress(props: CircularProgressProps) {
         value={100}
         sx={{
           [`& .${circularProgressClasses.circle}`]: {
-            stroke: '#1F293720',
+            stroke: trackColor,
           },
         }}
       />
@@ -71,6 +81,7 @@ export const TwoFACountdown = ({
   expirationDate: Date;
   fetchOnEnd: () => void;
 }) => {
+  const theme = useTheme();
   const timeLeft = useVisibleCountdown(expirationDate, 1000);
 
   // Evita dobles llamadas al llegar a 0
@@ -92,19 +103,29 @@ export const TwoFACountdown = ({
   }
 
   return (
-    <div className={styles.container}>
+    <Box
+      className={styles.container}
+      sx={{
+        backgroundColor: theme.palette.background.paper,
+        border: `1px solid ${theme.palette.divider}`,
+      }}
+    >
       <div className={styles.content}>
-        <span className={styles.contentText}>
+        <Box
+          component="span"
+          className={styles.contentText}
+          sx={{ color: theme.palette.text.primary }}
+        >
           <Trans>Time to operate</Trans>
-        </span>
-        <div className={styles.timeLeft}>
+        </Box>
+        <Box className={styles.timeLeft} sx={{ color: theme.palette.text.primary }}>
           {minutesLeft}:{secondsLeft}
-        </div>
+        </Box>
         <MyCircularProgress
           sx={{
             [`& .${circularProgressClasses.circle}`]: {
               strokeLinecap: 'round',
-              stroke: '#FF9E00',
+              stroke: theme.palette.text.highlight,
             },
           }}
           variant="determinate"
@@ -113,6 +134,6 @@ export const TwoFACountdown = ({
           thickness={8}
         />
       </div>
-    </div>
+    </Box>
   );
 };
