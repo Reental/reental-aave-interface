@@ -1,4 +1,3 @@
-import { Identify, identify, setUserId } from '@amplitude/analytics-browser';
 import { Trans } from '@lingui/macro';
 import { Button } from '@mui/material';
 import { ConnectKitButton } from 'connectkit';
@@ -9,6 +8,14 @@ import { useShallow } from 'zustand/shallow';
 
 import { AvatarSize } from '../Avatar';
 import { UserDisplay } from '../UserDisplay';
+
+// Amplitude is loaded on demand so the SDK stays out of the initial bundle. It
+// is only fetched when a wallet event fires and an API key is configured.
+const AMPLITUDE_API_KEY = process.env.NEXT_PUBLIC_AMPLITUDE_API_KEY || '';
+const withAmplitude = (fn: (module: typeof import('@amplitude/analytics-browser')) => void) => {
+  if (!AMPLITUDE_API_KEY) return;
+  import('@amplitude/analytics-browser').then(fn).catch(() => undefined);
+};
 
 export interface ConnectWalletProps {
   funnel?: string;
@@ -48,13 +55,15 @@ export const ConnectWalletButton: React.FC<ConnectWalletProps> = ({ funnel, onCl
 
       const walletAddress = account;
       if (walletAddress) {
-        setUserId(walletAddress);
+        withAmplitude(({ Identify, identify, setUserId }) => {
+          setUserId(walletAddress);
 
-        const identifyObj = new Identify()
-          .set('wallet_connected', true)
-          .set('wallet_type', walletType || 'unknown');
+          const identifyObj = new Identify()
+            .set('wallet_connected', true)
+            .set('wallet_type', walletType || 'unknown');
 
-        identify(identifyObj);
+          identify(identifyObj);
+        });
       }
 
       if (isConnectedRef.current) {
@@ -80,9 +89,11 @@ export const ConnectWalletButton: React.FC<ConnectWalletProps> = ({ funnel, onCl
   useEffect(() => {
     if (!account && walletType === undefined) {
       // Wallet disconnected - clear identity
-      const identifyObj = new Identify().set('wallet_connected', false).unset('wallet_type');
+      withAmplitude(({ Identify, identify }) => {
+        const identifyObj = new Identify().set('wallet_connected', false).unset('wallet_type');
 
-      identify(identifyObj);
+        identify(identifyObj);
+      });
 
       trackEvent(AUTH.DISCONNECT_WALLET, {
         funnel,

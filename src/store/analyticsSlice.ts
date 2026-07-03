@@ -1,7 +1,18 @@
-import { add, init, setOptOut, track } from '@amplitude/analytics-browser';
 import { StateCreator } from 'zustand';
 
 import { RootStore } from './root';
+
+// Amplitude is loaded on demand so the ~127KB SDK never ships in the initial
+// bundle. It is only fetched when tracking actually runs (which requires an
+// API key to be configured).
+type AmplitudeModule = typeof import('@amplitude/analytics-browser');
+let amplitudePromise: Promise<AmplitudeModule> | null = null;
+const loadAmplitude = () => {
+  if (!amplitudePromise) {
+    amplitudePromise = import('@amplitude/analytics-browser');
+  }
+  return amplitudePromise;
+};
 
 // Plugin to ensure all events have app_context
 const createAppContextPlugin = (context: string) => ({
@@ -69,12 +80,10 @@ export const createAnalyticsSlice: StateCreator<
         app_context: 'app', // Fallback in case plugin doesn't apply
       };
 
-      try {
-        if (!EXCLUDED_NETWORKS.includes(get().currentMarket)) {
-          track(eventName, eventProperties);
-        }
-      } catch (err) {
-        console.log('something went wrong tracking event', err);
+      if (!EXCLUDED_NETWORKS.includes(get().currentMarket)) {
+        loadAmplitude()
+          .then(({ track }) => track(eventName, eventProperties))
+          .catch((err) => console.log('something went wrong tracking event', err));
       }
     },
 
@@ -88,41 +97,45 @@ export const createAnalyticsSlice: StateCreator<
 
       if (!AMPLITUDE_API_KEY) return;
 
-      if (userAcceptedAnalytics) {
-        if (!isInitialized) {
-          init(AMPLITUDE_API_KEY, {
-            // serverZone: 'EU',
-            autocapture: true, // disable if we don't want to capture every click and page view on the site
-            trackingOptions: {
-              ipAddress: false,
-              language: false,
-              platform: true,
-            },
-          });
-          add(createAppContextPlugin('app'));
-          set({ eventsTrackingInitialized: true });
-        }
+      loadAmplitude()
+        .then(({ init, add, setOptOut }) => {
+          if (userAcceptedAnalytics) {
+            if (!isInitialized) {
+              init(AMPLITUDE_API_KEY, {
+                // serverZone: 'EU',
+                autocapture: true, // disable if we don't want to capture every click and page view on the site
+                trackingOptions: {
+                  ipAddress: false,
+                  language: false,
+                  platform: true,
+                },
+              });
+              add(createAppContextPlugin('app'));
+              set({ eventsTrackingInitialized: true });
+            }
 
-        setOptOut(false);
-        set({ isTrackingEnabled: true });
-      } else {
-        if (!isInitialized) {
-          init(AMPLITUDE_API_KEY, {
-            // serverZone: 'EU',
-            autocapture: false,
-            trackingOptions: {
-              ipAddress: false,
-              language: false,
-              platform: false,
-            },
-          });
-          add(createAppContextPlugin('app'));
-          set({ eventsTrackingInitialized: true });
-        }
+            setOptOut(false);
+            set({ isTrackingEnabled: true });
+          } else {
+            if (!isInitialized) {
+              init(AMPLITUDE_API_KEY, {
+                // serverZone: 'EU',
+                autocapture: false,
+                trackingOptions: {
+                  ipAddress: false,
+                  language: false,
+                  platform: false,
+                },
+              });
+              add(createAppContextPlugin('app'));
+              set({ eventsTrackingInitialized: true });
+            }
 
-        setOptOut(true);
-        set({ isTrackingEnabled: false });
-      }
+            setOptOut(true);
+            set({ isTrackingEnabled: false });
+          }
+        })
+        .catch((err) => console.log('something went wrong initializing analytics', err));
     },
     acceptAnalytics: () => {
       localStorage.setItem(CONSENT_KEY, 'true');
@@ -139,46 +152,53 @@ export const createAnalyticsSlice: StateCreator<
     },
     rejectAnalytics: () => {
       localStorage.setItem(CONSENT_KEY, 'false');
+      set({ isTrackingEnabled: false, analyticsConfigOpen: false });
+
+      if (!AMPLITUDE_API_KEY) return;
 
       // Only track the consent event once per user per consent version
       const alreadyCounted = localStorage.getItem(CONSENT_COUNTED_KEY) === 'true';
+      const wasInitialized = get().eventsTrackingInitialized;
 
-      if (!alreadyCounted && AMPLITUDE_API_KEY) {
-        localStorage.setItem(CONSENT_COUNTED_KEY, 'true');
+      loadAmplitude()
+        .then(({ init, add, setOptOut, track }) => {
+          if (!alreadyCounted) {
+            localStorage.setItem(CONSENT_COUNTED_KEY, 'true');
 
-        if (!get().eventsTrackingInitialized) {
-          // Initialize minimal tracking just for this one event
-          init(AMPLITUDE_API_KEY, {
-            autocapture: false,
-            trackingOptions: {
-              ipAddress: false,
-              language: false,
-              platform: false,
-            },
-          });
-          add(createAppContextPlugin('app'));
-          set({ eventsTrackingInitialized: true });
-        }
+            if (!wasInitialized) {
+              // Initialize minimal tracking just for this one event
+              init(AMPLITUDE_API_KEY, {
+                autocapture: false,
+                trackingOptions: {
+                  ipAddress: false,
+                  language: false,
+                  platform: false,
+                },
+              });
+              add(createAppContextPlugin('app'));
+              set({ eventsTrackingInitialized: true });
+            }
 
-        try {
-          // Temporarily enable tracking to send the opt-out event
-          // This ensures the event is sent even if Amplitude is in opt-out mode
-          setOptOut(false);
+            try {
+              // Temporarily enable tracking to send the opt-out event
+              // This ensures the event is sent even if Amplitude is in opt-out mode
+              setOptOut(false);
 
-          track('analytics_consent_declined', {
-            app_context: 'app',
-          });
+              track('analytics_consent_declined', {
+                app_context: 'app',
+              });
 
-          // Immediately disable tracking again
+              // Immediately disable tracking again
+              setOptOut(true);
+            } catch (err) {
+              console.log('Error tracking opt-out event', err);
+            }
+          }
+
+          // Now disable all tracking
           setOptOut(true);
-        } catch (err) {
-          console.log('Error tracking opt-out event', err);
-        }
-      }
-
-      // Now disable all tracking
-      setOptOut(true);
-      set({ isTrackingEnabled: false, analyticsConfigOpen: false });
+        })
+        .catch((err) => console.log('Error tracking opt-out event', err));
     },
     setAnalyticsConfigOpen: (value: boolean) => {
       // Clear the current consent version when reopening analytics config
