@@ -17,7 +17,23 @@ const {
   typography: { pxToRem },
 } = theme;
 
-const FONT = 'Fustat, Arial';
+// RNT Protocol type system (Manual de Marca V.1):
+// - Headings (H1–H4 / display): Inter Tight.
+// - Body / UI: Inter, used as the substitute for the licensed Helvetica Now Display.
+// - Orbitron (FONT_DATA): product logos, data / KPIs (metrics, APYs, balances) and
+//   uppercase labels. Exported so data primitives (FormattedNumber) and labels can share it.
+const FONT_HEADING = 'Inter Tight, Inter, Arial, sans-serif';
+const FONT_BODY = 'Inter, Arial, sans-serif';
+// Feature flag: Orbitron reads too futuristic for institutional investors, so the
+// data/KPI face is disabled for now. Flip to `true` to bring it back at any time
+// (the Orbitron font itself is still loaded in pages/_document.page.tsx).
+export const ENABLE_ORBITRON_DATA_FONT = false;
+export const FONT_DATA = ENABLE_ORBITRON_DATA_FONT ? 'Orbitron, Inter, sans-serif' : FONT_BODY;
+// Labels above KPI figures (top info panels, markets/reserve overview) always use
+// Orbitron regardless of the data-font flag above.
+export const FONT_LABEL = 'Orbitron, Inter, sans-serif';
+// Back-compat alias: many variants below still read `FONT` for the UI/body face.
+const FONT = FONT_BODY;
 
 declare module '@mui/material/styles/createPalette' {
   interface PaletteColor extends ColorPartial {}
@@ -135,16 +151,23 @@ export const getDesignTokens = (mode: 'light' | 'dark') => {
     },
     palette: {
       mode,
+      // Color principal de marca (Manual de Marca V.1): RNT Green en dark mode,
+      // RNT Blue en light mode. `main` drives contained buttons (MUI auto-picks
+      // the contrast text color). `light` is intentionally kept neutral because it
+      // is reused as the icon/label color (MuiListItemIcon, MuiSvgIcon colorPrimary,
+      // MuiSelect) throughout the app.
       primary: {
-        main: getColor('#1F2937', '#EAEBEF'),
-        light: getColor('#62677B', '#F1F1F3'),
-        dark: getColor('#292E41', '#D2D4DC'),
-        contrast: getColor('#FFFFFF', '#0F121D'),
+        main: getColor('#004DFF', '#97FF38'),
+        light: getColor('#62677B', '#A5A8B6'),
+        dark: getColor('#003BCC', '#7ACC2D'),
+        contrast: getColor('#FFFFFF', '#0e1201'),
       },
+      // RNT Blue — acento secundario (links, badges informativos).
       secondary: {
-        main: getColor('#FF607B', '#F48FB1'),
-        light: getColor('#FF607B', '#F6A5C0'),
-        dark: getColor('#B34356', '#AA647B'),
+        main: getColor('#004DFF', '#004DFF'),
+        light: getColor('#3D74FF', '#3D74FF'),
+        dark: getColor('#003BCC', '#003BCC'),
+        contrast: getColor('#FFFFFF', '#FFFFFF'),
       },
       error: {
         main: getColor('#BC0000B8', '#F44336'),
@@ -161,9 +184,9 @@ export const getDesignTokens = (mode: 'light' | 'dark') => {
         '200': getColor('#FEF5E8', '#301E04'), // for alert background
       },
       info: {
-        main: getColor('#0062D2', '#29B6F6'),
-        light: getColor('#0062D2', '#4FC3F7'),
-        dark: getColor('#002754', '#0288D1'),
+        main: getColor('#004DFF', '#4DA3FF'),
+        light: getColor('#3D74FF', '#7FBEFF'),
+        dark: getColor('#003BCC', '#0288D1'),
         '100': getColor('#002754', '#A9E2FB'), // for alert text
         '200': getColor('#E5EFFB', '#071F2E'), // for alert background
       },
@@ -175,35 +198,45 @@ export const getDesignTokens = (mode: 'light' | 'dark') => {
         '200': getColor('#ECF8ED', '#0A130B'), // for alert background
       },
       text: {
-        primary: getColor('#1F2937', '#F1F1F3'),
-        secondary: getColor('#62677B', '#A5A8B6'),
-        disabled: getColor('#D2D4DC', '#62677B'),
-        muted: getColor('#A5A8B6', '#8E92A3'),
-        highlight: getColor('#1F2937', '#C9B3F9'),
+        primary: getColor('#0e1201', '#FFFFFF'),
+        secondary: getColor('rgba(14,18,1,0.55)', 'rgba(255,255,255,0.6)'),
+        disabled: getColor('#B7B6B1', 'rgba(255,255,255,0.3)'),
+        muted: getColor('#8A8A85', 'rgba(255,255,255,0.45)'),
+        highlight: getColor('#004DFF', '#97FF38'),
       },
       background: {
-        default: getColor('#F9FAFB', '#111827'),
-        paper: getColor('#FFFFFF', '#1F2937'),
-        surface: getColor('#F7F7F9', '#1F2937'),
-        surface2: getColor('#F9F9FB', '#1F2937'),
-        header: getColor('#1F2937', '#1F2937'),
-        disabled: getColor('#EAEBEF', '#EBEBEF14'),
+        // Dark: body/page is pure black (#000000); cards, panels, header and every
+        // elevated surface use the RNT Body Color #0e1201.
+        // Light (Manual de Marca): page background near-white, cards/panels use the
+        // warm gray #f4f2ee so they read as surfaces on top of the white page.
+        default: getColor('#FFFFFF', '#000000'),
+        paper: getColor('#f4f2ee', '#0e1201'),
+        surface: getColor('#EFEDE8', '#0e1201'),
+        surface2: getColor('#f4f2ee', '#0e1201'),
+        // Dark: RNT Body Color. Light: card surface so the nav bar follows
+        // the same pattern as the rest of the app (see TopInfoPanel).
+        header: getColor('#f4f2ee', '#0e1201'),
+        disabled: getColor('#e7e7e6', '#FFFFFF14'),
       },
-      divider: getColor('#EAEBEF', '#EBEBEF14'),
+      divider: getColor('#e7e7e6', 'rgba(255,255,255,0.08)'),
       action: {
-        active: getColor('#8E92A3', '#EBEBEF8F'),
-        hover: getColor('#F1F1F3', '#EBEBEF14'),
-        selected: getColor('#EAEBEF', '#EBEBEF29'),
-        disabled: getColor('#BBBECA', '#EBEBEF4D'),
-        disabledBackground: getColor('#EAEBEF', '#EBEBEF1F'),
-        focus: getColor('#F1F1F3', '#EBEBEF1F'),
+        // Glass hover/selected states follow the mode's primary brand color:
+        // RNT Blue in light mode, RNT Green in dark mode.
+        active: getColor('#8A8A85', 'rgba(255,255,255,0.56)'),
+        hover: getColor('rgba(0,77,255,0.06)', 'rgba(151,255,56,0.13)'),
+        selected: getColor('rgba(0,77,255,0.10)', 'rgba(151,255,56,0.18)'),
+        disabled: getColor('#B7B6B1', 'rgba(255,255,255,0.3)'),
+        disabledBackground: getColor('#e7e7e6', 'rgba(255,255,255,0.12)'),
+        focus: getColor('rgba(0,77,255,0.10)', 'rgba(151,255,56,0.16)'),
       },
       other: {
-        standardInputLine: getColor('#1F29371F', '#EBEBEF6B'),
+        standardInputLine: getColor('#0e12011F', 'rgba(255,255,255,0.42)'),
       },
       gradients: {
-        aaveGradient: 'linear-gradient(250deg, #FCA311 0%, #FCA311 100%)',
-        newGradient: 'linear-gradient(250deg, #FCA311 0%, #FCA311 100%)',
+        // Brand Gradient (Manual de Marca V.1): 135° RNT Blue → RNT Green.
+        // Key names kept for back-compat with existing consumers.
+        aaveGradient: 'linear-gradient(135deg, #004DFF 0%, #97FF38 100%)',
+        newGradient: 'linear-gradient(135deg, #004DFF 0%, #97FF38 100%)',
       },
     },
     spacing: 4,
@@ -218,44 +251,44 @@ export const getDesignTokens = (mode: 'light' | 'dark') => {
       button: undefined,
       overline: undefined,
       display1: {
-        fontFamily: FONT,
+        fontFamily: FONT_HEADING,
         fontWeight: 700,
-        letterSpacing: pxToRem(0.25),
+        letterSpacing: '-0.02em',
         lineHeight: '123.5%',
         fontSize: pxToRem(32),
       },
       h1: {
-        fontFamily: FONT,
+        fontFamily: FONT_HEADING,
         fontWeight: 700,
-        letterSpacing: pxToRem(0.25),
+        letterSpacing: '-0.02em',
         lineHeight: '123.5%',
         fontSize: pxToRem(28),
       },
       h2: {
-        fontFamily: FONT,
+        fontFamily: FONT_HEADING,
         fontWeight: 600,
-        letterSpacing: 'unset',
+        letterSpacing: '-0.02em',
         lineHeight: '133.4%',
         fontSize: pxToRem(21),
       },
       h3: {
-        fontFamily: FONT,
+        fontFamily: FONT_HEADING,
         fontWeight: 600,
-        letterSpacing: pxToRem(0.15),
+        letterSpacing: '-0.01em',
         lineHeight: '160%',
         fontSize: pxToRem(18),
       },
       h4: {
-        fontFamily: FONT,
+        fontFamily: FONT_HEADING,
         fontWeight: 600,
-        letterSpacing: pxToRem(0.15),
+        letterSpacing: '-0.01em',
         lineHeight: pxToRem(24),
         fontSize: pxToRem(16),
       },
       subheader1: {
-        fontFamily: FONT,
+        fontFamily: FONT_HEADING,
         fontWeight: 600,
-        letterSpacing: pxToRem(0.15),
+        letterSpacing: '-0.01em',
         lineHeight: pxToRem(20),
         fontSize: pxToRem(14),
       },
@@ -316,8 +349,9 @@ export const getDesignTokens = (mode: 'light' | 'dark') => {
         fontSize: pxToRem(12),
       },
       main21: {
-        fontFamily: FONT,
+        fontFamily: FONT_HEADING,
         fontWeight: 800,
+        letterSpacing: '-0.01em',
         lineHeight: '133.4%',
         fontSize: pxToRem(21),
       },
@@ -328,9 +362,9 @@ export const getDesignTokens = (mode: 'light' | 'dark') => {
         fontSize: pxToRem(21),
       },
       main16: {
-        fontFamily: FONT,
+        fontFamily: FONT_HEADING,
         fontWeight: 600,
-        letterSpacing: pxToRem(0.15),
+        letterSpacing: '-0.01em',
         lineHeight: pxToRem(24),
         fontSize: pxToRem(16),
       },
@@ -401,10 +435,10 @@ export function getThemedComponents(theme: Theme) {
         styleOverrides: {
           root: {
             '& .MuiSlider-thumb': {
-              color: theme.palette.mode === 'light' ? '#62677B' : '#C9B3F9',
+              color: theme.palette.mode === 'light' ? '#7ACC2D' : '#97FF38',
             },
             '& .MuiSlider-track': {
-              color: theme.palette.mode === 'light' ? '#1F2937' : '#9C93B3',
+              color: theme.palette.mode === 'light' ? '#0e1201' : '#97FF38',
             },
           },
         },
@@ -433,20 +467,32 @@ export function getThemedComponents(theme: Theme) {
         variants: [
           {
             props: { variant: 'surface' },
-            style: {
-              color: theme.palette.common.white,
-              border: '1px solid',
-              borderColor: '#EBEBED1F',
-              backgroundColor: '#1F2937',
-              '&:hover, &.Mui-focusVisible': {
-                backgroundColor: theme.palette.background.header,
-              },
-            },
+            style:
+              theme.palette.mode === 'light'
+                ? {
+                    color: theme.palette.text.primary,
+                    border: '1px solid',
+                    borderColor: theme.palette.divider,
+                    backgroundColor: theme.palette.background.surface,
+                    '&:hover, &.Mui-focusVisible': {
+                      backgroundColor: theme.palette.background.disabled,
+                    },
+                  }
+                : {
+                    color: theme.palette.common.white,
+                    border: '1px solid',
+                    borderColor: 'rgba(255,255,255,0.12)',
+                    backgroundColor: '#1a1a1b',
+                    '&:hover, &.Mui-focusVisible': {
+                      backgroundColor: theme.palette.background.header,
+                    },
+                  },
           },
           {
             props: { variant: 'gradient' },
             style: {
-              color: theme.palette.common.white,
+              // Brand dark reads better than white over the blue→green gradient.
+              color: '#0E1201',
               background: theme.palette.gradients.aaveGradient,
               transition: 'all 0.2s ease',
               '&:hover, &.Mui-focusVisible': {

@@ -1,16 +1,17 @@
 import { API_ETH_MOCK_ADDRESS } from '@aave/contract-helpers';
-import { Trans } from '@lingui/macro';
+import { t, Trans } from '@lingui/macro';
 import { Box, Switch, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useState } from 'react';
+import { ListSearchBar } from 'src/components/lists/ListSearchBar';
 import { ListWrapper } from 'src/components/lists/ListWrapper';
 import { NoSearchResults } from 'src/components/NoSearchResults';
 import { Link } from 'src/components/primitives/Link';
 import { Warning } from 'src/components/primitives/Warning';
-import { TitleWithSearchBar } from 'src/components/TitleWithSearchBar';
 import { useAppDataContext } from 'src/hooks/app-data-provider/useAppDataProvider';
 import MarketAssetsList from 'src/modules/markets/MarketAssetsList';
 import { useRootStore } from 'src/store/root';
 import { fetchIconSymbolAndName } from 'src/ui-config/reservePatches';
+import { matchesSearchTerm } from 'src/utils/assetSearch';
 import { GHO_MINTING_MARKETS, GHO_SYMBOL } from 'src/utils/ghoUtilities';
 import { useShallow } from 'zustand/shallow';
 
@@ -59,15 +60,7 @@ export const MarketAssetsListContainer = () => {
     // Filter out any hidden assets
     .filter((res) => !isAssetHidden(currentMarketData.market, res.underlyingAsset))
     // filter out any that don't meet search term criteria
-    .filter((res) => {
-      if (!searchTerm) return true;
-      const term = searchTerm.toLowerCase().trim();
-      return (
-        res.symbol.toLowerCase().includes(term) ||
-        res.name.toLowerCase().includes(term) ||
-        res.underlyingAsset.toLowerCase().includes(term)
-      );
-    })
+    .filter((res) => matchesSearchTerm(searchTerm, res.symbol, res.name, res.underlyingAsset))
     // Transform the object for list to consume it
     .map((reserve) => ({
       ...reserve,
@@ -94,13 +87,16 @@ export const MarketAssetsListContainer = () => {
     <ListWrapper
       wrapperSx={{ pt: { xs: '6px', xsm: '6px', sm: 3.5 } }}
       titleComponent={
-        <TitleWithSearchBar
-          onSearchTermChange={setSearchTerm}
-          title={<Trans>Assets</Trans>}
-          searchPlaceholder={sm ? 'Search asset' : 'Search asset name, symbol, or address'}
-        />
+        <Typography component="div" variant="h2" sx={{ mr: 4 }}>
+          <Trans>Assets</Trans>
+        </Typography>
       }
     >
+      <ListSearchBar
+        onSearchTermChange={setSearchTerm}
+        placeholder={sm ? t`Search asset` : t`Search asset name, symbol, or address`}
+        wrapperSx={{ pt: 2 }}
+      />
       {displayGhoBanner && (
         <Box mb={4}>
           <SavingsGhoBanner />

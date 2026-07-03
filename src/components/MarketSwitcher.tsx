@@ -38,9 +38,13 @@ export const MULTIPLE_MARKET_OPTIONS = ['fork_proto_lido_v3', 'fork_proto_mainne
 export const getMarketInfoById = (marketId: CustomMarket) => {
   const market: MarketDataType = marketsData[marketId as CustomMarket];
   const network: BaseNetworkConfig = networkConfigs[market.chainId];
-  const logo = market.logo || network.networkLogoPath;
+  // Each market has its own logo; markets without one fall back to the RNT Protocol mark.
+  const logo = market.logo || '/rnt-protocol-mark.svg';
+  // Network logo is rendered as a small badge on top of the market logo.
+  const networkLogo = network.networkLogoPath;
+  const networkName = network.name;
 
-  return { market, logo };
+  return { market, logo, networkLogo, networkName };
 };
 
 export const getMarketHelpData = (marketName: string) => {
@@ -75,13 +79,60 @@ type MarketLogoProps = {
   size: number;
   logo: string;
   testChainName?: string;
+  networkLogo?: string;
+  networkName?: string;
   sx?: BoxProps;
 };
 
-export const MarketLogo = ({ size, logo, testChainName, sx }: MarketLogoProps) => {
+export const MarketLogo = ({
+  size,
+  logo,
+  testChainName,
+  networkLogo,
+  networkName,
+  sx,
+}: MarketLogoProps) => {
+  const badgeSize = Math.max(Math.round(size * 0.5), 12);
+
   return (
     <Box sx={{ mr: 2, width: size, height: size, position: 'relative', ...sx }}>
-      <img src={logo} alt="" width="100%" height="100%" />
+      <Box
+        sx={{
+          width: '100%',
+          height: '100%',
+          borderRadius: '50%',
+          overflow: 'hidden',
+          bgcolor: 'background.default',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <img src={logo} alt="" width="100%" height="100%" />
+      </Box>
+
+      {networkLogo && !testChainName && (
+        <Tooltip title={networkName || ''} arrow>
+          <Box
+            sx={{
+              width: `${badgeSize}px`,
+              height: `${badgeSize}px`,
+              borderRadius: '50%',
+              overflow: 'hidden',
+              position: 'absolute',
+              right: '-2px',
+              bottom: '-2px',
+              bgcolor: 'background.default',
+              border: (theme) => `1.5px solid ${theme.palette.background.default}`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <img src={networkLogo} alt="" width="100%" height="100%" />
+          </Box>
+        </Tooltip>
+      )}
 
       {testChainName && (
         <Tooltip title={testChainName} arrow>
@@ -193,8 +244,12 @@ export const MarketSwitcher = () => {
   };
 
   const marketBlurbs: { [key: string]: JSX.Element } = {
-    reental_polygon_v3: <Trans>RWA market focused on real estate assets.</Trans>,
-    reental_sepolia_v3: <Trans>RWA market focused on real estate assets.</Trans>,
+    reental_polygon_v3: (
+      <Trans>RWA market of real estate tokens issued by Reental over the Polygon network</Trans>
+    ),
+    reental_sepolia_v3: (
+      <Trans>RWA market of real estate tokens issued by Reental over the Sepolia network</Trans>
+    ),
   };
 
   return (
@@ -244,7 +299,9 @@ export const MarketSwitcher = () => {
               className: 'MarketSwitcher__select',
               IconComponent: () => null,
               renderValue: (marketId) => {
-                const { market, logo } = getMarketInfoById(marketId as CustomMarket);
+                const { market, logo, networkLogo, networkName } = getMarketInfoById(
+                  marketId as CustomMarket
+                );
 
                 return (
                   <Box>
@@ -253,6 +310,8 @@ export const MarketSwitcher = () => {
                       <MarketLogo
                         size={upToLG ? 32 : 28}
                         logo={logo}
+                        networkLogo={networkLogo}
+                        networkName={networkName}
                         testChainName={getMarketHelpData(market.marketTitle).testChainName}
                       />
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -260,32 +319,22 @@ export const MarketSwitcher = () => {
                           variant={upToLG ? 'display1' : 'h1'}
                           sx={{
                             fontSize: downToXSM ? '1.55rem' : undefined,
-                            color: 'common.white',
+                            // Slightly lighter than the theme's 700 so the switcher isn't so heavy.
+                            fontWeight: 600,
+                            // Header band is dark in dark mode and a light card in light mode.
+                            color: 'text.primary',
                             mr: 1,
                           }}
                         >
-                          {getMarketHelpData(market.marketTitle).name} {market.isFork ? 'Fork' : ''}{' '}
-                          Market
+                          {market.marketTitle} {market.isFork ? 'Fork' : ''} Market
                         </Typography>
                         {market.v3 ? (
                           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            <Box
-                              sx={{
-                                color: '#fff',
-                                px: 2,
-                                borderRadius: '12px',
-                                background: (theme) => theme.palette.gradients.aaveGradient,
-                                display: 'flex',
-                                alignItems: 'center',
-                              }}
-                            >
-                              <Typography variant="subheader2">V3</Typography>
-                            </Box>
                             <SvgIcon
                               fontSize="medium"
                               sx={{
                                 ml: 1,
-                                color: '#F1F1F3',
+                                color: 'text.primary',
                               }}
                             >
                               <ChevronDownIcon />
@@ -309,7 +358,7 @@ export const MarketSwitcher = () => {
                               fontSize="medium"
                               sx={{
                                 ml: 1,
-                                color: '#F1F1F3',
+                                color: 'text.primary',
                               }}
                             >
                               <ChevronDownIcon />
@@ -322,7 +371,7 @@ export const MarketSwitcher = () => {
                     {marketBlurbs[currentMarket] && (
                       <Typography
                         sx={{
-                          color: 'common.white',
+                          color: 'text.secondary',
                           mt: 0.5,
                           fontSize: '0.85rem',
                           wordWrap: 'break-word',
@@ -473,7 +522,7 @@ export const MarketSwitcher = () => {
                 return aIsFavorite ? -1 : 1;
               })
               .map((marketId: CustomMarket) => {
-                const { market, logo } = getMarketInfoById(marketId);
+                const { market, logo, networkLogo, networkName } = getMarketInfoById(marketId);
                 const marketNaming = getMarketHelpData(market.marketTitle);
                 const isFavorite = isFavoriteMarket(marketId);
                 return (
@@ -490,7 +539,13 @@ export const MarketSwitcher = () => {
                           : 'flex',
                     }}
                   >
-                    <MarketLogo size={32} logo={logo} testChainName={marketNaming.testChainName} />
+                    <MarketLogo
+                      size={32}
+                      logo={logo}
+                      networkLogo={networkLogo}
+                      networkName={networkName}
+                      testChainName={marketNaming.testChainName}
+                    />
                     <ListItemText sx={{ mr: 0 }}>
                       {marketNaming.name} {market.isFork ? 'Fork' : ''}
                     </ListItemText>

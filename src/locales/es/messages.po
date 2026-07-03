@@ -211,6 +211,10 @@ msgstr ""
 msgid "After the cooldown period ends, you will enter the unstake window of {0}. You will continue receiving rewards during cooldown and the unstake period."
 msgstr ""
 
+#: src/modules/dashboard/lists/BorrowAssetsList/BorrowAssetsList.tsx
+msgid "There are no assets available to borrow in this market right now."
+msgstr ""
+
 #: src/modules/dashboard/lists/SupplyAssetsList/SupplyAssetsListItem.tsx
 msgid "..."
 msgstr "..."
@@ -356,6 +360,10 @@ msgstr "Migrar al mercado V3 de {0}"
 msgid "Voting results"
 msgstr "Resultados de la votación"
 
+#: src/components/MarketSwitcher.tsx
+msgid "RWA market of real estate tokens issued by Reental over the Polygon network"
+msgstr "Mercado RWA de tokens inmobiliarios emitidos por Reental sobre la red Polygon"
+
 #: src/modules/dashboard/LiquidationRiskParametresModal/components/LTVContent.tsx
 msgid "MAX"
 msgstr "MAX"
@@ -404,11 +412,6 @@ msgstr "La deuda viva total en todas las reservas, es decir, la suma de todos lo
 msgid "Your {networkName} wallet is empty. Get free test assets at"
 msgstr "Tu cartera de {networkName} está vacía. Consigue activos de prueba gratis en"
 
-#: src/modules/dashboard/lists/BorrowAssetsList/BorrowAssetsList.tsx
-#: src/modules/dashboard/lists/SupplyAssetsList/SupplyAssetsList.tsx
-msgid "We couldn't find any assets related to your search. Try again with a different category."
-msgstr ""
-
 #: src/modules/governance/GovernanceTopPanel.tsx
 msgid "documentation"
 msgstr "documentación"
@@ -442,7 +445,6 @@ msgstr "Acción de permiso requerida"
 msgid "The amount of capital currently locked in the protocol, calculated as the total supplied minus the total borrowed. It reflects the liquidity that is actually available in the pool at this moment."
 msgstr "El capital actualmente bloqueado en el protocolo, calculado como el total suministrado menos el total tomado en préstamo. Refleja la liquidez que está realmente disponible en el pool en este momento."
 
-#: src/modules/dashboard/DashboardTopPanel.tsx
 #: src/modules/umbrella/UmbrellaHeader.tsx
 msgid "Available rewards"
 msgstr "Recompensas disponibles"
@@ -650,11 +652,6 @@ msgstr "Cantidad invalidad para generar"
 msgid "Disconnect Wallet"
 msgstr "Desconectar cartera"
 
-#: src/modules/markets/MarketAssetsListContainer.tsx
-#: src/modules/markets/MarketAssetsListContainer.tsx
-msgid "assets"
-msgstr "activos"
-
 #: src/components/transactions/GovDelegation/GovDelegationModalContent.tsx
 msgid "Balance to revoke"
 msgstr "Balance a revocar"
@@ -841,10 +838,6 @@ msgstr "Este activo está congelado debido a una decisión de la comunidad de Aa
 msgid "Faucet"
 msgstr "Faucet"
 
-#: src/components/MarketSwitcher.tsx
-msgid "Optimized for efficiency and risk by supporting blue-chip collateral assets"
-msgstr ""
-
 #: src/components/transactions/Bridge/BridgeFeeTokenSelector.tsx
 msgid "The fee includes the gas cost to complete the transaction on the destination chain and the fee paid to Chainlink CCIP service providers. You can chose to pay in the network token or GHO. <0>Learn more</0>"
 msgstr ""
@@ -960,10 +953,6 @@ msgstr "Colateralización"
 msgid "You can report incident to our <0>Discord</0> or<1>Github</1>."
 msgstr "Puedes reportar cualquier incidente a nuestro <0>Discord</0> o <1>Github</1>."
 
-#: src/components/MarketSwitcher.tsx
-msgid "Main Ethereum market with the largest selection of assets and yield options"
-msgstr ""
-
 #: src/components/ReserveSubheader.tsx
 #: src/components/transactions/FlowCommons/TxModalDetails.tsx
 msgid "Disabled"
@@ -1077,6 +1066,7 @@ msgid "This asset is frozen due to an Aave Protocol Governance decision. On the 
 msgstr "Este activo está congelado debido a una decisión del Gobierno del Protocolo Aave. El 20 de diciembre de 2022, renFIL ya no será compatible y no se podrá conectar de nuevo a su red nativa. Se recomienda retirar las posiciones de suministro y pagar las posiciones de préstamo para que renFIL se pueda convertir de nuevo a FIL antes de la fecha límite. Después de esta fecha, ya no será posible convertir renFIL a FIL. <0>Más detalles</0>"
 
 #: src/modules/dashboard/lists/SupplyAssetsList/SupplyAssetsList.tsx
+#: src/modules/markets/MarketAssetsListContainer.tsx
 msgid "Assets"
 msgstr "Activos"
 
@@ -1092,6 +1082,11 @@ msgstr "finaliza"
 #: src/hooks/useReserveActionState.tsx
 msgid "Borrowing is unavailable because you’ve enabled Efficiency Mode (E-Mode) for {0} category. To manage E-Mode categories visit your <0>Dashboard</0>."
 msgstr "Tomar prestado no está disponible porque has habilitado el Efficieny Mode (E-Mode) para la categoría {0}. Para manejar las categorías del E-Mode visita tu <0>Panel de control</0>."
+
+#. js-lingui-explicit-id
+#: src/ui-config/menu-items/index.tsx
+msgid "Guide"
+msgstr ""
 
 #: src/components/transactions/Switch/BaseSwitchModalContent.tsx
 msgid "Your health factor after this swap will be critically low and may result in liquidation. Please choose a different asset or reduce the swap amount to stay safe."
@@ -1180,6 +1175,10 @@ msgstr "Está previsto que este activo se desvincule debido a una decisión del 
 #: src/modules/umbrella/StakeCooldownModalContent.tsx
 msgid "Cooldown period"
 msgstr "Periodo de cooldown"
+
+#: src/modules/dashboard/lists/SupplyAssetsList/SupplyAssetsList.tsx
+msgid "There are no assets available to supply in this market right now."
+msgstr ""
 
 #: src/components/transactions/FlowCommons/TxModalDetails.tsx
 msgid "Liquidation at"
@@ -1325,6 +1324,10 @@ msgstr "Esto representa el umbral en el que un préstamo será considerado sin g
 #: src/components/isolationMode/IsolatedBadge.tsx
 msgid "Isolated"
 msgstr "Aislado"
+
+#: src/layouts/AppFooter.tsx
+msgid "Guide"
+msgstr ""
 
 #: src/components/transactions/Emode/EmodeActions.tsx
 msgid "Switching E-Mode"
@@ -1861,7 +1864,7 @@ msgstr ""
 #: src/modules/history/HistoryFilterMenu.tsx
 #: src/modules/reserve-overview/ReserveActions.tsx
 msgid "Borrow"
-msgstr "Tomar prestado"
+msgstr "Préstamo"
 
 #: src/modules/reserve-overview/ReserveEModePanel.tsx
 #: src/modules/reserve-overview/SupplyInfo.tsx
@@ -2543,6 +2546,10 @@ msgstr "Recibido"
 msgid "Your current loan to value based on your collateral supplied."
 msgstr "Tu actual relación préstamo-valor basado en tu garantía suministrada."
 
+#: src/components/MarketSwitcher.tsx
+msgid "There are no additional RWA markets available on RNT Lend yet."
+msgstr ""
+
 #: src/components/transactions/AssetInput.tsx
 #: src/modules/dashboard/lists/BorrowedPositionsList/BorrowedPositionsList.tsx
 #: src/modules/dashboard/lists/SuppliedPositionsList/SuppliedPositionsList.tsx
@@ -2673,7 +2680,6 @@ msgstr "Cantidad"
 msgid "There was some error. Please try changing the parameters or <0><1>copy the error</1></0>"
 msgstr "Hubo un error. Por favor intenta cambiar los parámetros o <0><1>copiar el error</1></0>"
 
-#: src/modules/dashboard/DashboardTopPanel.tsx
 #: src/modules/sGho/SGhoDepositPanel.tsx
 #: src/modules/staking/GhoStakingPanel.tsx
 #: src/modules/staking/StakingPanel.tsx
@@ -2694,6 +2700,13 @@ msgstr ""
 #: src/components/transactions/Borrow/BorrowActions.tsx
 msgid "Borrowing {symbol}"
 msgstr "Tomando prestado {symbol}"
+
+#: src/modules/dashboard/lists/BorrowAssetsList/BorrowAssetsList.tsx
+#: src/modules/dashboard/lists/BorrowedPositionsList/BorrowedPositionsList.tsx
+#: src/modules/dashboard/lists/SuppliedPositionsList/SuppliedPositionsList.tsx
+#: src/modules/dashboard/lists/SupplyAssetsList/SupplyAssetsList.tsx
+msgid "Search asset name or symbol"
+msgstr "Buscar por nombre o símbolo del activo"
 
 #: src/components/transactions/DebtSwitch/DebtSwitchModalContent.tsx
 #: src/components/transactions/Repay/CollateralRepayModalContent.tsx
@@ -2992,10 +3005,6 @@ msgstr "Versión 2"
 msgid "E-Mode increases your LTV for a selected category of assets. <0>Learn more</0>"
 msgstr ""
 
-#: src/modules/dashboard/lists/SupplyAssetsList/WalletEmptyInfo.tsx
-msgid "Your {name} wallet is empty. Purchase or transfer assets or use <0>{0}</0> to transfer your {network} assets."
-msgstr "Tu cartera de {name} está vacía. Compra o transfiere activos o usa <0>{0}</0> para transferir tus activos de {network}."
-
 #: src/components/transactions/Switch/SwitchActions.tsx
 msgid "Checking approval"
 msgstr ""
@@ -3191,6 +3200,10 @@ msgstr ""
 #: src/modules/governance/DelegatedInfoPanel.tsx
 msgid "{title}"
 msgstr "{title}"
+
+#: src/components/MarketSwitcher.tsx
+msgid "RWA market of real estate tokens issued by Reental over the Sepolia network"
+msgstr "Mercado RWA de tokens inmobiliarios emitidos por Reental sobre la red Sepolia"
 
 #: src/ui-config/errorMapping.tsx
 msgid "The underlying balance needs to be greater than 0"
@@ -3624,6 +3637,10 @@ msgstr "Idioma"
 msgid "Allows you to decide whether to use a supplied asset as collateral. An asset used as collateral will affect your borrowing power and health factor."
 msgstr "Te permite decidir si utilizar un activo suministrado como garantía. Un activo utilizado como garantía afectará a tu poder de préstamo y factor de salud."
 
+#: src/modules/markets/MarketAssetsListContainer.tsx
+msgid "Search asset name, symbol, or address"
+msgstr "Buscar por nombre, símbolo o dirección del activo"
+
 #: src/components/Reental/TwoFABanner/TwoFABanner.tsx
 msgid "In order to perform operations with your real estate tokens, you must first open your time window on the app.reental.co platform"
 msgstr "Para poder realizar operaciones con tus tokens de inmuebles, primero debes abrir tu ventana de tiempo en la plataforma app.reental.co"
@@ -3817,6 +3834,10 @@ msgstr "No hay fondos suficientes en la reserva{0}para tomar prestado"
 #: pages/404.page.tsx
 msgid "Back home"
 msgstr ""
+
+#: src/modules/markets/MarketAssetsListContainer.tsx
+msgid "Search asset"
+msgstr "Buscar activo"
 
 #: src/components/transactions/FlowCommons/Error.tsx
 #: src/components/transactions/FlowCommons/PermissionView.tsx

@@ -60,16 +60,17 @@ export const marketsData: {
   [key in keyof typeof CustomMarket]: MarketDataType;
 } = {
   [CustomMarket.reental_polygon_v3]: {
-    marketTitle: 'Reental',
+    marketTitle: 'Reental Polygon',
     market: CustomMarket.reental_polygon_v3,
     chainId: ChainId.polygon,
+    logo: '/icons/markets/reental.svg',
     v3: true,
     enabledFeatures: {
-      liquiditySwap: true,
+      liquiditySwap: false,
       incentives: true,
       collateralRepay: false,
       debtSwitch: false,
-      withdrawAndSwitch: true,
+      withdrawAndSwitch: false,
       switch: false,
     },
     // subgraphUrl: `https://gateway-arbitrum.network.thegraph.com/api/${apiKey}/subgraphs/id/Co2URyXjnxaw8WqxKyVHdirq9Ahhm5vcTs4dMedAq211`,
@@ -92,6 +93,7 @@ export const marketsData: {
     market: CustomMarket.reental_sepolia_v3,
     v3: true,
     chainId: ChainId.sepolia,
+    logo: '/icons/markets/reental.svg',
     enabledFeatures: {
       faucet: true,
     },

@@ -1,5 +1,6 @@
 import { Box, Skeleton, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { ReactNode } from 'react';
+import { FONT_LABEL } from 'src/utils/theme';
 
 interface TopInfoPanelItemProps {
   icon?: ReactNode;
@@ -56,9 +57,10 @@ export const TopInfoPanelItem = ({
               display: { xs: 'none', md: 'flex' },
               alignItems: 'center',
               justifyContent: 'center',
-              border: '1px solid #EBEBED1F',
+              border: '1px solid',
+              borderColor: theme.palette.mode === 'dark' ? '#EBEBED1F' : 'divider',
               borderRadius: '12px',
-              bgcolor: '#1F2937',
+              bgcolor: theme.palette.mode === 'dark' ? '#1F2937' : 'background.paper',
               boxShadow: '0px 2px 1px rgba(0, 0, 0, 0.05), 0px 0px 1px rgba(0, 0, 0, 0.25)',
               width: 42,
               height: 42,
@@ -72,8 +74,16 @@ export const TopInfoPanelItem = ({
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
           <Typography
-            sx={{ color: variant === 'dark' ? '#A5A8B6' : '#62677B' }}
-            variant={upToSM ? 'description' : 'caption'}
+            sx={{
+              // Theme-aware label color: the panel band is dark in dark mode and a
+              // light card in light mode.
+              color: variant === 'dark' ? 'text.muted' : '#62677B',
+              // RNT "Label" style: Orbitron, uppercase, tracked out (Manual de Marca V.1).
+              fontFamily: FONT_LABEL,
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
+            }}
+            variant={upToSM ? 'subheader2' : 'helperText'}
             component="div"
           >
             {title}
@@ -82,9 +92,18 @@ export const TopInfoPanelItem = ({
         </Box>
 
         {loading ? (
-          <Skeleton width={60} height={upToSM ? 28 : 24} sx={{ background: '#1F2937' }} />
+          <Skeleton
+            width={60}
+            height={upToSM ? 28 : 24}
+            sx={{ background: theme.palette.mode === 'dark' ? '#1F2937' : undefined }}
+          />
         ) : (
-          children
+          // RNT "Data" style: metric values inherit the brand primary color
+          // (green in dark mode, blue in light mode). Regular weight: the
+          // variants' bold weights read too heavy for figures.
+          <Box sx={{ color: 'primary.main', '& .MuiTypography-root': { fontWeight: 400 } }}>
+            {children}
+          </Box>
         )}
       </Box>
     </Box>

@@ -72,7 +72,7 @@
   border: none;
   cursor: pointer;
   transition: opacity 0.2s ease;
-  font-family: 'Fustat', Arial;
+  font-family: 'Helvetica Now Display', 'Inter', Arial, sans-serif;
   font-weight: 600;
 }
 

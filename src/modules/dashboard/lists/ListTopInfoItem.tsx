@@ -26,7 +26,15 @@ export const ListTopInfoItem = ({ title, value, percent, tooltip }: ListTopInfoI
       <Typography color="text.secondary" sx={{ mr: 1 }} noWrap>
         {title}
       </Typography>
-      <FormattedNumber value={value} percent={percent} variant="secondary14" symbol="USD" />
+      {/* RNT "Data" style: metric values use the brand primary color, matching TopInfoPanelItem. */}
+      <FormattedNumber
+        value={value}
+        percent={percent}
+        variant="secondary14"
+        symbol="USD"
+        color="primary.main"
+        symbolsColor="primary.main"
+      />
 
       {tooltip}
     </Paper>

@@ -68,7 +68,7 @@ export const MobileMenu = ({ open, setOpen, headerHeight }: MobileMenuProps) => 
           sx={{ p: '7px 8px', minWidth: 'unset', ml: 2 }}
           onClick={() => setOpen(true)}
         >
-          <SvgIcon sx={{ color: '#F1F1F3' }} fontSize="small">
+          <SvgIcon sx={{ color: 'text.primary' }} fontSize="small">
             <MenuIcon />
           </SvgIcon>
         </Button>

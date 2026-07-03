@@ -355,6 +355,10 @@ msgstr "Migrate to {0} v3 Market"
 msgid "Voting results"
 msgstr "Voting results"
 
+#: src/components/MarketSwitcher.tsx
+msgid "RWA market of real estate tokens issued by Reental over the Polygon network"
+msgstr "RWA market of real estate tokens issued by Reental over the Polygon network"
+
 #: src/modules/dashboard/LiquidationRiskParametresModal/components/LTVContent.tsx
 msgid "MAX"
 msgstr "MAX"
@@ -436,7 +440,6 @@ msgstr "Allowance required action"
 msgid "The amount of capital currently locked in the protocol, calculated as the total supplied minus the total borrowed. It reflects the liquidity that is actually available in the pool at this moment."
 msgstr "The amount of capital currently locked in the protocol, calculated as the total supplied minus the total borrowed. It reflects the liquidity that is actually available in the pool at this moment."
 
-#: src/modules/dashboard/DashboardTopPanel.tsx
 #: src/modules/umbrella/UmbrellaHeader.tsx
 msgid "Available rewards"
 msgstr "Available rewards"
@@ -2426,11 +2429,6 @@ msgstr "Assets to borrow"
 msgid "Data couldn't be loaded."
 msgstr "Data couldn't be loaded."
 
-#: src/components/MarketSwitcher.tsx
-#: src/components/MarketSwitcher.tsx
-msgid "RWA market focused on real estate assets."
-msgstr "RWA market focused on real estate assets."
-
 #: src/components/Warnings/BorrowDisabledWarning.tsx
 msgid "Borrowing is disabled due to an Aave community decision. <0>More details</0>"
 msgstr "Borrowing is disabled due to an Aave community decision. <0>More details</0>"
@@ -2677,7 +2675,6 @@ msgstr "Amount"
 msgid "There was some error. Please try changing the parameters or <0><1>copy the error</1></0>"
 msgstr "There was some error. Please try changing the parameters or <0><1>copy the error</1></0>"
 
-#: src/modules/dashboard/DashboardTopPanel.tsx
 #: src/modules/sGho/SGhoDepositPanel.tsx
 #: src/modules/staking/GhoStakingPanel.tsx
 #: src/modules/staking/StakingPanel.tsx
@@ -2698,6 +2695,13 @@ msgstr "dashboard"
 #: src/components/transactions/Borrow/BorrowActions.tsx
 msgid "Borrowing {symbol}"
 msgstr "Borrowing {symbol}"
+
+#: src/modules/dashboard/lists/BorrowAssetsList/BorrowAssetsList.tsx
+#: src/modules/dashboard/lists/BorrowedPositionsList/BorrowedPositionsList.tsx
+#: src/modules/dashboard/lists/SuppliedPositionsList/SuppliedPositionsList.tsx
+#: src/modules/dashboard/lists/SupplyAssetsList/SupplyAssetsList.tsx
+msgid "Search asset name or symbol"
+msgstr "Search asset name or symbol"
 
 #: src/components/transactions/DebtSwitch/DebtSwitchModalContent.tsx
 #: src/components/transactions/Repay/CollateralRepayModalContent.tsx
@@ -3192,6 +3196,10 @@ msgstr "Minimum amount of debt to be repaid"
 msgid "{title}"
 msgstr "{title}"
 
+#: src/components/MarketSwitcher.tsx
+msgid "RWA market of real estate tokens issued by Reental over the Sepolia network"
+msgstr "RWA market of real estate tokens issued by Reental over the Sepolia network"
+
 #: src/ui-config/errorMapping.tsx
 msgid "The underlying balance needs to be greater than 0"
 msgstr "The underlying balance needs to be greater than 0"
@@ -3591,10 +3599,6 @@ msgstr "Restaked"
 #: src/components/transactions/Switch/SwitchActions.tsx
 #: src/components/transactions/Switch/SwitchActions.tsx
 #: src/components/transactions/Switch/SwitchActions.tsx
-#: src/modules/dashboard/lists/BorrowedPositionsList/BorrowedPositionsListItem.tsx
-#: src/modules/dashboard/lists/BorrowedPositionsList/BorrowedPositionsListItem.tsx
-#: src/modules/dashboard/lists/SuppliedPositionsList/SuppliedPositionsListItem.tsx
-#: src/modules/dashboard/lists/SuppliedPositionsList/SuppliedPositionsListMobileItem.tsx
 #: src/modules/history/actions/ActionDetails.tsx
 #: src/modules/history/HistoryFilterMenu.tsx
 msgid "Swap"
@@ -3623,6 +3627,10 @@ msgstr "Language"
 #: src/components/infoTooltips/CollateralSwitchTooltip.tsx
 msgid "Allows you to decide whether to use a supplied asset as collateral. An asset used as collateral will affect your borrowing power and health factor."
 msgstr "Allows you to decide whether to use a supplied asset as collateral. An asset used as collateral will affect your borrowing power and health factor."
+
+#: src/modules/markets/MarketAssetsListContainer.tsx
+msgid "Search asset name, symbol, or address"
+msgstr "Search asset name, symbol, or address"
 
 #: src/components/Reental/TwoFABanner/TwoFABanner.tsx
 msgid "In order to perform operations with your real estate tokens, you must first open your time window on the app.reental.co platform"
@@ -3817,6 +3825,10 @@ msgstr "There are not enough funds in the{0}reserve to borrow"
 #: pages/404.page.tsx
 msgid "Back home"
 msgstr "Back home"
+
+#: src/modules/markets/MarketAssetsListContainer.tsx
+msgid "Search asset"
+msgstr "Search asset"
 
 #: src/components/transactions/FlowCommons/Error.tsx
 #: src/components/transactions/FlowCommons/PermissionView.tsx

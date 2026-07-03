@@ -222,7 +222,7 @@ export const InterestRateModelGraph = withTooltip<AreaProps, TooltipData>(
 
             {/* Variable Borrow APR Line */}
             <LinePath
-              stroke="#B6509E"
+              stroke={theme.palette.secondary.main}
               strokeWidth={2}
               data={data}
               x={(d) => dateScale(getDate(d)) ?? 0}
@@ -273,7 +273,7 @@ export const InterestRateModelGraph = withTooltip<AreaProps, TooltipData>(
             <Line
               from={{ x: dateScale(ticks[1].value), y: margin.top + 24 }}
               to={{ x: dateScale(ticks[1].value), y: innerHeight }}
-              stroke="#0062D2"
+              stroke={theme.palette.primary.main}
               strokeWidth={1}
               pointerEvents="none"
               strokeDasharray="5,2"
@@ -294,7 +294,7 @@ export const InterestRateModelGraph = withTooltip<AreaProps, TooltipData>(
             <Line
               from={{ x: dateScale(ticks[0].value), y: margin.top + 8 }}
               to={{ x: dateScale(ticks[0].value), y: innerHeight }}
-              stroke="#0062D2"
+              stroke={theme.palette.primary.main}
               strokeWidth={1}
               pointerEvents="none"
               strokeDasharray="5,2"

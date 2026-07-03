@@ -24,6 +24,7 @@ import { useAppDataContext } from 'src/hooks/app-data-provider/useAppDataProvide
 import { HISTORICAL_MARKET_CHAIN_IDS } from 'src/libs/reental/aave/history';
 import { GraphLegend } from 'src/modules/reserve-overview/graphs/GraphLegend';
 import { useRootStore } from 'src/store/root';
+import { FONT_LABEL } from 'src/utils/theme';
 import { useShallow } from 'zustand/shallow';
 
 import { isAssetHidden } from '../dashboard/lists/constants';
@@ -49,7 +50,7 @@ type StatProps = {
   loading: boolean;
   valueVariant: 'main16' | 'main21';
   symbolVariant: 'secondary16' | 'secondary21';
-  labelVariant: 'caption' | 'description';
+  labelVariant: 'helperText' | 'subheader2';
 };
 
 const Stat = ({
@@ -63,7 +64,20 @@ const Stat = ({
 }: StatProps) => (
   <TopInfoPanelItem
     title={
-      <Typography variant={labelVariant} component="span">
+      <Typography
+        variant={labelVariant}
+        component="span"
+        sx={{
+          // RNT "Label" style: Orbitron, uppercase, tracked out (Manual de Marca V.1).
+          // `&&` bumps specificity so it wins over the Typography variant's own
+          // fontFamily/letterSpacing (which otherwise take precedence over sx here).
+          '&&': {
+            fontFamily: FONT_LABEL,
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+          },
+        }}
+      >
         {label}
       </Typography>
     }
@@ -108,7 +122,7 @@ const Stat = ({
       symbolsVariant={symbolVariant}
       visibleDecimals={2}
       compact
-      symbolsColor="#A5A8B6"
+      symbolsColor="primary.main"
     />
   </TopInfoPanelItem>
 );
@@ -177,7 +191,7 @@ export const MarketsTopPanel = ({
       {
         key: 'totalSupplied',
         label: i18n._(t`Total market size`),
-        color: seriesColors.totalSupplied,
+        color: theme.palette.primary.main,
       },
       {
         key: 'tvl',
@@ -187,15 +201,17 @@ export const MarketsTopPanel = ({
       {
         key: 'totalBorrowed',
         label: i18n._(t`Total borrowed`),
-        color: seriesColors.totalBorrowed,
+        color: theme.palette.secondary.main,
       },
     ],
-    [i18n]
+    [i18n, theme.palette.primary.main, theme.palette.secondary.main]
   );
 
   const valueVariant = downToSM ? 'main16' : 'main21';
   const symbolVariant = downToSM ? 'secondary16' : 'secondary21';
-  const labelVariant = downToSM ? 'caption' : 'description';
+  // Match TopInfoPanelItem's label sizing (subheader2 ≥ sm, helperText < sm) so the
+  // Markets stats look identical to the dashboard panel labels.
+  const labelVariant = downToSM ? 'helperText' : 'subheader2';
   const historyLoading = historyQuery.isLoading || historyQuery.isFetching;
   const unsupportedChain = !HISTORICAL_MARKET_CHAIN_IDS.includes(currentMarketData.chainId);
   const metricsTextColor = theme.palette.text.secondary;

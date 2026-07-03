@@ -31,7 +31,7 @@ export const GhoReserveTopDetails = ({ reserve }: { reserve: ComputedReserveData
           symbol="USD"
           variant={valueTypographyVariant}
           symbolsVariant={symbolsTypographyVariant}
-          symbolsColor="#A5A8B6"
+          symbolsColor="primary.main"
         />
       </TopInfoPanelItem>
 
@@ -45,7 +45,7 @@ export const GhoReserveTopDetails = ({ reserve }: { reserve: ComputedReserveData
           symbol="USD"
           variant={valueTypographyVariant}
           symbolsVariant={symbolsTypographyVariant}
-          symbolsColor="#A5A8B6"
+          symbolsColor="primary.main"
         />
       </TopInfoPanelItem>
 
@@ -68,7 +68,7 @@ export const GhoReserveTopDetails = ({ reserve }: { reserve: ComputedReserveData
             symbol="USD"
             variant={valueTypographyVariant}
             symbolsVariant={symbolsTypographyVariant}
-            symbolsColor="#A5A8B6"
+            symbolsColor="primary.main"
           />
         </Box>
       </TopInfoPanelItem>

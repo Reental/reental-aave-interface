@@ -6,12 +6,10 @@ import { useAssetCaps } from 'src/hooks/useAssetCaps';
 import { useRootStore } from 'src/store/root';
 import { DashboardReserve } from 'src/utils/dashboardSortUtils';
 import { showExternalIncentivesTooltip } from 'src/utils/utils';
-import { useShallow } from 'zustand/shallow';
 
 import { IncentivesCard } from '../../../../components/incentives/IncentivesCard';
 import { Row } from '../../../../components/primitives/Row';
 import { useModalContext } from '../../../../hooks/useModal';
-import { isFeatureEnabled } from '../../../../utils/marketsAndNetworksConfig';
 import { ListItemUsedAsCollateral } from '../ListItemUsedAsCollateral';
 import { ListMobileItemWrapper } from '../ListMobileItemWrapper';
 import { ListValueRow } from '../ListValueRow';
@@ -25,12 +23,9 @@ export const SuppliedPositionsListMobileItem = ({
   is2FAEnabled,
 }: DashboardReserve & { is2FAEnabled: boolean }) => {
   const { user } = useAppDataContext();
-  const [currentMarketData, currentMarket] = useRootStore(
-    useShallow((state) => [state.currentMarketData, state.currentMarket])
-  );
-  const { openSupply, openCollateralSwap, openWithdraw, openCollateralChange } = useModalContext();
+  const currentMarket = useRootStore((state) => state.currentMarket);
+  const { openSupply, openWithdraw, openCollateralChange } = useModalContext();
   const { debtCeiling } = useAssetCaps();
-  const isSwapButton = isFeatureEnabled.liquiditySwap(currentMarketData);
   const {
     symbol,
     iconSymbol,
@@ -52,7 +47,6 @@ export const SuppliedPositionsListMobileItem = ({
         (reserve.isIsolated && user.totalCollateralMarketReferenceCurrency === '0'))
     : false;
 
-  const disableSwap = !isActive || isPaused || reserve.symbol == 'stETH';
   const disableWithdraw = !isActive || isPaused;
 
   const requires2FAandIsNotEnabled = usageAsCollateralEnabledOnUser && !is2FAEnabled;
@@ -123,25 +117,14 @@ export const SuppliedPositionsListMobileItem = ({
       </Row>
 
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 5 }}>
-        {isSwapButton ? (
-          <Button
-            disabled={disableSwap}
-            variant="contained"
-            onClick={() => openCollateralSwap(underlyingAsset)}
-            fullWidth
-          >
-            <Trans>Swap</Trans>
-          </Button>
-        ) : (
-          <Button
-            disabled={disableSupply}
-            variant="contained"
-            onClick={() => openSupply(underlyingAsset, currentMarket, reserve.name, 'dashboard')}
-            fullWidth
-          >
-            <Trans>Supply</Trans>
-          </Button>
-        )}
+        <Button
+          disabled={disableSupply}
+          variant="contained"
+          onClick={() => openSupply(underlyingAsset, currentMarket, reserve.name, 'dashboard')}
+          fullWidth
+        >
+          <Trans>Supply</Trans>
+        </Button>
         <Button
           disabled={disableWithdraw}
           variant="outlined"

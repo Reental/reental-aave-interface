@@ -1,16 +1,19 @@
 import { API_ETH_MOCK_ADDRESS } from '@aave/contract-helpers';
 import { USD_DECIMALS, valueToBigNumber } from '@aave/math-utils';
-import { Trans } from '@lingui/macro';
+import { t, Trans } from '@lingui/macro';
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { Fragment, useState } from 'react';
 import { VariableAPYTooltip } from 'src/components/infoTooltips/VariableAPYTooltip';
 import { ListColumn } from 'src/components/lists/ListColumn';
 import { ListHeaderTitle } from 'src/components/lists/ListHeaderTitle';
 import { ListHeaderWrapper } from 'src/components/lists/ListHeaderWrapper';
+import { ListSearchBar } from 'src/components/lists/ListSearchBar';
+import { NoSearchResults } from 'src/components/NoSearchResults';
 import { Warning } from 'src/components/primitives/Warning';
 import { AssetCapsProvider } from 'src/hooks/useAssetCaps';
 import { useRootStore } from 'src/store/root';
 import { fetchIconSymbolAndName } from 'src/ui-config/reservePatches';
+import { matchesSearchTerm } from 'src/utils/assetSearch';
 import { GENERAL } from 'src/utils/events';
 import { displayGhoForMintableMarket } from 'src/utils/ghoUtilities';
 import { useShallow } from 'zustand/shallow';
@@ -83,8 +86,10 @@ export const BorrowAssetsList = () => {
   const { user, reserves, marketReferencePriceInUsd, loading } = useAppDataContext();
   const theme = useTheme();
   const downToXSM = useMediaQuery(theme.breakpoints.down('xsm'));
-  const [sortName, setSortName] = useState('');
+  // Default sort: highest borrow APY first (note: sortDesc=false sorts numeric keys descending).
+  const [sortName, setSortName] = useState('variableBorrowAPY');
   const [sortDesc, setSortDesc] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const listCollapseKey = 'borrowAssetsDashboardTableCollapse';
   const [, setIsListCollapsed] = useState(localStorage.getItem(listCollapseKey) === 'true');
@@ -151,6 +156,10 @@ export const BorrowAssetsList = () => {
     }) as unknown as DashboardReserve[]
   );
   const borrowDisabled = !sortedReserves.length;
+
+  const displayedReserves = sortedReserves.filter((item) =>
+    matchesSearchTerm(searchTerm, item.symbol, item.name)
+  );
 
   const RenderHeader: React.FC = () => {
     return (
@@ -254,8 +263,15 @@ export const BorrowAssetsList = () => {
       }
     >
       <>
-        {!downToXSM && !!borrowReserves.length && <RenderHeader />}
-        {sortedReserves?.map((item) => (
+        {!borrowDisabled && (
+          <ListSearchBar
+            onSearchTermChange={setSearchTerm}
+            placeholder={t`Search asset name or symbol`}
+          />
+        )}
+        {!downToXSM && !!displayedReserves.length && <RenderHeader />}
+        {!displayedReserves.length && !!searchTerm && <NoSearchResults searchTerm={searchTerm} />}
+        {displayedReserves.map((item) => (
           <Fragment key={item.underlyingAsset}>
             <AssetCapsProvider asset={item.reserve}>
               {downToXSM ? (

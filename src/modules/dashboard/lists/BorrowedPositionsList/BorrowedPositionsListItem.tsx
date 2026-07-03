@@ -9,9 +9,7 @@ import { useModalContext } from 'src/hooks/useModal';
 import { useRootStore } from 'src/store/root';
 import { DashboardReserve } from 'src/utils/dashboardSortUtils';
 import { displayGhoForMintableMarket } from 'src/utils/ghoUtilities';
-import { isFeatureEnabled } from 'src/utils/marketsAndNetworksConfig';
 import { showExternalIncentivesTooltip } from 'src/utils/utils';
-import { useShallow } from 'zustand/shallow';
 
 import { ListAPRColumn, ListGhoAPRColumn } from '../ListAPRColumn';
 import { ListButtonsColumn } from '../ListButtonsColumn';
@@ -25,17 +23,12 @@ export interface BorrowedPositionsListItem {
   disableEModeSwitch: boolean;
 }
 
-export const BorrowedPositionsListItem = ({
-  item,
-  disableEModeSwitch,
-}: BorrowedPositionsListItem) => {
+export const BorrowedPositionsListItem = ({ item }: BorrowedPositionsListItem) => {
   const { borrowCap } = useAssetCaps();
-  const [currentMarket, currentMarketData] = useRootStore(
-    useShallow((state) => [state.currentMarket, state.currentMarketData])
-  );
+  const currentMarket = useRootStore((state) => state.currentMarket);
   const theme = useTheme();
   const downToXSM = useMediaQuery(theme.breakpoints.down('xsm'));
-  const { openBorrow, openRepay, openDebtSwitch } = useModalContext();
+  const { openBorrow, openRepay } = useModalContext();
 
   const reserve = item.reserve;
 
@@ -48,24 +41,15 @@ export const BorrowedPositionsListItem = ({
 
   const disableRepay = !reserve.isActive || reserve.isPaused;
 
-  const showSwitchButton = !!isFeatureEnabled.debtSwitch(currentMarketData);
-  const disableSwitch =
-    reserve.isPaused || !reserve.isActive || reserve.symbol == 'stETH' || disableEModeSwitch;
-
   const props: BorrowedPositionsListItemProps = {
     ...item,
     disableBorrow,
-    disableSwitch,
     disableRepay,
-    showSwitchButton,
     totalBorrows: item.variableBorrows,
     totalBorrowsUSD: item.variableBorrowsUSD,
     borrowAPY: Number(reserve.variableBorrowAPY),
     incentives: reserve.vIncentivesData,
     variableDebtTokenAddress: reserve.variableDebtTokenAddress,
-    onDetbSwitchClick: () => {
-      openDebtSwitch(reserve.underlyingAsset);
-    },
     onOpenBorrow: () => {
       openBorrow(reserve.underlyingAsset, currentMarket, reserve.name, 'dashboard');
     },
@@ -89,12 +73,9 @@ export const BorrowedPositionsListItem = ({
 
 interface BorrowedPositionsListItemProps extends DashboardReserve {
   disableBorrow: boolean;
-  disableSwitch: boolean;
   disableRepay: boolean;
-  showSwitchButton: boolean;
   borrowAPY: number;
   incentives: ReserveIncentiveResponse[] | undefined;
-  onDetbSwitchClick: () => void;
   onOpenBorrow: () => void;
   onOpenRepay: () => void;
 }
@@ -102,15 +83,12 @@ interface BorrowedPositionsListItemProps extends DashboardReserve {
 const BorrowedPositionsListItemDesktop = ({
   reserve,
   disableBorrow,
-  disableSwitch,
   disableRepay,
-  showSwitchButton,
   totalBorrows,
   totalBorrowsUSD,
   borrowAPY,
   variableDebtTokenAddress,
   incentives,
-  onDetbSwitchClick,
   onOpenBorrow,
   onOpenRepay,
 }: BorrowedPositionsListItemProps) => {
@@ -162,20 +140,9 @@ const BorrowedPositionsListItemDesktop = ({
       )}
 
       <ListButtonsColumn>
-        {showSwitchButton ? (
-          <Button
-            disabled={disableSwitch}
-            variant="contained"
-            onClick={onDetbSwitchClick}
-            data-cy={`swapButton`}
-          >
-            <Trans>Swap</Trans>
-          </Button>
-        ) : (
-          <Button disabled={disableBorrow} variant="contained" onClick={onOpenBorrow}>
-            <Trans>Borrow</Trans>
-          </Button>
-        )}
+        <Button disabled={disableBorrow} variant="contained" onClick={onOpenBorrow}>
+          <Trans>Borrow</Trans>
+        </Button>
         <Button disabled={disableRepay} variant="outlined" onClick={onOpenRepay}>
           <Trans>Repay</Trans>
         </Button>
@@ -189,13 +156,10 @@ const BorrowedPositionsListItemMobile = ({
   totalBorrows,
   totalBorrowsUSD,
   disableBorrow,
-  showSwitchButton,
-  disableSwitch,
   borrowAPY,
   incentives,
   variableDebtTokenAddress,
   disableRepay,
-  onDetbSwitchClick,
   onOpenBorrow,
   onOpenRepay,
 }: BorrowedPositionsListItemProps) => {
@@ -239,21 +203,9 @@ const BorrowedPositionsListItemMobile = ({
       </Row>
 
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 5 }}>
-        {showSwitchButton ? (
-          <Button
-            disabled={disableSwitch}
-            variant="contained"
-            fullWidth
-            onClick={onDetbSwitchClick}
-            data-cy={`swapButton`}
-          >
-            <Trans>Swap</Trans>
-          </Button>
-        ) : (
-          <Button disabled={disableBorrow} variant="contained" onClick={onOpenBorrow} fullWidth>
-            <Trans>Borrow</Trans>
-          </Button>
-        )}
+        <Button disabled={disableBorrow} variant="contained" onClick={onOpenBorrow} fullWidth>
+          <Trans>Borrow</Trans>
+        </Button>
         <Button
           disabled={disableRepay}
           variant="outlined"

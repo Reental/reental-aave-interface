@@ -1,3 +1,3 @@
 export const uiConfig = {
-  appLogo: '/RNTLend.png',
+  appLogo: '/rnt-protocol-mark.svg',
 };

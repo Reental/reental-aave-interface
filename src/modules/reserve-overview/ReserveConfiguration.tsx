@@ -172,6 +172,7 @@ export const ReserveConfiguration: React.FC<ReserveConfigurationProps> = ({ rese
                     value={reserve.borrowUsageRatio}
                     percent
                     variant="main16"
+                    color="primary.main"
                     compact
                   />
                 </PanelItem>

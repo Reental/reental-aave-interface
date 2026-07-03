@@ -160,7 +160,10 @@ export function AppHeader() {
           display: 'flex',
           alignItems: 'center',
           flexDirection: 'space-between',
-          boxShadow: 'inset 0px -1px 0px rgba(242, 243, 247, 0.16)',
+          boxShadow:
+            theme.palette.mode === 'dark'
+              ? 'inset 0px -1px 0px rgba(242, 243, 247, 0.16)'
+              : `inset 0px -1px 0px ${theme.palette.divider}`,
         })}
       >
         <Box
@@ -175,17 +178,23 @@ export function AppHeader() {
           }}
           onClick={() => setMobileMenuOpen(false)}
         >
+          {/* RNTLend product logo — Orbitron 700: "RNT" in text color + "Lend" in the
+              brand primary color (green in dark mode, blue in light mode). */}
           <Typography
             variant="h2"
             sx={{
-              color: '#FCA311',
+              fontFamily: 'Orbitron, Inter, sans-serif',
               fontWeight: 700,
               fontSize: { xs: '20px', sm: '24px' },
               lineHeight: 1,
               whiteSpace: 'nowrap',
+              color: 'text.primary',
             }}
           >
-            RNT Lend
+            RNT
+            <Box component="span" sx={{ color: 'primary.main' }}>
+              Lend
+            </Box>
           </Typography>
         </Box>
         <Box sx={{ mr: sm ? 1 : 3 }}>

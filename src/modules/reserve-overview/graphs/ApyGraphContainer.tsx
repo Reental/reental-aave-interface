@@ -1,6 +1,6 @@
 import { APYSample, bigDecimal, bigIntString, dateTime, TimeWindow } from '@aave/react';
 import { Trans } from '@lingui/macro';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography, useTheme } from '@mui/material';
 import { ParentSize } from '@visx/responsive';
 import { ethers } from 'ethers';
 import { useState } from 'react';
@@ -36,6 +36,7 @@ type ApyGraphProps = {
 };
 
 export const SupplyApyGraph = ({ chain, underlyingToken }: ApyGraphProps) => {
+  const theme = useTheme();
   const [selectedTimeRange, setSelectedTimeRange] = useState<TimeWindow>(TimeWindow.LastWeek);
   const { data, isLoading, isError, isFetching } = useAllTokenHistory({
     chainId: chain,
@@ -58,7 +59,7 @@ export const SupplyApyGraph = ({ chain, underlyingToken }: ApyGraphProps) => {
   return (
     <ApyGraphContainer
       label="Supply APR"
-      color="#2EBAC6"
+      color={theme.palette.primary.main}
       data={transformApyData(parsedData)}
       loading={isLoading || isFetching}
       error={isError || false}
@@ -69,6 +70,7 @@ export const SupplyApyGraph = ({ chain, underlyingToken }: ApyGraphProps) => {
 };
 
 export const BorrowApyGraph = ({ chain, underlyingToken }: ApyGraphProps) => {
+  const theme = useTheme();
   const [selectedTimeRange, setSelectedTimeRange] = useState<TimeWindow>(TimeWindow.LastWeek);
   const { data, isLoading, isError, isFetching } = useAllTokenHistory({
     chainId: chain,
@@ -91,7 +93,7 @@ export const BorrowApyGraph = ({ chain, underlyingToken }: ApyGraphProps) => {
   return (
     <ApyGraphContainer
       label="Borrow APR, variable"
-      color="#B6509E"
+      color={theme.palette.secondary.main}
       data={transformApyData(parsedData)}
       loading={isLoading || isFetching}
       error={isError || false}

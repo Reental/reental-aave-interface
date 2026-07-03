@@ -1,14 +1,17 @@
 import { API_ETH_MOCK_ADDRESS, InterestRate } from '@aave/contract-helpers';
 import { valueToBigNumber } from '@aave/math-utils';
-import { Trans } from '@lingui/macro';
+import { t, Trans } from '@lingui/macro';
 import { Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useState } from 'react';
 import { ListColumn } from 'src/components/lists/ListColumn';
 import { ListHeaderTitle } from 'src/components/lists/ListHeaderTitle';
 import { ListHeaderWrapper } from 'src/components/lists/ListHeaderWrapper';
+import { ListSearchBar } from 'src/components/lists/ListSearchBar';
+import { NoSearchResults } from 'src/components/NoSearchResults';
 import { AssetCapsProvider } from 'src/hooks/useAssetCaps';
 import { useRootStore } from 'src/store/root';
 import { fetchIconSymbolAndName } from 'src/ui-config/reservePatches';
+import { matchesSearchTerm } from 'src/utils/assetSearch';
 import { GENERAL } from 'src/utils/events';
 import { GHO_SYMBOL } from 'src/utils/ghoUtilities';
 import { useShallow } from 'zustand/shallow';
@@ -55,6 +58,7 @@ export const BorrowedPositionsList = () => {
   );
   const [sortName, setSortName] = useState('');
   const [sortDesc, setSortDesc] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const theme = useTheme();
   const downToXSM = useMediaQuery(theme.breakpoints.down('xsm'));
   const showEModeButton = currentMarketData.v3 && Object.keys(eModes).length > 1;
@@ -108,6 +112,10 @@ export const BorrowedPositionsList = () => {
     preSortedReserves,
     true
   ).filter((reserve) => !isAssetHidden(currentMarketData.market, reserve.underlyingAsset));
+
+  const displayedReserves = sortedReserves.filter((item) =>
+    matchesSearchTerm(searchTerm, item.reserve.symbol, item.reserve.name)
+  );
 
   const disableEModeSwitch =
     user.isInEmode &&
@@ -196,8 +204,13 @@ export const BorrowedPositionsList = () => {
     >
       {sortedReserves.length ? (
         <>
-          {!downToXSM && <RenderHeader />}
-          {sortedReserves.map((item) => (
+          <ListSearchBar
+            onSearchTermChange={setSearchTerm}
+            placeholder={t`Search asset name or symbol`}
+          />
+          {!downToXSM && !!displayedReserves.length && <RenderHeader />}
+          {!displayedReserves.length && !!searchTerm && <NoSearchResults searchTerm={searchTerm} />}
+          {displayedReserves.map((item) => (
             <AssetCapsProvider
               asset={item.reserve}
               key={item.underlyingAsset + item.borrowRateMode}

@@ -9,11 +9,18 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <meta name="theme-color" content="#1B2030" />
+          <meta name="theme-color" content="#0e1201" />
+          <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+          <link rel="apple-touch-icon" href="/favicon.svg" />
+
+          {/* RNT type system (Manual de Marca V.1): Inter Tight (headings) + Orbitron (data/KPIs).
+              Loaded as <link> instead of a CSS @import: the @import ended up mid-file in the
+              bundled production CSS, where browsers ignore it. */}
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
           <link
-            rel="icon"
-            type="image/png"
-            href="https://d37o222i0yqhd1.cloudfront.net/images/favicon_reental.png"
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700&display=swap"
           />
 
           <link rel="manifest" href="/manifest.json" />

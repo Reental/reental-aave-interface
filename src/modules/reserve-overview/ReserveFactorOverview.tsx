@@ -58,7 +58,13 @@ export const ReserveFactorOverview = ({
           />
         }
       >
-        <FormattedNumber value={reserveFactor} percent variant="secondary14" visibleDecimals={2} />
+        <FormattedNumber
+          value={reserveFactor}
+          percent
+          variant="secondary14"
+          color="primary.main"
+          visibleDecimals={2}
+        />
       </ReserveOverviewBox>
 
       <ReserveOverviewBox

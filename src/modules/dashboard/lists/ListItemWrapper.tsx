@@ -89,7 +89,13 @@ export const ListItemWrapper = ({
         >
           <TokenIcon symbol={iconSymbol} fontSize="large" />
           <Tooltip title={`${name} (${symbol})`} arrow placement="top">
-            <Typography variant="subheader1" sx={{ ml: 3 }} noWrap data-cy={`assetName`}>
+            <Typography
+              variant="subheader1"
+              color="text.primary"
+              sx={{ ml: 3 }}
+              noWrap
+              data-cy={`assetName`}
+            >
               {symbol.startsWith(REENTAL_PREFIX) ? symbol.slice(REENTAL_PREFIX.length) : symbol}
             </Typography>
           </Tooltip>

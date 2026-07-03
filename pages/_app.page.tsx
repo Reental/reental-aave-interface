@@ -1,5 +1,4 @@
 import '/public/fonts/inter/inter.css';
-import '/public/fonts/fustat/index.css';
 import '/src/styles/variables.css';
 
 import { AaveClient, AaveProvider } from '@aave/react';
