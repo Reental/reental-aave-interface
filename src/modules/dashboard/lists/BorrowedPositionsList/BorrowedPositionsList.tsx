@@ -207,6 +207,7 @@ export const BorrowedPositionsList = () => {
           <ListSearchBar
             onSearchTermChange={setSearchTerm}
             placeholder={t`Search asset name or symbol`}
+            wrapperSx={{ pt: 2 }}
           />
           {!downToXSM && !!displayedReserves.length && <RenderHeader />}
           {!displayedReserves.length && !!searchTerm && <NoSearchResults searchTerm={searchTerm} />}

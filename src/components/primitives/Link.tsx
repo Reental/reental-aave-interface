@@ -70,8 +70,11 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link
 
   const router = useRouter();
   const pathname = typeof href === 'string' ? href : href.pathname;
+  // The root route renders the dashboard, so keep the Dashboard nav item highlighted there too
+  const isActive =
+    router?.pathname === pathname || (pathname === ROUTES.dashboard && router?.pathname === '/');
   const className = clsx(classNameProps, {
-    active: router?.pathname === pathname,
+    active: isActive,
   });
   if (isExternal) {
     if (noLinkStyle) {

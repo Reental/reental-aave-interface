@@ -16,7 +16,6 @@ import { DASHBOARD, GENERAL } from 'src/utils/events';
 
 import { CollateralSwitchTooltip } from '../../../../components/infoTooltips/CollateralSwitchTooltip';
 import { CollateralTooltip } from '../../../../components/infoTooltips/CollateralTooltip';
-import { TotalSupplyAPYTooltip } from '../../../../components/infoTooltips/TotalSupplyAPYTooltip';
 import { ListWrapper } from '../../../../components/lists/ListWrapper';
 import { useAppDataContext } from '../../../../hooks/app-data-provider/useAppDataProvider';
 import {
@@ -211,24 +210,6 @@ export const SuppliedPositionsList = () => {
           {!!sortedReserves.length && (
             <>
               <ListTopInfoItem
-                title={<Trans>Balance</Trans>}
-                value={user?.totalLiquidityUSD || 0}
-              />
-              <ListTopInfoItem
-                title={<Trans>APY</Trans>}
-                value={user?.earnedAPY || 0}
-                percent
-                tooltip={
-                  <TotalSupplyAPYTooltip
-                    setOpen={setTooltipOpen}
-                    event={{
-                      eventName: GENERAL.TOOL_TIP,
-                      eventParams: { tooltip: 'Total Supplied APY' },
-                    }}
-                  />
-                }
-              />
-              <ListTopInfoItem
                 title={<Trans>Collateral</Trans>}
                 value={user?.totalCollateralUSD || 0}
                 tooltip={
@@ -251,6 +232,7 @@ export const SuppliedPositionsList = () => {
           <ListSearchBar
             onSearchTermChange={setSearchTerm}
             placeholder={t`Search asset name or symbol`}
+            wrapperSx={{ pt: 2 }}
           />
           {!downToXSM && !!displayedReserves.length && <RenderHeader />}
           {!displayedReserves.length && !!searchTerm && <NoSearchResults searchTerm={searchTerm} />}
