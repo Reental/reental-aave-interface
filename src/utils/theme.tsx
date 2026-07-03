@@ -40,6 +40,7 @@ declare module '@mui/material/styles/createPalette' {
 
   interface TypeText {
     muted: string;
+    highlight: string;
   }
 
   interface TypeBackground {
