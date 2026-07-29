@@ -917,6 +917,10 @@ msgstr "The underlying asset cannot be rescued"
 msgid "Supply balance after switch"
 msgstr "Supply balance after switch"
 
+#: src/components/WalletConnection/ConnectReentalButton.tsx
+msgid "Connect with Reental"
+msgstr "Connect with Reental"
+
 #: src/components/infoTooltips/MigrationDisabledTooltip.tsx
 msgid "Asset cannot be migrated to {marketName} V3 Market due to E-mode restrictions. You can disable or manage E-mode categories in your <0>V3 Dashboard</0>"
 msgstr "Asset cannot be migrated to {marketName} V3 Market due to E-mode restrictions. You can disable or manage E-mode categories in your <0>V3 Dashboard</0>"

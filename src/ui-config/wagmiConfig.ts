@@ -1,5 +1,6 @@
 import { Emitter } from '@wagmi/core/internal';
 import { getDefaultConfig } from 'connectkit';
+import { reentalWalletConnect } from 'src/libs/web3-data-provider/connectors/reentalWalletConnect';
 import {
   ENABLE_TESTNET,
   FORK_BASE_CHAIN_ID,
@@ -44,8 +45,10 @@ if (FORK_ENABLED) {
   prodChains = [forkChain, ...prodChains];
 }
 
+const walletConnectProjectId = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID as string;
+
 const defaultConfig = {
-  walletConnectProjectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID as string,
+  walletConnectProjectId,
   appName: 'RNT Lend',
   appDescription: 'Collateralization platform',
   appUrl: 'https://lend.rnt.finance',
@@ -80,29 +83,34 @@ const connectorConfig = {
   emitter: new Emitter(''),
 };
 
-const connectors = prodCkConfig.connectors
-  ?.map((connector) => {
-    // initialize the connector with the emitter so we can access the id
-    const c = connector(connectorConfig);
-    if (c.id === 'safe') {
-      return safe({
-        allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/, /dhedge.org$/],
-      });
-    } else {
-      return connector;
-    }
-  })
-  .sort((a, b) => {
-    // sort connectors so the family connector is last
-    // fixes slow wallet connections when running in the Safe UI
-    if (a(connectorConfig).id === familyConnectorId) {
-      return 1;
-    }
-    if (b(connectorConfig).id === familyConnectorId) {
-      return -1;
-    }
-    return 0;
-  });
+const mappedConnectors =
+  prodCkConfig.connectors
+    ?.map((connector) => {
+      // initialize the connector with the emitter so we can access the id
+      const c = connector(connectorConfig);
+      if (c.id === 'safe') {
+        return safe({
+          allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/, /dhedge.org$/],
+        });
+      } else {
+        return connector;
+      }
+    })
+    .sort((a, b) => {
+      // sort connectors so the family connector is last
+      // fixes slow wallet connections when running in the Safe UI
+      if (a(connectorConfig).id === familyConnectorId) {
+        return 1;
+      }
+      if (b(connectorConfig).id === familyConnectorId) {
+        return -1;
+      }
+      return 0;
+    }) ?? [];
+
+const connectors = walletConnectProjectId
+  ? [reentalWalletConnect({ projectId: walletConnectProjectId }), ...mappedConnectors]
+  : mappedConnectors;
 
 const prodConfig = createConfig({
   ...prodCkConfig,

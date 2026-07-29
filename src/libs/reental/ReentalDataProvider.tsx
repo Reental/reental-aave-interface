@@ -10,6 +10,14 @@ import { useShallow } from 'zustand/shallow';
 import { use2FA } from './2fa/services';
 import { TwoFaAccount } from './gql/types/graphql';
 
+/**
+ * TEMPORARY (demo WC/HW local): bypass del gate 2FA/time window.
+ * REMOVER antes de merge a prod: flag + ramas `skip2FA` en este archivo y
+ * el param `enabled` opcional en `2fa/services.ts` si solo se usa para esto.
+ * Env: NEXT_PUBLIC_SKIP_REENTAL_2FA=true
+ */
+const skip2FA = process.env.NEXT_PUBLIC_SKIP_REENTAL_2FA === 'true';
+
 const defaultState = {
   twoFA: {
     global: {
@@ -44,7 +52,7 @@ const Wrapper = ({
     return hasTokens && reserve.usageAsCollateralEnabled;
   });
 
-  const enable2FA = userCollateralTokens.length > 0;
+  const enable2FA = !skip2FA && userCollateralTokens.length > 0;
 
   const { fetchGlobal2FA } = value;
   const { expiresAt, windowTime } = value.twoFA.global;
@@ -87,9 +95,26 @@ export const ReentalDataProvider: React.FC<PropsWithChildren> = ({ children }) =
     chainId: currentMarketData.chainId,
     asset: defaultEveryTokenAddress,
     user: currentAccount,
+    enabled: !skip2FA,
   });
 
   const value = useMemo(() => {
+    if (skip2FA) {
+      // En modo de demo/pruebas locales, saltamos el gate 2FA:
+      // - No mostramos countdown/time window
+      // - Pero mantenemos `twoFA.global.status = true` para no deshabilitar acciones
+      return {
+        twoFA: {
+          global: {
+            status: true,
+            expiresAt: new Date(),
+            windowTime: 0,
+          },
+        },
+        fetchGlobal2FA: refetchGlobal2FA,
+      };
+    }
+
     const onRefetch = (account?: TwoFaAccount | null) => {
       if (account) {
         const expiresAt = new Date(account.expiresAt * 1000);

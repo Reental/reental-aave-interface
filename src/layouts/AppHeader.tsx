@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import { AvatarSize } from 'src/components/Avatar';
 import { ContentWithTooltip } from 'src/components/ContentWithTooltip';
 import { UserDisplay } from 'src/components/UserDisplay';
+import { ConnectReentalButton } from 'src/components/WalletConnection/ConnectReentalButton';
 import { ConnectWalletButton } from 'src/components/WalletConnection/ConnectWalletButton';
 // import { useCowOrderToast } from 'src/hooks/useCowOrderToast';
 import { useModalContext } from 'src/hooks/useModal';
@@ -319,7 +320,10 @@ export function AppHeader() {
             />
           </Button>
         ) : (
-          <ConnectWalletButton />
+          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, flexWrap: 'wrap' }}>
+            <ConnectWalletButton />
+            <ConnectReentalButton funnel="header" />
+          </Box>
         )}
 
         <Box sx={{ display: { xs: 'none', md: 'block' } }}>
