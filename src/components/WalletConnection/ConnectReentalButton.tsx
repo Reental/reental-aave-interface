@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro';
+import { t, Trans } from '@lingui/macro';
 import { Button, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useRootStore } from 'src/store/root';
@@ -36,14 +36,14 @@ export const ConnectReentalButton: React.FC<ConnectReentalButtonProps> = ({ funn
     setErrorMessage(null);
 
     if (!reentalConnector) {
-      setErrorMessage('Reental connector is not configured (missing WalletConnect Project ID).');
+      setErrorMessage(t`Reental connector is not configured (missing WalletConnect Project ID).`);
       return;
     }
 
     const popup = openBlankReentalPopup();
     if (!popup) {
       setErrorMessage(
-        'Tab blocked. Allow pop-ups/tabs for this site, or use Connect wallet (QR) as fallback.'
+        t`Tab blocked. Allow pop-ups/tabs for this site, or use Connect wallet (QR) as fallback.`
       );
       return;
     }
@@ -70,7 +70,7 @@ export const ConnectReentalButton: React.FC<ConnectReentalButtonProps> = ({ funn
         funnel: funnel || 'reental_walletconnect',
         wallet_type: REENTAL_CONNECTOR_ID,
       });
-      const message = error instanceof Error ? error.message : 'Connection failed';
+      const message = error instanceof Error ? error.message : t`Connection failed`;
       if (!/user rejected|connection request reset/i.test(message)) {
         setErrorMessage(message);
       }

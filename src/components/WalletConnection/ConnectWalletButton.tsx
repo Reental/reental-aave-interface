@@ -1,9 +1,11 @@
 import { Trans } from '@lingui/macro';
-import { Button } from '@mui/material';
+import { Box, Button, Chip } from '@mui/material';
 import { ConnectKitButton } from 'connectkit';
 import { useEffect, useRef, useState } from 'react';
 import { useRootStore } from 'src/store/root';
+import { REENTAL_CONNECTOR_ID } from 'src/ui-config/reentalWalletConnect';
 import { AUTH } from 'src/utils/events';
+import { useAccount } from 'wagmi';
 import { useShallow } from 'zustand/shallow';
 
 import { AvatarSize } from '../Avatar';
@@ -24,6 +26,8 @@ export interface ConnectWalletProps {
 }
 
 export const ConnectWalletButton: React.FC<ConnectWalletProps> = ({ funnel, onClick }) => {
+  const { connector } = useAccount();
+  const isReentalConnected = connector?.id === REENTAL_CONNECTOR_ID;
   const [trackEvent, walletType, account] = useRootStore(
     useShallow((store) => [store.trackEvent, store.walletType, store.account])
   );
@@ -125,11 +129,22 @@ export const ConnectWalletButton: React.FC<ConnectWalletProps> = ({ funnel, onCl
               }}
             >
               {isConnected ? (
-                <UserDisplay
-                  avatarProps={{ size: AvatarSize.SM }}
-                  oneLiner={true}
-                  titleProps={{ variant: 'buttonM' }}
-                />
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <UserDisplay
+                    avatarProps={{ size: AvatarSize.SM }}
+                    oneLiner={true}
+                    titleProps={{ variant: 'buttonM' }}
+                  />
+                  {isReentalConnected && (
+                    <Chip
+                      label={<Trans>Reental</Trans>}
+                      size="small"
+                      color="primary"
+                      variant="outlined"
+                      sx={{ height: 22, '& .MuiChip-label': { px: 1, typography: 'caption' } }}
+                    />
+                  )}
+                </Box>
               ) : (
                 <Trans>Connect wallet</Trans>
               )}

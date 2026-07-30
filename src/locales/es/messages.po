@@ -1987,6 +1987,26 @@ msgstr "Deuda cubierta"
 msgid "Connect wallet"
 msgstr "Conectar cartera"
 
+#: src/components/WalletConnection/ConnectReentalButton.tsx
+msgid "Connect with Reental"
+msgstr "Conectar con Reental"
+
+#: src/components/WalletConnection/ConnectWalletButton.tsx
+msgid "Reental"
+msgstr "Reental"
+
+#: src/components/WalletConnection/ConnectReentalButton.tsx
+msgid "Reental connector is not configured (missing WalletConnect Project ID)."
+msgstr "El conector Reental no está configurado (falta el Project ID de WalletConnect)."
+
+#: src/components/WalletConnection/ConnectReentalButton.tsx
+msgid "Tab blocked. Allow pop-ups/tabs for this site, or use Connect wallet (QR) as fallback."
+msgstr "Pestaña bloqueada. Permite ventanas emergentes/pestañas en este sitio, o usa Conectar cartera (QR) como alternativa."
+
+#: src/components/WalletConnection/ConnectReentalButton.tsx
+msgid "Connection failed"
+msgstr "Conexión fallida"
+
 #: src/modules/dashboard/LiquidationRiskParametresModal/LiquidationRiskParametresModal.tsx
 msgid "Safety of your deposited collateral against the borrowed assets and its underlying value."
 msgstr "Seguridad de tu garantía depositada contra los activos prestados y su valor subyacente."

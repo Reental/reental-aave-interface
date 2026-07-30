@@ -546,6 +546,10 @@ msgstr "Total"
 msgid "{stepName}"
 msgstr "{stepName}"
 
+#: src/components/WalletConnection/ConnectReentalButton.tsx
+msgid "Reental connector is not configured (missing WalletConnect Project ID)."
+msgstr "Reental connector is not configured (missing WalletConnect Project ID)."
+
 #: src/components/transactions/FlowCommons/TxModalDetails.tsx
 #: src/modules/dashboard/DashboardTopPanel.tsx
 #: src/modules/dashboard/LiquidationRiskParametresModal/LiquidationRiskParametresModal.tsx
@@ -1015,6 +1019,10 @@ msgstr "Legacy Markets"
 msgid "Learn more."
 msgstr "Learn more."
 
+#: src/components/WalletConnection/ConnectReentalButton.tsx
+msgid "Connection failed"
+msgstr "Connection failed"
+
 #: src/components/infoTooltips/ReserveFactorTooltip.tsx
 msgid "Reserve factor is a percentage of interest which goes to a {0} that is controlled by Aave governance to promote ecosystem growth."
 msgstr "Reserve factor is a percentage of interest which goes to a {0} that is controlled by Aave governance to promote ecosystem growth."
@@ -1378,6 +1386,10 @@ msgstr "Market"
 #: src/components/incentives/EthenaIncentivesTooltipContent.tsx
 msgid "Learn more about Ethena Rewards program"
 msgstr "Learn more about Ethena Rewards program"
+
+#: src/components/WalletConnection/ConnectWalletButton.tsx
+msgid "Reental"
+msgstr "Reental"
 
 #: src/components/transactions/ClaimRewards/RewardsSelect.tsx
 msgid "Rewards to claim"
@@ -3902,6 +3914,10 @@ msgstr "Umbrella is the upgraded version of the Safety Module. Manage your previ
 #: src/layouts/MobileMenu.tsx
 msgid "Menu"
 msgstr "Menu"
+
+#: src/components/WalletConnection/ConnectReentalButton.tsx
+msgid "Tab blocked. Allow pop-ups/tabs for this site, or use Connect wallet (QR) as fallback."
+msgstr "Tab blocked. Allow pop-ups/tabs for this site, or use Connect wallet (QR) as fallback."
 
 #: src/components/caps/DebtCeilingStatus.tsx
 #: src/components/infoTooltips/BorrowCapMaxedTooltip.tsx
