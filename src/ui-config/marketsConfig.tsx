@@ -30,6 +30,8 @@ export type MarketDataType = {
   subgraphUrl?: string;
   logo?: string;
   externalUrl?: string; // URL for external markets like Aptos
+  /** App Reental dashboard base URL for WalletConnect (per market). No trailing slash. */
+  reentalWalletConnectBaseUrl?: string;
   addresses: {
     LENDING_POOL_ADDRESS_PROVIDER: string;
     LENDING_POOL: string;
@@ -56,6 +58,8 @@ export enum CustomMarket {
 }
 // const apiKey = process.env.NEXT_PUBLIC_SUBGRAPH_API_KEY;
 
+const trimUrl = (url: string | undefined) => url?.replace(/\/$/, '') || undefined;
+
 export const marketsData: {
   [key in keyof typeof CustomMarket]: MarketDataType;
 } = {
@@ -65,6 +69,10 @@ export const marketsData: {
     chainId: ChainId.polygon,
     logo: '/icons/markets/reental.svg',
     v3: true,
+    reentalWalletConnectBaseUrl:
+      trimUrl(process.env.NEXT_PUBLIC_REENTAL_WC_URL_POLYGON) ||
+      trimUrl(process.env.NEXT_PUBLIC_REENTAL_WALLET_CONNECT_URL) ||
+      'https://app.reental.co/dashboard',
     enabledFeatures: {
       liquiditySwap: false,
       incentives: true,
@@ -94,6 +102,10 @@ export const marketsData: {
     v3: true,
     chainId: ChainId.sepolia,
     logo: '/icons/markets/reental.svg',
+    reentalWalletConnectBaseUrl:
+      trimUrl(process.env.NEXT_PUBLIC_REENTAL_WC_URL_SEPOLIA) ||
+      trimUrl(process.env.NEXT_PUBLIC_REENTAL_WALLET_CONNECT_URL) ||
+      'https://app.reental.co/dashboard',
     enabledFeatures: {
       faucet: true,
     },

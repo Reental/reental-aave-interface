@@ -1,38 +1,42 @@
 /**
- * Reental WalletConnect (opción A): URL de la app wallet + helpers de pestaña.
+ * Reental WalletConnect (opción A): URL de la app wallet por mercado + helpers de pestaña.
  * Spec: docs/reental-walletconnect-spec.pdf
  * Handoff app: docs/reental-walletconnect-handoff.md
  */
 
 export const REENTAL_CONNECTOR_ID = 'reental';
 
-/** Base URL del dashboard en la app Reental (sin query). */
-export const getReentalWalletConnectBaseUrl = (): string => {
-  return (
-    process.env.NEXT_PUBLIC_REENTAL_WALLET_CONNECT_URL?.replace(/\/$/, '') ||
-    'https://reental.co/dashboard'
-  );
-};
+type PendingPopup = Window | null;
 
-export const buildReentalConnectUrl = (uri: string): string => {
-  const base = getReentalWalletConnectBaseUrl();
+let pendingReentalPopup: PendingPopup = null;
+/** Base URL del mercado capturada en el click (evita race si cambia el market switcher). */
+let pendingBaseUrl: string | null = null;
+
+const normalizeBaseUrl = (url: string): string => url.replace(/\/$/, '');
+
+export const buildReentalConnectUrl = (uri: string, baseUrl: string): string => {
+  const base = normalizeBaseUrl(baseUrl);
   const separator = base.includes('?') ? '&' : '?';
   return `${base}${separator}uri=${encodeURIComponent(uri)}`;
 };
 
-type PendingPopup = Window | null;
-
-let pendingReentalPopup: PendingPopup = null;
-
 /** Abrir about:blank en el click (evita bloqueo de pestañas) antes de tener el URI. */
-export const openBlankReentalPopup = (): Window | null => {
+export const openBlankReentalPopup = (baseUrl: string): Window | null => {
+  pendingBaseUrl = normalizeBaseUrl(baseUrl);
   const popup = window.open('about:blank', 'reental-wallet');
   pendingReentalPopup = popup;
   return popup;
 };
 
 export const navigateReentalPopup = (uri: string): boolean => {
-  const url = buildReentalConnectUrl(uri);
+  const baseUrl = pendingBaseUrl;
+  pendingBaseUrl = null;
+
+  if (!baseUrl) {
+    return false;
+  }
+
+  const url = buildReentalConnectUrl(uri, baseUrl);
   const popup = pendingReentalPopup;
   pendingReentalPopup = null;
 
@@ -54,4 +58,5 @@ export const closePendingReentalPopup = (): void => {
     pendingReentalPopup.close();
   }
   pendingReentalPopup = null;
+  pendingBaseUrl = null;
 };

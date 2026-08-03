@@ -16,17 +16,21 @@ export interface ConnectReentalButtonProps {
 }
 
 /**
- * Opción A WalletConnect: abre la app Reental (dashboard) con el URI wc: (sin QR).
+ * WalletConnect por mercado: abre la base URL del mercado activo (dashboard) con uri=wc:.
  * Requiere NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID y
- * NEXT_PUBLIC_REENTAL_WALLET_CONNECT_URL (local: http://localhost:<PORT>/dashboard).
+ * reentalWalletConnectBaseUrl en el mercado (env NEXT_PUBLIC_REENTAL_WC_URL_*).
  */
 export const ConnectReentalButton: React.FC<ConnectReentalButtonProps> = ({ funnel }) => {
   const { isConnected } = useAccount();
   const { connectAsync, connectors, isPending } = useConnect();
-  const [trackEvent] = useRootStore(useShallow((store) => [store.trackEvent]));
+  const [trackEvent, currentMarketData] = useRootStore(
+    useShallow((store) => [store.trackEvent, store.currentMarketData])
+  );
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  if (isConnected) {
+  const baseUrl = currentMarketData.reentalWalletConnectBaseUrl;
+
+  if (isConnected || !baseUrl) {
     return null;
   }
 
@@ -40,7 +44,7 @@ export const ConnectReentalButton: React.FC<ConnectReentalButtonProps> = ({ funn
       return;
     }
 
-    const popup = openBlankReentalPopup();
+    const popup = openBlankReentalPopup(baseUrl);
     if (!popup) {
       setErrorMessage(
         t`Tab blocked. Allow pop-ups/tabs for this site, or use Connect wallet (QR) as fallback.`
@@ -52,10 +56,12 @@ export const ConnectReentalButton: React.FC<ConnectReentalButtonProps> = ({ funn
       funnel: funnel || 'reental_walletconnect',
       wallet_type: REENTAL_CONNECTOR_ID,
       current_url: window.location.pathname,
+      market: currentMarketData.market,
     });
     trackEvent(AUTH.WALLET_CONNECT_START, {
       funnel: funnel || 'reental_walletconnect',
       wallet_type: REENTAL_CONNECTOR_ID,
+      market: currentMarketData.market,
     });
 
     try {
@@ -63,12 +69,14 @@ export const ConnectReentalButton: React.FC<ConnectReentalButtonProps> = ({ funn
       trackEvent(AUTH.WALLET_CONNECT_SUCCESS, {
         funnel: funnel || 'reental_walletconnect',
         wallet_type: REENTAL_CONNECTOR_ID,
+        market: currentMarketData.market,
       });
     } catch (error) {
       closePendingReentalPopup();
       trackEvent(AUTH.WALLET_CONNECT_ABORT, {
         funnel: funnel || 'reental_walletconnect',
         wallet_type: REENTAL_CONNECTOR_ID,
+        market: currentMarketData.market,
       });
       const message = error instanceof Error ? error.message : t`Connection failed`;
       if (!/user rejected|connection request reset/i.test(message)) {
