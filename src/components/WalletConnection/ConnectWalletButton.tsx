@@ -7,6 +7,7 @@ import { AUTH } from 'src/utils/events';
 import { useShallow } from 'zustand/shallow';
 
 import { AvatarSize } from '../Avatar';
+import { WalletIcon } from '../icons/WalletIcon';
 import { UserDisplay } from '../UserDisplay';
 
 // Amplitude is loaded on demand so the SDK stays out of the initial bundle. It
@@ -112,6 +113,7 @@ export const ConnectWalletButton: React.FC<ConnectWalletProps> = ({ funnel, onCl
           return (
             <Button
               variant={isConnected ? 'surface' : 'gradient'}
+              sx={{ borderRadius: '10px' }}
               onClick={() => {
                 // Track initial button click
                 trackEvent(AUTH.CONNECT_WALLET, {
@@ -131,7 +133,10 @@ export const ConnectWalletButton: React.FC<ConnectWalletProps> = ({ funnel, onCl
                   titleProps={{ variant: 'buttonM' }}
                 />
               ) : (
-                <Trans>Connect wallet</Trans>
+                <>
+                  <Trans>Connect wallet</Trans>
+                  <WalletIcon sx={{ ml: 2, fontSize: 18, stroke: 'currentColor' }} />
+                </>
               )}
             </Button>
           );

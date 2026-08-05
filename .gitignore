@@ -50,3 +50,13 @@ package-lock.json
 
 .env.*
 .env
+
+# Local scratch / design dumps (not app source)
+.tmp-feedback/
+docs/ds-resources/
+docs/Feedback*
+docs/Reental_RNTLend_WalletConnect*
+*.zip
+.cursor
+*.md
+docs/

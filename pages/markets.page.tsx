@@ -1,5 +1,6 @@
 import { Box, Container } from '@mui/material';
 import { ReactNode, useEffect } from 'react';
+import { GradientBackground } from 'src/components/GradientBackground';
 import { MarketSwitcher } from 'src/components/MarketSwitcher';
 import { TopInfoPanel } from 'src/components/TopInfoPanel/TopInfoPanel';
 import { MainLayout } from 'src/layouts/MainLayout';
@@ -50,6 +51,7 @@ export default function Markets() {
 
   return (
     <>
+      <GradientBackground />
       <TopInfoPanel
         containerProps={marketContainerProps}
         wrapperSx={{ pb: { xs: 8, md: 9, lg: 10, xl: 10, xxl: 10 } }}

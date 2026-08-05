@@ -138,7 +138,8 @@ export const MarketAssetsListMobileItem = ({ ...reserve }: ComputedReserveData) 
           !reserve.isFrozen && <ReserveSubheader value={'Disabled'} />}
       </Row>
       <Button
-        variant="outlined"
+        variant="gradient"
+        sx={{ borderRadius: '10px' }}
         component={Link}
         href={ROUTES.reserveOverview(reserve.underlyingAsset, currentMarket)}
         fullWidth

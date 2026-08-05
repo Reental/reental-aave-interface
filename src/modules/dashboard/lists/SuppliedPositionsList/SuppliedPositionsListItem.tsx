@@ -102,13 +102,15 @@ export const SuppliedPositionsListItem = ({
         <Button
           disabled={disableSupply}
           variant="contained"
+          sx={{ borderRadius: '10px' }}
           onClick={() => openSupply(underlyingAsset, currentMarket, reserve.name, 'dashboard')}
         >
           <Trans>Supply</Trans>
         </Button>
         <Button
           disabled={disableWithdraw}
-          variant="outlined"
+          variant="contained"
+          sx={{ borderRadius: '10px' }}
           onClick={() => {
             openWithdraw(underlyingAsset, currentMarket, reserve.name, 'dashboard');
           }}

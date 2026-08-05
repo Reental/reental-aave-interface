@@ -1,4 +1,4 @@
-import { Box, Skeleton, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Skeleton, SxProps, Theme, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { ReactNode } from 'react';
 import { FONT_LABEL } from 'src/utils/theme';
 
@@ -12,6 +12,7 @@ interface TopInfoPanelItemProps {
   variant?: 'light' | 'dark' | undefined; // default dark
   withLine?: boolean;
   loading?: boolean;
+  sx?: SxProps<Theme>;
 }
 
 export const TopInfoPanelItem = ({
@@ -24,6 +25,7 @@ export const TopInfoPanelItem = ({
   withLine,
   loading,
   withoutIconWrapper,
+  sx,
 }: TopInfoPanelItemProps) => {
   const theme = useTheme();
   const upToSM = useMediaQuery(theme.breakpoints.up('sm'));
@@ -34,6 +36,7 @@ export const TopInfoPanelItem = ({
         display: 'flex',
         alignItems: 'center',
         width: { xs: 'calc(50% - 12px)', xsm: 'unset' },
+        ...sx,
       }}
     >
       {withLine && (
