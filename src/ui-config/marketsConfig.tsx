@@ -63,7 +63,7 @@ export const marketsData: {
     marketTitle: 'Reental Polygon',
     market: CustomMarket.reental_polygon_v3,
     chainId: ChainId.polygon,
-    logo: '/icons/tokens/reental.svg',
+    logo: '/icons/markets/reental.png',
     v3: true,
     enabledFeatures: {
       liquiditySwap: false,
@@ -93,7 +93,7 @@ export const marketsData: {
     market: CustomMarket.reental_sepolia_v3,
     v3: true,
     chainId: ChainId.sepolia,
-    logo: '/icons/tokens/reental.svg',
+    logo: '/icons/markets/reental.png',
     enabledFeatures: {
       faucet: true,
     },
