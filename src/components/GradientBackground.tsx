@@ -1,4 +1,4 @@
-import { Box, keyframes } from '@mui/material';
+import { Box, keyframes, useTheme } from '@mui/material';
 
 const rntGradientMove = keyframes`
   0% { background-position: 0% 50%; }
@@ -15,8 +15,15 @@ const rntBloomDrift = keyframes`
 /**
  * Low-opacity animated brand gradient backdrop (RNT DS motion tokens).
  * Mount behind page content; respects `prefers-reduced-motion`.
+ * Light mode uses solid warm paper (#F4F2EE) from the theme — no brand wash.
  */
 export const GradientBackground = () => {
+  const theme = useTheme();
+
+  if (theme.palette.mode === 'light') {
+    return null;
+  }
+
   return (
     <Box
       aria-hidden
