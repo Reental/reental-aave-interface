@@ -130,7 +130,10 @@ export default function MyApp(props: MyAppProps) {
         description={
           "Maximize the returns on your real estate investment in Reental using the world's most popular decentralized lending platform."
         }
-        // imageUrl="https://d37o222i0yqhd1.cloudfront.net/images/rntlend_seo.png"
+        imageUrl={`${(process.env.URL || 'https://lend.rnt.finance').replace(
+          /\/$/,
+          ''
+        )}/rntlend_seo.jpg`}
       />
       <NoSsr>
         <AaveProvider client={client}>
