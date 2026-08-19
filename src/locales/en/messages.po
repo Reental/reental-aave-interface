@@ -69,6 +69,10 @@ msgstr "Borrow cap"
 msgid "Estimated time"
 msgstr "Estimated time"
 
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRouterInfo.tsx
+msgid "This router can cover liquidations right now."
+msgstr "This router can cover liquidations right now."
+
 #: src/components/transactions/StakeCooldown/StakeCooldownModalContent.tsx
 #: src/modules/umbrella/StakeCooldownModalContent.tsx
 msgid "Remind me"
@@ -186,6 +190,14 @@ msgstr "Price data is not currently available for this reserve on the protocol s
 #: src/modules/history/HistoryTopPanel.tsx
 msgid "Transaction history"
 msgstr "Transaction history"
+
+#: src/modules/dashboard/lists/LiquidationRoutersList/useLiquidationRouterActions.tsx
+msgid "Arm router"
+msgstr "Arm router"
+
+#: src/components/transactions/SupplyForLiquidations/SupplyForLiquidationsActions.tsx
+msgid "Approving {symbol}..."
+msgstr "Approving {symbol}..."
 
 #: src/modules/umbrella/UmbrellaHeader.tsx
 msgid "Learn more about the risks."
@@ -347,6 +359,10 @@ msgstr "The weighted average of APY for all supplied assets, including incentive
 msgid "You can only withdraw your assets from the Security Module after the cooldown period ends and the unstake window is active."
 msgstr "You can only withdraw your assets from the Security Module after the cooldown period ends and the unstake window is active."
 
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRouterInfo.tsx
+msgid "Not armed"
+msgstr "Not armed"
+
 #: src/modules/dashboard/DashboardTopPanel.tsx
 msgid "Migrate to {0} v3 Market"
 msgstr "Migrate to {0} v3 Market"
@@ -355,6 +371,11 @@ msgstr "Migrate to {0} v3 Market"
 msgid "Voting results"
 msgstr "Voting results"
 
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersList.tsx
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersListMobileItem.tsx
+msgid "Router"
+msgstr "Router"
+
 #: src/components/MarketSwitcher.tsx
 msgid "RWA market of real estate tokens issued by Reental over the Polygon network"
 msgstr "RWA market of real estate tokens issued by Reental over the Polygon network"
@@ -362,6 +383,10 @@ msgstr "RWA market of real estate tokens issued by Reental over the Polygon netw
 #: src/modules/dashboard/LiquidationRiskParametresModal/components/LTVContent.tsx
 msgid "MAX"
 msgstr "MAX"
+
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersList.tsx
+msgid "The liquidation indexer is unreachable, so routers cannot be listed. Any routers you own still exist on-chain."
+msgstr "The liquidation indexer is unreachable, so routers cannot be listed. Any routers you own still exist on-chain."
 
 #: src/layouts/AppFooter.tsx
 msgid "Terms"
@@ -677,6 +702,10 @@ msgstr "Please connect your wallet to be able to bridge your tokens."
 msgid "Show"
 msgstr "Show"
 
+#: src/components/transactions/SupplyForLiquidations/SupplyForLiquidationsActions.tsx
+msgid "Create liquidation router"
+msgstr "Create liquidation router"
+
 #: src/modules/markets/Gho/GhoBanner.tsx
 #: src/modules/markets/Gho/GhoBanner.tsx
 #: src/modules/reserve-overview/Gho/SavingsGho.tsx
@@ -867,6 +896,11 @@ msgstr "You've successfully submitted an order."
 msgid "Max"
 msgstr "Max"
 
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersList.tsx
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersList.tsx
+msgid "Supply for liquidations"
+msgstr "Supply for liquidations"
+
 #: src/components/transactions/StakeRewardClaim/StakeRewardClaimActions.tsx
 msgid "Claim {symbol}"
 msgstr "Claim {symbol}"
@@ -970,6 +1004,10 @@ msgstr "Withdrawing {symbol}"
 msgid "None"
 msgstr "None"
 
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRouterInfo.tsx
+msgid "Unknown"
+msgstr "Unknown"
+
 #: src/modules/markets/MarketsTopPanel.tsx
 msgid "The total value of all assets supplied to the protocol across every reserve. It represents the overall size of the market and includes both the liquidity currently available in the pool and the portion that has been borrowed."
 msgstr "The total value of all assets supplied to the protocol across every reserve. It represents the overall size of the market and includes both the liquidity currently available in the pool and the portion that has been borrowed."
@@ -1015,6 +1053,10 @@ msgstr "Learn more."
 msgid "Reserve factor is a percentage of interest which goes to a {0} that is controlled by Aave governance to promote ecosystem growth."
 msgstr "Reserve factor is a percentage of interest which goes to a {0} that is controlled by Aave governance to promote ecosystem growth."
 
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRouterInfo.tsx
+msgid "No router"
+msgstr "No router"
+
 #: src/modules/dashboard/lists/BorrowedPositionsList/BorrowedPositionsList.tsx
 msgid "Borrow power used"
 msgstr "Borrow power used"
@@ -1048,6 +1090,10 @@ msgstr "Restake"
 msgid "Sending cancel..."
 msgstr "Sending cancel..."
 
+#: src/components/transactions/SupplyForLiquidations/SupplyForLiquidationsModalContent.tsx
+msgid "Supplied balance"
+msgstr "Supplied balance"
+
 #: src/modules/reserve-overview/Gho/GhoReserveConfiguration.tsx
 msgid "GHO is a native decentralized, collateral-backed digital asset pegged to USD. It is created by users via borrowing against multiple collateral. When user repays their GHO borrow position, the protocol burns that user's GHO. All the interest payments accrued by minters of GHO would be directly transferred to the AaveDAO treasury."
 msgstr "GHO is a native decentralized, collateral-backed digital asset pegged to USD. It is created by users via borrowing against multiple collateral. When user repays their GHO borrow position, the protocol burns that user's GHO. All the interest payments accrued by minters of GHO would be directly transferred to the AaveDAO treasury."
@@ -1064,6 +1110,12 @@ msgstr "This asset is frozen due to an Aave Protocol Governance decision. On the
 #: src/modules/markets/MarketAssetsListContainer.tsx
 msgid "Assets"
 msgstr "Assets"
+
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersListItem.tsx
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersListMobileItem.tsx
+#: src/modules/reserve-overview/ReserveActions.tsx
+msgid "Revoke"
+msgstr "Revoke"
 
 #: src/components/transactions/DelegationTxsWrapper.tsx
 #: src/components/transactions/TxActionsWrapper.tsx
@@ -1404,6 +1456,10 @@ msgstr "Borrow and repay in same block is not allowed"
 msgid "<0>Slippage tolerance </0><1>{selectedSlippage}% </1><2>{0}</2>"
 msgstr "<0>Slippage tolerance </0><1>{selectedSlippage}% </1><2>{0}</2>"
 
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRouterInfo.tsx
+msgid "Never approved"
+msgstr "Never approved"
+
 #: src/components/transactions/Repay/CollateralRepayModalContent.tsx
 msgid "Maximum collateral amount to use"
 msgstr "Maximum collateral amount to use"
@@ -1518,6 +1574,12 @@ msgstr "Weekly Rewards"
 msgid "Pending..."
 msgstr "Pending..."
 
+#: src/components/transactions/SupplyForLiquidations/SupplyForLiquidationsModalContent.tsx
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRouterInfo.tsx
+#: src/modules/reserve-overview/ReserveActions.tsx
+msgid "Unlimited"
+msgstr "Unlimited"
+
 #: src/modules/staking/GhoStakingPanel.tsx
 #: src/modules/staking/StakingPanel.tsx
 msgid "Wallet Balance"
@@ -1565,6 +1627,10 @@ msgstr "Email"
 #: src/components/incentives/MeritIncentivesTooltipContent.tsx
 msgid "here"
 msgstr "here"
+
+#: src/components/transactions/SupplyForLiquidations/SupplyForLiquidationsModalContent.tsx
+msgid "No liquidation router factory is configured for this market."
+msgstr "No liquidation router factory is configured for this market."
 
 #: src/modules/staking/StakingPanel.tsx
 #: src/modules/umbrella/UnstakeModal.tsx
@@ -1706,6 +1772,10 @@ msgstr "Withdrawing"
 msgid "Go to Reental"
 msgstr "Go to Reental"
 
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersList.tsx
+msgid "Router data could not be loaded. The list below may be incomplete."
+msgstr "Router data could not be loaded. The list below may be incomplete."
+
 #: src/modules/markets/MarketsTopPanel.tsx
 #: src/modules/markets/MarketsTopPanel.tsx
 msgid "Total value locked"
@@ -1723,6 +1793,10 @@ msgstr "Auto"
 #: src/modules/bridge/BridgeWrapper.tsx
 msgid "Age"
 msgstr "Age"
+
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersList.tsx
+msgid "No borrowable assets in this market"
+msgstr "No borrowable assets in this market"
 
 #: src/components/transactions/CollateralChange/CollateralChangeActions.tsx
 msgid "Disable {symbol} as collateral"
@@ -1939,6 +2013,10 @@ msgstr "Send cancel"
 msgid "Details"
 msgstr "Details"
 
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersList.tsx
+msgid "One or more approvals are unlimited, so the total above excludes them."
+msgstr "One or more approvals are unlimited, so the total above excludes them."
+
 #: src/components/transactions/StakeCooldown/StakeCooldownModalContent.tsx
 #: src/modules/umbrella/StakeCooldownModalContent.tsx
 msgid "Stake cooldown activated"
@@ -2007,6 +2085,10 @@ msgstr "Nothing supplied yet"
 #: src/components/transactions/GovDelegation/DelegationTypeSelector.tsx
 msgid "Voting"
 msgstr "Voting"
+
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersList.tsx
+msgid "Each borrowable asset can be committed to a liquidation router you back. The router uses the aTokens you approve to cover liquidations, and only ever sends the seized collateral to its fixed recipient. A router can only act once you have approved it — until then it is shown as not armed."
+msgstr "Each borrowable asset can be committed to a liquidation router you back. The router uses the aTokens you approve to cover liquidations, and only ever sends the seized collateral to its fixed recipient. A router can only act once you have approved it — until then it is shown as not armed."
 
 #: src/modules/reserve-overview/SupplyInfo.tsx
 msgid "Unbacked"
@@ -2144,6 +2226,10 @@ msgstr "Interest rate rebalance conditions were not met"
 msgid "Add {0} to wallet to track your balance."
 msgstr "Add {0} to wallet to track your balance."
 
+#: src/modules/reserve-overview/ReserveActions.tsx
+msgid "Approve"
+msgstr "Approve"
+
 #: src/modules/governance/GovernanceTopPanel.tsx
 msgid "Aave Governance"
 msgstr "Aave Governance"
@@ -2182,6 +2268,10 @@ msgstr "Assets to stake"
 #: src/modules/dashboard/LiquidationRiskParametresModal/components/HFContent.tsx
 msgid "Liquidation value"
 msgstr "Liquidation value"
+
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRouterInfo.tsx
+msgid "Armed"
+msgstr "Armed"
 
 #: src/modules/markets/MarketAssetsListContainer.tsx
 #: src/modules/umbrella/StakeAssets/UmbrellaAssetsListContainer.tsx
@@ -2236,6 +2326,10 @@ msgstr "Your balance is lower than the selected amount."
 msgid "An error has occurred fetching the proposal."
 msgstr "An error has occurred fetching the proposal."
 
+#: src/components/transactions/SupplyForLiquidations/SupplyForLiquidationsModalContent.tsx
+msgid "Your router"
+msgstr "Your router"
+
 #: src/modules/markets/MarketAssetsList.tsx
 #: src/modules/markets/MarketAssetsListMobileItem.tsx
 msgid "Borrow APY, variable"
@@ -2249,9 +2343,17 @@ msgstr "This asset is eligible for rewards through SuperFest. Aave Labs does not
 msgid "Cooldown period warning"
 msgstr "Cooldown period warning"
 
+#: src/components/transactions/SupplyForLiquidations/SupplyForLiquidationsActions.tsx
+msgid "Revoke {symbol}"
+msgstr "Revoke {symbol}"
+
 #: src/modules/umbrella/AmountSharesItem.tsx
 msgid "Available to withdraw"
 msgstr "Available to withdraw"
+
+#: src/components/transactions/SupplyForLiquidations/SupplyForLiquidationsModalContent.tsx
+msgid "You need your own liquidation router for {0} before you can commit aTokens. It is created once and reused for every later approval."
+msgstr "You need your own liquidation router for {0} before you can commit aTokens. It is created once and reused for every later approval."
 
 #: src/components/transactions/FlowCommons/TxModalDetails.tsx
 msgid "Cooldown"
@@ -2261,6 +2363,7 @@ msgstr "Cooldown"
 #: src/modules/bridge/BridgeWrapper.tsx
 #: src/modules/dashboard/lists/BorrowAssetsList/BorrowAssetsList.tsx
 #: src/modules/dashboard/lists/BorrowedPositionsList/BorrowedPositionsList.tsx
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersList.tsx
 #: src/modules/dashboard/lists/SuppliedPositionsList/SuppliedPositionsList.tsx
 #: src/modules/faucet/FaucetAssetsList.tsx
 #: src/modules/markets/MarketAssetsList.tsx
@@ -2299,6 +2402,8 @@ msgstr "supply"
 
 #: pages/dashboard.page.tsx
 #: src/components/transactions/Supply/SupplyModal.tsx
+#: src/components/transactions/SupplyForLiquidations/SupplyForLiquidationsModal.tsx
+#: src/modules/dashboard/lists/LiquidationRoutersList/useLiquidationRouterActions.tsx
 #: src/modules/dashboard/lists/SuppliedPositionsList/SuppliedPositionsListItem.tsx
 #: src/modules/dashboard/lists/SuppliedPositionsList/SuppliedPositionsListMobileItem.tsx
 #: src/modules/dashboard/lists/SupplyAssetsList/SupplyAssetsListItem.tsx
@@ -2317,6 +2422,10 @@ msgstr "Cannot disable E-Mode"
 #: src/components/transactions/Repay/CollateralRepayModalContent.tsx
 msgid "Not enough collateral to repay this amount of debt with"
 msgstr "Not enough collateral to repay this amount of debt with"
+
+#: src/components/transactions/SupplyForLiquidations/SupplyForLiquidationsModalContent.tsx
+msgid "Revoke approval"
+msgstr "Revoke approval"
 
 #: src/ui-config/errorMapping.tsx
 msgid "Address is not a contract"
@@ -2338,6 +2447,10 @@ msgstr "This is the total amount available for you to borrow. You can borrow bas
 #: src/modules/governance/VotingPowerInfoPanel.tsx
 msgid "Your voting power is based on your AAVE/stkAAVE balance and received delegations."
 msgstr "Your voting power is based on your AAVE/stkAAVE balance and received delegations."
+
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRouterInfo.tsx
+msgid "Not created"
+msgstr "Not created"
 
 #: src/components/HealthFactorNumber.tsx
 msgid "Risk details"
@@ -2429,6 +2542,10 @@ msgstr "Assets to borrow"
 msgid "Data couldn't be loaded."
 msgstr "Data couldn't be loaded."
 
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersListItem.tsx
+msgid "This asset is not a reserve of the current market."
+msgstr "This asset is not a reserve of the current market."
+
 #: src/components/Warnings/BorrowDisabledWarning.tsx
 msgid "Borrowing is disabled due to an Aave community decision. <0>More details</0>"
 msgstr "Borrowing is disabled due to an Aave community decision. <0>More details</0>"
@@ -2481,6 +2598,10 @@ msgstr "Staking Rewards"
 #: src/components/transactions/Bridge/BridgeModalContent.tsx
 msgid "Bridge GHO"
 msgstr "Bridge GHO"
+
+#: src/components/transactions/SupplyForLiquidations/SupplyForLiquidationsActions.tsx
+msgid "Creating router..."
+msgstr "Creating router..."
 
 #: src/modules/history/HistoryWrapper.tsx
 #: src/modules/history/HistoryWrapperMobile.tsx
@@ -2557,6 +2678,7 @@ msgstr "Withdraw {symbol}"
 
 #: src/components/transactions/Supply/SupplyModalContent.tsx
 #: src/components/transactions/Supply/SupplyModalContent.tsx
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersList.tsx
 msgid "Supplied"
 msgstr "Supplied"
 
@@ -2822,6 +2944,10 @@ msgstr "Interest rate that is determined by Aave Governance. This rate may be ch
 msgid "Disable E-Mode"
 msgstr "Disable E-Mode"
 
+#: src/components/transactions/SupplyForLiquidations/SupplyForLiquidationsModalContent.tsx
+msgid "Your {0} liquidation router is ready"
+msgstr "Your {0} liquidation router is ready"
+
 #: src/components/transactions/Emode/EmodeActions.tsx
 #: src/modules/dashboard/DashboardEModeButton.tsx
 msgid "Enable E-Mode"
@@ -2868,6 +2994,10 @@ msgstr "here."
 #: src/components/transactions/FlowCommons/TxModalDetails.tsx
 msgid "Unavailable"
 msgstr "Unavailable"
+
+#: src/components/transactions/SupplyForLiquidations/SupplyForLiquidationsModalContent.tsx
+msgid "Revoked {0} from your liquidation router"
+msgstr "Revoked {0} from your liquidation router"
 
 #: src/layouts/components/LanguageSwitcher.tsx
 msgid "Select language"
@@ -2995,6 +3125,10 @@ msgstr "Expected amount to repay"
 msgid "Version 2"
 msgstr "Version 2"
 
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRouterInfo.tsx
+msgid "An unlimited approval is not re-emitted as it is spent, so no exact remaining figure can be shown."
+msgstr "An unlimited approval is not re-emitted as it is spent, so no exact remaining figure can be shown."
+
 #: src/modules/dashboard/DashboardEModeButton.tsx
 msgid "E-Mode increases your LTV for a selected category of assets. <0>Learn more</0>"
 msgstr "E-Mode increases your LTV for a selected category of assets. <0>Learn more</0>"
@@ -3059,9 +3193,25 @@ msgstr "Can be executed"
 msgid "Assets with zero LTV ({0}) must be withdrawn or disabled as collateral to perform this action"
 msgstr "Assets with zero LTV ({0}) must be withdrawn or disabled as collateral to perform this action"
 
+#: src/components/transactions/SupplyForLiquidations/SupplyForLiquidationsModalContent.tsx
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersList.tsx
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersList.tsx
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersListMobileItem.tsx
+#: src/modules/reserve-overview/ReserveActions.tsx
+msgid "Supplied for liquidations"
+msgstr "Supplied for liquidations"
+
+#: src/components/transactions/SupplyForLiquidations/SupplyForLiquidationsModalContent.tsx
+msgid "Back to supplying"
+msgstr "Back to supplying"
+
 #: src/components/transactions/GovDelegation/DelegationTypeSelector.tsx
 msgid "Both"
 msgstr "Both"
+
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRouterInfo.tsx
+msgid "No allowance has ever been granted, so this router cannot cover liquidations yet."
+msgstr "No allowance has ever been granted, so this router cannot cover liquidations yet."
 
 #: src/components/SecondsToString.tsx
 msgid "{h}h"
@@ -3179,6 +3329,10 @@ msgstr "Signatures ready"
 msgid "Go to Balancer Pool"
 msgstr "Go to Balancer Pool"
 
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersList.tsx
+msgid "Armed routers"
+msgstr "Armed routers"
+
 #: src/components/caps/CapsTooltip.tsx
 msgid "This asset has reached its borrow cap. Nothing is available to be borrowed from this market."
 msgstr "This asset has reached its borrow cap. Nothing is available to be borrowed from this market."
@@ -3194,6 +3348,11 @@ msgstr "Minimum amount of debt to be repaid"
 #: src/modules/governance/DelegatedInfoPanel.tsx
 msgid "{title}"
 msgstr "{title}"
+
+#: src/components/transactions/SupplyForLiquidations/SupplyForLiquidationsModalContent.tsx
+#: src/components/transactions/SupplyForLiquidations/SupplyForLiquidationsModalContent.tsx
+msgid "Currently supplied for liquidations"
+msgstr "Currently supplied for liquidations"
 
 #: src/components/MarketSwitcher.tsx
 msgid "RWA market of real estate tokens issued by Reental over the Sepolia network"
@@ -3224,6 +3383,10 @@ msgstr "please check that the amount you want to supply is not currently being u
 #: src/components/transactions/Withdraw/WithdrawAndSwitchModalContent.tsx
 msgid "Minimum amount received"
 msgstr "Minimum amount received"
+
+#: src/modules/dashboard/lists/LiquidationRoutersList/useLiquidationRouterActions.tsx
+msgid "Put your deposits for liquidations"
+msgstr "Put your deposits for liquidations"
 
 #: src/modules/governance/proposal/VoteInfo.tsx
 msgid "Voting is on"
@@ -3413,6 +3576,10 @@ msgstr "These assets are temporarily frozen or paused by Aave community decision
 msgid "Your proposition power is based on your AAVE/stkAAVE balance and received delegations."
 msgstr "Your proposition power is based on your AAVE/stkAAVE balance and received delegations."
 
+#: src/components/transactions/SupplyForLiquidations/SupplyForLiquidationsModalContent.tsx
+msgid "This sets your {0} allowance for the router to 0. The router will no longer be able to use these aTokens to offset liquidations."
+msgstr "This sets your {0} allowance for the router to 0. The router will no longer be able to use these aTokens to offset liquidations."
+
 #: src/modules/bridge/BridgeWrapper.tsx
 msgid "You don't have any bridge transactions"
 msgstr "You don't have any bridge transactions"
@@ -3421,6 +3588,10 @@ msgstr "You don't have any bridge transactions"
 #: src/modules/umbrella/UnstakeModalActions.tsx
 msgid "Unstake {symbol}"
 msgstr "Unstake {symbol}"
+
+#: src/components/transactions/SupplyForLiquidations/SupplyForLiquidationsActions.tsx
+msgid "Revoking {symbol}..."
+msgstr "Revoking {symbol}..."
 
 #: src/components/transactions/Bridge/BridgeDestinationInput.tsx
 msgid "Enter ETH address or ENS"
@@ -3539,6 +3710,8 @@ msgid "No search results{0}"
 msgstr "No search results{0}"
 
 #: src/modules/bridge/BridgeWrapper.tsx
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersList.tsx
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersListMobileItem.tsx
 msgid "Status"
 msgstr "Status"
 
@@ -3621,6 +3794,10 @@ msgstr "PTs"
 #: src/layouts/components/LanguageSwitcher.tsx
 msgid "Language"
 msgstr "Language"
+
+#: src/components/transactions/SupplyForLiquidations/SupplyForLiquidationsActions.tsx
+msgid "Supply {symbol} for liquidations"
+msgstr "Supply {symbol} for liquidations"
 
 #: src/components/infoTooltips/CollateralSwitchTooltip.tsx
 msgid "Allows you to decide whether to use a supplied asset as collateral. An asset used as collateral will affect your borrowing power and health factor."
@@ -3732,6 +3909,14 @@ msgstr "Your {networkName} wallet is empty. Get free test {0} at"
 msgid "tokens, please go to the"
 msgstr "tokens, please go to the"
 
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRouterInfo.tsx
+msgid "Revoked"
+msgstr "Revoked"
+
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersList.tsx
+msgid "Router data unavailable"
+msgstr "Router data unavailable"
+
 #: src/components/transactions/Switch/SwitchLimitOrdersModalContent.tsx
 msgid "Sell"
 msgstr "Sell"
@@ -3761,6 +3946,10 @@ msgstr "Your info"
 #: src/components/isolationMode/IsolatedBadge.tsx
 msgid "Collateral usage is limited because of isolation mode."
 msgstr "Collateral usage is limited because of isolation mode."
+
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRouterInfo.tsx
+msgid "The allowance was set back to zero, so this router cannot cover liquidations."
+msgstr "The allowance was set back to zero, so this router cannot cover liquidations."
 
 #: src/components/infoTooltips/MigrationDisabledTooltip.tsx
 msgid "Flashloan is disabled for this asset, hence this position cannot be migrated."
@@ -3880,6 +4069,7 @@ msgstr "Remaining debt"
 #: src/components/transactions/Withdraw/WithdrawAndSwitchModalContent.tsx
 #: src/components/transactions/Withdraw/WithdrawAndSwitchModalContent.tsx
 #: src/components/transactions/Withdraw/WithdrawModalContent.tsx
+#: src/modules/dashboard/lists/LiquidationRoutersList/LiquidationRoutersListMobileItem.tsx
 #: src/modules/dashboard/lists/SuppliedPositionsList/SuppliedPositionsListMobileItem.tsx
 #: src/modules/dashboard/lists/SupplyAssetsList/SupplyAssetsListItem.tsx
 #: src/modules/dashboard/lists/SupplyAssetsList/SupplyAssetsListItem.tsx
