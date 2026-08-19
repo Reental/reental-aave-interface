@@ -48,7 +48,14 @@ export type MarketDataType = {
     V3_MIGRATOR?: string;
     GHO_TOKEN_ADDRESS?: string;
     GHO_UI_DATA_PROVIDER?: string;
+    // Factory that deploys a per-user, per-asset liquidation router. Users approve their
+    // aTokens to their own router, which uses them to offset liquidations.
+    // The "Supply for liquidations" action is hidden on markets where this is unset.
+    LIQUIDATION_ROUTER_FACTORY?: string;
   };
+  // Block to scan router deployment events from. Should be the factory's creation block:
+  // routers deployed before it will not be found. Only read when LIQUIDATION_ROUTER_FACTORY is set.
+  liquidationRouterFactoryFromBlock?: number;
 };
 export enum CustomMarket {
   reental_polygon_v3 = 'reental_polygon_v3',
@@ -86,6 +93,9 @@ export const marketsData: {
       COLLECTOR: AaveV3Polygon.COLLECTOR,
       DEBT_SWITCH_ADAPTER: AaveV3Polygon.DEBT_SWAP_ADAPTER,
       WITHDRAW_SWITCH_ADAPTER: AaveV3Polygon.WITHDRAW_SWAP_ADAPTER,
+      // TODO: set to the LpLiquidationRouterFactory deployment on Polygon (plus
+      // liquidationRouterFactoryFromBlock below) to enable the "Supply for liquidations" action.
+      // LIQUIDATION_ROUTER_FACTORY: '0x...',
     },
   },
   [CustomMarket.reental_sepolia_v3]: {
@@ -105,7 +115,11 @@ export const marketsData: {
       WALLET_BALANCE_PROVIDER: AaveV3Sepolia.WALLET_BALANCE_PROVIDER,
       UI_POOL_DATA_PROVIDER: AaveV3Sepolia.UI_POOL_DATA_PROVIDER,
       UI_INCENTIVE_DATA_PROVIDER: AaveV3Sepolia.UI_INCENTIVE_DATA_PROVIDER,
+      LIQUIDATION_ROUTER_FACTORY: '0x19b43022C2F42E7375b27A5F9E2442fe2cBA5d79',
     },
+    // Conservative floor: the earliest known router deployment is block 11459067. Narrow this
+    // to the factory's exact creation block to cut the number of log queries per lookup.
+    liquidationRouterFactoryFromBlock: 11_000_000,
   },
 } as const;
 

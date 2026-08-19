@@ -43,6 +43,7 @@ export enum ModalType {
   SavingsGhoWithdraw,
   SwitchLimitOrder,
   CancelCowOrder,
+  SupplyForLiquidations,
 }
 
 export interface ModalArgsType {
@@ -61,6 +62,9 @@ export interface ModalArgsType {
   stataTokenAToken?: string;
   stataTokenAsset?: string;
   cowOrder?: TransactionHistoryItem<ActionFields['CowSwap']>;
+  revoke?: boolean;
+  /** Address of the specific liquidation router to act on; a reserve may have several. */
+  liquidationRouter?: string;
 }
 
 export type TxStateType = {
@@ -85,6 +89,14 @@ export interface ModalContextType<T extends ModalArgsType> {
     currentMarket: string,
     name: string,
     funnel: string
+  ) => void;
+  openSupplyForLiquidations: (
+    underlyingAsset: string,
+    currentMarket: string,
+    name: string,
+    funnel: string,
+    revoke?: boolean,
+    liquidationRouter?: string
   ) => void;
   openBorrow: (
     underlyingAsset: string,
@@ -207,6 +219,25 @@ export const ModalContextProvider: React.FC<PropsWithChildren> = ({ children }) 
               funnel,
             });
           }
+        },
+        openSupplyForLiquidations: (
+          underlyingAsset,
+          currentMarket,
+          name,
+          funnel,
+          revoke,
+          liquidationRouter
+        ) => {
+          setType(ModalType.SupplyForLiquidations);
+          setArgs({ underlyingAsset, revoke, liquidationRouter });
+
+          trackEvent(GENERAL.OPEN_MODAL, {
+            modal: 'Supply for liquidations',
+            market: currentMarket,
+            assetName: name,
+            asset: underlyingAsset,
+            funnel,
+          });
         },
         openWithdraw: (underlyingAsset, currentMarket, name, funnel) => {
           setType(ModalType.Withdraw);
