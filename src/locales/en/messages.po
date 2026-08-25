@@ -363,6 +363,10 @@ msgstr "Supply {symbol}"
 msgid "Max LTV"
 msgstr "Max LTV"
 
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "Partial"
+msgstr "Partial"
+
 #: src/components/transactions/Repay/RepayModal.tsx
 #: src/modules/dashboard/lists/BorrowedPositionsList/BorrowedPositionsListItem.tsx
 #: src/modules/dashboard/lists/BorrowedPositionsList/BorrowedPositionsListItem.tsx
@@ -592,6 +596,7 @@ msgstr "Switch Network"
 msgid "APR"
 msgstr "APR"
 
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
 #: src/modules/umbrella/helpers/Helpers.tsx
 #: src/modules/umbrella/StakingApyItem.tsx
 #: src/modules/umbrella/UmbrellaClaimModalContent.tsx
@@ -1836,6 +1841,10 @@ msgstr "{currentMethod}"
 msgid "Amount you accept"
 msgstr "Amount you accept"
 
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "using {backstopPositionsUsed} backstop positions"
+msgstr "using {backstopPositionsUsed} backstop positions"
+
 #: src/modules/bridge/BridgeTransactionListItem.tsx
 msgid "View TX"
 msgstr "View TX"
@@ -2264,6 +2273,10 @@ msgstr "Action cannot be performed because the reserve is paused"
 #: src/components/transactions/TxActionsWrapper.tsx
 msgid "{0} {symbol} to continue"
 msgstr "{0} {symbol} to continue"
+
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "Backstop used"
+msgstr "Backstop used"
 
 #: src/modules/governance/RepresentativesInfoPanel.tsx
 msgid "Representative smart contract wallet (ie. Safe) addresses on other chains."

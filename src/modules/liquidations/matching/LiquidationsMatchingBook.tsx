@@ -1,19 +1,9 @@
 import { Trans } from '@lingui/macro';
-import {
-  Box,
-  Button,
-  Checkbox,
-  MenuItem,
-  Select,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Box, Button, Checkbox, Chip, MenuItem, Select, Typography } from '@mui/material';
 import { useMemo, useState } from 'react';
 import { ListColumn } from 'src/components/lists/ListColumn';
 import { ListHeaderTitle } from 'src/components/lists/ListHeaderTitle';
 import { ListHeaderWrapper } from 'src/components/lists/ListHeaderWrapper';
-import { ListItem } from 'src/components/lists/ListItem';
 import { FormattedNumber } from 'src/components/primitives/FormattedNumber';
 import { TokenIcon } from 'src/components/primitives/TokenIcon';
 import { Warning } from 'src/components/primitives/Warning';
@@ -34,6 +24,12 @@ interface LiquidationsMatchingBookProps {
   reserve: ComputedReserveData;
 }
 
+/** A chunk of one backstop position assigned to fund (part of) a liquidation */
+interface BackstopSlice {
+  owner: string;
+  amountUSD: number;
+}
+
 interface BookRow {
   position: LiquidatablePosition;
   debtAmount: number;
@@ -42,8 +38,14 @@ interface BookRow {
   collateralUSD: number;
   /** 1 when HF < 0.95, 0.5 otherwise (close factor) */
   factor: number;
-  /** USD repayable now for this pair: close factor, collateral value and backstop caps applied */
+  /** USD repayable now: close factor and collateral value caps applied */
+  demandUSD: number;
+  /** USD actually funded by the assigned backstop slices */
   matchableUSD: number;
+  /** Backstop positions used to fund this liquidation, in fill order */
+  slices: BackstopSlice[];
+  /** 'total' when the backstop fully covers demand, 'partial' otherwise */
+  coverage: 'total' | 'partial' | 'none';
   executable: boolean;
 }
 
@@ -52,9 +54,11 @@ interface BookRow {
  * On a borrowable reserve the debt side is fixed and the collateral is selectable;
  * on a collateral reserve it is the other way around.
  */
-/** One liquidation call for the matcher: who liquidates whom, on which pair, for how much debt */
+/** One liquidation call for the matcher: which backstop position liquidates whom, on which pair, for how much debt */
 export interface MatcherLiquidationCall {
+  /** Backstop depositor whose funds execute this chunk of the liquidation */
   liquidator: string;
+  /** Borrower being liquidated */
   user: string;
   debtAsset: string;
   collateralAsset: string;
@@ -64,12 +68,10 @@ export interface MatcherLiquidationCall {
 }
 
 export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookProps) => {
-  const theme = useTheme();
-  const downToSm = useMediaQuery(theme.breakpoints.down('sm'));
   const { reserves } = useAppDataContext();
   const { currentAccount } = useWeb3Context();
   const positions = useLiquidatablePositions();
-  const { getPairLiquidity } = useBackstopLiquidity();
+  const { getPairPositions, getPairLiquidity } = useBackstopLiquidity();
   const [selected, setSelected] = useState<Record<string, boolean>>({});
 
   const isDebtSide = reserve.borrowingEnabled;
@@ -99,7 +101,7 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
     if (!debtReserve || !collateralReserve) return [];
     const liquidationBonus = Number(collateralReserve.formattedReserveLiquidationBonus) || 0;
 
-    return positions
+    const candidates = positions
       .flatMap((position) => {
         const debtEntry = position.debt.find(
           (d) => d.underlyingAsset === debtReserve.underlyingAsset
@@ -113,56 +115,88 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
         const factor = maxLiquidatableFactor(position.healthFactor);
         // Repaying X USD seizes X * (1 + bonus) USD of collateral, capped by what the position holds
         const collateralCapUSD = collateralEntry.amountUSD / (1 + liquidationBonus);
-        const matchableUSD = executable
-          ? Math.min(debtEntry.amountUSD * factor, collateralCapUSD, backstop.availableUSD)
-          : 0;
+        const demandUSD = executable ? Math.min(debtEntry.amountUSD * factor, collateralCapUSD) : 0;
 
-        return [
-          {
-            position,
-            debtAmount: debtEntry.amount,
-            debtUSD: debtEntry.amountUSD,
-            collateralAmount: collateralEntry.amount,
-            collateralUSD: collateralEntry.amountUSD,
-            factor,
-            matchableUSD,
-            executable,
-          },
-        ];
+        return [{ position, debtEntry, collateralEntry, factor, demandUSD, executable }];
       })
       .sort((a, b) => a.position.healthFactor - b.position.healthFactor);
-  }, [positions, debtReserve, collateralReserve, backstop.availableUSD]);
+
+    // Fill algorithm: lowest HF first; each liquidation drains backstop positions starting
+    // from the largest remaining volume, splitting across positions when one is not enough.
+    const backstopPool = getPairPositions(
+      debtReserve.underlyingAsset,
+      collateralReserve.underlyingAsset
+    ).map((p) => ({ ...p, remainingUSD: p.availableUSD }));
+
+    return candidates.map(
+      ({ position, debtEntry, collateralEntry, factor, demandUSD, executable }) => {
+        const slices: BackstopSlice[] = [];
+        let pending = demandUSD;
+
+        while (pending > 0.01) {
+          const source = backstopPool
+            .filter((p) => p.remainingUSD > 0.01)
+            .sort((a, b) => b.remainingUSD - a.remainingUSD)[0];
+          if (!source) break;
+          const take = Math.min(source.remainingUSD, pending);
+          slices.push({ owner: source.owner, amountUSD: take });
+          source.remainingUSD -= take;
+          pending -= take;
+        }
+
+        const matchableUSD = slices.reduce((acc, s) => acc + s.amountUSD, 0);
+
+        return {
+          position,
+          debtAmount: debtEntry.amount,
+          debtUSD: debtEntry.amountUSD,
+          collateralAmount: collateralEntry.amount,
+          collateralUSD: collateralEntry.amountUSD,
+          factor,
+          demandUSD,
+          matchableUSD,
+          slices,
+          coverage: (matchableUSD === 0
+            ? 'none'
+            : pending <= 0.01
+            ? 'total'
+            : 'partial') as BookRow['coverage'],
+          executable,
+        };
+      }
+    );
+  }, [positions, debtReserve, collateralReserve, getPairPositions]);
 
   const executableRows = rows.filter((r) => r.executable);
-  const liquidatableUSD = executableRows.reduce((acc, r) => acc + r.debtUSD * r.factor, 0);
-  const matchableUSD = Math.min(
-    executableRows.reduce((acc, r) => acc + r.matchableUSD, 0),
-    backstop.availableUSD
-  );
+  const liquidatableUSD = executableRows.reduce((acc, r) => acc + r.demandUSD, 0);
+  const matchableUSD = executableRows.reduce((acc, r) => acc + r.matchableUSD, 0);
+  const backstopPositionsUsed = new Set(executableRows.flatMap((r) => r.slices.map((s) => s.owner)))
+    .size;
 
   const batchableRows = executableRows.filter((r) => r.matchableUSD > 0);
   const selectedRows = batchableRows.filter((r) => selected[r.position.user]);
   const selectedUSD = selectedRows.reduce((acc, r) => acc + r.matchableUSD, 0);
   const allSelected = batchableRows.length > 0 && selectedRows.length === batchableRows.length;
 
-  const buildCall = (row: BookRow): MatcherLiquidationCall | undefined => {
-    if (!debtReserve || !collateralReserve) return undefined;
+  // One call per backstop slice: a liquidation split across N backstop positions becomes N calls
+  const buildCalls = (row: BookRow): MatcherLiquidationCall[] => {
+    if (!debtReserve || !collateralReserve) return [];
     const debtPrice = Number(debtReserve.priceInUSD) || 1;
-    return {
-      liquidator: currentAccount,
+    return row.slices.map((slice) => ({
+      liquidator: slice.owner,
       user: row.position.user,
       debtAsset: debtReserve.underlyingAsset,
       collateralAsset: collateralReserve.underlyingAsset,
-      debtToCover: row.matchableUSD / debtPrice,
-      debtToCoverUSD: row.matchableUSD,
-    };
+      debtToCover: slice.amountUSD / debtPrice,
+      debtToCoverUSD: slice.amountUSD,
+    }));
   };
 
   const handleExecute = (rowsToExecute: BookRow[]) => {
-    const calls = rowsToExecute.map(buildCall).filter(Boolean);
+    const calls = rowsToExecute.flatMap(buildCalls);
     // TODO: wire the matcher contract — single tx per call, or its batch entrypoint when 2+
     // eslint-disable-next-line no-console
-    console.log('execute liquidations', calls);
+    console.log('execute liquidations', { executor: currentAccount, calls });
   };
 
   if (!debtReserve || !collateralReserve || otherSideOptions.length === 0) return null;
@@ -249,12 +283,19 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
           <Typography variant="caption" color="text.secondary" component="div">
             <Trans>Matchable now</Trans>
           </Typography>
-          <FormattedNumber
-            value={matchableUSD}
-            symbol="USD"
-            variant="main16"
-            color={matchableUSD > 0 ? 'success.main' : 'text.primary'}
-          />
+          <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 2 }}>
+            <FormattedNumber
+              value={matchableUSD}
+              symbol="USD"
+              variant="main16"
+              color={matchableUSD > 0 ? 'success.main' : 'text.primary'}
+            />
+            {backstopPositionsUsed > 0 && (
+              <Typography variant="helperText" color="text.muted">
+                <Trans>using {backstopPositionsUsed} backstop positions</Trans>
+              </Typography>
+            )}
+          </Box>
         </Box>
       </Box>
 
@@ -270,7 +311,7 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
         </Warning>
       ) : (
         <Box sx={{ border: 1, borderColor: 'divider', borderRadius: '6px', overflowX: 'auto' }}>
-          <Box sx={{ minWidth: downToSm ? '640px' : 'unset' }}>
+          <Box sx={{ minWidth: '560px' }}>
             <ListHeaderWrapper px={4} sx={{ position: 'static', pt: 3 }}>
               <ListColumn maxWidth={40} minWidth={40} align="center">
                 <Checkbox
@@ -306,11 +347,6 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
               </ListColumn>
               <ListColumn align="right" minWidth={110}>
                 <ListHeaderTitle>
-                  <Trans>Collateral</Trans>
-                </ListHeaderTitle>
-              </ListColumn>
-              <ListColumn align="right" minWidth={110}>
-                <ListHeaderTitle>
                   <Trans>Matchable now</Trans>
                 </ListHeaderTitle>
               </ListColumn>
@@ -322,99 +358,172 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
             </ListHeaderWrapper>
 
             {rows.map((row) => (
-              <ListItem
+              <Box
                 key={row.position.user}
-                px={4}
-                minHeight={64}
-                sx={{ opacity: row.executable ? 1 : 0.45 }}
+                sx={{
+                  opacity: row.executable ? 1 : 0.45,
+                  '&:not(:last-child)': { borderBottom: '1px solid', borderColor: 'divider' },
+                }}
               >
-                <ListColumn maxWidth={40} minWidth={40} align="center">
-                  {row.executable && row.matchableUSD > 0 && (
-                    <Checkbox
-                      size="small"
-                      checked={!!selected[row.position.user]}
-                      onChange={(e) =>
-                        setSelected((prev) => ({
-                          ...prev,
-                          [row.position.user]: e.target.checked,
-                        }))
+                <Box sx={{ display: 'flex', alignItems: 'center', minHeight: '56px', px: 4 }}>
+                  <ListColumn maxWidth={40} minWidth={40} align="center">
+                    {row.executable && row.matchableUSD > 0 && (
+                      <Checkbox
+                        size="small"
+                        checked={!!selected[row.position.user]}
+                        onChange={(e) =>
+                          setSelected((prev) => ({
+                            ...prev,
+                            [row.position.user]: e.target.checked,
+                          }))
+                        }
+                        inputProps={{ 'aria-label': `select position ${row.position.user}` }}
+                        sx={{ p: 0 }}
+                      />
+                    )}
+                  </ListColumn>
+                  <ListColumn isRow minWidth={110} maxWidth={130}>
+                    <Typography variant="secondary14" noWrap>
+                      {row.position.user}
+                    </Typography>
+                  </ListColumn>
+                  <ListColumn align="left" minWidth={80}>
+                    <Typography
+                      variant="main14"
+                      color={
+                        !row.executable
+                          ? 'text.muted'
+                          : row.position.healthFactor < 0.95
+                          ? 'error.main'
+                          : 'warning.main'
                       }
-                      inputProps={{ 'aria-label': `select position ${row.position.user}` }}
-                      sx={{ p: 0 }}
-                    />
-                  )}
-                </ListColumn>
-                <ListColumn isRow minWidth={110} maxWidth={130}>
-                  <Typography variant="secondary14" noWrap>
-                    {row.position.user}
-                  </Typography>
-                </ListColumn>
-                <ListColumn align="left" minWidth={80}>
-                  <Typography
-                    variant="main14"
-                    color={
-                      !row.executable
-                        ? 'text.muted'
-                        : row.position.healthFactor < 0.95
-                        ? 'error.main'
-                        : 'warning.main'
-                    }
-                  >
-                    {row.position.healthFactor.toFixed(3)}
-                  </Typography>
-                  {row.executable && (
-                    <Typography variant="helperText" color="text.secondary">
-                      {row.factor === 1 ? (
-                        <Trans>100% liquidatable</Trans>
-                      ) : (
-                        <Trans>up to 50%</Trans>
-                      )}
+                    >
+                      {row.position.healthFactor.toFixed(3)}
                     </Typography>
-                  )}
-                </ListColumn>
-                <ListColumn align="right" minWidth={100}>
-                  <FormattedNumber value={row.debtAmount} variant="secondary14" />
-                  <FormattedNumber
-                    value={row.debtUSD}
-                    symbol="USD"
-                    variant="secondary12"
-                    color="text.secondary"
-                  />
-                </ListColumn>
-                <ListColumn align="right" minWidth={110}>
-                  <FormattedNumber value={row.collateralAmount} variant="secondary14" />
-                  <FormattedNumber
-                    value={row.collateralUSD}
-                    symbol="USD"
-                    variant="secondary12"
-                    color="text.secondary"
-                  />
-                </ListColumn>
-                <ListColumn align="right" minWidth={110}>
-                  {row.executable ? (
+                    {row.executable && (
+                      <Typography variant="helperText" color="text.secondary">
+                        {row.factor === 1 ? (
+                          <Trans>100% liquidatable</Trans>
+                        ) : (
+                          <Trans>up to 50%</Trans>
+                        )}
+                      </Typography>
+                    )}
+                  </ListColumn>
+                  <ListColumn align="right" minWidth={100}>
+                    <FormattedNumber value={row.debtAmount} variant="secondary14" />
                     <FormattedNumber
-                      value={row.matchableUSD}
+                      value={row.debtUSD}
                       symbol="USD"
-                      variant="secondary14"
-                      color={row.matchableUSD > 0 ? 'success.main' : 'text.muted'}
+                      variant="secondary12"
+                      color="text.secondary"
                     />
-                  ) : (
+                  </ListColumn>
+                  <ListColumn align="right" minWidth={110}>
+                    {row.executable ? (
+                      <>
+                        <FormattedNumber
+                          value={row.matchableUSD}
+                          symbol="USD"
+                          variant="secondary14"
+                          color={row.matchableUSD > 0 ? 'success.main' : 'text.muted'}
+                        />
+                        {row.coverage !== 'none' && (
+                          <Chip
+                            label={
+                              row.coverage === 'total' ? (
+                                <Trans>Total</Trans>
+                              ) : (
+                                <Trans>Partial</Trans>
+                              )
+                            }
+                            size="small"
+                            variant="outlined"
+                            color={row.coverage === 'total' ? 'success' : 'warning'}
+                            sx={{ mt: 1, height: '20px', fontSize: '11px' }}
+                          />
+                        )}
+                      </>
+                    ) : (
+                      <Typography variant="helperText" color="text.muted">
+                        <Trans>HF above 1</Trans>
+                      </Typography>
+                    )}
+                  </ListColumn>
+                  <ListColumn maxWidth={110} minWidth={100} align="right">
+                    <Button
+                      variant="contained"
+                      size="small"
+                      disabled={!row.executable || row.matchableUSD === 0}
+                      onClick={() => handleExecute([row])}
+                    >
+                      <Trans>Execute</Trans>
+                    </Button>
+                  </ListColumn>
+                </Box>
+
+                {/* Secondary line: seized collateral and the backstop positions funding this liquidation */}
+                <Box
+                  sx={{
+                    px: 4,
+                    pb: 3,
+                    pl: '56px',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    alignItems: 'baseline',
+                    columnGap: 5,
+                    rowGap: 1,
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1.5 }}>
                     <Typography variant="helperText" color="text.muted">
-                      <Trans>HF above 1</Trans>
+                      <Trans>Collateral</Trans>
                     </Typography>
+                    <FormattedNumber value={row.collateralAmount} variant="secondary12" />
+                    <FormattedNumber
+                      value={row.collateralUSD}
+                      symbol="USD"
+                      variant="secondary12"
+                      color="text.secondary"
+                    />
+                  </Box>
+                  {row.executable && row.slices.length > 0 && (
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        alignItems: 'baseline',
+                        columnGap: 2,
+                        rowGap: 1,
+                      }}
+                    >
+                      <Typography variant="helperText" color="text.muted">
+                        <Trans>Backstop used</Trans>
+                      </Typography>
+                      {row.slices.map((slice, i) => (
+                        <Box
+                          key={slice.owner}
+                          sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}
+                        >
+                          <Typography variant="secondary12" color="text.secondary">
+                            {slice.owner}
+                          </Typography>
+                          <FormattedNumber
+                            value={slice.amountUSD}
+                            symbol="USD"
+                            variant="secondary12"
+                          />
+                          {i < row.slices.length - 1 && (
+                            <Typography variant="secondary12" color="text.muted">
+                              ·
+                            </Typography>
+                          )}
+                        </Box>
+                      ))}
+                    </Box>
                   )}
-                </ListColumn>
-                <ListColumn maxWidth={110} minWidth={100} align="right">
-                  <Button
-                    variant="contained"
-                    size="small"
-                    disabled={!row.executable || row.matchableUSD === 0}
-                    onClick={() => handleExecute([row])}
-                  >
-                    <Trans>Execute</Trans>
-                  </Button>
-                </ListColumn>
-              </ListItem>
+                </Box>
+              </Box>
             ))}
           </Box>
         </Box>
