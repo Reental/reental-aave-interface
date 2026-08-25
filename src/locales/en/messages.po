@@ -23,6 +23,7 @@ msgid "Reward APY at target liquidity"
 msgstr "Reward APY at target liquidity"
 
 #: src/modules/liquidations/lists/LiquidationCollateralList/LiquidationCollateralList.tsx
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
 msgid "selected"
 msgstr "selected"
 
@@ -324,6 +325,11 @@ msgstr "Borrow cap is exceeded"
 msgid "Borrow {symbol}"
 msgstr "Borrow {symbol}"
 
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "Debt token"
+msgstr "Debt token"
+
 #: src/modules/markets/MarketAssetsList.tsx
 #: src/modules/markets/MarketAssetsListMobileItem.tsx
 #: src/modules/reserve-overview/SupplyInfo.tsx
@@ -378,6 +384,10 @@ msgstr "You can only withdraw your assets from the Security Module after the coo
 #: src/modules/dashboard/DashboardTopPanel.tsx
 msgid "Migrate to {0} v3 Market"
 msgstr "Migrate to {0} v3 Market"
+
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "No backstop deposits accept this pair yet, so nothing can be matched."
+msgstr "No backstop deposits accept this pair yet, so nothing can be matched."
 
 #: src/modules/governance/proposal/VotingResults.tsx
 msgid "Voting results"
@@ -509,6 +519,9 @@ msgstr "All transactions"
 #: src/components/transactions/Repay/RepayTypeSelector.tsx
 #: src/modules/dashboard/lists/SuppliedPositionsList/SuppliedPositionsList.tsx
 #: src/modules/dashboard/lists/SuppliedPositionsList/SuppliedPositionsList.tsx
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
 msgid "Collateral"
 msgstr "Collateral"
 
@@ -529,6 +542,10 @@ msgstr "Signing"
 #: src/components/transactions/Repay/RepayActions.tsx
 msgid "Repay {symbol}"
 msgstr "Repay {symbol}"
+
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "Execute batch ({0})"
+msgstr "Execute batch ({0})"
 
 #: src/modules/sGho/SavingsGhoCard.tsx
 #: src/modules/sGho/SGhoDepositPanel.tsx
@@ -582,6 +599,10 @@ msgstr "APR"
 msgid "Total"
 msgstr "Total"
 
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "Backstop for this pair"
+msgstr "Backstop for this pair"
+
 #: src/modules/governance/proposal/ProposalLifecycle.tsx
 msgid "{stepName}"
 msgstr "{stepName}"
@@ -589,6 +610,7 @@ msgstr "{stepName}"
 #: src/components/transactions/FlowCommons/TxModalDetails.tsx
 #: src/modules/dashboard/DashboardTopPanel.tsx
 #: src/modules/dashboard/LiquidationRiskParametresModal/LiquidationRiskParametresModal.tsx
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
 msgid "Health factor"
 msgstr "Health factor"
 
@@ -1318,6 +1340,10 @@ msgstr "Your liquidation position"
 msgid "{0}"
 msgstr "{0}"
 
+#: src/modules/reserve-overview/ReserveConfiguration.tsx
+msgid "Liquidations book"
+msgstr "Liquidations book"
+
 #: src/components/transactions/Switch/SwitchLimitOrdersActions.tsx
 #: src/components/transactions/Switch/SwitchLimitOrdersActions.tsx
 msgid "Create limit order"
@@ -1503,6 +1529,10 @@ msgstr "Borrow and repay in same block is not allowed"
 #: src/modules/dashboard/lists/SlippageList.tsx
 msgid "<0>Slippage tolerance </0><1>{selectedSlippage}% </1><2>{0}</2>"
 msgstr "<0>Slippage tolerance </0><1>{selectedSlippage}% </1><2>{0}</2>"
+
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "up to 50%"
+msgstr "up to 50%"
 
 #. js-lingui-explicit-id
 #: src/ui-config/menu-items/index.tsx
@@ -2047,6 +2077,10 @@ msgstr "Show assets with small balance"
 msgid "Asset has been successfully sent to CCIP contract. You can check the status of the transactions below"
 msgstr "Asset has been successfully sent to CCIP contract. You can check the status of the transactions below"
 
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "Liquidatable debt"
+msgstr "Liquidatable debt"
+
 #: pages/500.page.tsx
 msgid "Reload the page"
 msgstr "Reload the page"
@@ -2211,6 +2245,10 @@ msgstr "To borrow you need to supply any asset to be used as collateral."
 msgid "Accepted collaterals"
 msgstr "Accepted collaterals"
 
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "HF above 1"
+msgstr "HF above 1"
+
 #: src/components/transactions/FlowCommons/Error.tsx
 msgid "Copy error text"
 msgstr "Copy error text"
@@ -2321,6 +2359,10 @@ msgstr "Grant the liquidations matcher contract permission to use each selected 
 msgid "Aave Governance"
 msgstr "Aave Governance"
 
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "Execute"
+msgstr "Execute"
+
 #: src/modules/governance/proposal/ProposalOverview.tsx
 msgid "Raw-Ipfs"
 msgstr "Raw-Ipfs"
@@ -2351,6 +2393,10 @@ msgstr "Before supplying"
 #: src/modules/umbrella/UmbrellaAssetsDefault.tsx
 msgid "Assets to stake"
 msgstr "Assets to stake"
+
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "No liquidatable positions for this pair right now."
+msgstr "No liquidatable positions for this pair right now."
 
 #: src/modules/dashboard/LiquidationRiskParametresModal/components/HFContent.tsx
 msgid "Liquidation value"
@@ -2473,6 +2519,10 @@ msgstr "This is a program initiated and implemented by the Aave Chan Initiative 
 #: src/modules/umbrella/StakingApyItem.tsx
 msgid "supply"
 msgstr "supply"
+
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "Action"
+msgstr "Action"
 
 #: pages/dashboard.page.tsx
 #: src/components/transactions/Supply/SupplyModal.tsx
@@ -3030,6 +3080,10 @@ msgstr "Disable E-Mode"
 msgid "Enable E-Mode"
 msgstr "Enable E-Mode"
 
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "vs"
+msgstr "vs"
+
 #: src/components/transactions/Emode/EmodeModalContent.tsx
 msgid "Enabling E-Mode allows you to maximize your borrowing power, however, borrowing is restricted to assets within the selected category. <0>Learn more</0> about how it works and the applied restrictions."
 msgstr "Enabling E-Mode allows you to maximize your borrowing power, however, borrowing is restricted to assets within the selected category. <0>Learn more</0> about how it works and the applied restrictions."
@@ -3092,6 +3146,10 @@ msgstr "Price impact"
 msgid "Available to claim"
 msgstr "Available to claim"
 
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "100% liquidatable"
+msgstr "100% liquidatable"
+
 #: src/modules/sGho/SGhoApyChart.tsx
 msgid "sGHO Merit APY History"
 msgstr "sGHO Merit APY History"
@@ -3111,6 +3169,10 @@ msgstr "Show metrics"
 #: src/modules/umbrella/UmbrellaModalContent.tsx
 msgid "You can not stake this amount because it will cause collateral call"
 msgstr "You can not stake this amount because it will cause collateral call"
+
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "depositors"
+msgstr "depositors"
 
 #: src/components/transactions/SavingsGho/SavingsGhoDepositActions.tsx
 #: src/modules/reserve-overview/Gho/SavingsGho.tsx
@@ -3305,6 +3367,7 @@ msgstr "Borrow APY"
 
 #: src/modules/dashboard/lists/BorrowedPositionsList/BorrowedPositionsList.tsx
 #: src/modules/dashboard/lists/BorrowedPositionsList/BorrowedPositionsListItem.tsx
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
 msgid "Debt"
 msgstr "Debt"
 
@@ -3386,6 +3449,10 @@ msgstr "Signatures ready"
 #: src/modules/staking/GetABPTokenModal.tsx
 msgid "Go to Balancer Pool"
 msgstr "Go to Balancer Pool"
+
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "Position"
+msgstr "Position"
 
 #: src/components/caps/CapsTooltip.tsx
 msgid "This asset has reached its borrow cap. Nothing is available to be borrowed from this market."
@@ -4057,6 +4124,11 @@ msgstr "Collaterals you accept to receive"
 #: pages/404.page.tsx
 msgid "Back home"
 msgstr "Back home"
+
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "Matchable now"
+msgstr "Matchable now"
 
 #: src/modules/markets/MarketAssetsListContainer.tsx
 msgid "Search asset"

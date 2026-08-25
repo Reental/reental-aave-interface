@@ -19,6 +19,7 @@ import { useRootStore } from 'src/store/root';
 import { GENERAL } from 'src/utils/events';
 import { useShallow } from 'zustand/shallow';
 
+import { LiquidationsMatchingBook } from '../liquidations/matching/LiquidationsMatchingBook';
 import { BorrowInfo } from './BorrowInfo';
 import { InterestRateModelGraphContainer } from './graphs/InterestRateModelGraphContainer';
 import { ReserveEModePanel } from './ReserveEModePanel';
@@ -149,6 +150,20 @@ export const ReserveConfiguration: React.FC<ReserveConfigurationProps> = ({ rese
         <>
           <Divider sx={{ my: { xs: 6, sm: 10 } }} />
           <ReserveEModePanel reserve={reserve} />
+        </>
+      )}
+
+      {(reserve.borrowingEnabled || reserve.reserveLiquidationThreshold !== '0') && (
+        <>
+          <Divider sx={{ my: { xs: 6, sm: 10 } }} />
+          <PanelRow>
+            <PanelTitle>
+              <Trans>Liquidations book</Trans>
+            </PanelTitle>
+            <Box sx={{ flexGrow: 1, minWidth: 0, maxWidth: '100%', width: '100%' }}>
+              <LiquidationsMatchingBook reserve={reserve} />
+            </Box>
+          </PanelRow>
         </>
       )}
 
