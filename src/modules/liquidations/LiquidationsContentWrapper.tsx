@@ -1,38 +1,32 @@
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { ROUTES } from 'src/components/primitives/Link';
 
+import { LiquidationsNoPosition } from './LiquidationsNoPosition';
 import { LiquidationsPositionOverview } from './LiquidationsPositionOverview';
-import { LiquidationsSetup } from './LiquidationsSetup';
-import { LiquidationsConfig } from './types';
 import { useLiquidationsData } from './useLiquidationsData';
 import { useLiquidationsPosition } from './useLiquidationsPosition';
 
+/**
+ * Main /liquidations content: shows the user's position (or an empty state).
+ * The setup/edit form lives on its own page at /liquidations/setup.
+ */
 export const LiquidationsContentWrapper = () => {
+  const router = useRouter();
   const { deposits, collateralOptions } = useLiquidationsData();
-  const { position, savePosition } = useLiquidationsPosition();
-  const [isEditing, setIsEditing] = useState(false);
+  const { position } = useLiquidationsPosition();
 
-  const handleSubmit = (config: LiquidationsConfig) => {
-    // TODO: wire the approve tx to the liquidations contract before persisting
-    savePosition(config);
-    setIsEditing(false);
-  };
+  const goToSetup = () => router.push(ROUTES.liquidationsSetup);
 
-  if (position && !isEditing) {
-    return (
-      <LiquidationsPositionOverview
-        position={position}
-        deposits={deposits}
-        collateralOptions={collateralOptions}
-        onEdit={() => setIsEditing(true)}
-      />
-    );
+  if (!position) {
+    return <LiquidationsNoPosition onSetup={goToSetup} />;
   }
 
   return (
-    <LiquidationsSetup
-      initialConfig={position?.config}
-      onSubmit={handleSubmit}
-      onCancel={position ? () => setIsEditing(false) : undefined}
+    <LiquidationsPositionOverview
+      position={position}
+      deposits={deposits}
+      collateralOptions={collateralOptions}
+      onEdit={goToSetup}
     />
   );
 };
