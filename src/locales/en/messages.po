@@ -1151,10 +1151,6 @@ msgstr "Linked addresses"
 msgid "on"
 msgstr "on"
 
-#: src/modules/liquidations/matching/LiquidationsExecuteModal.tsx
-msgid "Execute ({totalCalls} calls)"
-msgstr "Execute ({totalCalls} calls)"
-
 #: src/components/transactions/Switch/SwitchLimitOrdersModalContent.tsx
 msgid "Receive at least"
 msgstr "Receive at least"
@@ -1187,6 +1183,10 @@ msgstr "Execute liquidation"
 #: src/modules/reserve-overview/Gho/GhoReserveConfiguration.tsx
 msgid "GHO is a native decentralized, collateral-backed digital asset pegged to USD. It is created by users via borrowing against multiple collateral. When user repays their GHO borrow position, the protocol burns that user's GHO. All the interest payments accrued by minters of GHO would be directly transferred to the AaveDAO treasury."
 msgstr "GHO is a native decentralized, collateral-backed digital asset pegged to USD. It is created by users via borrowing against multiple collateral. When user repays their GHO borrow position, the protocol burns that user's GHO. All the interest payments accrued by minters of GHO would be directly transferred to the AaveDAO treasury."
+
+#: src/modules/liquidations/matching/LiquidationsExecuteModal.tsx
+msgid "Single transaction · {0} liquidations · {totalCalls} backstop matches"
+msgstr "Single transaction · {0} liquidations · {totalCalls} backstop matches"
 
 #: src/components/transactions/Emode/EmodeActions.tsx
 msgid "Switch E-Mode"

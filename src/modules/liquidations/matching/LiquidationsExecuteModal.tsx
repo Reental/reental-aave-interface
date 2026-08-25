@@ -153,8 +153,17 @@ export const LiquidationsExecuteModal = ({
       </Row>
 
       <Button variant="contained" size="large" fullWidth onClick={onConfirm}>
-        {totalCalls > 1 ? <Trans>Execute ({totalCalls} calls)</Trans> : <Trans>Execute</Trans>}
+        <Trans>Execute</Trans>
       </Button>
+      <Typography
+        variant="helperText"
+        color="text.muted"
+        sx={{ display: 'block', textAlign: 'center', mt: 2 }}
+      >
+        <Trans>
+          Single transaction · {rows.length} liquidations · {totalCalls} backstop matches
+        </Trans>
+      </Typography>
     </BasicModal>
   );
 };

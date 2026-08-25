@@ -196,7 +196,8 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
 
   const handleExecute = (rowsToExecute: BookRow[]) => {
     const calls = rowsToExecute.flatMap(buildCalls);
-    // TODO: wire the matcher contract — single tx per call, or its batch entrypoint when 2+
+    // TODO: wire the matcher contract — one batch function taking the whole array in a
+    // single tx, e.g. liquidate(LiquidationParams[] calls)
     // eslint-disable-next-line no-console
     console.log('execute liquidations', { executor: currentAccount, calls });
   };
