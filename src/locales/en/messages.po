@@ -130,6 +130,10 @@ msgstr "FAQ"
 msgid "Deposit GHO and earn up to <0>{0}%</0> APY"
 msgstr "Deposit GHO and earn up to <0>{0}%</0> APY"
 
+#: src/modules/liquidations/matching/LiquidationsExecuteModal.tsx
+msgid "Repay {0} debt with backstop deposits and seize {1} with its liquidation bonus."
+msgstr "Repay {0} debt with backstop deposits and seize {1} with its liquidation bonus."
+
 #: src/ui-config/errorMapping.tsx
 msgid "Stable borrowing is not enabled"
 msgstr "Stable borrowing is not enabled"
@@ -363,6 +367,7 @@ msgstr "Supply {symbol}"
 msgid "Max LTV"
 msgstr "Max LTV"
 
+#: src/modules/liquidations/matching/LiquidationsExecuteModal.tsx
 #: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
 msgid "Partial"
 msgstr "Partial"
@@ -372,6 +377,7 @@ msgstr "Partial"
 #: src/modules/dashboard/lists/BorrowedPositionsList/BorrowedPositionsListItem.tsx
 #: src/modules/history/actions/ActionDetails.tsx
 #: src/modules/history/HistoryFilterMenu.tsx
+#: src/modules/liquidations/matching/LiquidationsExecuteModal.tsx
 msgid "Repay"
 msgstr "Repay"
 
@@ -525,7 +531,6 @@ msgstr "All transactions"
 #: src/modules/dashboard/lists/SuppliedPositionsList/SuppliedPositionsList.tsx
 #: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
 #: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
-#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
 msgid "Collateral"
 msgstr "Collateral"
 
@@ -596,6 +601,7 @@ msgstr "Switch Network"
 msgid "APR"
 msgstr "APR"
 
+#: src/modules/liquidations/matching/LiquidationsExecuteModal.tsx
 #: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
 #: src/modules/umbrella/helpers/Helpers.tsx
 #: src/modules/umbrella/StakingApyItem.tsx
@@ -1145,6 +1151,10 @@ msgstr "Linked addresses"
 msgid "on"
 msgstr "on"
 
+#: src/modules/liquidations/matching/LiquidationsExecuteModal.tsx
+msgid "Execute ({totalCalls} calls)"
+msgstr "Execute ({totalCalls} calls)"
+
 #: src/components/transactions/Switch/SwitchLimitOrdersModalContent.tsx
 msgid "Receive at least"
 msgstr "Receive at least"
@@ -1162,9 +1172,17 @@ msgstr "Assets to supply"
 msgid "Restake"
 msgstr "Restake"
 
+#: src/modules/liquidations/matching/LiquidationsExecuteModal.tsx
+msgid "Receive (incl. bonus)"
+msgstr "Receive (incl. bonus)"
+
 #: src/components/transactions/CancelCowOrder/CancelCowOrderActions.tsx
 msgid "Sending cancel..."
 msgstr "Sending cancel..."
+
+#: src/modules/liquidations/matching/LiquidationsExecuteModal.tsx
+msgid "Execute liquidation"
+msgstr "Execute liquidation"
 
 #: src/modules/reserve-overview/Gho/GhoReserveConfiguration.tsx
 msgid "GHO is a native decentralized, collateral-backed digital asset pegged to USD. It is created by users via borrowing against multiple collateral. When user repays their GHO borrow position, the protocol burns that user's GHO. All the interest payments accrued by minters of GHO would be directly transferred to the AaveDAO treasury."
@@ -1344,6 +1362,10 @@ msgstr "Your liquidation position"
 #: src/modules/umbrella/UmbrellaMarketSwitcher.tsx
 msgid "{0}"
 msgstr "{0}"
+
+#: src/modules/liquidations/matching/LiquidationsExecuteModal.tsx
+msgid "Funded by {0} backstop positions"
+msgstr "Funded by {0} backstop positions"
 
 #: src/modules/reserve-overview/ReserveConfiguration.tsx
 msgid "Liquidations book"
@@ -2254,6 +2276,10 @@ msgstr "To borrow you need to supply any asset to be used as collateral."
 msgid "Accepted collaterals"
 msgstr "Accepted collaterals"
 
+#: src/modules/liquidations/matching/LiquidationsExecuteModal.tsx
+msgid "Execute {0} liquidations"
+msgstr "Execute {0} liquidations"
+
 #: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
 msgid "HF above 1"
 msgstr "HF above 1"
@@ -2273,10 +2299,6 @@ msgstr "Action cannot be performed because the reserve is paused"
 #: src/components/transactions/TxActionsWrapper.tsx
 msgid "{0} {symbol} to continue"
 msgstr "{0} {symbol} to continue"
-
-#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
-msgid "Backstop used"
-msgstr "Backstop used"
 
 #: src/modules/governance/RepresentativesInfoPanel.tsx
 msgid "Representative smart contract wallet (ie. Safe) addresses on other chains."
@@ -2372,6 +2394,7 @@ msgstr "Grant the liquidations matcher contract permission to use each selected 
 msgid "Aave Governance"
 msgstr "Aave Governance"
 
+#: src/modules/liquidations/matching/LiquidationsExecuteModal.tsx
 #: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
 msgid "Execute"
 msgstr "Execute"
@@ -2528,6 +2551,10 @@ msgstr "The requested amount is greater than the max loan size in stable rate mo
 #: src/components/incentives/MeritIncentivesTooltipContent.tsx
 msgid "This is a program initiated and implemented by the Aave Chan Initiative (ACI). Aave Labs does not guarantee the program and accepts no liability."
 msgstr "This is a program initiated and implemented by the Aave Chan Initiative (ACI). Aave Labs does not guarantee the program and accepts no liability."
+
+#: src/modules/liquidations/matching/LiquidationsExecuteModal.tsx
+msgid "Total to receive"
+msgstr "Total to receive"
 
 #: src/modules/umbrella/StakingApyItem.tsx
 msgid "supply"
@@ -2824,6 +2851,10 @@ msgstr "Powered by"
 #: src/modules/governance/proposal/VotersListModal.tsx
 msgid "Voted NAY"
 msgstr "Voted NAY"
+
+#: src/modules/liquidations/matching/LiquidationsExecuteModal.tsx
+msgid "Total to repay"
+msgstr "Total to repay"
 
 #: src/components/infoTooltips/SuperFestTooltip.tsx
 msgid "about SuperFest."

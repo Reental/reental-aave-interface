@@ -13,6 +13,7 @@ import {
 } from 'src/hooks/app-data-provider/useAppDataProvider';
 import { useWeb3Context } from 'src/libs/hooks/useWeb3Context';
 
+import { LiquidationsExecuteModal } from './LiquidationsExecuteModal';
 import { useBackstopLiquidity } from './useBackstopLiquidity';
 import {
   LiquidatablePosition,
@@ -25,12 +26,12 @@ interface LiquidationsMatchingBookProps {
 }
 
 /** A chunk of one backstop position assigned to fund (part of) a liquidation */
-interface BackstopSlice {
+export interface BackstopSlice {
   owner: string;
   amountUSD: number;
 }
 
-interface BookRow {
+export interface BookRow {
   position: LiquidatablePosition;
   debtAmount: number;
   debtUSD: number;
@@ -73,6 +74,7 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
   const positions = useLiquidatablePositions();
   const { getPairPositions, getPairLiquidity } = useBackstopLiquidity();
   const [selected, setSelected] = useState<Record<string, boolean>>({});
+  const [executeRows, setExecuteRows] = useState<BookRow[] | null>(null);
 
   const isDebtSide = reserve.borrowingEnabled;
 
@@ -455,73 +457,11 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
                       variant="contained"
                       size="small"
                       disabled={!row.executable || row.matchableUSD === 0}
-                      onClick={() => handleExecute([row])}
+                      onClick={() => setExecuteRows([row])}
                     >
                       <Trans>Execute</Trans>
                     </Button>
                   </ListColumn>
-                </Box>
-
-                {/* Secondary line: seized collateral and the backstop positions funding this liquidation */}
-                <Box
-                  sx={{
-                    px: 4,
-                    pb: 3,
-                    pl: '56px',
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    alignItems: 'baseline',
-                    columnGap: 5,
-                    rowGap: 1,
-                  }}
-                >
-                  <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1.5 }}>
-                    <Typography variant="helperText" color="text.muted">
-                      <Trans>Collateral</Trans>
-                    </Typography>
-                    <FormattedNumber value={row.collateralAmount} variant="secondary12" />
-                    <FormattedNumber
-                      value={row.collateralUSD}
-                      symbol="USD"
-                      variant="secondary12"
-                      color="text.secondary"
-                    />
-                  </Box>
-                  {row.executable && row.slices.length > 0 && (
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        alignItems: 'baseline',
-                        columnGap: 2,
-                        rowGap: 1,
-                      }}
-                    >
-                      <Typography variant="helperText" color="text.muted">
-                        <Trans>Backstop used</Trans>
-                      </Typography>
-                      {row.slices.map((slice, i) => (
-                        <Box
-                          key={slice.owner}
-                          sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}
-                        >
-                          <Typography variant="secondary12" color="text.secondary">
-                            {slice.owner}
-                          </Typography>
-                          <FormattedNumber
-                            value={slice.amountUSD}
-                            symbol="USD"
-                            variant="secondary12"
-                          />
-                          {i < row.slices.length - 1 && (
-                            <Typography variant="secondary12" color="text.muted">
-                              ·
-                            </Typography>
-                          )}
-                        </Box>
-                      ))}
-                    </Box>
-                  )}
                 </Box>
               </Box>
             ))}
@@ -547,12 +487,24 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
           <Button
             variant="contained"
             disabled={selectedRows.length === 0}
-            onClick={() => handleExecute(selectedRows)}
+            onClick={() => setExecuteRows(selectedRows)}
           >
             <Trans>Execute batch ({selectedRows.length})</Trans>
           </Button>
         </Box>
       )}
+
+      <LiquidationsExecuteModal
+        open={!!executeRows}
+        setOpen={(isOpen) => !isOpen && setExecuteRows(null)}
+        rows={executeRows ?? []}
+        debtReserve={debtReserve}
+        collateralReserve={collateralReserve}
+        onConfirm={() => {
+          if (executeRows) handleExecute(executeRows);
+          setExecuteRows(null);
+        }}
+      />
     </Box>
   );
 };
