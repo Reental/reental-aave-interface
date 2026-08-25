@@ -57,7 +57,7 @@ export const LiquidationsSetup = ({
               {
                 enabled: true,
                 mode: allocation.mode,
-                amount: allocation.mode === 'all' ? deposit.underlyingBalance : allocation.amount,
+                amount: allocation.mode === 'all' ? '' : allocation.amount,
               },
             ] as const;
           })
@@ -80,18 +80,24 @@ export const LiquidationsSetup = ({
         .map((deposit) => ({ deposit, allocation: allocations[deposit.underlyingAsset] }))
         .filter(
           (entry): entry is { deposit: LiquidationDeposit; allocation: DepositAllocation } =>
-            !!entry.allocation?.enabled && Number(entry.allocation.amount) > 0
+            !!entry.allocation?.enabled &&
+            (entry.allocation.mode === 'all' || Number(entry.allocation.amount) > 0)
         ),
     [deposits, allocations]
   );
 
+  // 'all' allocations are unlimited, so estimate them at the current deposit balance
   const totalAllocatedUSD = enabledAllocations.reduce(
-    (acc, { deposit, allocation }) => acc + Number(allocation.amount) * Number(deposit.priceInUSD),
+    (acc, { deposit, allocation }) =>
+      acc +
+      Number(allocation.mode === 'all' ? deposit.underlyingBalance : allocation.amount) *
+        Number(deposit.priceInUSD),
     0
   );
 
   const hasExceededAllocation = enabledAllocations.some(
-    ({ deposit, allocation }) => Number(allocation.amount) > Number(deposit.underlyingBalance)
+    ({ deposit, allocation }) =>
+      allocation.mode === 'custom' && Number(allocation.amount) > Number(deposit.underlyingBalance)
   );
 
   const acceptedEntries = useMemo(
@@ -115,7 +121,7 @@ export const LiquidationsSetup = ({
       Object.fromEntries(
         deposits.map((deposit) => [
           deposit.underlyingAsset,
-          { enabled, mode: 'all' as const, amount: enabled ? deposit.underlyingBalance : '' },
+          { enabled, mode: 'all' as const, amount: '' },
         ])
       )
     );
@@ -265,16 +271,22 @@ export const LiquidationsSetup = ({
                 }
                 mb={2}
               >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <FormattedNumber value={allocation.amount} variant="secondary14" />
-                  <FormattedNumber
-                    value={Number(allocation.amount) * Number(deposit.priceInUSD)}
-                    symbol="USD"
-                    variant="secondary12"
-                    color="text.secondary"
-                    sx={{ ml: 2 }}
-                  />
-                </Box>
+                {allocation.mode === 'all' ? (
+                  <Typography variant="secondary14" color="text.secondary">
+                    <Trans>Unlimited</Trans>
+                  </Typography>
+                ) : (
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <FormattedNumber value={allocation.amount} variant="secondary14" />
+                    <FormattedNumber
+                      value={Number(allocation.amount) * Number(deposit.priceInUSD)}
+                      symbol="USD"
+                      variant="secondary12"
+                      color="text.secondary"
+                      sx={{ ml: 2 }}
+                    />
+                  </Box>
+                )}
               </Row>
             ))}
 

@@ -3,9 +3,9 @@ export type AllocationMode = 'all' | 'custom';
 export interface DepositAllocation {
   /** The deposit is selected to back liquidations */
   enabled: boolean;
-  /** 'all' allocates the full deposit (kept in sync with the balance), 'custom' unlocks the amount input */
+  /** 'all' = unlimited (max uint approval, stays valid as the deposit grows), 'custom' unlocks the amount input */
   mode: AllocationMode;
-  /** Effective amount allocated for liquidations, in token units */
+  /** Amount allocated for liquidations in token units ('' when mode is 'all') */
   amount: string;
 }
 
@@ -46,7 +46,7 @@ export interface LiquidationCollateralOption {
 }
 
 export interface LiquidationsConfig {
-  /** mode 'all' means the full deposit backs liquidations (e.g. unlimited approval), 'custom' caps it at amount */
+  /** mode 'all' = approve MaxUint256 to the matcher (amount is ''), 'custom' = approve exactly amount */
   allocations: { underlyingAsset: string; mode: AllocationMode; amount: string }[];
   /** mode 'all' means no cap on the amount received, 'custom' caps it at amount */
   acceptedCollaterals: { underlyingAsset: string; mode: AllocationMode; amount: string }[];

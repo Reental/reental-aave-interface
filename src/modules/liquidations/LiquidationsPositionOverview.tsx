@@ -125,7 +125,7 @@ export const LiquidationsPositionOverview = ({
           </ListColumn>
           <ListColumn>
             <Typography variant="secondary14" color="text.secondary">
-              {mode === 'all' ? <Trans>Full deposit</Trans> : <Trans>Custom amount</Trans>}
+              {mode === 'all' ? <Trans>Unlimited</Trans> : <Trans>Custom amount</Trans>}
             </Typography>
           </ListColumn>
           <ListColumn align="right">

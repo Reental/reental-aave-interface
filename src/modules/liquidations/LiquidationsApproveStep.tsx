@@ -80,10 +80,27 @@ export const LiquidationsApproveStep = ({
             </ListColumn>
 
             <ListColumn>
-              <FormattedNumber value={allocation.amount} variant="secondary14" sx={{ mb: '2px' }} />
-              <Typography variant="helperText" color="text.secondary">
-                {allocation.mode === 'all' ? <Trans>Full deposit</Trans> : <Trans>Custom</Trans>}
-              </Typography>
+              {allocation.mode === 'all' ? (
+                <>
+                  <Typography variant="secondary14" sx={{ mb: '2px' }}>
+                    <Trans>Unlimited</Trans>
+                  </Typography>
+                  <Typography variant="helperText" color="text.secondary">
+                    <Trans>Max uint approval</Trans>
+                  </Typography>
+                </>
+              ) : (
+                <>
+                  <FormattedNumber
+                    value={allocation.amount}
+                    variant="secondary14"
+                    sx={{ mb: '2px' }}
+                  />
+                  <Typography variant="helperText" color="text.secondary">
+                    <Trans>Custom</Trans>
+                  </Typography>
+                </>
+              )}
             </ListColumn>
 
             <ListColumn maxWidth={190} minWidth={160} align="right">

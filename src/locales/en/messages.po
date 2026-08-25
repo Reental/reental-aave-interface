@@ -443,9 +443,6 @@ msgstr "Your {networkName} wallet is empty. Get free test assets at"
 msgid "documentation"
 msgstr "documentation"
 
-#: src/modules/liquidations/LiquidationAmountInput.tsx
-#: src/modules/liquidations/LiquidationsApproveStep.tsx
-#: src/modules/liquidations/LiquidationsPositionOverview.tsx
 #: src/modules/liquidations/LiquidationsSetup.tsx
 msgid "Full deposit"
 msgstr "Full deposit"
@@ -1627,6 +1624,13 @@ msgstr "Weekly Rewards"
 msgid "Pending..."
 msgstr "Pending..."
 
+#: src/modules/liquidations/LiquidationAmountInput.tsx
+#: src/modules/liquidations/LiquidationsApproveStep.tsx
+#: src/modules/liquidations/LiquidationsPositionOverview.tsx
+#: src/modules/liquidations/LiquidationsSetup.tsx
+msgid "Unlimited"
+msgstr "Unlimited"
+
 #: src/modules/staking/GhoStakingPanel.tsx
 #: src/modules/staking/StakingPanel.tsx
 msgid "Wallet Balance"
@@ -2109,6 +2113,10 @@ msgstr "No rewards to claim"
 #: src/modules/liquidations/LiquidationsPositionOverview.tsx
 msgid "Total backing liquidations"
 msgstr "Total backing liquidations"
+
+#: src/modules/liquidations/LiquidationsApproveStep.tsx
+msgid "Max uint approval"
+msgstr "Max uint approval"
 
 #: src/modules/reserve-overview/ReserveFactorOverview.tsx
 msgid "Reserve factor"

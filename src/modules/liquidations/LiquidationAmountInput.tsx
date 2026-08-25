@@ -1,7 +1,6 @@
 import { Trans } from '@lingui/macro';
 import { Box, Button, InputBase, Typography } from '@mui/material';
 import { ReactNode } from 'react';
-import { FormattedNumber } from 'src/components/primitives/FormattedNumber';
 import { NoData } from 'src/components/primitives/NoData';
 import { StyledTxModalToggleButton } from 'src/components/StyledToggleButton';
 import { StyledTxModalToggleGroup } from 'src/components/StyledToggleButtonGroup';
@@ -70,12 +69,10 @@ export const LiquidationAmountInput = ({
       {disabled ? (
         <NoData variant="secondary14" color="text.muted" sx={{ pr: 1 }} />
       ) : mode === 'all' ? (
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', pr: 1 }}>
-          {maxValue !== undefined && <FormattedNumber value={maxValue} variant="secondary14" />}
-          <Typography variant="helperText" color="text.secondary">
-            {allLabel ?? <Trans>Full deposit</Trans>}
-          </Typography>
-        </Box>
+        // 'all' always means an unlimited (max uint) authorization, so no amount to show
+        <Typography variant="secondary14" color="text.secondary" sx={{ pr: 1 }}>
+          {allLabel ?? <Trans>Unlimited</Trans>}
+        </Typography>
       ) : (
         <>
           <Box

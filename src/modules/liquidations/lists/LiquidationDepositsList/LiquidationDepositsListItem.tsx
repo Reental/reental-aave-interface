@@ -32,11 +32,11 @@ const useItemHandlers = ({
   onAllocationChange,
 }: LiquidationDepositsListItemProps) => {
   const handleToggle = (checked: boolean) => {
-    // Selecting defaults to the full deposit ('all'), the user can switch to 'custom' to cap it
+    // Selecting defaults to 'all' (unlimited max-uint approval), the user can switch to 'custom' to cap it
     onAllocationChange(deposit.underlyingAsset, {
       enabled: checked,
       mode: 'all',
-      amount: checked ? deposit.underlyingBalance : '',
+      amount: '',
     });
   };
 
@@ -44,8 +44,8 @@ const useItemHandlers = ({
     onAllocationChange(deposit.underlyingAsset, {
       ...allocation,
       mode,
-      // Both directions start from the full deposit; in 'custom' the user edits from there
-      amount: deposit.underlyingBalance,
+      // 'custom' starts from the full deposit for the user to edit; 'all' carries no amount (unlimited)
+      amount: mode === 'custom' ? deposit.underlyingBalance : '',
     });
   };
 
