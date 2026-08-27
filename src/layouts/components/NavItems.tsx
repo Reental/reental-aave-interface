@@ -35,6 +35,11 @@ export const NavItems = ({ setOpen }: NavItemsProps) => {
       dataCy: 'menuMarkets',
     },
     {
+      link: ROUTES.liquidations,
+      title: <Trans>Liquidations</Trans>,
+      dataCy: 'menuLiquidations',
+    },
+    {
       link: ROUTES.analytics,
       title: <Trans>Analytics</Trans>,
       dataCy: 'menuAnalytics',
