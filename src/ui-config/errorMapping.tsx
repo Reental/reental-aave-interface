@@ -15,6 +15,53 @@ export type TxErrorType = {
   txAction: TxAction;
 };
 
+/**
+ * Reverts from the SharedLiquidationRouter.
+ *
+ * These arrive as revert strings, not the numeric codes the Aave pool uses, so they fall
+ * straight through the parser below and surface as a blank error. Each one here has a
+ * concrete cause worth naming — "no eligible LP capacity" in particular is the single most
+ * likely failure, and reads as a broken app rather than a configuration gap without it.
+ */
+const SHARED_ROUTER_ERRORS: [string, ReactElement][] = [
+  [
+    'no eligible LP capacity',
+    <Trans key="slr-capacity">
+      No liquidity provider can fund this liquidation right now. Providers are skipped when their
+      approval, deposit balance, collateral budget or per-liquidation cap runs out, or when their
+      recipient is not whitelisted for this collateral.
+    </Trans>,
+  ],
+  [
+    'bad candidate count',
+    <Trans key="slr-candidates">
+      The list of liquidity providers is empty or above the router&apos;s limit.
+    </Trans>,
+  ],
+  [
+    'bad liquidation bonus',
+    <Trans key="slr-bonus">
+      This asset has no liquidation bonus configured, so it cannot be seized as collateral.
+    </Trans>,
+  ],
+  [
+    'unsupported debt asset',
+    <Trans key="slr-debt">The router cannot repay this debt asset.</Trans>,
+  ],
+  [
+    'not registered',
+    <Trans key="slr-registered">
+      You need to register as a liquidity provider before changing anything else.
+    </Trans>,
+  ],
+  [
+    'already registered',
+    <Trans key="slr-already">You are already registered on the router.</Trans>,
+  ],
+  ['zero recipient', <Trans key="slr-recipient">The recipient address cannot be empty.</Trans>],
+  ['zero asset', <Trans key="slr-asset">The asset address cannot be empty.</Trans>],
+];
+
 export const getErrorTextFromError = (
   error: Error,
   txAction: TxAction,
@@ -27,6 +74,20 @@ export const getErrorTextFromError = (
       error: errorMapping[4001],
       blocking: false,
       actionBlocked: false,
+      rawError: error,
+      txAction,
+    };
+  }
+
+  // Router reverts are strings, so they have to be matched before the numeric parse below,
+  // which would otherwise NaN out and lose them.
+  const message = JSON.stringify(error?.message ?? '') + JSON.stringify(error ?? '');
+  const routerError = SHARED_ROUTER_ERRORS.find(([needle]) => message.includes(needle));
+  if (routerError) {
+    return {
+      error: routerError[1],
+      blocking,
+      actionBlocked: true,
       rawError: error,
       txAction,
     };

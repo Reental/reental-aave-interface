@@ -12,6 +12,7 @@ import {
   useAppDataContext,
 } from 'src/hooks/app-data-provider/useAppDataProvider';
 
+import { BackstopDiagnostics } from './BackstopDiagnostics';
 import { LiquidationsExecuteModal } from './LiquidationsExecuteModal';
 import { useBackstopLiquidity } from './useBackstopLiquidity';
 import { useExecuteLiquidations } from './useExecuteLiquidations';
@@ -286,6 +287,9 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
           </Warning>
         )
       )}
+
+      {/* Names the gate blocking each provider, which the totals above cannot. */}
+      <BackstopDiagnostics debtReserve={debtReserve} collateralReserve={collateralReserve} />
 
       {executionError && (
         <Warning severity="error" sx={{ mb: 4 }}>
