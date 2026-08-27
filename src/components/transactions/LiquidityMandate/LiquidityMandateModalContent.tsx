@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro';
-import { Skeleton, Stack, Switch, TextField, Typography } from '@mui/material';
+import { Button, Skeleton, Stack, Switch, TextField, Typography } from '@mui/material';
 import { formatUnits, parseUnits } from 'ethers/lib/utils';
 import React, { useState } from 'react';
 import { CompactableTypography, CompactMode } from 'src/components/CompactableTypography';
@@ -7,7 +7,11 @@ import { Warning } from 'src/components/primitives/Warning';
 import { useAppDataContext } from 'src/hooks/app-data-provider/useAppDataProvider';
 import { MandateStep, useModalContext } from 'src/hooks/useModal';
 import { useWeb3Context } from 'src/libs/hooks/useWeb3Context';
-import { BUDGET_USD_DECIMALS, UNCONSTRAINED_THRESHOLD } from 'src/libs/reental/sharedRouter/abi';
+import {
+  BUDGET_USD_DECIMALS,
+  UNCONSTRAINED_THRESHOLD,
+  UNLIMITED_MAX_DEBT,
+} from 'src/libs/reental/sharedRouter/abi';
 import { useMandate } from 'src/libs/reental/sharedRouter/useMandate';
 import { useRootStore } from 'src/store/root';
 import { useShallow } from 'zustand/shallow';
@@ -48,6 +52,7 @@ export const LiquidityMandateModalContent = React.memo(
 
     const [recipient, setRecipient] = useState('');
     const [amount, setAmount] = useState('');
+    const [noLimit, setNoLimit] = useState(false);
 
     const reserveFor = (address?: string) =>
       reserves.find((reserve) => reserve.underlyingAsset.toLowerCase() === address?.toLowerCase());
@@ -523,16 +528,29 @@ export const LiquidityMandateModalContent = React.memo(
             </Trans>
           </Warning>
 
-          <TextField
-            fullWidth
-            size="small"
-            type="number"
-            sx={{ mt: 4 }}
-            label={<Trans>Max debt per liquidation ({reserve.symbol})</Trans>}
-            value={amount}
-            onChange={(event) => setAmount(event.target.value)}
-            data-cy="mandateMaxDebtInput"
-          />
+          {/* "No limit" is max uint, not zero, and nobody is going to type 78 digits. The
+              other three ceilings still clamp it, so it grants nothing extra. */}
+          <Stack direction="row" gap={2} alignItems="center" sx={{ mt: 4 }}>
+            <TextField
+              fullWidth
+              size="small"
+              type="number"
+              label={<Trans>Max debt per liquidation ({reserve.symbol})</Trans>}
+              value={noLimit ? '' : amount}
+              disabled={noLimit}
+              onChange={(event) => setAmount(event.target.value)}
+              data-cy="mandateMaxDebtInput"
+            />
+            <Button
+              variant={noLimit ? 'contained' : 'outlined'}
+              size="small"
+              sx={{ flexShrink: 0 }}
+              onClick={() => setNoLimit((previous) => !previous)}
+              data-cy="mandateNoLimitButton"
+            >
+              <Trans>No limit</Trans>
+            </Button>
+          </Stack>
 
           <TxModalDetails gasLimit={gasLimit} skipLoad>
             <Stack direction="row" justifyContent="space-between" alignItems="center">
@@ -558,15 +576,19 @@ export const LiquidityMandateModalContent = React.memo(
               fn: 'setMaxDebtPerLiquidation',
               args: [
                 debtAsset.asset,
-                amount ? parseUnits(amount, reserve.decimals).toString() : '0',
+                noLimit
+                  ? UNLIMITED_MAX_DEBT
+                  : amount
+                  ? parseUnits(amount, reserve.decimals).toString()
+                  : '0',
               ],
             }}
             router={router}
             chainId={currentMarketData.chainId}
             isWrongNetwork={isWrongNetwork}
-            disabled={amount === ''}
-            actionText={<Trans>Set cap</Trans>}
-            actionInProgressText={<Trans>Setting cap...</Trans>}
+            disabled={!noLimit && amount === ''}
+            actionText={<Trans>Set limit</Trans>}
+            actionInProgressText={<Trans>Setting limit...</Trans>}
           />
         </>
       );
