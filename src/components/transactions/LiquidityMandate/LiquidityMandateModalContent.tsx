@@ -7,7 +7,7 @@ import { Warning } from 'src/components/primitives/Warning';
 import { useAppDataContext } from 'src/hooks/app-data-provider/useAppDataProvider';
 import { MandateStep, useModalContext } from 'src/hooks/useModal';
 import { useWeb3Context } from 'src/libs/hooks/useWeb3Context';
-import { BUDGET_USD_DECIMALS } from 'src/libs/reental/sharedRouter/abi';
+import { BUDGET_USD_DECIMALS, UNCONSTRAINED_THRESHOLD } from 'src/libs/reental/sharedRouter/abi';
 import { useMandate } from 'src/libs/reental/sharedRouter/useMandate';
 import { useRootStore } from 'src/store/root';
 import { useShallow } from 'zustand/shallow';
@@ -518,7 +518,8 @@ export const LiquidityMandateModalContent = React.memo(
           <Warning severity="info" sx={{ mt: 4, mb: 0 }}>
             <Trans>
               Caps how much {reserve.symbol} debt you cover in a single liquidation. This one is in{' '}
-              {reserve.symbol}, not USD. 0 means uncapped.
+              {reserve.symbol}, not USD. Zero is a real limit of zero: leave it unset and you fund
+              nothing, however much you have approved.
             </Trans>
           </Warning>
 
@@ -540,7 +541,9 @@ export const LiquidityMandateModalContent = React.memo(
               </Typography>
               <Typography variant="secondary14">
                 {debtAsset.maxDebt === '0' ? (
-                  <Trans>Uncapped</Trans>
+                  <Trans>Not set — funds nothing</Trans>
+                ) : BigInt(debtAsset.maxDebt) >= UNCONSTRAINED_THRESHOLD ? (
+                  <Trans>No limit</Trans>
                 ) : (
                   `${formatUnits(debtAsset.maxDebt, reserve.decimals)} ${reserve.symbol}`
                 )}

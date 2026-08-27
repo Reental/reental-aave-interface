@@ -2,6 +2,7 @@ import { Trans } from '@lingui/macro';
 import { Box, Chip, Stack, Typography } from '@mui/material';
 import { formatUnits } from 'ethers/lib/utils';
 import { CompactableTypography, CompactMode } from 'src/components/CompactableTypography';
+import { Warning } from 'src/components/primitives/Warning';
 import { ComputedReserveData } from 'src/hooks/app-data-provider/useAppDataProvider';
 import {
   BUDGET_USD_DECIMALS,
@@ -12,6 +13,7 @@ import {
   CandidateDiagnostic,
   useCandidateDiagnostics,
 } from 'src/libs/reental/sharedRouter/useCandidateDiagnostics';
+import { useCollateralTransferCheck } from 'src/libs/reental/sharedRouter/useCollateralTransferCheck';
 import { useRootStore } from 'src/store/root';
 
 /**
@@ -55,11 +57,18 @@ const fixFor = (diagnostic: CandidateDiagnostic, debtSymbol: string, collateralS
         </Trans>
       );
     case 'NoCapacity':
+      if (diagnostic.detail === 'cap-unset')
+        return (
+          <Trans>
+            No per-liquidation limit set for {debtSymbol}. The router reads an unset limit as zero,
+            so this provider funds nothing until one is set.
+          </Trans>
+        );
       if (diagnostic.detail === 'allowance')
         return <Trans>No {debtSymbol} approved to the router — armed on a different asset.</Trans>;
       if (diagnostic.detail === 'balance')
         return <Trans>Holds no {debtSymbol} deposit to draw on.</Trans>;
-      return <Trans>Its per-liquidation cap on {debtSymbol} leaves nothing available.</Trans>;
+      return <Trans>Its per-liquidation limit on {debtSymbol} leaves nothing available.</Trans>;
     default:
       return null;
   }
@@ -80,22 +89,46 @@ export const BackstopDiagnostics = ({
     debtAsset: debtReserve.underlyingAsset,
   });
 
-  if (isLoading || !diagnostics?.length) return null;
+  const { data: transferCheck } = useCollateralTransferCheck({
+    marketData: currentMarketData,
+    collateralAsset: collateralReserve.underlyingAsset,
+    aTokenAddress: collateralReserve.aTokenAddress,
+  });
 
-  const blocked = diagnostics.filter((diagnostic) => diagnostic.blockedBy);
-  if (!blocked.length) return null;
+  const blocked = diagnostics?.filter((diagnostic) => diagnostic.blockedBy) ?? [];
+
+  // The token-control gate is reported even when every provider looks fundable: quote()
+  // does not model it, so this is the one blocker the numbers above cannot reveal.
+  const routerBarred = transferCheck && !transferCheck.routerAllowed;
+
+  if (isLoading || (!blocked.length && !routerBarred)) return null;
 
   return (
     <Box sx={{ border: 1, borderColor: 'divider', borderRadius: '6px', p: 4, mb: 4 }}>
-      <Typography variant="subheader1" sx={{ mb: 1 }}>
-        <Trans>Why providers are not funding this pair</Trans>
-      </Typography>
-      <Typography variant="helperText" color="text.muted" sx={{ display: 'block', mb: 3 }}>
-        <Trans>
-          {blocked.length} of {diagnostics.length} registered providers are skipped for{' '}
-          {collateralReserve.symbol} / {debtReserve.symbol}.
-        </Trans>
-      </Typography>
+      {routerBarred && (
+        <Warning severity="error" sx={{ mb: blocked.length ? 4 : 0 }}>
+          <Trans>
+            The router is not permitted to hold {collateralReserve.symbol}, and seized collateral
+            passes through it before reaching any recipient. Every liquidation of this collateral
+            will revert until Reental whitelists the router on the token&apos;s control contract,
+            whatever the providers below show.
+          </Trans>
+        </Warning>
+      )}
+
+      {blocked.length > 0 && (
+        <Typography variant="subheader1" sx={{ mb: 1 }}>
+          <Trans>Why providers are not funding this pair</Trans>
+        </Typography>
+      )}
+      {blocked.length > 0 && (
+        <Typography variant="helperText" color="text.muted" sx={{ display: 'block', mb: 3 }}>
+          <Trans>
+            {blocked.length} of {diagnostics?.length ?? 0} registered providers are skipped for{' '}
+            {collateralReserve.symbol} / {debtReserve.symbol}.
+          </Trans>
+        </Typography>
+      )}
 
       {blocked.map((diagnostic) => (
         <Stack

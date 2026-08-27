@@ -8,6 +8,7 @@ import {
   BUDGET_USD_DECIMALS,
   SHARED_LIQUIDATION_ROUTER_ABI,
   UNCONSTRAINED_THRESHOLD,
+  UNLIMITED_MAX_DEBT,
 } from 'src/libs/reental/sharedRouter/abi';
 import { Mandate } from 'src/libs/reental/sharedRouter/useMandate';
 import { useRootStore } from 'src/store/root';
@@ -112,7 +113,11 @@ export const useLiquidationsSetupTx = (router?: string, chainId?: number) => {
    * signed before anything is sent.
    */
   const planConfig = useCallback(
-    (config: LiquidationsConfig, mandate?: Mandate): SetupStep[] => {
+    (
+      config: LiquidationsConfig,
+      mandate?: Mandate,
+      deposits: LiquidationDeposit[] = []
+    ): SetupStep[] => {
       if (!router) return [];
 
       const iface = new ethers.utils.Interface(SHARED_LIQUIDATION_ROUTER_ABI);
@@ -194,6 +199,40 @@ export const useLiquidationsSetupTx = (router?: string, chainId?: number) => {
           );
         });
       }
+
+      /**
+       * The per-liquidation limit, which is mandatory rather than optional.
+       *
+       * An unset limit reads as zero on-chain, not as "no limit", so a provider that has
+       * registered, approved and funded a budget still contributes nothing until this is
+       * set. Leaving it to an advanced screen produced exactly that: a setup that completes
+       * successfully and never fills.
+       */
+      config.allocations.forEach((allocation) => {
+        const deposit = deposits.find(
+          (item) => item.underlyingAsset.toLowerCase() === allocation.underlyingAsset.toLowerCase()
+        );
+        if (!deposit) return;
+
+        const desired =
+          allocation.mode === 'all'
+            ? UNLIMITED_MAX_DEBT
+            : parseUnits(allocation.amount || '0', deposit.decimals).toString();
+
+        const current = mandate?.debtAssets.find(
+          (item) => item.asset.toLowerCase() === allocation.underlyingAsset.toLowerCase()
+        );
+        if (current?.maxDebt === desired) return;
+
+        steps.push(
+          call(
+            `cap-${allocation.underlyingAsset.toLowerCase()}`,
+            `Set the per-liquidation limit for ${deposit.symbol}`,
+            'setMaxDebtPerLiquidation',
+            [allocation.underlyingAsset, desired]
+          )
+        );
+      });
 
       // A paused mandate would keep being skipped however well it is configured.
       if (mandate?.registered && !mandate.enabled) {

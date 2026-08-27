@@ -170,7 +170,10 @@ export const LiquidationsSetup = ({
     [enabledAllocations, collateralMode, acceptedEntries, pooledBudget, recipient]
   );
 
-  const plan = useMemo(() => planConfig(config, mandate), [planConfig, config, mandate]);
+  const plan = useMemo(
+    () => planConfig(config, mandate, deposits),
+    [planConfig, config, mandate, deposits]
+  );
 
   const handleAllocationChange = (underlyingAsset: string, allocation: DepositAllocation) =>
     setAllocations((prev) => ({ ...prev, [underlyingAsset]: allocation }));

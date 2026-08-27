@@ -26,6 +26,11 @@ export const SHARED_LIQUIDATION_ROUTER_ABI = [
 
   // maxDebt is in the debt asset's own decimals. Reverts with "SLR: unsupported debt asset"
   // before the registration check, so only listed debt assets may be passed here.
+  //
+  // A cap of 0 means the LP funds NOTHING — it is not a sentinel for "uncapped". Verified on
+  // a Sepolia fork: an LP passing every other gate quoted 0 until a cap was set, at which
+  // point quote() returned the cap clamped by the remaining ceilings. Use UNLIMITED_MAX_DEBT
+  // to express "no ceiling".
   'function setMaxDebtPerLiquidation(address debtAsset_, uint256 maxDebt_)',
 
   // --- liquidation ---
@@ -71,6 +76,19 @@ export const LIQUIDATION_WHITELIST_ABI = [
   'function isWhitelisted(address collateralAsset, address account) view returns (bool)',
 ];
 
+/**
+ * Reental's RWA tokens gate every transfer on their own control contract, which is separate
+ * from the router's whitelist and is NOT modelled by `quote()`. Collateral moves through the
+ * router on its way to the recipient, so the router itself has to be permitted to hold the
+ * token — a liquidation reverts otherwise even when the router quotes a healthy number.
+ */
+export const REENTAL_TOKEN_ABI = ['function tokenControl() view returns (address)'];
+
+/** Reverts with ReentalTokenControl_NotWhitelisted when the transfer is not permitted. */
+export const REENTAL_TOKEN_CONTROL_ABI = [
+  'function checkTransfer(address token, address from, address to, uint256 amount) view',
+];
+
 /** Enough of ERC20 to read the two aToken ceilings the indexer cannot give us. */
 export const ATOKEN_ABI = [
   'function allowance(address owner, address spender) view returns (uint256)',
@@ -79,6 +97,16 @@ export const ATOKEN_ABI = [
 
 /** Collateral budgets are denominated in USD with 8 decimals, not in token decimals. */
 export const BUDGET_USD_DECIMALS = 8;
+
+/**
+ * "No per-liquidation ceiling", expressed as max uint.
+ *
+ * There is no zero-means-unlimited sentinel: zero is a real cap of zero. The other three
+ * ceilings still clamp this, so it grants no more than the LP's allowance, deposit balance
+ * and collateral budget already allow.
+ */
+export const UNLIMITED_MAX_DEBT =
+  '115792089237316195423570985008687907853269984665640564039457584007913129639935';
 
 /**
  * Anything at or above this is treated on-chain as unconstrained, so it must be rendered

@@ -12,6 +12,7 @@ import { TokenIcon } from 'src/components/primitives/TokenIcon';
 import { Warning } from 'src/components/primitives/Warning';
 import { useModalContext } from 'src/hooks/useModal';
 import { useWeb3Context } from 'src/libs/hooks/useWeb3Context';
+import { UNCONSTRAINED_THRESHOLD } from 'src/libs/reental/sharedRouter/abi';
 import { Mandate } from 'src/libs/reental/sharedRouter/useMandate';
 import { SKIP_FIXES, useMandateActivity } from 'src/libs/reental/sharedRouter/useMandateActivity';
 import { useIndexerStatus } from 'src/libs/reental/sharedRouter/usePonderMandate';
@@ -101,8 +102,11 @@ export const LiquidationsPositionOverview = ({
       (item) => item.asset.toLowerCase() === underlyingAsset.toLowerCase()
     );
     const deposit = deposits.find((item) => item.underlyingAsset === underlyingAsset);
-    if (!debtAsset || !deposit || debtAsset.maxDebt === '0') return 'No per-liquidation cap';
-    return `Cap ${formatUnits(debtAsset.maxDebt, deposit.decimals)} per liquidation`;
+    // Zero is a real limit of zero, not "unlimited" — an LP sitting on it funds nothing.
+    if (!debtAsset || !deposit) return 'Set a per-liquidation limit';
+    if (debtAsset.maxDebt === '0') return 'No limit set — funds nothing';
+    if (BigInt(debtAsset.maxDebt) >= UNCONSTRAINED_THRESHOLD) return 'No limit per liquidation';
+    return `Limit ${formatUnits(debtAsset.maxDebt, deposit.decimals)} per liquidation`;
   };
   const recentSkips = skips.data?.items.slice(0, 3) ?? [];
 

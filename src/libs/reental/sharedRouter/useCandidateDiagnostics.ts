@@ -33,7 +33,7 @@ export type CandidateDiagnostic = {
   /** Undefined when the LP can fund; otherwise the first gate that stops it. */
   blockedBy?: SkipReason;
   /** The specific ceiling behind a NoCapacity verdict, which the reason alone hides. */
-  detail?: 'allowance' | 'balance' | 'cap';
+  detail?: 'allowance' | 'balance' | 'cap-unset' | 'cap';
   budgetUsd: string;
   allowance: string;
   balance: string;
@@ -143,7 +143,11 @@ export const useCandidateDiagnostics = ({
           else if (!whitelisted) blockedBy = 'RecipientNotWhitelisted';
           else if (BigInt(maxDebt) === BigInt(0)) {
             blockedBy = 'NoCapacity';
-            if (BigInt(allowance.toString()) === BigInt(0)) detail = 'allowance';
+            // Checked before allowance and balance because it is the default state: a cap of
+            // zero is a cap of zero, not "unlimited", so a freshly configured LP that has
+            // done everything else right still funds nothing until it sets one.
+            if (BigInt(cap.toString()) === BigInt(0)) detail = 'cap-unset';
+            else if (BigInt(allowance.toString()) === BigInt(0)) detail = 'allowance';
             else if (BigInt(balance.toString()) === BigInt(0)) detail = 'balance';
             else detail = 'cap';
           }
