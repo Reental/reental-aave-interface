@@ -15,11 +15,8 @@ import {
   useAppDataContext,
 } from 'src/hooks/app-data-provider/useAppDataProvider';
 import { useWalletBalances } from 'src/hooks/app-data-provider/useWalletBalances';
-import { useApprovedAmount } from 'src/hooks/useApprovedAmount';
 import { useModalContext } from 'src/hooks/useModal';
 import { useWeb3Context } from 'src/libs/hooks/useWeb3Context';
-import { useUserLiquidationRouter } from 'src/libs/reental/liquidationRouter/useUserLiquidationRouter';
-import { hasAllowance, isUnlimitedAllowance } from 'src/libs/reental/liquidationRouter/utils';
 import { useReentalDataContext } from 'src/libs/reental/ReentalDataProvider';
 import { BuyWithFiat } from 'src/modules/staking/BuyWithFiat';
 import { useRootStore } from 'src/store/root';
@@ -59,7 +56,7 @@ export const ReserveActions = ({ reserve }: ReserveActionsProps) => {
   const [selectedAsset, setSelectedAsset] = useState<string>(reserve.symbol);
 
   const { currentAccount } = useWeb3Context();
-  const { openBorrow, openSupply, openSupplyForLiquidations } = useModalContext();
+  const { openBorrow, openSupply } = useModalContext();
   const [currentMarket, currentNetworkConfig, currentMarketData, minRemainingBaseTokenBalance] =
     useRootStore(
       useShallow((store) => [
@@ -112,38 +109,6 @@ export const ReserveActions = ({ reserve }: ReserveActionsProps) => {
 
   const requires2FAandIsNotEnabled = reserve.usageAsCollateralEnabled && !is2FAEnabled;
   const disabledSupplyButton = disableSupplyButton || requires2FAandIsNotEnabled;
-
-  // aTokens can only be committed to a liquidation router on borrowable reserves the user
-  // has already supplied into, and only where the market has a router factory configured.
-  const userReserve = user?.userReservesData.find(
-    (userReserve) => userReserve.underlyingAsset === reserve.underlyingAsset
-  );
-  const suppliedBalance = userReserve?.underlyingBalance || '0';
-  const showSupplyForLiquidations =
-    !!currentMarketData.addresses.LIQUIDATION_ROUTER_FACTORY &&
-    reserve.borrowingEnabled &&
-    Number(suppliedBalance) > 0;
-
-  // Show what is already committed to the router, so the amount is visible without
-  // opening the modal.
-  const { data: liquidationRouter } = useUserLiquidationRouter({
-    marketData: currentMarketData,
-    user: currentAccount,
-    aTokenAddress: reserve.aTokenAddress,
-    underlyingAsset: reserve.underlyingAsset,
-  });
-  const { data: routerAllowance } = useApprovedAmount({
-    chainId: currentMarketData.chainId,
-    token: reserve.aTokenAddress,
-    spender: liquidationRouter?.address ?? '',
-    enabled: !!liquidationRouter,
-  });
-  const committedForLiquidations = routerAllowance ?? 0;
-  const committedForLiquidationsUsd = amountToUSD(
-    isUnlimitedAllowance(committedForLiquidations) ? 0 : committedForLiquidations,
-    reserve.formattedPriceInMarketReferenceCurrency,
-    marketReferencePriceInUsd
-  ).toString();
 
   if (!currentAccount) {
     return <ConnectWallet />;
@@ -208,38 +173,6 @@ export const ReserveActions = ({ reserve }: ReserveActionsProps) => {
             )}
             {alerts}
           </Stack>
-          {showSupplyForLiquidations && (
-            <>
-              <Divider sx={{ my: 6 }} />
-              <SupplyForLiquidationsAction
-                value={committedForLiquidations}
-                usdValue={committedForLiquidationsUsd}
-                symbol={selectedAsset}
-                disable={requires2FAandIsNotEnabled}
-                onActionClicked={() => {
-                  openSupplyForLiquidations(
-                    reserve.underlyingAsset,
-                    currentMarket,
-                    reserve.name,
-                    'reserve'
-                  );
-                }}
-                onRevokeClicked={
-                  hasAllowance(committedForLiquidations)
-                    ? () => {
-                        openSupplyForLiquidations(
-                          reserve.underlyingAsset,
-                          currentMarket,
-                          reserve.name,
-                          'reserve',
-                          true
-                        );
-                      }
-                    : undefined
-                }
-              />
-            </>
-          )}
         </>
       )}
     </PaperWrapper>
@@ -460,78 +393,6 @@ const BorrowAction = ({
         >
           <Trans>Borrow </Trans>
         </Button>
-      </Stack>
-    </Stack>
-  );
-};
-
-const SupplyForLiquidationsAction = ({
-  value,
-  usdValue,
-  symbol,
-  disable,
-  onActionClicked,
-  onRevokeClicked,
-}: Omit<ActionProps, 'reserve' | 'value'> & {
-  value: number;
-  onRevokeClicked?: () => void;
-}) => {
-  const unlimited = isUnlimitedAllowance(value);
-
-  return (
-    <Stack>
-      <Typography variant="description" color="text.secondary">
-        <Trans>Supplied for liquidations</Trans>
-      </Typography>
-      <Stack
-        sx={{ height: '44px' }}
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-        gap={2}
-      >
-        <Box>
-          {unlimited ? (
-            <Typography variant="h4" color="text.primary">
-              <Trans>Unlimited</Trans>
-            </Typography>
-          ) : (
-            <>
-              <ValueWithSymbol value={value.toString()} symbol={symbol} />
-              <FormattedNumber
-                value={usdValue}
-                variant="subheader2"
-                color="text.muted"
-                symbolsColor="text.muted"
-                symbol="USD"
-              />
-            </>
-          )}
-        </Box>
-        <Stack direction="row" alignItems="center" gap={2} sx={{ flexShrink: 0 }}>
-          {onRevokeClicked && (
-            <Button
-              sx={{ height: '36px', px: 4 }}
-              onClick={onRevokeClicked}
-              disabled={disable}
-              fullWidth={false}
-              variant="outlined"
-              data-cy="revokeForLiquidationsButton"
-            >
-              <Trans>Revoke</Trans>
-            </Button>
-          )}
-          <Button
-            sx={{ height: '36px', px: 4 }}
-            onClick={onActionClicked}
-            disabled={disable}
-            fullWidth={false}
-            variant="contained"
-            data-cy="supplyForLiquidationsButton"
-          >
-            <Trans>Approve</Trans>
-          </Button>
-        </Stack>
       </Stack>
     </Stack>
   );

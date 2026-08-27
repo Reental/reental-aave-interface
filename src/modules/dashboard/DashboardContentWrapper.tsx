@@ -9,7 +9,7 @@ import { useRootStore } from 'src/store/root';
 // import { AUTH } from 'src/utils/events';
 import { BorrowAssetsList } from './lists/BorrowAssetsList/BorrowAssetsList';
 import { BorrowedPositionsList } from './lists/BorrowedPositionsList/BorrowedPositionsList';
-import { LiquidationRoutersList } from './lists/LiquidationRoutersList/LiquidationRoutersList';
+import { LiquidityMandateCard } from './lists/LiquidityMandateCard/LiquidityMandateCard';
 import { SuppliedPositionsList } from './lists/SuppliedPositionsList/SuppliedPositionsList';
 import { SupplyAssetsList } from './lists/SupplyAssetsList/SupplyAssetsList';
 
@@ -76,7 +76,7 @@ export const DashboardContentWrapper = ({ isBorrow }: DashboardContentWrapperPro
           )} */}
 
           <SuppliedPositionsList />
-          <LiquidationRoutersList />
+          <LiquidityMandateCard />
           <SupplyAssetsList />
         </Box>
 
