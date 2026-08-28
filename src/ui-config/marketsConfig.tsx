@@ -48,6 +48,10 @@ export type MarketDataType = {
     V3_MIGRATOR?: string;
     GHO_TOKEN_ADDRESS?: string;
     GHO_UI_DATA_PROVIDER?: string;
+    // Shared liquidation router. Every liquidity provider holds a *mandate* on this one
+    // contract rather than owning a router of their own, so there is a single address per
+    // market. The liquidity provider UI is hidden on markets where this is unset.
+    SHARED_LIQUIDATION_ROUTER?: string;
   };
 };
 export enum CustomMarket {
@@ -86,6 +90,8 @@ export const marketsData: {
       COLLECTOR: AaveV3Polygon.COLLECTOR,
       DEBT_SWITCH_ADAPTER: AaveV3Polygon.DEBT_SWAP_ADAPTER,
       WITHDRAW_SWITCH_ADAPTER: AaveV3Polygon.WITHDRAW_SWAP_ADAPTER,
+      // TODO: set once the SharedLiquidationRouter is deployed on Polygon.
+      // SHARED_LIQUIDATION_ROUTER: '0x...',
     },
   },
   [CustomMarket.reental_sepolia_v3]: {
@@ -105,6 +111,7 @@ export const marketsData: {
       WALLET_BALANCE_PROVIDER: AaveV3Sepolia.WALLET_BALANCE_PROVIDER,
       UI_POOL_DATA_PROVIDER: AaveV3Sepolia.UI_POOL_DATA_PROVIDER,
       UI_INCENTIVE_DATA_PROVIDER: AaveV3Sepolia.UI_INCENTIVE_DATA_PROVIDER,
+      SHARED_LIQUIDATION_ROUTER: '0x694277431c449d58D32229D4EF827B0eA18228AD',
     },
   },
 } as const;

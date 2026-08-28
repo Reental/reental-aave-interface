@@ -73,9 +73,7 @@ export type BaseNetworkConfig = Omit<NetworkConfig, 'explorerLinkBuilder'>;
 export const testnetConfig: Record<string, BaseNetworkConfig> = {
   [ChainId.sepolia]: {
     name: 'Ethereum Sepolia',
-    publicJsonRPCUrl: [
-      `https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`,
-    ],
+    publicJsonRPCUrl: ['https://ethereum-sepolia-rpc.publicnode.com', 'https://1rpc.io/sepolia'],
     baseUniswapAdapter: '0x0',
     baseAssetSymbol: 'ETH',
     wrappedBaseAssetSymbol: 'WETH',
@@ -187,9 +185,7 @@ export const prodNetworkConfig: Record<string, BaseNetworkConfig> = {
   [ChainId.polygon]: {
     name: 'Polygon POS',
     displayName: 'Polygon',
-    publicJsonRPCUrl: [
-      `https://polygon-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`,
-    ],
+    publicJsonRPCUrl: ['https://polygon.drpc.org'],
     baseAssetSymbol: 'POL',
     wrappedBaseAssetSymbol: 'WPOL',
     baseAssetDecimals: 18,

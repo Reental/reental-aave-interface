@@ -69,6 +69,16 @@ const WithdrawModal = dynamic(() =>
     (module) => module.WithdrawModal
   )
 );
+const LiquidityMandateModal = dynamic(() =>
+  import('src/components/transactions/LiquidityMandate/LiquidityMandateModal').then(
+    (module) => module.LiquidityMandateModal
+  )
+);
+const LiquidateModal = dynamic(() =>
+  import('src/components/transactions/Liquidate/LiquidateModal').then(
+    (module) => module.LiquidateModal
+  )
+);
 const StakingMigrateModal = dynamic(() =>
   import('src/components/transactions/StakingMigrate/StakingMigrateModal').then(
     (module) => module.StakingMigrateModal
@@ -155,6 +165,8 @@ export default function MyApp(props: MyAppProps) {
                                   {getLayout(<Component {...pageProps} />)}
                                 </ReentalDataProvider>
                                 <SupplyModal />
+                                <LiquidateModal />
+                                <LiquidityMandateModal />
                                 <WithdrawModal />
                                 <BorrowModal />
                                 <RepayModal />
