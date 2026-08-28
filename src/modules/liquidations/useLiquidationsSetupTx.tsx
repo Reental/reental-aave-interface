@@ -6,6 +6,7 @@ import { useCallback, useState } from 'react';
 import { useWeb3Context } from 'src/libs/hooks/useWeb3Context';
 import {
   BUDGET_USD_DECIMALS,
+  LpConfig,
   SHARED_LIQUIDATION_ROUTER_ABI,
   UNCONSTRAINED_THRESHOLD,
   UNLIMITED_MAX_DEBT,
@@ -20,14 +21,18 @@ import { DepositAllocation, LiquidationDeposit, LiquidationsConfig } from './typ
 /**
  * The transactions behind the setup flow.
  *
- * Configuring a mandate is not one call. The router enforces an order — `register()` first,
- * because every other setter sits behind `require(m.registered)` — and the collateral mode
- * and its budget are set by different functions depending on what is changing. This hook
- * owns that sequencing so the form only has to describe the desired end state.
+ * Configuring a mandate is now a single router call. `configure` takes the whole `LpConfig`
+ * struct and is idempotent — it registers on the first call and updates on every later one —
+ * so the ordering this hook used to own is gone, along with the separate register, recipient,
+ * mode, budget and cap calls it used to sequence.
  *
- * Each step is diffed against the current mandate and skipped when it would be a no-op.
- * That is not an optimisation: every redundant step is a wallet prompt the user has to read
- * and sign, and a setup that asks for six signatures to change one number reads as broken.
+ * What is left is still a plan rather than one transaction. The aToken approvals are calls on
+ * the aTokens rather than on the router, so they cannot be folded in; and `configure` carries
+ * no enabled flag, so resuming a paused mandate keeps its own step.
+ *
+ * The plan is still diffed against the current mandate and dropped when it would be a no-op.
+ * That is not an optimisation: a review screen that asks for a signature to confirm the
+ * settings the user already has reads as broken.
  */
 
 export type SetupStep = {
@@ -43,6 +48,112 @@ const toUsd = (amount: string) => parseUnits(amount || '0', BUDGET_USD_DECIMALS)
 
 /** 'all' means unlimited, which the router expresses as any value at or above 1e36. */
 const UNLIMITED_USD = UNCONSTRAINED_THRESHOLD.toString();
+
+/**
+ * The form's desired end state, as the struct `configure` takes.
+ *
+ * Built from the configuration in full rather than from the diff against the mandate. Every
+ * field goes on every call, so it does not matter whether the contract merges the arrays into
+ * what is stored or replaces them outright — the one place that distinction would bite is
+ * collateral the user has just unticked, and that is passed explicitly as a zero budget rather
+ * than omitted. An omitted asset would keep funding a property the review screen has just said
+ * is no longer accepted.
+ */
+const buildLpConfig = (
+  config: LiquidationsConfig,
+  mandate: Mandate | undefined,
+  deposits: LiquidationDeposit[]
+): LpConfig => {
+  const acceptAll = config.collateralMode === 'pooled';
+
+  const debtAssets: string[] = [];
+  const maxDebts: string[] = [];
+
+  /**
+   * The per-liquidation limit, which is mandatory rather than optional.
+   *
+   * An unset limit reads as zero on-chain, not as "no limit", so a provider that has
+   * registered, approved and funded a budget still contributes nothing until this is set.
+   * Leaving it to an advanced screen produced exactly that: a setup that completes
+   * successfully and never fills.
+   */
+  config.allocations.forEach((allocation) => {
+    const deposit = deposits.find(
+      (item) => item.underlyingAsset.toLowerCase() === allocation.underlyingAsset.toLowerCase()
+    );
+    // The router reverts on a debt asset it does not list, which would take the whole
+    // configuration down with it rather than just this allocation.
+    if (!deposit) return;
+
+    debtAssets.push(allocation.underlyingAsset);
+    maxDebts.push(
+      allocation.mode === 'all'
+        ? UNLIMITED_MAX_DEBT
+        : parseUnits(allocation.amount || '0', deposit.decimals).toString()
+    );
+  });
+
+  const collateralAssets: string[] = [];
+  const collateralBudgetsUsd: string[] = [];
+
+  // Read only when acceptAll is false. While aggregating, the pooled budget is the only
+  // figure that means anything.
+  if (!acceptAll) {
+    const desired = new Map(
+      config.acceptedCollaterals.map((collateral) => [
+        collateral.underlyingAsset.toLowerCase(),
+        collateral.mode === 'all' ? UNLIMITED_USD : toUsd(collateral.amount),
+      ])
+    );
+
+    desired.forEach((amountUsd, asset) => {
+      collateralAssets.push(asset);
+      collateralBudgetsUsd.push(amountUsd);
+    });
+
+    (mandate?.budgets ?? []).forEach((budget) => {
+      if (BigInt(budget.budget) === BigInt(0)) return;
+      if (desired.has(budget.asset.toLowerCase())) return;
+      collateralAssets.push(budget.asset);
+      collateralBudgetsUsd.push('0');
+    });
+  }
+
+  return {
+    recipient: config.recipient,
+    acceptAll,
+    globalBudgetUsd: !acceptAll
+      ? '0'
+      : config.pooledBudget === ''
+      ? UNLIMITED_USD
+      : toUsd(config.pooledBudget),
+    debtAssets,
+    maxDebts,
+    collateralAssets,
+    collateralBudgetsUsd,
+  };
+};
+
+/** Whether sending `cfg` would leave the mandate exactly as it already is. */
+const matchesMandate = (cfg: LpConfig, mandate: Mandate): boolean => {
+  if (mandate.recipient.toLowerCase() !== cfg.recipient.toLowerCase()) return false;
+  if (mandate.acceptsAllCollateral !== cfg.acceptAll) return false;
+  if (cfg.acceptAll && mandate.globalBudget !== cfg.globalBudgetUsd) return false;
+
+  const debtUnchanged = cfg.debtAssets.every(
+    (asset, index) =>
+      mandate.debtAssets.find((item) => item.asset.toLowerCase() === asset.toLowerCase())
+        ?.maxDebt === cfg.maxDebts[index]
+  );
+  if (!debtUnchanged) return false;
+
+  // An asset with no budget on record reads as zero, which is what the contract stores for it.
+  return cfg.collateralAssets.every(
+    (asset, index) =>
+      (mandate.budgets.find((item) => item.asset.toLowerCase() === asset.toLowerCase())?.budget ??
+        '0') === cfg.collateralBudgetsUsd[index]
+  );
+};
 
 export const useLiquidationsSetupTx = (router?: string, chainId?: number) => {
   const [estimateGasLimit, generateApproval, user] = useRootStore(
@@ -107,7 +218,7 @@ export const useLiquidationsSetupTx = (router?: string, chainId?: number) => {
   );
 
   /**
-   * Builds the ordered list of router calls that turns `mandate` into `config`.
+   * Builds the router calls that turn `mandate` into `config`.
    *
    * Exported separately from the runner so the review screen can show exactly what will be
    * signed before anything is sent.
@@ -128,113 +239,16 @@ export const useLiquidationsSetupTx = (router?: string, chainId?: number) => {
       });
 
       const steps: SetupStep[] = [];
+      const cfg = buildLpConfig(config, mandate, deposits);
 
       if (!mandate?.registered) {
-        steps.push(
-          call('register', 'Register as a liquidity provider', 'register', [config.recipient])
-        );
-      } else if (mandate.recipient.toLowerCase() !== config.recipient.toLowerCase()) {
-        steps.push(
-          call('recipient', 'Update collateral recipient', 'setRecipient', [config.recipient])
-        );
+        steps.push(call('configure', 'Register as a liquidity provider', 'configure', [cfg]));
+      } else if (!matchesMandate(cfg, mandate)) {
+        steps.push(call('configure', 'Update your liquidation settings', 'configure', [cfg]));
       }
 
-      const wantsPooled = config.collateralMode === 'pooled';
-      const isPooled = !!mandate?.acceptsAllCollateral;
-      const pooledUsd = config.pooledBudget === '' ? UNLIMITED_USD : toUsd(config.pooledBudget);
-
-      if (wantsPooled) {
-        // Switching mode and toping up are different functions. Using the mode switch as a
-        // top-up is harmless here (we do want pooled), but using the top-up as a mode switch
-        // silently leaves the LP enumerated, so the direction of this test matters.
-        if (!isPooled) {
-          steps.push(
-            call('mode', 'Accept all collateral from one pooled budget', 'setAcceptAllCollateral', [
-              true,
-              pooledUsd,
-            ])
-          );
-        } else if (mandate?.globalBudget !== pooledUsd) {
-          steps.push(
-            call('pooled-budget', 'Set the pooled budget', 'setGlobalCollateralBudget', [pooledUsd])
-          );
-        }
-      } else {
-        if (isPooled) {
-          steps.push(
-            call('mode', 'Fund selected assets only', 'setAcceptAllCollateral', [false, '0'])
-          );
-        }
-
-        const desired = new Map(
-          config.acceptedCollaterals.map((collateral) => [
-            collateral.underlyingAsset.toLowerCase(),
-            collateral.mode === 'all' ? UNLIMITED_USD : toUsd(collateral.amount),
-          ])
-        );
-
-        desired.forEach((amountUsd, asset) => {
-          const current = mandate?.budgets.find((budget) => budget.asset.toLowerCase() === asset);
-          if (current?.budget === amountUsd) return;
-          steps.push(
-            call(`budget-${asset}`, `Set budget for ${asset.slice(0, 8)}`, 'setCollateralBudget', [
-              asset,
-              amountUsd,
-            ])
-          );
-        });
-
-        // A budget the user has unticked has to be zeroed explicitly. Leaving it in place
-        // would keep funding an asset the review screen says is no longer accepted.
-        (mandate?.budgets ?? []).forEach((budget) => {
-          if (BigInt(budget.budget) === BigInt(0)) return;
-          if (desired.has(budget.asset.toLowerCase())) return;
-          steps.push(
-            call(
-              `budget-${budget.asset.toLowerCase()}`,
-              `Stop accepting ${budget.asset.slice(0, 8)}`,
-              'setCollateralBudget',
-              [budget.asset, '0']
-            )
-          );
-        });
-      }
-
-      /**
-       * The per-liquidation limit, which is mandatory rather than optional.
-       *
-       * An unset limit reads as zero on-chain, not as "no limit", so a provider that has
-       * registered, approved and funded a budget still contributes nothing until this is
-       * set. Leaving it to an advanced screen produced exactly that: a setup that completes
-       * successfully and never fills.
-       */
-      config.allocations.forEach((allocation) => {
-        const deposit = deposits.find(
-          (item) => item.underlyingAsset.toLowerCase() === allocation.underlyingAsset.toLowerCase()
-        );
-        if (!deposit) return;
-
-        const desired =
-          allocation.mode === 'all'
-            ? UNLIMITED_MAX_DEBT
-            : parseUnits(allocation.amount || '0', deposit.decimals).toString();
-
-        const current = mandate?.debtAssets.find(
-          (item) => item.asset.toLowerCase() === allocation.underlyingAsset.toLowerCase()
-        );
-        if (current?.maxDebt === desired) return;
-
-        steps.push(
-          call(
-            `cap-${allocation.underlyingAsset.toLowerCase()}`,
-            `Set the per-liquidation limit for ${deposit.symbol}`,
-            'setMaxDebtPerLiquidation',
-            [allocation.underlyingAsset, desired]
-          )
-        );
-      });
-
-      // A paused mandate would keep being skipped however well it is configured.
+      // configure carries no enabled flag, so a paused mandate would keep being skipped
+      // however well the rest of it is configured.
       if (mandate?.registered && !mandate.enabled) {
         steps.push(call('enable', 'Resume participation', 'setEnabled', [true]));
       }

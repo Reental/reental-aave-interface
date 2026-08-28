@@ -53,7 +53,6 @@ export type MarketDataType = {
     // market. The liquidity provider UI is hidden on markets where this is unset.
     SHARED_LIQUIDATION_ROUTER?: string;
   };
-
 };
 export enum CustomMarket {
   reental_polygon_v3 = 'reental_polygon_v3',
@@ -112,7 +111,7 @@ export const marketsData: {
       WALLET_BALANCE_PROVIDER: AaveV3Sepolia.WALLET_BALANCE_PROVIDER,
       UI_POOL_DATA_PROVIDER: AaveV3Sepolia.UI_POOL_DATA_PROVIDER,
       UI_INCENTIVE_DATA_PROVIDER: AaveV3Sepolia.UI_INCENTIVE_DATA_PROVIDER,
-      SHARED_LIQUIDATION_ROUTER: '0x745aC4f9D08ff8a86A1E9dD3929408BaCBf3be33',
+      SHARED_LIQUIDATION_ROUTER: '0x694277431c449d58D32229D4EF827B0eA18228AD',
     },
   },
 } as const;

@@ -4,10 +4,24 @@
  * An LP no longer owns a router; it holds a *mandate* on this single contract. Nothing in
  * the UI is keyed by a router address any more, only by the LP's own wallet.
  *
- * Verified against the deployed bytecode at
- * https://sepolia.etherscan.io/address/0x745aC4f9D08ff8a86A1E9dD3929408BaCBf3be33
+ * Every fragment below is verified present in the deployed bytecode at
+ * https://sepolia.etherscan.io/address/0x694277431c449d58D32229D4EF827B0eA18228AD
  */
 export const SHARED_LIQUIDATION_ROUTER_ABI = [
+  /**
+   * The whole mandate in one call: registers on the first call, updates on every later one.
+   * There is no separate update entry point — onboarding and editing are the same call.
+   *
+   * Selector 0xe9190fd8. It supersedes the register/setRecipient/setAcceptAllCollateral/
+   * setCollateralBudget/setMaxDebtPerLiquidation sequence below rather than replacing it:
+   * those still exist, and the granular mandate screens still use them.
+   *
+   * Conventions carry over unchanged — budgets are 8-decimal USD, maxDebts are in each debt
+   * asset's own decimals, and the two array pairs are matched index-wise. The collateral
+   * arrays are read only when acceptAll is false.
+   */
+  'function configure((address recipient, bool acceptAll, uint256 globalBudgetUsd, address[] debtAssets, uint256[] maxDebts, address[] collateralAssets, uint256[] collateralBudgetsUsd) cfg)',
+
   // --- mandate lifecycle, in the order the contract enforces ---
   // register() must come first: every other setter reverts with "SLR: not registered".
   'function register(address recipient_)',
@@ -65,6 +79,29 @@ export const SHARED_LIQUIDATION_ROUTER_ABI = [
   'event LpSkipped(address indexed lp, address indexed collateralAsset, uint8 reason)',
   'event Liquidated(address indexed borrower, address indexed collateralAsset, address indexed debtAsset, uint256 debtCovered, uint256 collateralSeized, uint256 lpsUsed)',
 ];
+
+/**
+ * The `LpConfig` struct `configure` takes, in the struct's own field order.
+ *
+ * Amounts stay strings all the way to the encoder: a pooled budget of 1e36 and an uncapped
+ * maxDebt of max uint are both well past Number's safe range.
+ */
+export type LpConfig = {
+  /** Where this LP receives seized RWA, and the address the whitelist is checked against. */
+  recipient: string;
+  /** true = one pooled budget funds every property, including ones listed later. */
+  acceptAll: boolean;
+  /** Pooled budget, 8-decimal USD. Read only when acceptAll is true. */
+  globalBudgetUsd: string;
+  /** Paired index-wise with maxDebts. */
+  debtAssets: string[];
+  /** Per-liquidation cap, in the debt asset's own decimals. 0 funds nothing — see UNLIMITED_MAX_DEBT. */
+  maxDebts: string[];
+  /** Paired index-wise with collateralBudgetsUsd. Read only when acceptAll is false. */
+  collateralAssets: string[];
+  /** Per-property budget, 8-decimal USD. */
+  collateralBudgetsUsd: string[];
+};
 
 /**
  * The whitelist the router points to via `whitelist()`.
