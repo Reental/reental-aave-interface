@@ -179,8 +179,8 @@ export function AppHeader() {
           }}
           onClick={() => setMobileMenuOpen(false)}
         >
-          {/* RNTLend product logo — Orbitron 700: "RNT" in text color + "Lend" in the
-              brand primary color (green in dark mode, blue in light mode). */}
+          {/* RNTLend product wordmark — Orbitron 700: "RNT" in text color + "Lend" in
+              the brand primary color (green in dark mode, blue in light mode). */}
           <Typography
             variant="h2"
             sx={{

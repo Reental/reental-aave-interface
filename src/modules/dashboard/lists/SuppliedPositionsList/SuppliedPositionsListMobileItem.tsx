@@ -121,15 +121,16 @@ export const SuppliedPositionsListMobileItem = ({
           disabled={disableSupply}
           variant="contained"
           onClick={() => openSupply(underlyingAsset, currentMarket, reserve.name, 'dashboard')}
+          sx={{ borderRadius: '10px' }}
           fullWidth
         >
           <Trans>Supply</Trans>
         </Button>
         <Button
           disabled={disableWithdraw}
-          variant="outlined"
+          variant="contained"
           onClick={() => openWithdraw(underlyingAsset, currentMarket, reserve.name, 'dashboard')}
-          sx={{ ml: 1.5 }}
+          sx={{ ml: 1.5, borderRadius: '10px' }}
           fullWidth
         >
           <Trans>Withdraw</Trans>

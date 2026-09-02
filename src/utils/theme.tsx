@@ -207,16 +207,14 @@ export const getDesignTokens = (mode: 'light' | 'dark') => {
       },
       background: {
         // Dark: body/page is pure black (#000000); cards, panels, header and every
-        // elevated surface use the RNT Body Color #0e1201.
-        // Light (Manual de Marca): page background near-white, cards/panels use the
-        // warm gray #f4f2ee so they read as surfaces on top of the white page.
-        default: getColor('#FFFFFF', '#000000'),
-        paper: getColor('#f4f2ee', '#0e1201'),
-        surface: getColor('#EFEDE8', '#0e1201'),
-        surface2: getColor('#f4f2ee', '#0e1201'),
-        // Dark: RNT Body Color. Light: card surface so the nav bar follows
-        // the same pattern as the rest of the app (see TopInfoPanel).
-        header: getColor('#f4f2ee', '#0e1201'),
+        // elevated surface use Card Dark (#1A1A1B) from the RNT Protocol DS.
+        // Light: warm paper page background (#F4F2EE) with white cards, panels
+        // and header, matching the RNT Protocol DS light-mode surface hierarchy.
+        default: getColor('#F4F2EE', '#000000'),
+        paper: getColor('#FFFFFF', '#1A1A1B'),
+        surface: getColor('#FFFFFF', '#1A1A1B'),
+        surface2: getColor('#FFFFFF', '#1A1A1B'),
+        header: getColor('#FFFFFF', '#1A1A1B'),
         disabled: getColor('#e7e7e6', '#FFFFFF14'),
       },
       divider: getColor('#e7e7e6', 'rgba(255,255,255,0.08)'),
@@ -492,8 +490,8 @@ export function getThemedComponents(theme: Theme) {
           {
             props: { variant: 'gradient' },
             style: {
-              // Brand dark reads better than white over the blue→green gradient.
-              color: '#0E1201',
+              // White text matches the RNT DS CTA treatment over the brand gradient.
+              color: '#FFFFFF',
               background: theme.palette.gradients.aaveGradient,
               transition: 'all 0.2s ease',
               '&:hover, &.Mui-focusVisible': {

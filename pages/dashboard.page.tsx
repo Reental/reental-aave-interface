@@ -1,6 +1,7 @@
 import { Trans } from '@lingui/macro';
 import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { GradientBackground } from 'src/components/GradientBackground';
 import StyledToggleButton from 'src/components/StyledToggleButton';
 import StyledToggleButtonGroup from 'src/components/StyledToggleButtonGroup';
 import { useRootStore } from 'src/store/root';
@@ -30,6 +31,7 @@ export default function Dashboard() {
 
   return (
     <>
+      <GradientBackground />
       <DashboardTopPanel />
 
       <ContentContainer wrapperSx={{ mt: { xs: 4, md: 6 } }}>

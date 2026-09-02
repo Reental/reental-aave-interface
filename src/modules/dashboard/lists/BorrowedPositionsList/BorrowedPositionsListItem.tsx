@@ -140,10 +140,20 @@ const BorrowedPositionsListItemDesktop = ({
       )}
 
       <ListButtonsColumn>
-        <Button disabled={disableBorrow} variant="contained" onClick={onOpenBorrow}>
+        <Button
+          disabled={disableBorrow}
+          variant="contained"
+          sx={{ borderRadius: '10px' }}
+          onClick={onOpenBorrow}
+        >
           <Trans>Borrow</Trans>
         </Button>
-        <Button disabled={disableRepay} variant="outlined" onClick={onOpenRepay}>
+        <Button
+          disabled={disableRepay}
+          variant="contained"
+          sx={{ borderRadius: '10px' }}
+          onClick={onOpenRepay}
+        >
           <Trans>Repay</Trans>
         </Button>
       </ListButtonsColumn>
@@ -203,14 +213,20 @@ const BorrowedPositionsListItemMobile = ({
       </Row>
 
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 5 }}>
-        <Button disabled={disableBorrow} variant="contained" onClick={onOpenBorrow} fullWidth>
+        <Button
+          disabled={disableBorrow}
+          variant="contained"
+          sx={{ borderRadius: '10px' }}
+          onClick={onOpenBorrow}
+          fullWidth
+        >
           <Trans>Borrow</Trans>
         </Button>
         <Button
           disabled={disableRepay}
-          variant="outlined"
+          variant="contained"
           onClick={onOpenRepay}
-          sx={{ ml: 1.5 }}
+          sx={{ ml: 1.5, borderRadius: '10px' }}
           fullWidth
         >
           <Trans>Repay</Trans>

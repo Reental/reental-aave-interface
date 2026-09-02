@@ -62,69 +62,85 @@ const Stat = ({
   symbolVariant,
   labelVariant,
 }: StatProps) => (
-  <TopInfoPanelItem
-    title={
-      <Typography
-        variant={labelVariant}
-        component="span"
-        sx={{
-          // RNT "Label" style: Orbitron, uppercase, tracked out (Manual de Marca V.1).
-          // `&&` bumps specificity so it wins over the Typography variant's own
-          // fontFamily/letterSpacing (which otherwise take precedence over sx here).
-          '&&': {
-            fontFamily: FONT_LABEL,
-            textTransform: 'uppercase',
-            letterSpacing: '0.08em',
-          },
-        }}
-      >
-        {label}
-      </Typography>
-    }
-    titleIcon={
-      <Tooltip
-        arrow
-        placement="top"
-        PopperComponent={PopperComponent}
-        title={
-          <Box
-            sx={{
-              py: 4,
-              px: 6,
-              fontSize: '12px',
-              lineHeight: '16px',
-            }}
-          >
-            {tooltip}
-          </Box>
-        }
-      >
-        <SvgIcon
+  <Box
+    sx={(theme) => ({
+      width: { xs: 'calc(50% - 12px)', xsm: 'unset' },
+      bgcolor: 'background.surface',
+      border: '1px solid',
+      borderColor: 'divider',
+      borderRadius: '14px',
+      px: { xs: 3, sm: 4 },
+      py: { xs: 2.5, sm: 3 },
+      ...(theme.palette.mode === 'dark' && {
+        boxShadow: '0 0 24px rgba(151,255,56,.12)',
+      }),
+    })}
+  >
+    <TopInfoPanelItem
+      sx={{ width: '100%' }}
+      title={
+        <Typography
+          variant={labelVariant}
+          component="span"
           sx={{
-            fontSize: 14,
-            ml: 0.5,
-            color: 'text.muted',
-            cursor: 'pointer',
-            '&:hover': { color: 'info.main' },
+            // RNT "Label" style: Orbitron, uppercase, tracked out (Manual de Marca V.1).
+            // `&&` bumps specificity so it wins over the Typography variant's own
+            // fontFamily/letterSpacing (which otherwise take precedence over sx here).
+            '&&': {
+              fontFamily: FONT_LABEL,
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
+            },
           }}
         >
-          <InformationCircleIcon />
-        </SvgIcon>
-      </Tooltip>
-    }
-    loading={loading}
-    hideIcon
-  >
-    <FormattedNumber
-      value={value}
-      symbol="USD"
-      variant={valueVariant}
-      symbolsVariant={symbolVariant}
-      visibleDecimals={2}
-      compact
-      symbolsColor="primary.main"
-    />
-  </TopInfoPanelItem>
+          {label}
+        </Typography>
+      }
+      titleIcon={
+        <Tooltip
+          arrow
+          placement="top"
+          PopperComponent={PopperComponent}
+          title={
+            <Box
+              sx={{
+                py: 4,
+                px: 6,
+                fontSize: '12px',
+                lineHeight: '16px',
+              }}
+            >
+              {tooltip}
+            </Box>
+          }
+        >
+          <SvgIcon
+            sx={{
+              fontSize: 14,
+              ml: 0.5,
+              color: 'text.muted',
+              cursor: 'pointer',
+              '&:hover': { color: 'info.main' },
+            }}
+          >
+            <InformationCircleIcon />
+          </SvgIcon>
+        </Tooltip>
+      }
+      loading={loading}
+      hideIcon
+    >
+      <FormattedNumber
+        value={value}
+        symbol="USD"
+        variant={valueVariant}
+        symbolsVariant={symbolVariant}
+        visibleDecimals={2}
+        compact
+        symbolsColor="primary.main"
+      />
+    </TopInfoPanelItem>
+  </Box>
 );
 
 type MarketsTopPanelProps = {

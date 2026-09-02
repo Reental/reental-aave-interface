@@ -25,7 +25,7 @@ interface ATokenIconProps {
 // Reental real estate tokens (symbol prefix "Reental-") share the market logo
 // instead of having one icon per property token.
 const REENTAL_TOKEN_PREFIX = 'reental-';
-const REENTAL_MARKET_LOGO = '/icons/markets/reental.svg';
+const REENTAL_MARKET_LOGO = '/icons/markets/reental.png';
 
 export const getTokenIconSrc = (lowercaseSymbol: string) =>
   lowercaseSymbol.startsWith(REENTAL_TOKEN_PREFIX)

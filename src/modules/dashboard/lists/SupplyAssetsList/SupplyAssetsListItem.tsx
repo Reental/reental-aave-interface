@@ -237,6 +237,7 @@ export const SupplyAssetsListItemDesktop = ({
         <Button
           disabled={disableSupply}
           variant="contained"
+          sx={{ borderRadius: '10px' }}
           onClick={() => {
             openSupply(underlyingAsset, currentMarket, name, 'dashboard');
           }}
@@ -248,6 +249,7 @@ export const SupplyAssetsListItemDesktop = ({
           sx={{
             minWidth: 0,
             px: 4,
+            borderRadius: '10px',
           }}
           variant="outlined"
           onClick={handleClick}
@@ -434,13 +436,14 @@ export const SupplyAssetsListItemMobile = ({
           disabled={disableSupply}
           variant="contained"
           onClick={() => openSupply(underlyingAsset, currentMarket, name, 'dashboard')}
-          sx={{ mr: 1.5 }}
+          sx={{ mr: 1.5, borderRadius: '10px' }}
           fullWidth
         >
           <Trans>Supply</Trans>
         </Button>
         <Button
-          variant="outlined"
+          variant="gradient"
+          sx={{ borderRadius: '10px' }}
           component={Link}
           href={ROUTES.reserveOverview(detailsAddress, currentMarket)}
           fullWidth

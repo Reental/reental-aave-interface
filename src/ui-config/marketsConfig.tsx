@@ -67,7 +67,7 @@ export const marketsData: {
     marketTitle: 'Reental Polygon',
     market: CustomMarket.reental_polygon_v3,
     chainId: ChainId.polygon,
-    logo: '/icons/markets/reental.svg',
+    logo: '/icons/markets/reental.png',
     v3: true,
     reentalWalletConnectBaseUrl:
       trimUrl(process.env.NEXT_PUBLIC_REENTAL_WC_URL_POLYGON) ||
@@ -101,7 +101,7 @@ export const marketsData: {
     market: CustomMarket.reental_sepolia_v3,
     v3: true,
     chainId: ChainId.sepolia,
-    logo: '/icons/markets/reental.svg',
+    logo: '/icons/markets/reental.png',
     reentalWalletConnectBaseUrl:
       trimUrl(process.env.NEXT_PUBLIC_REENTAL_WC_URL_SEPOLIA) ||
       trimUrl(process.env.NEXT_PUBLIC_REENTAL_WALLET_CONNECT_URL) ||
