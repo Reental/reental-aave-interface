@@ -70,11 +70,28 @@ export type NetworkConfig = {
 
 export type BaseNetworkConfig = Omit<NetworkConfig, 'explorerLinkBuilder'>;
 
+/** TEMP demo: avoid viem/wagmi default sepolia.drpc.org (free plan 400). */
+const SEPOLIA_PUBLIC_RPCS = [
+  'https://ethereum-sepolia-rpc.publicnode.com',
+  'https://rpc.sepolia.org',
+  'https://1rpc.io/sepolia',
+] as const;
+
+const sepoliaChain: Chain = {
+  ...sepolia,
+  rpcUrls: {
+    default: { http: [...SEPOLIA_PUBLIC_RPCS] },
+  },
+};
+
 export const testnetConfig: Record<string, BaseNetworkConfig> = {
   [ChainId.sepolia]: {
     name: 'Ethereum Sepolia',
     publicJsonRPCUrl: [
-      `https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`,
+      ...SEPOLIA_PUBLIC_RPCS,
+      ...(process.env.NEXT_PUBLIC_ALCHEMY_API_KEY
+        ? [`https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`]
+        : []),
     ],
     baseUniswapAdapter: '0x0',
     baseAssetSymbol: 'ETH',
@@ -83,7 +100,7 @@ export const testnetConfig: Record<string, BaseNetworkConfig> = {
     explorerLink: 'https://sepolia.etherscan.io',
     isTestnet: true,
     networkLogoPath: '/icons/networks/ethereum.svg',
-    wagmiChain: sepolia,
+    wagmiChain: sepoliaChain,
   },
   [ChainId.fuji]: {
     name: 'Avalanche Fuji',

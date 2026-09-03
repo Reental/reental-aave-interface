@@ -70,9 +70,13 @@ const getTransport = (chainId: number) => {
 const buildTransports = (chains: CreateConfigParameters['chains']) =>
   Object.fromEntries(chains.map((chain) => [chain.id, http(getTransport(chain.id))]));
 
+const activeChains = ENABLE_TESTNET ? testnetChains : prodChains;
+const activeTransports = buildTransports(activeChains);
+
 const prodCkConfig = getDefaultConfig({
-  chains: ENABLE_TESTNET ? testnetChains : prodChains,
-  transports: ENABLE_TESTNET ? undefined : buildTransports(prodChains),
+  chains: activeChains,
+  // TEMP: never leave transports undefined on testnet — viem sepolia default is sepolia.drpc.org
+  transports: activeTransports,
   ...defaultConfig,
 });
 
@@ -115,6 +119,7 @@ const connectors = walletConnectProjectId
 const prodConfig = createConfig({
   ...prodCkConfig,
   connectors,
+  transports: activeTransports,
 });
 
 const isCypressEnabled = process.env.NEXT_PUBLIC_IS_CYPRESS_ENABLED === 'true';
