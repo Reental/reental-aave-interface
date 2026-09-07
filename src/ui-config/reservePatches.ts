@@ -6,6 +6,7 @@ import {
   AaveV3Polygon,
 } from '@bgd-labs/aave-address-book';
 import { unPrefixSymbol } from 'src/hooks/app-data-provider/useAppDataProvider';
+import { isReentalSymbol, normalizeReentalSymbol } from 'src/utils/reentalSymbol';
 
 /**
  * Maps onchain symbols to different symbols.
@@ -99,7 +100,14 @@ export interface IconMapInterface {
   symbol?: string;
 }
 
-export function fetchIconSymbolAndName({ underlyingAsset, symbol, name }: IconSymbolInterface) {
+export function fetchIconSymbolAndName({
+  underlyingAsset,
+  symbol: onChainSymbol,
+  name,
+}: IconSymbolInterface) {
+  // some Reental property tokens were deployed with an all caps prefix ("REENTAL-CAR-1"),
+  // normalize it so the whole app renders them as "Reental-CAR-1"
+  const symbol = normalizeReentalSymbol(onChainSymbol);
   const underlyingAssetMap: Record<string, IconMapInterface> = {
     '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9': {
       name,
@@ -217,7 +225,9 @@ export function fetchIconSymbolAndName({ underlyingAsset, symbol, name }: IconSy
 
   const unifiedSymbol = unPrefixSymbol((SYMBOL_MAP[symbol] || symbol).toUpperCase(), 'AMM');
   return {
-    iconSymbol: unifiedSymbol,
+    // Reental symbols keep their casing, they resolve to the market logo and the icon symbol
+    // is also used as the icon alt text
+    iconSymbol: isReentalSymbol(symbol) ? symbol : unifiedSymbol,
     name: SYMBOL_NAME_MAP[unifiedSymbol.toUpperCase()] || name || unifiedSymbol,
     symbol,
   };

@@ -1,6 +1,7 @@
 import { Badge, Box, Icon, IconProps } from '@mui/material';
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import LazyLoad from 'react-lazy-load';
+import { isReentalSymbol } from 'src/utils/reentalSymbol';
 
 /**
  * To save some bundle size we stopped base64 encoding & inlining svgs as base encoding increases size by up to 30%
@@ -24,13 +25,10 @@ interface ATokenIconProps {
 
 // Reental real estate tokens (symbol prefix "Reental-") share the market logo
 // instead of having one icon per property token.
-const REENTAL_TOKEN_PREFIX = 'reental-';
 const REENTAL_MARKET_LOGO = '/icons/markets/reental.png';
 
 export const getTokenIconSrc = (lowercaseSymbol: string) =>
-  lowercaseSymbol.startsWith(REENTAL_TOKEN_PREFIX)
-    ? REENTAL_MARKET_LOGO
-    : `/icons/tokens/${lowercaseSymbol}.svg`;
+  isReentalSymbol(lowercaseSymbol) ? REENTAL_MARKET_LOGO : `/icons/tokens/${lowercaseSymbol}.svg`;
 
 // Modified Base64Token to support waToken
 export function Base64Token({
