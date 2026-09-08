@@ -1,16 +1,16 @@
 import { Trans } from '@lingui/macro';
-import { Box, Button, Chip } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { ConnectKitButton } from 'connectkit';
 import { useEffect, useRef, useState } from 'react';
+import { useIsReentalConnected } from 'src/hooks/useIsReentalConnected';
 import { useRootStore } from 'src/store/root';
-import { REENTAL_CONNECTOR_ID } from 'src/ui-config/reentalWalletConnect';
 import { AUTH } from 'src/utils/events';
-import { useAccount } from 'wagmi';
 import { useShallow } from 'zustand/shallow';
 
 import { AvatarSize } from '../Avatar';
 import { WalletIcon } from '../icons/WalletIcon';
 import { UserDisplay } from '../UserDisplay';
+import { ReentalConnectedMark } from './ReentalConnectedMark';
 
 // Amplitude is loaded on demand so the SDK stays out of the initial bundle. It
 // is only fetched when a wallet event fires and an API key is configured.
@@ -27,8 +27,7 @@ export interface ConnectWalletProps {
 }
 
 export const ConnectWalletButton: React.FC<ConnectWalletProps> = ({ funnel, onClick }) => {
-  const { connector } = useAccount();
-  const isReentalConnected = connector?.id === REENTAL_CONNECTOR_ID;
+  const isReentalConnected = useIsReentalConnected();
   const [trackEvent, walletType, account] = useRootStore(
     useShallow((store) => [store.trackEvent, store.walletType, store.account])
   );
@@ -131,21 +130,13 @@ export const ConnectWalletButton: React.FC<ConnectWalletProps> = ({ funnel, onCl
               }}
             >
               {isConnected ? (
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
                   <UserDisplay
                     avatarProps={{ size: AvatarSize.SM }}
                     oneLiner={true}
                     titleProps={{ variant: 'buttonM' }}
                   />
-                  {isReentalConnected && (
-                    <Chip
-                      label={<Trans>Reental</Trans>}
-                      size="small"
-                      color="primary"
-                      variant="outlined"
-                      sx={{ height: 22, '& .MuiChip-label': { px: 1, typography: 'caption' } }}
-                    />
-                  )}
+                  {isReentalConnected && <ReentalConnectedMark />}
                 </Box>
               ) : (
                 <>

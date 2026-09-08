@@ -1,5 +1,6 @@
 import { t, Trans } from '@lingui/macro';
-import { Button, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
+import Image from 'next/image';
 import { useState } from 'react';
 import { useRootStore } from 'src/store/root';
 import {
@@ -16,9 +17,8 @@ export interface ConnectReentalButtonProps {
 }
 
 /**
- * WalletConnect por mercado: abre la base URL del mercado activo (dashboard) con uri=wc:.
- * Requiere NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID y
- * reentalWalletConnectBaseUrl en el mercado (env NEXT_PUBLIC_REENTAL_WC_URL_*).
+ * WalletConnect por mercado: abre la base URL del mercado activo con uri=wc:.
+ * Misma altura que Connect wallet; estilo surface + logo (no gradient).
  */
 export const ConnectReentalButton: React.FC<ConnectReentalButtonProps> = ({ funnel }) => {
   const { isConnected } = useAccount();
@@ -29,6 +29,7 @@ export const ConnectReentalButton: React.FC<ConnectReentalButtonProps> = ({ funn
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const baseUrl = currentMarketData.reentalWalletConnectBaseUrl;
+  const marketLogo = currentMarketData.logo || '/icons/markets/reental.png';
 
   if (isConnected || !baseUrl) {
     return null;
@@ -86,25 +87,50 @@ export const ConnectReentalButton: React.FC<ConnectReentalButtonProps> = ({ funn
   };
 
   return (
-    <>
+    <Box sx={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'stretch' }}>
       <Button
-        variant="outlined"
-        color="primary"
+        variant="surface"
         disabled={isPending || !reentalConnector}
         onClick={onClick}
-        sx={{ whiteSpace: 'nowrap' }}
+        startIcon={
+          isPending ? (
+            <CircularProgress color="inherit" size={16} />
+          ) : (
+            <Box
+              component="span"
+              sx={{
+                width: 18,
+                height: 18,
+                borderRadius: '50%',
+                overflow: 'hidden',
+                display: 'inline-flex',
+                flexShrink: 0,
+                lineHeight: 0,
+              }}
+            >
+              <Image src={marketLogo} alt="" width={18} height={18} />
+            </Box>
+          )
+        }
+        sx={{
+          whiteSpace: 'nowrap',
+          borderRadius: '10px',
+          borderColor: 'divider',
+          minHeight: 40,
+          px: 3,
+          '& .MuiButton-startIcon': { mr: 1.5, ml: 0 },
+          '&:hover, &.Mui-focusVisible': {
+            borderColor: 'primary.main',
+          },
+        }}
       >
         <Trans>Connect with Reental</Trans>
       </Button>
       {errorMessage && (
-        <Typography
-          variant="caption"
-          color="error"
-          sx={{ display: 'block', maxWidth: 220, mt: 0.5 }}
-        >
+        <Typography variant="caption" color="error" sx={{ display: 'block', mt: 0.5 }}>
           {errorMessage}
         </Typography>
       )}
-    </>
+    </Box>
   );
 };

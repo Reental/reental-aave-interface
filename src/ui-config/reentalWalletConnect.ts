@@ -6,6 +6,57 @@
 
 export const REENTAL_CONNECTOR_ID = 'reental';
 
+/**
+ * Peer metadata that the Reental app WalletKit MUST publish (wallet side).
+ * RNT Lend uses this to show the "connected to Reental" mark for both:
+ * - Connect with Reental (connector id `reental`)
+ * - Connect wallet → WalletConnect URI pasted into the app
+ */
+export const REENTAL_WALLET_PEER_METADATA = {
+  name: 'Reental',
+  description: 'Reental HumanWallet',
+  url: 'https://app.reental.co',
+} as const;
+
+/** Hosts accepted as Reental app wallet peer (prod + common aliases). */
+const REENTAL_PEER_URL_HOSTS = new Set(['app.reental.co', 'reental.co', 'www.reental.co']);
+
+const REENTAL_PEER_NAMES = new Set(['reental', 'reental app', 'humanwallet', 'human wallet']);
+
+export type WalletConnectPeerMetadata = {
+  name?: string;
+  description?: string;
+  url?: string;
+  icons?: string[];
+};
+
+export const isReentalPeerMetadata = (
+  meta: WalletConnectPeerMetadata | null | undefined
+): boolean => {
+  if (!meta) return false;
+
+  const name = (meta.name || '').trim().toLowerCase();
+  if (REENTAL_PEER_NAMES.has(name)) {
+    return true;
+  }
+
+  const rawUrl = (meta.url || '').trim();
+  if (!rawUrl) return false;
+
+  try {
+    const host = new URL(
+      rawUrl.includes('://') ? rawUrl : `https://${rawUrl}`
+    ).hostname.toLowerCase();
+    if (REENTAL_PEER_URL_HOSTS.has(host) || host.endsWith('.reental.co')) {
+      return true;
+    }
+  } catch {
+    return false;
+  }
+
+  return false;
+};
+
 type PendingPopup = Window | null;
 
 let pendingReentalPopup: PendingPopup = null;

@@ -320,7 +320,7 @@ export function AppHeader() {
             />
           </Button>
         ) : (
-          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, flexWrap: 'wrap' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
             <ConnectWalletButton />
             <ConnectReentalButton funnel="header" />
           </Box>

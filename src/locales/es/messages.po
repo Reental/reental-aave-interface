@@ -1991,6 +1991,10 @@ msgstr "Conectar cartera"
 msgid "Connect with Reental"
 msgstr "Conectar con Reental"
 
+#: src/components/WalletConnection/ReentalConnectedMark.tsx
+msgid "Connected with Reental"
+msgstr "Conectado con Reental"
+
 #: src/components/WalletConnection/ConnectWalletButton.tsx
 msgid "Reental"
 msgstr "Reental"
