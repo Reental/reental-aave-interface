@@ -3,7 +3,6 @@ import { Box, CircularProgress, Paper, PaperProps, Typography } from '@mui/mater
 import { useModal } from 'connectkit';
 import { ReactNode } from 'react';
 
-import { ConnectReentalButton } from './WalletConnection/ConnectReentalButton';
 import { ConnectWalletButton } from './WalletConnection/ConnectWalletButton';
 
 interface ConnectWalletPaperProps extends PaperProps {
@@ -55,7 +54,6 @@ export const ConnectWalletPaper = ({ description, sx, ...rest }: ConnectWalletPa
               }}
             >
               <ConnectWalletButton funnel="connect_wallet_paper" />
-              <ConnectReentalButton funnel="connect_wallet_paper" />
             </Box>
           </>
         )}
