@@ -546,6 +546,10 @@ msgstr "Total"
 msgid "{stepName}"
 msgstr "{stepName}"
 
+#: src/components/WalletConnection/ConnectReentalButton.tsx
+msgid "Reental connector is not configured (missing WalletConnect Project ID)."
+msgstr "Reental connector is not configured (missing WalletConnect Project ID)."
+
 #: src/components/transactions/FlowCommons/TxModalDetails.tsx
 #: src/modules/dashboard/DashboardTopPanel.tsx
 #: src/modules/dashboard/LiquidationRiskParametresModal/LiquidationRiskParametresModal.tsx
@@ -810,6 +814,10 @@ msgstr "Collateral usage is limited because of isolation mode. <0>Learn More</0>
 msgid "AAVE and ABPT holders (Ethereum network only) can stake their assets in the Safety Module to add more security to the protocol and earn Safety Incentives. In the case of a shortfall event, your stake can be slashed to cover the deficit, providing an additional layer of protection for the protocol."
 msgstr "AAVE and ABPT holders (Ethereum network only) can stake their assets in the Safety Module to add more security to the protocol and earn Safety Incentives. In the case of a shortfall event, your stake can be slashed to cover the deficit, providing an additional layer of protection for the protocol."
 
+#: src/components/WalletConnection/ReentalConnectedMark.tsx
+msgid "Connected with Reental"
+msgstr "Connected with Reental"
+
 #: src/components/transactions/Emode/EmodeModalContent.tsx
 #: src/modules/dashboard/DashboardEModeButton.tsx
 msgid "Asset category"
@@ -917,6 +925,10 @@ msgstr "The underlying asset cannot be rescued"
 msgid "Supply balance after switch"
 msgstr "Supply balance after switch"
 
+#: src/components/WalletConnection/ConnectReentalButton.tsx
+msgid "Connect with Reental"
+msgstr "Connect with Reental"
+
 #: src/components/infoTooltips/MigrationDisabledTooltip.tsx
 msgid "Asset cannot be migrated to {marketName} V3 Market due to E-mode restrictions. You can disable or manage E-mode categories in your <0>V3 Dashboard</0>"
 msgstr "Asset cannot be migrated to {marketName} V3 Market due to E-mode restrictions. You can disable or manage E-mode categories in your <0>V3 Dashboard</0>"
@@ -1010,6 +1022,10 @@ msgstr "Legacy Markets"
 #: src/modules/governance/DelegatedInfoPanel.tsx
 msgid "Learn more."
 msgstr "Learn more."
+
+#: src/components/WalletConnection/ConnectReentalButton.tsx
+msgid "Connection failed"
+msgstr "Connection failed"
 
 #: src/components/infoTooltips/ReserveFactorTooltip.tsx
 msgid "Reserve factor is a percentage of interest which goes to a {0} that is controlled by Aave governance to promote ecosystem growth."
@@ -3898,6 +3914,10 @@ msgstr "Umbrella is the upgraded version of the Safety Module. Manage your previ
 #: src/layouts/MobileMenu.tsx
 msgid "Menu"
 msgstr "Menu"
+
+#: src/components/WalletConnection/ConnectReentalButton.tsx
+msgid "Tab blocked. Allow pop-ups/tabs for this site, or use Connect wallet (QR) as fallback."
+msgstr "Tab blocked. Allow pop-ups/tabs for this site, or use Connect wallet (QR) as fallback."
 
 #: src/components/caps/DebtCeilingStatus.tsx
 #: src/components/infoTooltips/BorrowCapMaxedTooltip.tsx

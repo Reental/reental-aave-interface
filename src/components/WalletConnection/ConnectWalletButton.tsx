@@ -1,7 +1,8 @@
 import { Trans } from '@lingui/macro';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { ConnectKitButton } from 'connectkit';
 import { useEffect, useRef, useState } from 'react';
+import { useIsReentalConnected } from 'src/hooks/useIsReentalConnected';
 import { useRootStore } from 'src/store/root';
 import { AUTH } from 'src/utils/events';
 import { useShallow } from 'zustand/shallow';
@@ -9,6 +10,7 @@ import { useShallow } from 'zustand/shallow';
 import { AvatarSize } from '../Avatar';
 import { WalletIcon } from '../icons/WalletIcon';
 import { UserDisplay } from '../UserDisplay';
+import { ReentalConnectedMark } from './ReentalConnectedMark';
 
 // Amplitude is loaded on demand so the SDK stays out of the initial bundle. It
 // is only fetched when a wallet event fires and an API key is configured.
@@ -25,6 +27,7 @@ export interface ConnectWalletProps {
 }
 
 export const ConnectWalletButton: React.FC<ConnectWalletProps> = ({ funnel, onClick }) => {
+  const isReentalConnected = useIsReentalConnected();
   const [trackEvent, walletType, account] = useRootStore(
     useShallow((store) => [store.trackEvent, store.walletType, store.account])
   );
@@ -127,11 +130,14 @@ export const ConnectWalletButton: React.FC<ConnectWalletProps> = ({ funnel, onCl
               }}
             >
               {isConnected ? (
-                <UserDisplay
-                  avatarProps={{ size: AvatarSize.SM }}
-                  oneLiner={true}
-                  titleProps={{ variant: 'buttonM' }}
-                />
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
+                  <UserDisplay
+                    avatarProps={{ size: AvatarSize.SM }}
+                    oneLiner={true}
+                    titleProps={{ variant: 'buttonM' }}
+                  />
+                  {isReentalConnected && <ReentalConnectedMark />}
+                </Box>
               ) : (
                 <>
                   <Trans>Connect wallet</Trans>

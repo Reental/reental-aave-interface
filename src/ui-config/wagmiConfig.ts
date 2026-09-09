@@ -1,5 +1,7 @@
 import { Emitter } from '@wagmi/core/internal';
 import { getDefaultConfig } from 'connectkit';
+import { reentalWalletConnect } from 'src/libs/web3-data-provider/connectors/reentalWalletConnect';
+import { ENABLE_REENTAL_WC } from 'src/ui-config/reentalWalletConnect';
 import {
   ENABLE_TESTNET,
   FORK_BASE_CHAIN_ID,
@@ -9,7 +11,7 @@ import {
   networkConfigs,
 } from 'src/utils/marketsAndNetworksConfig';
 import { type Chain } from 'viem';
-import { createConfig, CreateConfigParameters, http } from 'wagmi';
+import { type CreateConnectorFn, createConfig, CreateConfigParameters, http } from 'wagmi';
 import { injected, safe } from 'wagmi/connectors';
 
 import { prodNetworkConfig, testnetConfig } from './networksConfig';
@@ -44,8 +46,10 @@ if (FORK_ENABLED) {
   prodChains = [forkChain, ...prodChains];
 }
 
+const walletConnectProjectId = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID as string;
+
 const defaultConfig = {
-  walletConnectProjectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID as string,
+  walletConnectProjectId,
   appName: 'RNT Lend',
   appDescription: 'Collateralization platform',
   appUrl: 'https://lend.rnt.finance',
@@ -67,9 +71,13 @@ const getTransport = (chainId: number) => {
 const buildTransports = (chains: CreateConfigParameters['chains']) =>
   Object.fromEntries(chains.map((chain) => [chain.id, http(getTransport(chain.id))]));
 
+const activeChains = ENABLE_TESTNET ? testnetChains : prodChains;
+const activeTransports = buildTransports(activeChains);
+
 const prodCkConfig = getDefaultConfig({
-  chains: ENABLE_TESTNET ? testnetChains : prodChains,
-  transports: ENABLE_TESTNET ? undefined : buildTransports(prodChains),
+  chains: activeChains,
+  // TEMP: never leave transports undefined on testnet — viem sepolia default is sepolia.drpc.org
+  transports: activeTransports,
   ...defaultConfig,
 });
 
@@ -80,33 +88,46 @@ const connectorConfig = {
   emitter: new Emitter(''),
 };
 
-const connectors = prodCkConfig.connectors
-  ?.map((connector) => {
-    // initialize the connector with the emitter so we can access the id
-    const c = connector(connectorConfig);
-    if (c.id === 'safe') {
-      return safe({
-        allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/, /dhedge.org$/],
-      });
-    } else {
-      return connector;
-    }
-  })
-  .sort((a, b) => {
-    // sort connectors so the family connector is last
-    // fixes slow wallet connections when running in the Safe UI
-    if (a(connectorConfig).id === familyConnectorId) {
-      return 1;
-    }
-    if (b(connectorConfig).id === familyConnectorId) {
-      return -1;
-    }
-    return 0;
-  });
+const mappedConnectors =
+  prodCkConfig.connectors
+    ?.map((connector) => {
+      // initialize the connector with the emitter so we can access the id
+      const c = connector(connectorConfig);
+      if (c.id === 'safe') {
+        return safe({
+          allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/, /dhedge.org$/],
+        });
+      } else {
+        return connector;
+      }
+    })
+    .sort((a, b) => {
+      // sort connectors so the family connector is last
+      // fixes slow wallet connections when running in the Safe UI
+      if (a(connectorConfig).id === familyConnectorId) {
+        return 1;
+      }
+      if (b(connectorConfig).id === familyConnectorId) {
+        return -1;
+      }
+      return 0;
+    }) ?? [];
+
+const connectors: CreateConnectorFn[] = [...mappedConnectors];
+if (walletConnectProjectId && ENABLE_REENTAL_WC) {
+  connectors.unshift(reentalWalletConnect({ projectId: walletConnectProjectId }));
+}
+
+// getDefaultConfig may include a `client` factory; overriding connectors + transports
+// makes that incompatible with createConfig (client must be undefined when transports set).
+const { client: _omitClient, ...ckConfigBase } = prodCkConfig as typeof prodCkConfig & {
+  client?: unknown;
+};
 
 const prodConfig = createConfig({
-  ...prodCkConfig,
+  ...ckConfigBase,
   connectors,
+  transports: activeTransports,
 });
 
 const isCypressEnabled = process.env.NEXT_PUBLIC_IS_CYPRESS_ENABLED === 'true';
