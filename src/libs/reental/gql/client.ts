@@ -5,10 +5,11 @@ import { GraphQLClient } from 'graphql-request';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const request = async <T = any, S = any>(
   query: DocumentNode<T, S>,
-  variables: S & { [key: string]: unknown }
+  variables: S & { [key: string]: unknown },
+  endpoint: string
 ): Promise<T> => {
   try {
-    const client = new GraphQLClient('https://ponder-pro.reental.eu/graphql', {
+    const client = new GraphQLClient(endpoint, {
       headers: {
         'Content-Type': 'application/json',
       },

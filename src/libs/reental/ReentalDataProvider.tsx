@@ -95,6 +95,7 @@ export const ReentalDataProvider: React.FC<PropsWithChildren> = ({ children }) =
     chainId: currentMarketData.chainId,
     asset: defaultEveryTokenAddress,
     user: currentAccount,
+    endpoint: currentMarketData.reentalPonderUrl,
     enabled: !skip2FA,
   });
 
