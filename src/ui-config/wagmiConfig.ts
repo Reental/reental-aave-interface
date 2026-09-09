@@ -1,6 +1,7 @@
 import { Emitter } from '@wagmi/core/internal';
 import { getDefaultConfig } from 'connectkit';
 import { reentalWalletConnect } from 'src/libs/web3-data-provider/connectors/reentalWalletConnect';
+import { ENABLE_REENTAL_WC } from 'src/ui-config/reentalWalletConnect';
 import {
   ENABLE_TESTNET,
   FORK_BASE_CHAIN_ID,
@@ -10,7 +11,7 @@ import {
   networkConfigs,
 } from 'src/utils/marketsAndNetworksConfig';
 import { type Chain } from 'viem';
-import { createConfig, CreateConfigParameters, http } from 'wagmi';
+import { type CreateConnectorFn, createConfig, CreateConfigParameters, http } from 'wagmi';
 import { injected, safe } from 'wagmi/connectors';
 
 import { prodNetworkConfig, testnetConfig } from './networksConfig';
@@ -112,12 +113,19 @@ const mappedConnectors =
       return 0;
     }) ?? [];
 
-const connectors = walletConnectProjectId
-  ? [reentalWalletConnect({ projectId: walletConnectProjectId }), ...mappedConnectors]
-  : mappedConnectors;
+const connectors: CreateConnectorFn[] = [...mappedConnectors];
+if (walletConnectProjectId && ENABLE_REENTAL_WC) {
+  connectors.unshift(reentalWalletConnect({ projectId: walletConnectProjectId }));
+}
+
+// getDefaultConfig may include a `client` factory; overriding connectors + transports
+// makes that incompatible with createConfig (client must be undefined when transports set).
+const { client: _omitClient, ...ckConfigBase } = prodCkConfig as typeof prodCkConfig & {
+  client?: unknown;
+};
 
 const prodConfig = createConfig({
-  ...prodCkConfig,
+  ...ckConfigBase,
   connectors,
   transports: activeTransports,
 });

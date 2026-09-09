@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   type WalletConnectPeerMetadata,
+  ENABLE_REENTAL_WC,
   isReentalPeerMetadata,
   REENTAL_CONNECTOR_ID,
 } from 'src/ui-config/reentalWalletConnect';
@@ -17,6 +18,7 @@ type SessionProvider = {
 /**
  * True when the active session is the Reental app (HumanWallet), whether the
  * user entered via the branded connector or pasted a WalletConnect URI.
+ * Gated by NEXT_PUBLIC_ENABLE_REENTAL_WC.
  */
 export const useIsReentalConnected = (): boolean => {
   const { connector, isConnected, status } = useAccount();
@@ -26,7 +28,7 @@ export const useIsReentalConnected = (): boolean => {
     let cancelled = false;
 
     const resolve = async () => {
-      if (!isConnected || !connector) {
+      if (!ENABLE_REENTAL_WC || !isConnected || !connector) {
         if (!cancelled) setIsReental(false);
         return;
       }

@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useRootStore } from 'src/store/root';
 import {
   closePendingReentalPopup,
+  ENABLE_REENTAL_WC,
   openBlankReentalPopup,
   REENTAL_CONNECTOR_ID,
 } from 'src/ui-config/reentalWalletConnect';
@@ -31,7 +32,7 @@ export const ConnectReentalButton: React.FC<ConnectReentalButtonProps> = ({ funn
   const baseUrl = currentMarketData.reentalWalletConnectBaseUrl;
   const marketLogo = currentMarketData.logo || '/icons/markets/reental.png';
 
-  if (isConnected || !baseUrl) {
+  if (!ENABLE_REENTAL_WC || isConnected || !baseUrl) {
     return null;
   }
 

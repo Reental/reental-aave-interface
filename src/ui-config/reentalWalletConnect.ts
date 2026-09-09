@@ -7,6 +7,12 @@
 export const REENTAL_CONNECTOR_ID = 'reental';
 
 /**
+ * Feature flag: Connect with Reental (branded WC) + connector + connected mark.
+ * Opt-in for controlled envs. Requires restart of Next after change.
+ */
+export const ENABLE_REENTAL_WC = process.env.NEXT_PUBLIC_ENABLE_REENTAL_WC === 'true';
+
+/**
  * Peer metadata that the Reental app WalletKit MUST publish (wallet side).
  * RNT Lend uses this to show the "connected to Reental" mark for both:
  * - Connect with Reental (connector id `reental`)
