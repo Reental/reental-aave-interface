@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro';
+import { t, Trans } from '@lingui/macro';
 import { Box, Button, Chip, Divider, Paper, Stack, Typography } from '@mui/material';
 import { formatUnits } from 'ethers/lib/utils';
 import { CompactableTypography, CompactMode } from 'src/components/CompactableTypography';
@@ -14,7 +14,11 @@ import { useModalContext } from 'src/hooks/useModal';
 import { useWeb3Context } from 'src/libs/hooks/useWeb3Context';
 import { UNCONSTRAINED_THRESHOLD } from 'src/libs/reental/sharedRouter/abi';
 import { Mandate } from 'src/libs/reental/sharedRouter/useMandate';
-import { SKIP_FIXES, useMandateActivity } from 'src/libs/reental/sharedRouter/useMandateActivity';
+import {
+  skipFix,
+  skipLabel,
+  useMandateActivity,
+} from 'src/libs/reental/sharedRouter/useMandateActivity';
 import { useIndexerStatus } from 'src/libs/reental/sharedRouter/usePonderMandate';
 
 import {
@@ -103,10 +107,11 @@ export const LiquidationsPositionOverview = ({
     );
     const deposit = deposits.find((item) => item.underlyingAsset === underlyingAsset);
     // Zero is a real limit of zero, not "unlimited" — an LP sitting on it funds nothing.
-    if (!debtAsset || !deposit) return 'Set a per-liquidation limit';
-    if (debtAsset.maxDebt === '0') return 'No limit set — funds nothing';
-    if (BigInt(debtAsset.maxDebt) >= UNCONSTRAINED_THRESHOLD) return 'No limit per liquidation';
-    return `Limit ${formatUnits(debtAsset.maxDebt, deposit.decimals)} per liquidation`;
+    if (!debtAsset || !deposit) return t`Set a per-liquidation limit`;
+    if (debtAsset.maxDebt === '0') return t`No limit set — funds nothing`;
+    if (BigInt(debtAsset.maxDebt) >= UNCONSTRAINED_THRESHOLD) return t`No limit per liquidation`;
+    const limit = formatUnits(debtAsset.maxDebt, deposit.decimals);
+    return t`Limit ${limit} per liquidation`;
   };
   const recentSkips = skips.data?.items.slice(0, 3) ?? [];
 
@@ -309,9 +314,9 @@ export const LiquidationsPositionOverview = ({
                 sx={{ py: 1, flexWrap: 'wrap', gap: 2 }}
               >
                 <Typography variant="secondary14" color="text.secondary">
-                  {SKIP_FIXES[skip.reasonName]}
+                  {skipFix(skip.reasonName)}
                 </Typography>
-                <Chip size="small" color="warning" label={skip.reasonName} />
+                <Chip size="small" color="warning" label={skipLabel(skip.reasonName)} />
               </Stack>
             ))}
           </>

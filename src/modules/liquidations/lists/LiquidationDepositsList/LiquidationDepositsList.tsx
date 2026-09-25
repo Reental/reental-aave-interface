@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro';
+import { t, Trans } from '@lingui/macro';
 import { Box, Checkbox, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { ListColumn } from 'src/components/lists/ListColumn';
 import { ListHeaderTitle } from 'src/components/lists/ListHeaderTitle';
@@ -76,7 +76,7 @@ export const LiquidationDepositsList = ({
                   checked={allEnabled}
                   indeterminate={enabledCount > 0 && !allEnabled}
                   onChange={(e) => onToggleAll(e.target.checked)}
-                  inputProps={{ 'aria-label': 'select all deposits' }}
+                  inputProps={{ 'aria-label': t`Select all deposits` }}
                   sx={{ p: 0 }}
                 />
               </ListColumn>

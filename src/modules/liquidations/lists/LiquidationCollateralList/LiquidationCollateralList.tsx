@@ -87,7 +87,7 @@ export const LiquidationCollateralList = ({
                       displayedOptions.map((o) => o.underlyingAsset)
                     )
                   }
-                  inputProps={{ 'aria-label': 'accept all collaterals' }}
+                  inputProps={{ 'aria-label': t`Accept all collaterals` }}
                   sx={{ p: 0 }}
                 />
               </ListColumn>

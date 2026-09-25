@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro';
+import { t, Trans } from '@lingui/macro';
 import { Box, Button, InputBase, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { NoData } from 'src/components/primitives/NoData';
@@ -101,7 +101,7 @@ export const LiquidationAmountInput = ({
               value={value}
               onChange={(e) => onChange(e.target.value)}
               inputProps={{
-                'aria-label': 'amount for liquidations',
+                'aria-label': t`Amount for liquidations`,
                 sx: { p: 1, textAlign: 'left' },
               }}
               // eslint-disable-next-line

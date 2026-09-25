@@ -62,6 +62,10 @@ msgstr "Savings GHO token"
 msgid "You've successfully swapped borrow position."
 msgstr "You've successfully swapped borrow position."
 
+#: src/modules/liquidations/lists/LiquidationDepositsList/LiquidationDepositsList.tsx
+msgid "Select all deposits"
+msgstr "Select all deposits"
+
 #: src/components/incentives/IncentivesTooltipContent.tsx
 msgid "Participating in this {symbol} reserve gives annualized rewards."
 msgstr "Participating in this {symbol} reserve gives annualized rewards."
@@ -193,6 +197,10 @@ msgstr "Rate change"
 #: pages/404.page.tsx
 msgid "Sorry, we couldn't find the page you were looking for."
 msgstr "Sorry, we couldn't find the page you were looking for."
+
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "Select all matchable positions"
+msgstr "Select all matchable positions"
 
 #: src/components/transactions/LiquidityMandate/LiquidityMandateModalContent.tsx
 msgid "Current budget"
@@ -413,6 +421,10 @@ msgstr "Supply {symbol}"
 #: src/components/transactions/LiquidityMandate/LiquidityMandateModalContent.tsx
 msgid "Current mode"
 msgstr "Current mode"
+
+#: src/modules/liquidations/LiquidationsPositionOverview.tsx
+msgid "No limit per liquidation"
+msgstr "No limit per liquidation"
 
 #: src/components/transactions/Emode/EmodeModalContent.tsx
 #: src/components/transactions/Emode/EmodeModalContent.tsx
@@ -1128,6 +1140,7 @@ msgstr "You've successfully submitted an order."
 msgid "Max"
 msgstr "Max"
 
+#: src/libs/reental/sharedRouter/useMandateActivity.ts
 #: src/modules/liquidations/matching/BackstopDiagnostics.tsx
 msgid "Not registered"
 msgstr "Not registered"
@@ -1233,6 +1246,10 @@ msgstr "Claiming all protocol rewards only. Merit rewards excluded - select \"cl
 #: src/modules/history/actions/ActionDetails.tsx
 msgid "Collateralization"
 msgstr "Collateralization"
+
+#: src/libs/reental/sharedRouter/useMandateActivity.ts
+msgid "Raise your aToken allowance, aToken balance, or per-liquidation debt cap."
+msgstr "Raise your aToken allowance, aToken balance, or per-liquidation debt cap."
 
 #: src/components/transactions/FlowCommons/Error.tsx
 msgid "You can report incident to our <0>Discord</0> or<1>Github</1>."
@@ -1683,6 +1700,10 @@ msgstr "None of your deposits can currently be drawn on, so you are skipped in e
 msgid "Protocol debt ceiling is at 100% for this asset. Further borrowing against this asset is unavailable."
 msgstr "Protocol debt ceiling is at 100% for this asset. Further borrowing against this asset is unavailable."
 
+#: src/modules/liquidations/useLiquidationsSetupTx.tsx
+msgid "Resume participation"
+msgstr "Resume participation"
+
 #: src/components/transactions/LiquidityMandate/LiquidityMandateModalContent.tsx
 msgid "Remaining now"
 msgstr "Remaining now"
@@ -1810,6 +1831,10 @@ msgstr "Claimable AAVE"
 msgid "Submitting..."
 msgstr "Submitting..."
 
+#: src/modules/liquidations/LiquidationsSetup.tsx
+msgid "Leave empty for no limit"
+msgstr "Leave empty for no limit"
+
 #: src/ui-config/errorMapping.tsx
 msgid "Borrow and repay in same block is not allowed"
 msgstr "Borrow and repay in same block is not allowed"
@@ -1846,6 +1871,10 @@ msgstr "Budget {0} · Approved {1} · Deposit {2} {3}"
 #: src/modules/history/actions/ActionDetails.tsx
 msgid "Expired"
 msgstr "Expired"
+
+#: src/libs/reental/sharedRouter/useMandateActivity.ts
+msgid "Top up your budget for this collateral, or the pooled one if you aggregate."
+msgstr "Top up your budget for this collateral, or the pooled one if you aggregate."
 
 #: src/components/transactions/Warnings/ParaswapErrorDisplay.tsx
 msgid "Tip: Try increasing slippage or reduce input amount"
@@ -2186,6 +2215,10 @@ msgstr "View TX"
 msgid "The Aave Balancer Pool Token (ABPT) is a liquidity pool token. You can receive ABPT by depositing a combination of AAVE + wstETH in the Balancer liquidity pool. You can then stake your BPT in the Safety Module to secure the protocol and earn Safety Incentives."
 msgstr "The Aave Balancer Pool Token (ABPT) is a liquidity pool token. You can receive ABPT by depositing a combination of AAVE + wstETH in the Balancer liquidity pool. You can then stake your BPT in the Safety Module to secure the protocol and earn Safety Incentives."
 
+#: src/libs/reental/sharedRouter/useMandateActivity.ts
+msgid "Ask Reental to whitelist your recipient for this property."
+msgstr "Ask Reental to whitelist your recipient for this property."
+
 #: src/components/transactions/ClaimRewards/ClaimRewardsModalContent.tsx
 #: src/components/transactions/ClaimRewards/ClaimRewardsModalContent.tsx
 #: src/components/transactions/ClaimRewards/RewardsSelect.tsx
@@ -2496,6 +2529,7 @@ msgstr "No liquidity provider can fund this liquidation right now. Providers are
 msgid "No per-liquidation limit set for {debtSymbol}. The router reads an unset limit as zero, so this provider funds nothing until one is set."
 msgstr "No per-liquidation limit set for {debtSymbol}. The router reads an unset limit as zero, so this provider funds nothing until one is set."
 
+#: src/libs/reental/sharedRouter/useMandateActivity.ts
 #: src/modules/liquidations/LiquidationsPositionOverview.tsx
 #: src/modules/liquidations/matching/BackstopDiagnostics.tsx
 msgid "Paused"
@@ -2656,6 +2690,7 @@ msgstr "In Progress"
 msgid "Because this asset is paused, no actions can be taken until further notice"
 msgstr "Because this asset is paused, no actions can be taken until further notice"
 
+#: src/modules/liquidations/LiquidationAmountInput.tsx
 #: src/modules/liquidations/lists/LiquidationDepositsList/LiquidationDepositsList.tsx
 #: src/modules/liquidations/lists/LiquidationDepositsList/LiquidationDepositsListItem.tsx
 msgid "Amount for liquidations"
@@ -2706,6 +2741,10 @@ msgstr "Budgets are denominated in USD, not in tokens. Setting 0 means you do no
 #: src/modules/governance/RepresentativesInfoPanel.tsx
 msgid "Representative smart contract wallet (ie. Safe) addresses on other chains."
 msgstr "Representative smart contract wallet (ie. Safe) addresses on other chains."
+
+#: src/modules/liquidations/useLiquidationsSetupTx.tsx
+msgid "Update your liquidation settings"
+msgstr "Update your liquidation settings"
 
 #: src/layouts/SupportModal.tsx
 msgid "Support"
@@ -2761,6 +2800,10 @@ msgstr "VOTE NAY"
 #: src/components/transactions/Emode/EmodeActions.tsx
 msgid "Enabling E-Mode"
 msgstr "Enabling E-Mode"
+
+#: src/modules/liquidations/LiquidationsPositionOverview.tsx
+msgid "Limit {limit} per liquidation"
+msgstr "Limit {limit} per liquidation"
 
 #: src/components/transactions/Emode/EmodeModalContent.tsx
 msgid "This action will reduce your health factor. Please be mindful of the increased risk of collateral liquidation."
@@ -2827,6 +2870,7 @@ msgstr "Your recipient is not whitelisted for {0}. A budget can be set, but you 
 msgid "Remaining"
 msgstr "Remaining"
 
+#: src/libs/reental/sharedRouter/useMandateActivity.ts
 #: src/modules/liquidations/matching/BackstopDiagnostics.tsx
 msgid "Recipient not whitelisted"
 msgstr "Recipient not whitelisted"
@@ -2867,7 +2911,6 @@ msgid "Liquidation value"
 msgstr "Liquidation value"
 
 #: pages/analytics.page.tsx
-#: src/layouts/components/NavItems.tsx
 msgid "Analytics"
 msgstr "Analytics"
 
@@ -2908,6 +2951,10 @@ msgstr "Unstaked"
 msgid "Vote NAY"
 msgstr "Vote NAY"
 
+#: src/modules/liquidations/LiquidationsPositionOverview.tsx
+msgid "Set a per-liquidation limit"
+msgstr "Set a per-liquidation limit"
+
 #: src/ui-config/menu-items/index.tsx
 msgid "Buy Crypto With Fiat"
 msgstr "Buy Crypto With Fiat"
@@ -2924,6 +2971,7 @@ msgstr "Your balance is lower than the selected amount."
 msgid "An error has occurred fetching the proposal."
 msgstr "An error has occurred fetching the proposal."
 
+#: src/libs/reental/sharedRouter/useMandateActivity.ts
 #: src/modules/liquidations/matching/BackstopDiagnostics.tsx
 msgid "No capacity"
 msgstr "No capacity"
@@ -3075,6 +3123,7 @@ msgstr "Custom amount"
 msgid "Something went wrong fetching bridge message, please try again later."
 msgstr "Something went wrong fetching bridge message, please try again later."
 
+#: src/libs/reental/sharedRouter/useMandateActivity.ts
 #: src/modules/liquidations/matching/BackstopDiagnostics.tsx
 msgid "No budget for this collateral"
 msgstr "No budget for this collateral"
@@ -3442,6 +3491,10 @@ msgstr "Claimed"
 #: src/components/transactions/LiquidityMandate/LiquidityMandateModalContent.tsx
 msgid "Approving your {0} aTokens is what arms you. Without an allowance a liquidation reverts on its first line, whatever budget you set."
 msgstr "Approving your {0} aTokens is what arms you. Without an allowance a liquidation reverts on its first line, whatever budget you set."
+
+#: src/libs/reental/sharedRouter/useMandateActivity.ts
+msgid "Your mandate is paused — switch participation back on."
+msgstr "Your mandate is paused — switch participation back on."
 
 #: src/modules/liquidations/matching/BackstopDiagnostics.tsx
 msgid "The recipient is not approved to hold {collateralSymbol}. Reental has to whitelist it."
@@ -4450,6 +4503,10 @@ msgstr "Since this asset is frozen, the only available actions are withdraw and 
 msgid "Borrow amount to reach {0}% utilization"
 msgstr "Borrow amount to reach {0}% utilization"
 
+#: src/modules/liquidations/useLiquidationsSetupTx.tsx
+msgid "Register as a liquidity provider"
+msgstr "Register as a liquidity provider"
+
 #: src/ui-config/errorMapping.tsx
 msgid "This asset has no liquidation bonus configured, so it cannot be seized as collateral."
 msgstr "This asset has no liquidation bonus configured, so it cannot be seized as collateral."
@@ -4686,6 +4743,10 @@ msgstr "The Aave Protocol is programmed to always use the price of 1 GHO = $1. T
 msgid "You have no AAVE/stkAAVE/aAave balance to delegate."
 msgstr "You have no AAVE/stkAAVE/aAave balance to delegate."
 
+#: src/modules/liquidations/LiquidationsPositionOverview.tsx
+msgid "No limit set — funds nothing"
+msgstr "No limit set — funds nothing"
+
 #: src/modules/faucet/FaucetTopPanel.tsx
 msgid "With testnet Faucet you can get free assets to test the Aave Protocol. Make sure to switch your wallet provider to the appropriate testnet network, select desired asset, and click ‘Faucet’ to get tokens transferred to your wallet. The assets on a testnet are not “real,” meaning they have no monetary value. <0>Learn more</0>"
 msgstr "With testnet Faucet you can get free assets to test the Aave Protocol. Make sure to switch your wallet provider to the appropriate testnet network, select desired asset, and click ‘Faucet’ to get tokens transferred to your wallet. The assets on a testnet are not “real,” meaning they have no monetary value. <0>Learn more</0>"
@@ -4886,6 +4947,10 @@ msgstr "Action cannot be performed because the reserve is frozen"
 msgid "Excludes variable supply APY"
 msgstr "Excludes variable supply APY"
 
+#: src/modules/liquidations/lists/LiquidationCollateralList/LiquidationCollateralList.tsx
+msgid "Accept all collaterals"
+msgstr "Accept all collaterals"
+
 #: src/components/transactions/LiquidityMandate/LiquidityMandateModal.tsx
 msgid "Become a liquidity provider"
 msgstr "Become a liquidity provider"
@@ -4897,6 +4962,10 @@ msgstr "Isolated Debt Ceiling"
 #: src/components/transactions/Warnings/SupplyCapWarning.tsx
 msgid "Protocol supply cap is at 100% for this asset. Further supply unavailable."
 msgstr "Protocol supply cap is at 100% for this asset. Further supply unavailable."
+
+#: src/libs/reental/sharedRouter/useMandateActivity.ts
+msgid "Register a recipient on the router."
+msgstr "Register a recipient on the router."
 
 #: src/layouts/SupportModal.tsx
 msgid "Submission did not work, please try again later or contact wecare@avara.xyz"

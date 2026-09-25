@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro';
+import { t, Trans } from '@lingui/macro';
 import {
   Box,
   Button,
@@ -379,7 +379,7 @@ export const LiquidationsSetup = ({
                   type="number"
                   sx={{ mt: 3, mb: 2, maxWidth: '280px' }}
                   label={<Trans>Pooled budget in USD</Trans>}
-                  placeholder="Leave empty for no limit"
+                  placeholder={t`Leave empty for no limit`}
                   value={pooledBudget}
                   onChange={(event) => setPooledBudget(event.target.value)}
                   data-cy="pooledBudgetInput"

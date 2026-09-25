@@ -1,4 +1,5 @@
 import { PopulatedTransaction } from '@ethersproject/contracts';
+import { t } from '@lingui/macro';
 import { useQueryClient } from '@tanstack/react-query';
 import { constants, ethers } from 'ethers';
 import { parseUnits } from 'ethers/lib/utils';
@@ -249,15 +250,15 @@ export const useLiquidationsSetupTx = (router?: string, chainId?: number) => {
       const cfg = buildLpConfig(config, mandate, deposits);
 
       if (!mandate?.registered) {
-        steps.push(call('configure', 'Register as a liquidity provider', 'configure', [cfg]));
+        steps.push(call('configure', t`Register as a liquidity provider`, 'configure', [cfg]));
       } else if (!matchesMandate(cfg, mandate)) {
-        steps.push(call('configure', 'Update your liquidation settings', 'configure', [cfg]));
+        steps.push(call('configure', t`Update your liquidation settings`, 'configure', [cfg]));
       }
 
       // configure carries no enabled flag, so a paused mandate would keep being skipped
       // however well the rest of it is configured.
       if (mandate?.registered && !mandate.enabled) {
-        steps.push(call('enable', 'Resume participation', 'setEnabled', [true]));
+        steps.push(call('enable', t`Resume participation`, 'setEnabled', [true]));
       }
 
       return steps;
