@@ -119,14 +119,20 @@ const buildLpConfig = (
     });
   }
 
+  const globalBudgetUsd = !acceptAll
+    ? '0'
+    : config.pooledBudget === ''
+    ? UNLIMITED_USD
+    : toUsd(config.pooledBudget);
+
   return {
     recipient: config.recipient,
     acceptAll,
-    globalBudgetUsd: !acceptAll
-      ? '0'
-      : config.pooledBudget === ''
-      ? UNLIMITED_USD
-      : toUsd(config.pooledBudget),
+    // Only write the pooled budget when it actually changed, so an unrelated edit does not
+    // reset what liquidations have already drawn down.
+    updateGlobalBudget:
+      acceptAll && (!mandate?.registered || mandate.globalBudget !== globalBudgetUsd),
+    globalBudgetUsd,
     debtAssets,
     maxDebts,
     collateralAssets,
@@ -182,6 +188,7 @@ export const useLiquidationsSetupTx = (router?: string, chainId?: number) => {
         setStatuses((prev) => ({ ...prev, [key]: 'done' }));
         return true;
       } catch (caught) {
+        console.error(`[liquidations setup] step "${key}" failed`, { tx, error: caught });
         setStatuses((prev) => ({ ...prev, [key]: 'failed' }));
         setError(getErrorTextFromError(caught, TxAction.MAIN_ACTION, false).error?.toString());
         return false;

@@ -20,7 +20,7 @@ export const SHARED_LIQUIDATION_ROUTER_ABI = [
    * asset's own decimals, and the two array pairs are matched index-wise. The collateral
    * arrays are read only when acceptAll is false.
    */
-  'function configure((address recipient, bool acceptAll, uint256 globalBudgetUsd, address[] debtAssets, uint256[] maxDebts, address[] collateralAssets, uint256[] collateralBudgetsUsd) cfg)',
+  'function configure((address recipient, bool acceptAll, bool updateGlobalBudget, uint256 globalBudgetUsd, address[] debtAssets, uint256[] maxDebts, address[] collateralAssets, uint256[] collateralBudgetsUsd) cfg)',
 
   // --- mandate lifecycle, in the order the contract enforces ---
   // register() must come first: every other setter reverts with "SLR: not registered".
@@ -91,7 +91,13 @@ export type LpConfig = {
   recipient: string;
   /** true = one pooled budget funds every property, including ones listed later. */
   acceptAll: boolean;
-  /** Pooled budget, 8-decimal USD. Read only when acceptAll is true. */
+  /**
+   * Whether globalBudgetUsd is written. The pooled budget is a balance liquidations draw
+   * down, so re-sending it on every edit would restore spent appetite. Forced to true by the
+   * contract on first registration.
+   */
+  updateGlobalBudget: boolean;
+  /** Pooled budget, 8-decimal USD. Read only when acceptAll and updateGlobalBudget are true. */
   globalBudgetUsd: string;
   /** Paired index-wise with maxDebts. */
   debtAssets: string[];
