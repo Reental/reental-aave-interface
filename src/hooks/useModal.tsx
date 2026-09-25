@@ -9,6 +9,20 @@ import { GENERAL } from 'src/utils/events';
 
 import { Proposal } from './governance/useProposals';
 
+/** The mandate actions the shared router exposes, one modal opening each. */
+export type MandateStep =
+  | 'register'
+  | 'recipient'
+  | 'arm'
+  | 'budget'
+  // Mode switch: flips between one pooled budget and per-asset ones. Kept distinct from
+  // 'globalBudget' because using the mode call as a top-up silently makes an LP accept
+  // every property.
+  | 'acceptAll'
+  | 'globalBudget'
+  | 'maxDebt'
+  | 'enabled';
+
 export enum ModalType {
   Supply,
   Withdraw,
@@ -43,6 +57,8 @@ export enum ModalType {
   SavingsGhoWithdraw,
   SwitchLimitOrder,
   CancelCowOrder,
+  Liquidate,
+  LiquidityMandate,
 }
 
 export interface ModalArgsType {
@@ -61,6 +77,13 @@ export interface ModalArgsType {
   stataTokenAToken?: string;
   stataTokenAsset?: string;
   cowOrder?: TransactionHistoryItem<ActionFields['CowSwap']>;
+  revoke?: boolean;
+  /** Which single mandate action the liquidity-provider modal should perform. */
+  mandateStep?: MandateStep;
+  /** Collateral or debt asset the mandate action applies to. */
+  mandateAsset?: string;
+  /** Borrower whose position is being liquidated. */
+  borrower?: string;
 }
 
 export type TxStateType = {
@@ -86,6 +109,8 @@ export interface ModalContextType<T extends ModalArgsType> {
     name: string,
     funnel: string
   ) => void;
+  openLiquidate: (borrower: string) => void;
+  openLiquidityMandate: (step: MandateStep, asset?: string, revoke?: boolean) => void;
   openBorrow: (
     underlyingAsset: string,
     currentMarket: string,
@@ -207,6 +232,18 @@ export const ModalContextProvider: React.FC<PropsWithChildren> = ({ children }) 
               funnel,
             });
           }
+        },
+        openLiquidityMandate: (step, asset, revoke) => {
+          setType(ModalType.LiquidityMandate);
+          setArgs({ mandateStep: step, mandateAsset: asset, revoke });
+
+          trackEvent(GENERAL.OPEN_MODAL, { modal: 'Liquidity mandate', step });
+        },
+        openLiquidate: (borrower) => {
+          setType(ModalType.Liquidate);
+          setArgs({ borrower });
+
+          trackEvent(GENERAL.OPEN_MODAL, { modal: 'Liquidate', borrower });
         },
         openWithdraw: (underlyingAsset, currentMarket, name, funnel) => {
           setType(ModalType.Withdraw);
