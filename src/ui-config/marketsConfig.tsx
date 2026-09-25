@@ -53,7 +53,6 @@ export type MarketDataType = {
     // market. The liquidity provider UI is hidden on markets where this is unset.
     SHARED_LIQUIDATION_ROUTER?: string;
   };
-
 };
 export enum CustomMarket {
   reental_polygon_v3 = 'reental_polygon_v3',
@@ -91,8 +90,7 @@ export const marketsData: {
       COLLECTOR: AaveV3Polygon.COLLECTOR,
       DEBT_SWITCH_ADAPTER: AaveV3Polygon.DEBT_SWAP_ADAPTER,
       WITHDRAW_SWITCH_ADAPTER: AaveV3Polygon.WITHDRAW_SWAP_ADAPTER,
-      // TODO: set once the SharedLiquidationRouter is deployed on Polygon.
-      // SHARED_LIQUIDATION_ROUTER: '0x...',
+      SHARED_LIQUIDATION_ROUTER: '0xae753596529d95DeC5ee39c20fad20865Abc5e90',
     },
   },
   [CustomMarket.reental_sepolia_v3]: {

@@ -28,6 +28,14 @@ export const SHARED_LIQUIDATION_ROUTER_ABI = [
   // before the registration check, so only listed debt assets may be passed here.
   'function setMaxDebtPerLiquidation(address debtAsset_, uint256 maxDebt_)',
 
+  // Everything above in a single call. Budgets are 8-decimal USD, maxDebts are in each debt
+  // asset's own decimals. The aToken approve still has to be sent separately.
+  'function configure((address recipient, bool acceptAll, bool updateGlobalBudget, uint256 globalBudgetUsd, address[] debtAssets, uint256[] maxDebts, address[] collateralAssets, uint256[] collateralBudgetsUsd) cfg)',
+
+  // --- residuals ---
+  // Debt owed back to an LP after a degraded settlement, withdrawn by the LP itself.
+  'function claimResidual(address debtAsset) returns (uint256 amount)',
+
   // --- liquidation ---
   'function liquidate(address borrower, address collateralAsset, address debtAsset, uint256 debtToCover, address[] candidates)',
   'function quote(address[] candidates, address collateralAsset, address debtAsset) view returns (uint256[] maxDebt, uint256[] collateralOut, uint256 collateralPerDebt)',
@@ -44,6 +52,8 @@ export const SHARED_LIQUIDATION_ROUTER_ABI = [
   'function maxDebtPerLiquidation(address lp, address debtAsset) view returns (uint256)',
   'function aTokenOf(address debtAsset) view returns (address)',
   'function getLps() view returns (address[])',
+  'function lpCount() view returns (uint256)',
+  'function claimableResidual(address lp, address debtAsset) view returns (uint256)',
   'function getDebtAssets() view returns (address[])',
   'function whitelist() view returns (address)',
   'function MAX_CANDIDATES() view returns (uint256)',
@@ -58,6 +68,9 @@ export const SHARED_LIQUIDATION_ROUTER_ABI = [
   'event MaxDebtPerLiquidationSet(address indexed lp, address indexed debtAsset, uint256 maxDebt)',
   'event LpParticipated(address indexed lp, address indexed collateralAsset, address indexed debtAsset, uint256 debtContributed, uint256 collateralReceived, uint256 residualReturned)',
   'event LpSkipped(address indexed lp, address indexed collateralAsset, uint8 reason)',
+  'event ResidualCredited(address indexed lp, address indexed debtAsset, uint256 amount)',
+  'event ResidualTransferred(address indexed lp, address indexed debtAsset, uint256 amount)',
+  'event ResidualClaimed(address indexed lp, address indexed debtAsset, uint256 amount)',
   'event Liquidated(address indexed borrower, address indexed collateralAsset, address indexed debtAsset, uint256 debtCovered, uint256 collateralSeized, uint256 lpsUsed)',
 ];
 
