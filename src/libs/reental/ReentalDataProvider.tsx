@@ -21,6 +21,12 @@ const defaultState = {
   fetchGlobal2FA: () => Promise.resolve({}),
 };
 
+// The 2FA time window is only indexed for mainnet (chainId 137), so it can never be
+// opened while developing against the Sepolia integration environment. This flag fakes
+// an always-open window locally. Never enable it in a production build.
+const BYPASS_2FA = process.env.NEXT_PUBLIC_BYPASS_2FA === 'true';
+const BYPASSED_WINDOW_MS = 24 * 60 * 60 * 1000;
+
 const Wrapper = ({
   children,
   value,
@@ -90,6 +96,19 @@ export const ReentalDataProvider: React.FC<PropsWithChildren> = ({ children }) =
   });
 
   const value = useMemo(() => {
+    if (BYPASS_2FA) {
+      return {
+        twoFA: {
+          global: {
+            status: true,
+            expiresAt: new Date(Date.now() + BYPASSED_WINDOW_MS),
+            windowTime: BYPASSED_WINDOW_MS,
+          },
+        },
+        fetchGlobal2FA: refetchGlobal2FA,
+      };
+    }
+
     const onRefetch = (account?: TwoFaAccount | null) => {
       if (account) {
         const expiresAt = new Date(account.expiresAt * 1000);
