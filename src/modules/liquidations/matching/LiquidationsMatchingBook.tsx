@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro';
+import { t, Trans } from '@lingui/macro';
 import { Box, Button, Checkbox, Chip, MenuItem, Select, Typography } from '@mui/material';
 import { useMemo, useState } from 'react';
 import { ListColumn } from 'src/components/lists/ListColumn';
@@ -318,7 +318,7 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
                         : {}
                     )
                   }
-                  inputProps={{ 'aria-label': 'select all matchable positions' }}
+                  inputProps={{ 'aria-label': t`Select all matchable positions` }}
                   sx={{ p: 0 }}
                 />
               </ListColumn>
