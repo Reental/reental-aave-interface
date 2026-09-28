@@ -99,7 +99,7 @@ msgstr "Depósitos"
 
 #: src/components/transactions/Bridge/BridgeModalContent.tsx
 msgid "Estimated time"
-msgstr ""
+msgstr "Tiempo estimado"
 
 #: src/components/transactions/StakeCooldown/StakeCooldownModalContent.tsx
 #: src/modules/umbrella/StakeCooldownModalContent.tsx
@@ -146,7 +146,7 @@ msgstr ""
 
 #: src/components/transactions/Bridge/BridgeDestinationInput.tsx
 msgid "To"
-msgstr ""
+msgstr "Hacia"
 
 #: src/modules/reserve-overview/Gho/GhoReserveConfiguration.tsx
 #: src/ui-config/menu-items/index.tsx
@@ -4626,7 +4626,7 @@ msgstr "Restakeado"
 #: src/modules/history/actions/ActionDetails.tsx
 #: src/modules/history/HistoryFilterMenu.tsx
 msgid "Swap"
-msgstr ""
+msgstr "Swap"
 
 #: src/components/lists/ListWrapper.tsx
 #: src/modules/analytics/RiskParameters.tsx
@@ -5030,3 +5030,106 @@ msgstr "Aprende más"
 #: src/components/infoTooltips/MigrationDisabledTooltip.tsx
 msgid "Asset is frozen in {marketName} v3 market, hence this position cannot be migrated."
 msgstr "Este activo está congelado en el mercado v3 de {marketName}, por lo tanto, esta posición no se puede migrar."
+
+
+#: src/components/MarketSwitcher.tsx
+msgid "Official Aave V3 Core market on the Ethereum network"
+msgstr "Mercado oficial Aave V3 Core sobre la red Ethereum"
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Switch to {0}"
+msgstr "Cambiar a {0}"
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "The amount is below the minimum that can be bridged."
+msgstr "El importe está por debajo del mínimo que se puede transferir."
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Transaction rejected in your wallet."
+msgstr "Transacción rechazada en tu wallet."
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Waiting for the funds to arrive on {0}..."
+msgstr "Esperando a que los fondos lleguen a {0}..."
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Bridge"
+msgstr "Bridge"
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Bridge transaction sent."
+msgstr "Transacción de bridge enviada."
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Approving {0}..."
+msgstr "Aprobando {0}..."
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Confirm the bridge in your wallet..."
+msgstr "Confirma el bridge en tu wallet..."
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Bridge {0}"
+msgstr "Transferir {0}"
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Watch-only mode: connect a wallet to bridge"
+msgstr "Modo solo lectura: conecta una wallet para transferir"
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Waiting for confirmation..."
+msgstr "Esperando confirmación..."
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Bridging powered by Uniswap and Across."
+msgstr "Bridge operado por Uniswap y Across."
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "View transaction"
+msgstr "Ver transacción"
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "From"
+msgstr "Desde"
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Something went wrong. Please try again."
+msgstr "Algo ha fallado. Inténtalo de nuevo."
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "No bridge route is available for this amount right now."
+msgstr "Ahora mismo no hay ruta de bridge disponible para este importe."
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "The bridge could not be completed. Your funds will be refunded."
+msgstr "El bridge no se ha podido completar. Tus fondos serán reembolsados."
+
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Insufficient {0} balance"
+msgstr "Saldo de {0} insuficiente"
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Funds delivered on {0}."
+msgstr "Fondos recibidos en {0}."
+
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Bridge fee"
+msgstr "Comisión del bridge"
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Network fee"
+msgstr "Comisión de red"
+
+#: src/modules/bridge/BridgeTopPanel.tsx
+msgid "Move USDC and USDT between Ethereum and Polygon. Borrow stablecoins on the Aave market on Ethereum and bridge them to supply in the Reental market on Polygon, or bridge them back to repay your debt."
+msgstr "Mueve USDC y USDT entre Ethereum y Polygon. Pide prestadas stablecoins en el mercado de Aave en Ethereum y transfiérelas para depositarlas en el mercado de Reental en Polygon, o devuélvelas para pagar tu deuda."
+
+#: src/modules/bridge/BridgeTopPanel.tsx
+msgid "Transfers usually arrive in under a minute. Each bridge is quoted and executed by Uniswap and Across, and the fees are shown before you confirm."
+msgstr "Las transferencias suelen llegar en menos de un minuto. Cada bridge lo cotizan y ejecutan Uniswap y Across, y las comisiones se muestran antes de confirmar."
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Back to markets"
+msgstr "Volver a mercados"

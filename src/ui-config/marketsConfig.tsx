@@ -1,4 +1,5 @@
 import { ChainId } from '@aave/contract-helpers';
+import { AaveV3Ethereum } from '@bgd-labs/aave-address-book';
 import { ReactNode } from 'react';
 
 import { AaveV3Polygon, AaveV3Sepolia } from './custom';
@@ -23,8 +24,16 @@ export type MarketDataType = {
     withdrawAndSwitch?: boolean;
     switch?: boolean;
     limit?: boolean;
+    // Reental 2FA gating for collateral supply (only markets indexed by the Reental backend)
+    twoFA?: boolean;
+    // "Show metrics" history charts on the markets page (served by the Reental indexer)
+    metrics?: boolean;
   };
   permitDisabled?: boolean; // intended to be used for testnets
+  // Reental pools run the pre-v3.1 UiPoolDataProvider, official Aave markets use the current one
+  legacyUiPoolDataProvider?: boolean;
+  // Reental ponder GraphQL endpoint (2FA time window), one deployment per network
+  reentalPonderUrl?: string;
   isFork?: boolean;
   permissionComponent?: ReactNode;
   subgraphUrl?: string;
@@ -57,6 +66,7 @@ export type MarketDataType = {
 export enum CustomMarket {
   reental_polygon_v3 = 'reental_polygon_v3',
   reental_sepolia_v3 = 'reental_sepolia_v3',
+  proto_mainnet_v3 = 'proto_mainnet_v3',
 }
 // const apiKey = process.env.NEXT_PUBLIC_SUBGRAPH_API_KEY;
 
@@ -69,6 +79,8 @@ export const marketsData: {
     chainId: ChainId.polygon,
     logo: '/icons/markets/reental.png',
     v3: true,
+    legacyUiPoolDataProvider: true,
+    reentalPonderUrl: 'https://ponder-pro.reental.eu/graphql',
     enabledFeatures: {
       liquiditySwap: false,
       incentives: true,
@@ -76,6 +88,8 @@ export const marketsData: {
       debtSwitch: false,
       withdrawAndSwitch: false,
       switch: false,
+      twoFA: true,
+      metrics: true,
     },
     // subgraphUrl: `https://gateway-arbitrum.network.thegraph.com/api/${apiKey}/subgraphs/id/Co2URyXjnxaw8WqxKyVHdirq9Ahhm5vcTs4dMedAq211`,
     addresses: {
@@ -99,8 +113,12 @@ export const marketsData: {
     v3: true,
     chainId: ChainId.sepolia,
     logo: '/icons/markets/reental.png',
+    legacyUiPoolDataProvider: true,
+    reentalPonderUrl: 'https://ponder-int.reental.eu/graphql',
     enabledFeatures: {
       faucet: true,
+      twoFA: true,
+      metrics: true,
     },
     addresses: {
       LENDING_POOL_ADDRESS_PROVIDER: AaveV3Sepolia.POOL_ADDRESSES_PROVIDER,
@@ -111,6 +129,31 @@ export const marketsData: {
       UI_POOL_DATA_PROVIDER: AaveV3Sepolia.UI_POOL_DATA_PROVIDER,
       UI_INCENTIVE_DATA_PROVIDER: AaveV3Sepolia.UI_INCENTIVE_DATA_PROVIDER,
       SHARED_LIQUIDATION_ROUTER: '0x694277431c449d58D32229D4EF827B0eA18228AD',
+    },
+  },
+  // Official Aave V3 Core market on Ethereum
+  [CustomMarket.proto_mainnet_v3]: {
+    marketTitle: 'Aave Ethereum',
+    market: CustomMarket.proto_mainnet_v3,
+    chainId: ChainId.mainnet,
+    logo: '/icons/tokens/aave.svg',
+    v3: true,
+    enabledFeatures: {
+      incentives: true,
+    },
+    addresses: {
+      LENDING_POOL_ADDRESS_PROVIDER: AaveV3Ethereum.POOL_ADDRESSES_PROVIDER,
+      LENDING_POOL: AaveV3Ethereum.POOL,
+      WETH_GATEWAY: AaveV3Ethereum.WETH_GATEWAY,
+      REPAY_WITH_COLLATERAL_ADAPTER: AaveV3Ethereum.REPAY_WITH_COLLATERAL_ADAPTER,
+      SWAP_COLLATERAL_ADAPTER: AaveV3Ethereum.SWAP_COLLATERAL_ADAPTER,
+      WALLET_BALANCE_PROVIDER: AaveV3Ethereum.WALLET_BALANCE_PROVIDER,
+      UI_POOL_DATA_PROVIDER: AaveV3Ethereum.UI_POOL_DATA_PROVIDER,
+      UI_INCENTIVE_DATA_PROVIDER: AaveV3Ethereum.UI_INCENTIVE_DATA_PROVIDER,
+      COLLECTOR: AaveV3Ethereum.COLLECTOR,
+      GHO_TOKEN_ADDRESS: AaveV3Ethereum.ASSETS.GHO.UNDERLYING,
+      WITHDRAW_SWITCH_ADAPTER: AaveV3Ethereum.WITHDRAW_SWAP_ADAPTER,
+      DEBT_SWITCH_ADAPTER: AaveV3Ethereum.DEBT_SWAP_ADAPTER,
     },
   },
 } as const;

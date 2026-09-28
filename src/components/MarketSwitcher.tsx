@@ -168,6 +168,9 @@ enum SelectedMarketVersion {
 
 // Custom market order requested by BD - TODO: move logic to the backend base on TVL
 const MARKET_ORDER_BY_TITLE: { [title: string]: number } = {
+  'Reental Polygon': -3,
+  'Reental Sepolia': -2,
+  'Aave Ethereum': -1,
   Core: 0,
   Prime: 1,
   Plasma: 2,
@@ -212,6 +215,12 @@ export const MarketSwitcher = () => {
   // Subscribe to favoriteMarkets to trigger re-renders when favorites change
   useRootStore((store) => store.favoriteMarkets);
 
+  // With a single market the switcher is locked and a tooltip explains why
+  const hasMultipleMarkets = availableMarkets.length > 1;
+  const isV2MarketsAvailable = availableMarkets.some(
+    (marketId) => !getMarketInfoById(marketId).market.v3
+  );
+
   const isV3MarketsAvailable = availableMarkets
     .map((marketId: CustomMarket) => {
       const { market } = getMarketInfoById(marketId);
@@ -250,12 +259,13 @@ export const MarketSwitcher = () => {
     reental_sepolia_v3: (
       <Trans>RWA market of real estate tokens issued by Reental over the Sepolia network</Trans>
     ),
+    proto_mainnet_v3: <Trans>Official Aave V3 Core market on the Ethereum network</Trans>,
   };
 
   return (
     <ClickAwayListener onClickAway={() => setIsUnavailableMarketsTooltipOpen(false)}>
       <Tooltip
-        open={isUnavailableMarketsTooltipOpen}
+        open={!hasMultipleMarkets && isUnavailableMarketsTooltipOpen}
         onClose={() => setIsUnavailableMarketsTooltipOpen(false)}
         disableFocusListener
         disableHoverListener
@@ -264,12 +274,12 @@ export const MarketSwitcher = () => {
         arrow
       >
         <Box
-          onClick={handleUnavailableMarketsClick}
-          role="button"
-          aria-label="show unavailable markets message"
-          aria-disabled="true"
+          onClick={hasMultipleMarkets ? undefined : handleUnavailableMarketsClick}
+          role={hasMultipleMarkets ? undefined : 'button'}
+          aria-label={hasMultipleMarkets ? undefined : 'show unavailable markets message'}
+          aria-disabled={!hasMultipleMarkets}
           sx={{
-            cursor: 'not-allowed',
+            cursor: hasMultipleMarkets ? 'pointer' : 'not-allowed',
             width: 'fit-content',
             display: 'inline-flex',
           }}
@@ -282,7 +292,7 @@ export const MarketSwitcher = () => {
             onChange={handleMarketSelect}
             sx={{
               width: 'fit-content',
-              pointerEvents: 'none',
+              pointerEvents: hasMultipleMarkets ? 'auto' : 'none',
               '& .MuiOutlinedInput-notchedOutline': {
                 border: 'none',
               },
@@ -295,7 +305,7 @@ export const MarketSwitcher = () => {
             }}
             SelectProps={{
               native: false,
-              open: false,
+              ...(hasMultipleMarkets ? {} : { open: false }),
               className: 'MarketSwitcher__select',
               IconComponent: () => null,
               renderValue: (marketId) => {
@@ -417,13 +427,11 @@ export const MarketSwitcher = () => {
             <Box>
               <Typography variant="subheader2" color="text.secondary" sx={{ px: 4, pt: 2 }}>
                 <Trans>
-                  {ENABLE_TESTNET || STAGING_ENV
-                    ? 'Select Reental Testnet Market'
-                    : 'Select Reental Market'}
+                  {ENABLE_TESTNET || STAGING_ENV ? 'Select Testnet Market' : 'Select Market'}
                 </Trans>
               </Typography>
             </Box>
-            {isV3MarketsAvailable && (
+            {isV3MarketsAvailable && isV2MarketsAvailable && (
               <Box sx={{ mx: '18px', display: 'flex', justifyContent: 'center' }}>
                 <StyledToggleButtonGroup
                   value={selectedMarketVersion}

@@ -7,7 +7,6 @@ import {
 } from '@aave/contract-helpers';
 import { Provider } from '@ethersproject/providers';
 import { MarketDataType } from 'src/ui-config/marketsConfig';
-// import { ENABLE_TESTNET } from 'src/utils/marketsAndNetworksConfig';
 
 export type UserReservesDataHumanized = {
   userReserves: UserReserveDataHumanized[];
@@ -19,7 +18,7 @@ export class UiPoolService {
 
   private async getUiPoolDataService(marketData: MarketDataType) {
     const provider = this.getProvider(marketData.chainId);
-    if (this.useLegacyUiPoolDataProvider()) {
+    if (marketData.legacyUiPoolDataProvider) {
       return new LegacyUiPoolDataProvider({
         uiPoolDataProviderAddress: marketData.addresses.UI_POOL_DATA_PROVIDER,
         provider,
@@ -32,23 +31,6 @@ export class UiPoolService {
         chainId: marketData.chainId,
       });
     }
-  }
-
-  private useLegacyUiPoolDataProvider() {
-    return true;
-    // if (
-    //   marketData.market === CustomMarket.reental_polygon_v3 ||
-    //   marketData.market === CustomMarket.reental_sepolia_v3
-    // ) {
-    //   return false;
-    // }
-
-    // if (ENABLE_TESTNET || !marketData.v3) {
-    //   // it's a v2 market, or it does not have v3.1 upgrade
-    //   return true;
-    // }
-
-    // return false;
   }
 
   async getReservesHumanized(marketData: MarketDataType): Promise<ReservesDataHumanized> {

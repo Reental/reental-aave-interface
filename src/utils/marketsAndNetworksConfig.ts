@@ -153,6 +153,8 @@ export const isFeatureEnabled = {
   debtSwitch: (data: MarketDataType) => data.enabledFeatures?.debtSwitch,
   withdrawAndSwitch: (data: MarketDataType) => data.enabledFeatures?.withdrawAndSwitch,
   switch: (data: MarketDataType) => data.enabledFeatures?.switch,
+  twoFA: (data: MarketDataType) => data.enabledFeatures?.twoFA,
+  metrics: (data: MarketDataType) => data.enabledFeatures?.metrics,
 };
 
 const providers: { [network: string]: ProviderWithSend } = {};

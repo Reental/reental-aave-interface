@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro';
-import { Button } from '@mui/material';
+import { Button, ButtonProps } from '@mui/material';
 import { ConnectKitButton } from 'connectkit';
 import { useEffect, useRef, useState } from 'react';
 import { useRootStore } from 'src/store/root';
@@ -22,9 +22,16 @@ export interface ConnectWalletProps {
   funnel?: string;
   onIsConnecting?: (isConnecting: boolean) => void;
   onClick?: () => void;
+  fullWidth?: boolean;
+  size?: ButtonProps['size'];
 }
 
-export const ConnectWalletButton: React.FC<ConnectWalletProps> = ({ funnel, onClick }) => {
+export const ConnectWalletButton: React.FC<ConnectWalletProps> = ({
+  funnel,
+  onClick,
+  fullWidth,
+  size,
+}) => {
   const [trackEvent, walletType, account] = useRootStore(
     useShallow((store) => [store.trackEvent, store.walletType, store.account])
   );
@@ -114,6 +121,8 @@ export const ConnectWalletButton: React.FC<ConnectWalletProps> = ({ funnel, onCl
             <Button
               variant={isConnected ? 'surface' : 'gradient'}
               sx={{ borderRadius: '10px' }}
+              fullWidth={fullWidth}
+              size={size}
               onClick={() => {
                 // Track initial button click
                 trackEvent(AUTH.CONNECT_WALLET, {

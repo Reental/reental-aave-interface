@@ -37,6 +37,14 @@ export const navigation: Navigation[] = [
     dataCy: 'menuMarkets',
   },
   {
+    link: ROUTES.bridge,
+    title: t({
+      id: 'Bridge',
+      message: 'Bridge',
+    }),
+    dataCy: 'menuBridge',
+  },
+  {
     link: ROUTES.terms,
     title: t({
       id: 'Terms',

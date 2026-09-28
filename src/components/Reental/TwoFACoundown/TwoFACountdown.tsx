@@ -8,7 +8,6 @@ import {
 } from '@mui/material';
 import React from 'react';
 
-import { TwoFABanner } from '../TwoFABanner/TwoFABanner';
 import styles from './TwoFACountdown.module.css';
 
 function useVisibleCountdown(expirationDate: Date, stepMs = 1000) {
@@ -99,7 +98,7 @@ export const TwoFACountdown = ({
   const progress = 100 - Math.max(0, Math.min(100, (timeLeft / totalMs) * 100));
 
   if (timeLeft <= 0) {
-    return <TwoFABanner />;
+    return null;
   }
 
   return (

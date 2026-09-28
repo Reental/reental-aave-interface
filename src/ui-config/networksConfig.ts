@@ -194,7 +194,8 @@ export const prodNetworkConfig: Record<string, BaseNetworkConfig> = {
     bridge: {
       icon: '/icons/bridge/polygon.svg',
       name: 'Polygon PoS Bridge',
-      url: 'https://wallet.polygon.technology/polygon/bridge',
+      // In-app USDC/USDT bridge between Aave (Ethereum) and Reental (Polygon)
+      url: '/bridge',
     },
     wagmiChain: polygon,
   },

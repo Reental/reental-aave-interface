@@ -93,6 +93,7 @@ msgid "Deposits"
 msgstr "Deposits"
 
 #: src/components/transactions/Bridge/BridgeModalContent.tsx
+#: src/modules/bridge/BridgeForm.tsx
 msgid "Estimated time"
 msgstr "Estimated time"
 
@@ -140,8 +141,13 @@ msgid "The most you can borrow against this collateral when opening a position."
 msgstr "The most you can borrow against this collateral when opening a position."
 
 #: src/components/transactions/Bridge/BridgeDestinationInput.tsx
+#: src/modules/bridge/BridgeForm.tsx
 msgid "To"
 msgstr "To"
+
+#: src/modules/bridge/BridgeTopPanel.tsx
+msgid "Move USDC and USDT between Ethereum and Polygon. Borrow stablecoins on the Aave market on Ethereum and bridge them to supply in the Reental market on Polygon, or bridge them back to repay your debt."
+msgstr "Move USDC and USDT between Ethereum and Polygon. Borrow stablecoins on the Aave market on Ethereum and bridge them to supply in the Reental market on Polygon, or bridge them back to repay your debt."
 
 #: src/modules/reserve-overview/Gho/GhoReserveConfiguration.tsx
 #: src/ui-config/menu-items/index.tsx
@@ -229,6 +235,10 @@ msgstr "Collateral change"
 #: src/components/infoTooltips/AvailableTooltip.tsx
 msgid "This is the total amount that you are able to supply to in this reserve. You are able to supply your wallet balance up until the supply cap is reached."
 msgstr "This is the total amount that you are able to supply to in this reserve. You are able to supply your wallet balance up until the supply cap is reached."
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Switch to {0}"
+msgstr "Switch to {0}"
 
 #: src/components/incentives/EthenaIncentivesTooltipContent.tsx
 msgid "This asset is eligible for {0} Ethena Rewards."
@@ -578,6 +588,14 @@ msgstr "This asset has almost reached its supply cap. There can only be {message
 #: src/modules/liquidations/LiquidationsSetup.tsx
 msgid "Review your liquidation setup"
 msgstr "Review your liquidation setup"
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "The amount is below the minimum that can be bridged."
+msgstr "The amount is below the minimum that can be bridged."
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Transaction rejected in your wallet."
+msgstr "Transaction rejected in your wallet."
 
 #: src/ui-config/errorMapping.tsx
 msgid "Variable debt supply is not zero"
@@ -1030,6 +1048,10 @@ msgstr "Join the community discussion"
 msgid "Borrowing power and assets are limited due to Isolation mode."
 msgstr "Borrowing power and assets are limited due to Isolation mode."
 
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Waiting for the funds to arrive on {0}..."
+msgstr "Waiting for the funds to arrive on {0}..."
+
 #: src/components/infoTooltips/BorrowCapMaxedTooltip.tsx
 msgid "Protocol borrow cap at 100% for this asset. Further borrowing unavailable."
 msgstr "Protocol borrow cap at 100% for this asset. Further borrowing unavailable."
@@ -1101,6 +1123,11 @@ msgstr "This asset is frozen due to an Aave community decision. <0>More details<
 msgid "Faucet"
 msgstr "Faucet"
 
+#. js-lingui-explicit-id
+#: src/ui-config/menu-items/index.tsx
+msgid "Bridge"
+msgstr "Bridge"
+
 #: src/components/transactions/Bridge/BridgeFeeTokenSelector.tsx
 msgid "The fee includes the gas cost to complete the transaction on the destination chain and the fee paid to Chainlink CCIP service providers. You can chose to pay in the network token or GHO. <0>Learn more</0>"
 msgstr "The fee includes the gas cost to complete the transaction on the destination chain and the fee paid to Chainlink CCIP service providers. You can chose to pay in the network token or GHO. <0>Learn more</0>"
@@ -1136,9 +1163,14 @@ msgstr "You've successfully submitted an order."
 
 #: src/components/transactions/AssetInput.tsx
 #: src/components/transactions/Switch/SwitchAssetInput.tsx
+#: src/modules/bridge/BridgeForm.tsx
 #: src/modules/liquidations/LiquidationAmountInput.tsx
 msgid "Max"
 msgstr "Max"
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Bridge transaction sent."
+msgstr "Bridge transaction sent."
 
 #: src/libs/reental/sharedRouter/useMandateActivity.ts
 #: src/modules/liquidations/matching/BackstopDiagnostics.tsx
@@ -1208,6 +1240,10 @@ msgstr "Done"
 msgid "Supply balance after switch"
 msgstr "Supply balance after switch"
 
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Approving {0}..."
+msgstr "Approving {0}..."
+
 #: src/components/infoTooltips/MigrationDisabledTooltip.tsx
 msgid "Asset cannot be migrated to {marketName} V3 Market due to E-mode restrictions. You can disable or manage E-mode categories in your <0>V3 Dashboard</0>"
 msgstr "Asset cannot be migrated to {marketName} V3 Market due to E-mode restrictions. You can disable or manage E-mode categories in your <0>V3 Dashboard</0>"
@@ -1267,6 +1303,10 @@ msgstr "Estimated compounding interest rate, that is determined by Aave Governan
 #: src/modules/analytics/PositionsList.tsx
 msgid "Showing {0}–{1} of {2}"
 msgstr "Showing {0}–{1} of {2}"
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Confirm the bridge in your wallet..."
+msgstr "Confirm the bridge in your wallet..."
 
 #: src/modules/analytics/PositionsList.tsx
 msgid "Position data could not be loaded."
@@ -1462,6 +1502,10 @@ msgstr "{tooltipText}"
 msgid "Rewards can be claimed through"
 msgstr "Rewards can be claimed through"
 
+#: src/components/MarketSwitcher.tsx
+msgid "Official Aave V3 Core market on the Ethereum network"
+msgstr "Official Aave V3 Core market on the Ethereum network"
+
 #: src/components/transactions/LiquidityMandate/LiquidityMandateModalContent.tsx
 msgid "You currently accept all collateral from one pooled budget, so this per-asset budget is stored but not spent. It takes effect again if you switch to choosing assets individually."
 msgstr "You currently accept all collateral from one pooled budget, so this per-asset budget is stored but not spent. It takes effect again if you switch to choosing assets individually."
@@ -1606,6 +1650,11 @@ msgstr "{0}"
 #: src/modules/liquidations/matching/LiquidationsExecuteModal.tsx
 msgid "Funded by {0} backstop positions"
 msgstr "Funded by {0} backstop positions"
+
+#: src/layouts/components/NavItems.tsx
+#: src/modules/bridge/BridgeTopPanel.tsx
+msgid "Bridge"
+msgstr "Bridge"
 
 #: src/modules/reserve-overview/ReserveConfiguration.tsx
 msgid "Liquidations book"
@@ -2007,6 +2056,11 @@ msgstr "Wallet Balance"
 #: src/components/transactions/StakeRewardClaimRestake/StakeRewardClaimRestakeModalContent.tsx
 msgid "Amount claimable"
 msgstr "Amount claimable"
+
+#: src/modules/bridge/BridgeForm.tsx
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Bridge {0}"
+msgstr "Bridge {0}"
 
 #: src/components/incentives/MeritIncentivesTooltipContent.tsx
 msgid "{remainingCustomMessage}"
@@ -2473,10 +2527,6 @@ msgstr "Borrow rate change"
 msgid "Terms"
 msgstr "Terms"
 
-#: src/modules/bridge/BridgeTopPanel.tsx
-msgid "Bridge history"
-msgstr "Bridge history"
-
 #: src/components/transactions/DebtSwitch/DebtSwitchModalDetails.tsx
 msgid "Borrow balance after switch"
 msgstr "Borrow balance after switch"
@@ -2742,6 +2792,10 @@ msgstr "Budgets are denominated in USD, not in tokens. Setting 0 means you do no
 msgid "Representative smart contract wallet (ie. Safe) addresses on other chains."
 msgstr "Representative smart contract wallet (ie. Safe) addresses on other chains."
 
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Watch-only mode: connect a wallet to bridge"
+msgstr "Watch-only mode: connect a wallet to bridge"
+
 #: src/modules/liquidations/useLiquidationsSetupTx.tsx
 msgid "Update your liquidation settings"
 msgstr "Update your liquidation settings"
@@ -2841,6 +2895,10 @@ msgstr "Interest rate rebalance conditions were not met"
 msgid "Add {0} to wallet to track your balance."
 msgstr "Add {0} to wallet to track your balance."
 
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Waiting for confirmation..."
+msgstr "Waiting for confirmation..."
+
 #: src/modules/analytics/PositionsList.tsx
 msgid "Borrower"
 msgstr "Borrower"
@@ -2848,6 +2906,10 @@ msgstr "Borrower"
 #: src/modules/liquidations/LiquidationsSetup.tsx
 msgid "Approve"
 msgstr "Approve"
+
+#: src/modules/bridge/BridgeTopPanel.tsx
+msgid "Transfers usually arrive in under a minute. Each bridge is quoted and executed by Uniswap and Across, and the fees are shown before you confirm."
+msgstr "Transfers usually arrive in under a minute. Each bridge is quoted and executed by Uniswap and Across, and the fees are shown before you confirm."
 
 #: src/modules/governance/GovernanceTopPanel.tsx
 msgid "Aave Governance"
@@ -2970,6 +3032,10 @@ msgstr "Your balance is lower than the selected amount."
 #: src/modules/governance/proposal/ProposalOverview.tsx
 msgid "An error has occurred fetching the proposal."
 msgstr "An error has occurred fetching the proposal."
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Back to markets"
+msgstr "Back to markets"
 
 #: src/libs/reental/sharedRouter/useMandateActivity.ts
 #: src/modules/liquidations/matching/BackstopDiagnostics.tsx
@@ -3231,6 +3297,14 @@ msgstr "Variable"
 msgid "Liquidation"
 msgstr "Liquidation"
 
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Bridging powered by Uniswap and Across."
+msgstr "Bridging powered by Uniswap and Across."
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "View transaction"
+msgstr "View transaction"
+
 #: src/modules/reserve-overview/TokenLinkDropdown.tsx
 msgid "Aave debt token"
 msgstr "Aave debt token"
@@ -3296,6 +3370,10 @@ msgstr "No liquidation router is configured for this market."
 msgid "Show assets"
 msgstr "Show assets"
 
+#: src/modules/bridge/BridgeForm.tsx
+msgid "From"
+msgstr "From"
+
 #: src/modules/governance/FormattedProposalTime.tsx
 msgid "starts"
 msgstr "starts"
@@ -3328,6 +3406,10 @@ msgstr "Registered"
 msgid "Borrowed"
 msgstr "Borrowed"
 
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Something went wrong. Please try again."
+msgstr "Something went wrong. Please try again."
+
 #: src/components/transactions/Faucet/FaucetModalContent.tsx
 msgid "Received"
 msgstr "Received"
@@ -3349,6 +3431,7 @@ msgid "There are no additional RWA markets available on RNT Lend yet."
 msgstr "There are no additional RWA markets available on RNT Lend yet."
 
 #: src/components/transactions/AssetInput.tsx
+#: src/modules/bridge/BridgeForm.tsx
 #: src/modules/dashboard/lists/BorrowedPositionsList/BorrowedPositionsList.tsx
 #: src/modules/dashboard/lists/SuppliedPositionsList/SuppliedPositionsList.tsx
 msgid "Balance"
@@ -3650,6 +3733,10 @@ msgstr "High price impact. This route may return less due to low liquidity."
 msgid "Collateral usage is limited because of Isolation mode."
 msgstr "Collateral usage is limited because of Isolation mode."
 
+#: src/modules/bridge/BridgeForm.tsx
+msgid "No bridge route is available for this amount right now."
+msgstr "No bridge route is available for this amount right now."
+
 #: src/modules/liquidations/matching/BackstopDiagnostics.tsx
 msgid "No budget covers {collateralSymbol}. The provider must fund it."
 msgstr "No budget covers {collateralSymbol}. The provider must fund it."
@@ -3818,6 +3905,10 @@ msgstr "Supply cap is exceeded"
 msgid ".JSON"
 msgstr ".JSON"
 
+#: src/modules/bridge/BridgeForm.tsx
+msgid "The bridge could not be completed. Your funds will be refunded."
+msgstr "The bridge could not be completed. Your funds will be refunded."
+
 #: src/ui-config/errorMapping.tsx
 msgid "Debt ceiling is not zero"
 msgstr "Debt ceiling is not zero"
@@ -3882,6 +3973,10 @@ msgstr "Collateral to repay with"
 #: src/modules/staking/StakingHeader.tsx
 msgid "Total emission per day"
 msgstr "Total emission per day"
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Insufficient {0} balance"
+msgstr "Insufficient {0} balance"
 
 #: src/components/transactions/MigrateV3/MigrateV3ModalContent.tsx
 msgid "Selected borrow assets"
@@ -3989,6 +4084,10 @@ msgstr "Collateral assets"
 #: src/components/transactions/Withdraw/WithdrawError.tsx
 msgid "Assets with zero LTV ({0}) must be withdrawn or disabled as collateral to perform this action"
 msgstr "Assets with zero LTV ({0}) must be withdrawn or disabled as collateral to perform this action"
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Funds delivered on {0}."
+msgstr "Funds delivered on {0}."
 
 #: src/components/transactions/GovDelegation/DelegationTypeSelector.tsx
 msgid "Both"
@@ -4640,6 +4739,10 @@ msgstr "Approve with"
 msgid "PTs"
 msgstr "PTs"
 
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Bridge fee"
+msgstr "Bridge fee"
+
 #: src/layouts/components/LanguageSwitcher.tsx
 msgid "Language"
 msgstr "Language"
@@ -4838,6 +4941,10 @@ msgstr "The recipient address cannot be empty."
 #: src/components/transactions/StakingMigrate/StakingMigrateActions.tsx
 msgid "Migrate"
 msgstr "Migrate"
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Network fee"
+msgstr "Network fee"
 
 #: src/components/transactions/CollateralChange/CollateralChangeActions.tsx
 msgid "Enable {symbol} as collateral"
