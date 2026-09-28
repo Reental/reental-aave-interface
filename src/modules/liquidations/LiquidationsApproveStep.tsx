@@ -21,12 +21,15 @@ interface LiquidationsApproveStepProps {
   allocations: { deposit: LiquidationDeposit; allocation: DepositAllocation }[];
   approvals: Record<string, ApprovalStatus>;
   onApprove: (deposit: LiquidationDeposit, allocation: DepositAllocation) => void;
+  /** Wallet on another network: approving would send the transaction to the wrong chain */
+  disabled?: boolean;
 }
 
 export const LiquidationsApproveStep = ({
   allocations,
   approvals,
   onApprove,
+  disabled = false,
 }: LiquidationsApproveStepProps) => {
   return (
     // Rendered inside the setup card, which already draws the outer border
@@ -116,7 +119,7 @@ export const LiquidationsApproveStep = ({
               ) : (
                 <Button
                   variant="contained"
-                  disabled={status === 'pending'}
+                  disabled={disabled || status === 'pending'}
                   onClick={() => onApprove(deposit, allocation)}
                   sx={{ minWidth: '130px' }}
                 >

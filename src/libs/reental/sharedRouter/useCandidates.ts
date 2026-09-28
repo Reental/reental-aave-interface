@@ -2,9 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import { ethers } from 'ethers';
 import { useRootStore } from 'src/store/root';
 import { MarketDataType } from 'src/ui-config/marketsConfig';
+import { isFeatureEnabled } from 'src/utils/marketsAndNetworksConfig';
 
 import { SHARED_LIQUIDATION_ROUTER_ABI } from './abi';
-import { ponderRequest } from './ponder/client';
+import { getLiquidationsPonderUrl, ponderRequest } from './ponder/client';
 import { FUNDERS_QUERY } from './ponder/queries';
 import { PonderCollateralOrder, PonderLp, PonderPage } from './ponder/types';
 
@@ -48,10 +49,16 @@ export const useCandidates = ({
 }) => {
   const jsonRpcProvider = useRootStore((store) => store.jsonRpcProvider);
   const router = marketData.addresses.SHARED_LIQUIDATION_ROUTER;
+  const ponderUrl = getLiquidationsPonderUrl(marketData);
 
   return useQuery({
     queryKey: ['sharedRouterCandidates', marketData.chainId, collateralAsset, debtAsset],
-    enabled: enabled && !!router && !!collateralAsset && !!debtAsset,
+    enabled:
+      enabled &&
+      !!isFeatureEnabled.liquidations(marketData) &&
+      !!router &&
+      !!collateralAsset &&
+      !!debtAsset,
     staleTime: 15_000,
     queryFn: async () => {
       const provider = jsonRpcProvider(marketData.chainId);
@@ -69,7 +76,7 @@ export const useCandidates = ({
       let shortlist: string[];
       let shortlistSource: 'indexer' | 'chain' = 'indexer';
       try {
-        const data = await ponderRequest<FundersResponse>(FUNDERS_QUERY, {
+        const data = await ponderRequest<FundersResponse>(ponderUrl, FUNDERS_QUERY, {
           asset: collateralAsset?.toLowerCase(),
           limit: 100,
         });

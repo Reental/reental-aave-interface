@@ -5,6 +5,7 @@ import { SkipReason } from './abi';
 import { ponderRequest } from './ponder/client';
 import { FILLS_QUERY, SKIPS_QUERY } from './ponder/queries';
 import { PonderFill, PonderPage, PonderSkip } from './ponder/types';
+import { useLiquidationsPonder } from './ponder/useLiquidationsPonder';
 
 /**
  * What actually happened to an LP: what it earned, and what it was passed over for.
@@ -43,14 +44,15 @@ export const skipLabel = (reason: SkipReason): string =>
 
 export const useMandateActivity = (user?: string) => {
   const me = user?.toLowerCase();
+  const ponder = useLiquidationsPonder();
 
   const fills = useQuery({
-    queryKey: ['sharedRouterFills', me],
-    enabled: !!me,
+    queryKey: ['sharedRouterFills', ponder.chainId, me],
+    enabled: ponder.enabled && !!me,
     staleTime: 30_000,
     retry: 1,
     queryFn: async () => {
-      const data = await ponderRequest<{ fills: PonderPage<PonderFill> }>(FILLS_QUERY, {
+      const data = await ponderRequest<{ fills: PonderPage<PonderFill> }>(ponder.url, FILLS_QUERY, {
         me,
         limit: LIMIT,
       });
@@ -59,12 +61,12 @@ export const useMandateActivity = (user?: string) => {
   });
 
   const skips = useQuery({
-    queryKey: ['sharedRouterSkips', me],
-    enabled: !!me,
+    queryKey: ['sharedRouterSkips', ponder.chainId, me],
+    enabled: ponder.enabled && !!me,
     staleTime: 30_000,
     retry: 1,
     queryFn: async () => {
-      const data = await ponderRequest<{ skips: PonderPage<PonderSkip> }>(SKIPS_QUERY, {
+      const data = await ponderRequest<{ skips: PonderPage<PonderSkip> }>(ponder.url, SKIPS_QUERY, {
         me,
         limit: LIMIT,
       });

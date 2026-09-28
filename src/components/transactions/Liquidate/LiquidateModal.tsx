@@ -4,6 +4,7 @@ import React from 'react';
 import { ModalContextType, ModalType, useModalContext } from 'src/hooks/useModal';
 
 import { BasicModal } from '../../primitives/BasicModal';
+import { MarketNetworkWarning } from '../Warnings/MarketNetworkWarning';
 import { LiquidateModalContent } from './LiquidateModalContent';
 
 export const LiquidateModal = () => {
@@ -14,6 +15,7 @@ export const LiquidateModal = () => {
       <Typography variant="h2" sx={{ mb: 6 }}>
         <Trans>Liquidate position</Trans>
       </Typography>
+      <MarketNetworkWarning funnel="Liquidate modal" />
       {args.borrower && <LiquidateModalContent borrower={args.borrower} />}
     </BasicModal>
   );

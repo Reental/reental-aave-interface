@@ -7,11 +7,14 @@ import { TopInfoPanel } from 'src/components/TopInfoPanel/TopInfoPanel';
 import { MainLayout } from 'src/layouts/MainLayout';
 import { useWeb3Context } from 'src/libs/hooks/useWeb3Context';
 import { LiquidationsContentWrapper } from 'src/modules/liquidations/LiquidationsContentWrapper';
+import { LiquidationsUnavailable } from 'src/modules/liquidations/LiquidationsUnavailable';
 import { useRootStore } from 'src/store/root';
+import { isFeatureEnabled } from 'src/utils/marketsAndNetworksConfig';
 
 export default function Liquidations() {
   const { currentAccount } = useWeb3Context();
   const trackEvent = useRootStore((store) => store.trackEvent);
+  const currentMarketData = useRootStore((store) => store.currentMarketData);
 
   useEffect(() => {
     trackEvent('Page Viewed', {
@@ -38,7 +41,13 @@ export default function Liquidations() {
       </TopInfoPanel>
 
       <ContentContainer>
-        {currentAccount ? <LiquidationsContentWrapper /> : <ConnectWalletPaper />}
+        {!isFeatureEnabled.liquidations(currentMarketData) ? (
+          <LiquidationsUnavailable />
+        ) : currentAccount ? (
+          <LiquidationsContentWrapper />
+        ) : (
+          <ConnectWalletPaper />
+        )}
       </ContentContainer>
     </>
   );

@@ -9,14 +9,17 @@ import { TopInfoPanel } from 'src/components/TopInfoPanel/TopInfoPanel';
 import { MainLayout } from 'src/layouts/MainLayout';
 import { useWeb3Context } from 'src/libs/hooks/useWeb3Context';
 import { LiquidationsSetup } from 'src/modules/liquidations/LiquidationsSetup';
+import { LiquidationsUnavailable } from 'src/modules/liquidations/LiquidationsUnavailable';
 import { useLiquidationsPosition } from 'src/modules/liquidations/useLiquidationsPosition';
 import { useRootStore } from 'src/store/root';
+import { isFeatureEnabled } from 'src/utils/marketsAndNetworksConfig';
 
 export default function LiquidationsSetupPage() {
   const router = useRouter();
   const { currentAccount } = useWeb3Context();
   const { position } = useLiquidationsPosition();
   const trackEvent = useRootStore((store) => store.trackEvent);
+  const currentMarketData = useRootStore((store) => store.currentMarketData);
 
   useEffect(() => {
     trackEvent('Page Viewed', {
@@ -42,7 +45,9 @@ export default function LiquidationsSetupPage() {
       </TopInfoPanel>
 
       <ContentContainer>
-        {currentAccount ? (
+        {!isFeatureEnabled.liquidations(currentMarketData) ? (
+          <LiquidationsUnavailable />
+        ) : currentAccount ? (
           <LiquidationsSetup
             initialConfig={position?.config}
             // The configuration now lives on-chain, so there is nothing to persist here —

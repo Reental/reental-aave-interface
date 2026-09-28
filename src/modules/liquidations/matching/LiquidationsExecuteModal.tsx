@@ -4,7 +4,10 @@ import { BasicModal } from 'src/components/primitives/BasicModal';
 import { FormattedNumber } from 'src/components/primitives/FormattedNumber';
 import { Row } from 'src/components/primitives/Row';
 import { TokenIcon } from 'src/components/primitives/TokenIcon';
+import { MarketNetworkWarning } from 'src/components/transactions/Warnings/MarketNetworkWarning';
 import { ComputedReserveData } from 'src/hooks/app-data-provider/useAppDataProvider';
+import { useWeb3Context } from 'src/libs/hooks/useWeb3Context';
+import { useRootStore } from 'src/store/root';
 
 import type { BookRow } from './LiquidationsMatchingBook';
 
@@ -25,6 +28,9 @@ export const LiquidationsExecuteModal = ({
   collateralReserve,
   onConfirm,
 }: LiquidationsExecuteModalProps) => {
+  const { chainId: connectedChainId } = useWeb3Context();
+  const marketChainId = useRootStore((store) => store.currentMarketData.chainId);
+  const isWrongNetwork = connectedChainId !== marketChainId;
   const liquidationBonus = Number(collateralReserve.formattedReserveLiquidationBonus) || 0;
   const collateralPrice = Number(collateralReserve.priceInUSD) || 1;
   const debtPrice = Number(debtReserve.priceInUSD) || 1;
@@ -161,7 +167,14 @@ export const LiquidationsExecuteModal = ({
         />
       </Row>
 
-      <Button variant="contained" size="large" fullWidth onClick={onConfirm}>
+      {open && <MarketNetworkWarning funnel="Execute liquidations" sx={{ mb: 3 }} />}
+      <Button
+        variant="contained"
+        size="large"
+        fullWidth
+        onClick={onConfirm}
+        disabled={isWrongNetwork}
+      >
         <Trans>Execute</Trans>
       </Button>
       <Typography

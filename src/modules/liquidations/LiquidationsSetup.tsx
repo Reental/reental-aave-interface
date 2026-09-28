@@ -19,6 +19,7 @@ import { FormattedNumber } from 'src/components/primitives/FormattedNumber';
 import { Row } from 'src/components/primitives/Row';
 import { TokenIcon } from 'src/components/primitives/TokenIcon';
 import { Warning } from 'src/components/primitives/Warning';
+import { MarketNetworkWarning } from 'src/components/transactions/Warnings/MarketNetworkWarning';
 import { useWeb3Context } from 'src/libs/hooks/useWeb3Context';
 import { useRootStore } from 'src/store/root';
 
@@ -263,6 +264,7 @@ export const LiquidationsSetup = ({
 
   return (
     <Box>
+      <MarketNetworkWarning funnel="Liquidations setup" sx={{ mb: 4 }} />
       <Paper sx={{ border: 1, borderColor: 'divider' }}>
         <Box
           sx={{
@@ -403,6 +405,7 @@ export const LiquidationsSetup = ({
             allocations={enabledAllocations}
             approvals={approvals}
             onApprove={approveDeposit}
+            disabled={isWrongNetwork}
           />
         )}
 
@@ -556,12 +559,6 @@ export const LiquidationsSetup = ({
             {error && (
               <Warning severity="error" sx={{ mt: 3, mb: 0 }}>
                 {error}
-              </Warning>
-            )}
-
-            {isWrongNetwork && (
-              <Warning severity="warning" sx={{ mt: 3, mb: 0 }}>
-                <Trans>Switch to {currentMarketData.marketTitle} to continue.</Trans>
               </Warning>
             )}
           </Box>

@@ -11,6 +11,7 @@ import {
   PonderRouterConfig,
   PonderTokenApproval,
 } from './ponder/types';
+import { useLiquidationsPonder } from './ponder/useLiquidationsPonder';
 
 /**
  * The indexed view of a wallet's mandate.
@@ -42,15 +43,16 @@ export type PonderMandate = {
   approvals: PonderTokenApproval[];
 };
 
-export const usePonderMandate = (user?: string) =>
-  useQuery({
-    queryKey: ['sharedRouterPonderMandate', user?.toLowerCase()],
-    enabled: !!user,
+export const usePonderMandate = (user?: string) => {
+  const ponder = useLiquidationsPonder();
+  return useQuery({
+    queryKey: ['sharedRouterPonderMandate', ponder.chainId, user?.toLowerCase()],
+    enabled: ponder.enabled && !!user,
     staleTime: 15_000,
     // An unreachable indexer is a state to render, not a failure to retry into the ground.
     retry: 1,
     queryFn: async (): Promise<PonderMandate> => {
-      const data = await ponderRequest<MandateResponse>(MANDATE_QUERY, {
+      const data = await ponderRequest<MandateResponse>(ponder.url, MANDATE_QUERY, {
         me: user?.toLowerCase(),
       });
 
@@ -64,6 +66,7 @@ export const usePonderMandate = (user?: string) =>
       };
     },
   });
+};
 
 /**
  * Indexer reachability and how far it has synced.
@@ -71,9 +74,11 @@ export const usePonderMandate = (user?: string) =>
  * Kept separate from the data queries so "indexer offline" can be shown as its own state
  * rather than being mistaken for "no data yet" — on a fresh router both look identical.
  */
-export const useIndexerStatus = () =>
-  useQuery({
-    queryKey: ['sharedRouterIndexerStatus'],
+export const useIndexerStatus = () => {
+  const ponder = useLiquidationsPonder();
+  return useQuery({
+    queryKey: ['sharedRouterIndexerStatus', ponder.chainId],
+    enabled: ponder.enabled,
     staleTime: 10_000,
     refetchInterval: 30_000,
     retry: 1,
@@ -81,7 +86,7 @@ export const useIndexerStatus = () =>
       try {
         const data = await ponderRequest<{
           _meta: { status: Record<string, { id: number; block: { number: number } }> };
-        }>(META_QUERY);
+        }>(ponder.url, META_QUERY);
 
         const chain = Object.values(data._meta.status ?? {})[0];
         return {
@@ -97,3 +102,4 @@ export const useIndexerStatus = () =>
       }
     },
   });
+};

@@ -5133,3 +5133,11 @@ msgstr "Las transferencias suelen llegar en menos de un minuto. Cada bridge lo c
 #: src/modules/bridge/BridgeForm.tsx
 msgid "Back to markets"
 msgstr "Volver a mercados"
+
+#: src/modules/liquidations/LiquidationsUnavailable.tsx
+msgid "Liquidations are not available on {marketTitle}"
+msgstr "Las liquidaciones no están disponibles en {marketTitle}"
+
+#: src/modules/liquidations/LiquidationsUnavailable.tsx
+msgid "Select a Reental market to back liquidations with your deposits."
+msgstr "Selecciona un mercado de Reental para respaldar liquidaciones con tus depósitos."

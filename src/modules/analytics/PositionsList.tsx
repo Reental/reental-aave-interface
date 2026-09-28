@@ -14,6 +14,7 @@ import { TextWithTooltip } from 'src/components/TextWithTooltip';
 import { useModalContext } from 'src/hooks/useModal';
 import { useWeb3Context } from 'src/libs/hooks/useWeb3Context';
 import { useRootStore } from 'src/store/root';
+import { isFeatureEnabled } from 'src/utils/marketsAndNetworksConfig';
 
 import { DashboardContentNoData } from '../dashboard/DashboardContentNoData';
 import { ListLoader } from '../dashboard/lists/ListLoader';
@@ -55,6 +56,7 @@ const head = [
 
 const PositionRow = ({ position }: { position: ProtocolPosition }) => {
   const currentNetworkConfig = useRootStore((store) => store.currentNetworkConfig);
+  const currentMarketData = useRootStore((store) => store.currentMarketData);
   const { currentAccount } = useWeb3Context();
   const { openLiquidate } = useModalContext();
 
@@ -106,7 +108,7 @@ const PositionRow = ({ position }: { position: ProtocolPosition }) => {
             <Trans>No collateral</Trans>
           </Typography>
         )}
-        {actionable && (
+        {actionable && isFeatureEnabled.liquidations(currentMarketData) && (
           <Button
             variant="contained"
             size="small"

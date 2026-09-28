@@ -28,12 +28,16 @@ export type MarketDataType = {
     twoFA?: boolean;
     // "Show metrics" history charts on the markets page (served by the Reental indexer)
     metrics?: boolean;
+    // Shared liquidation router: needs addresses.SHARED_LIQUIDATION_ROUTER and liquidationsPonderUrl
+    liquidations?: boolean;
   };
   permitDisabled?: boolean; // intended to be used for testnets
   // Reental pools run the pre-v3.1 UiPoolDataProvider, official Aave markets use the current one
   legacyUiPoolDataProvider?: boolean;
   // Reental ponder GraphQL endpoint (2FA time window), one deployment per network
   reentalPonderUrl?: string;
+  // Liquidation-router ponder GraphQL endpoint, one deployment per network
+  liquidationsPonderUrl?: string;
   isFork?: boolean;
   permissionComponent?: ReactNode;
   subgraphUrl?: string;
@@ -90,6 +94,7 @@ export const marketsData: {
       switch: false,
       twoFA: true,
       metrics: true,
+      liquidations: true,
     },
     // subgraphUrl: `https://gateway-arbitrum.network.thegraph.com/api/${apiKey}/subgraphs/id/Co2URyXjnxaw8WqxKyVHdirq9Ahhm5vcTs4dMedAq211`,
     addresses: {
@@ -119,6 +124,7 @@ export const marketsData: {
       faucet: true,
       twoFA: true,
       metrics: true,
+      liquidations: true,
     },
     addresses: {
       LENDING_POOL_ADDRESS_PROVIDER: AaveV3Sepolia.POOL_ADDRESSES_PROVIDER,

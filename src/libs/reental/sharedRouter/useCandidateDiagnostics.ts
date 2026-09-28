@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ethers } from 'ethers';
 import { useRootStore } from 'src/store/root';
 import { MarketDataType } from 'src/ui-config/marketsConfig';
+import { isFeatureEnabled } from 'src/utils/marketsAndNetworksConfig';
 
 import {
   ATOKEN_ABI,
@@ -9,7 +10,7 @@ import {
   SHARED_LIQUIDATION_ROUTER_ABI,
   SkipReason,
 } from './abi';
-import { ponderRequest } from './ponder/client';
+import { getLiquidationsPonderUrl, ponderRequest } from './ponder/client';
 import { PonderLp, PonderPage } from './ponder/types';
 
 /**
@@ -71,10 +72,16 @@ export const useCandidateDiagnostics = ({
 }) => {
   const jsonRpcProvider = useRootStore((store) => store.jsonRpcProvider);
   const router = marketData.addresses.SHARED_LIQUIDATION_ROUTER;
+  const ponderUrl = getLiquidationsPonderUrl(marketData);
 
   return useQuery({
     queryKey: ['sharedRouterDiagnostics', marketData.chainId, collateralAsset, debtAsset],
-    enabled: enabled && !!router && !!collateralAsset && !!debtAsset,
+    enabled:
+      enabled &&
+      !!isFeatureEnabled.liquidations(marketData) &&
+      !!router &&
+      !!collateralAsset &&
+      !!debtAsset,
     staleTime: 15_000,
     queryFn: async (): Promise<CandidateDiagnostic[]> => {
       const provider = jsonRpcProvider(marketData.chainId);
@@ -88,7 +95,7 @@ export const useCandidateDiagnostics = ({
       // own list is the fallback when it is unreachable.
       let addresses: string[];
       try {
-        const data = await ponderRequest<{ lps: PonderPage<PonderLp> }>(LPS_QUERY, {
+        const data = await ponderRequest<{ lps: PonderPage<PonderLp> }>(ponderUrl, LPS_QUERY, {
           limit: MAX_DIAGNOSED,
         });
         addresses = data.lps.items.map((lp) => lp.address);

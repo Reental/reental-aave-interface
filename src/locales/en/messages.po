@@ -1781,10 +1781,6 @@ msgstr "Isolated"
 msgid "What collateral will you take?"
 msgstr "What collateral will you take?"
 
-#: src/modules/liquidations/LiquidationsSetup.tsx
-msgid "Switch to {0} to continue."
-msgstr "Switch to {0} to continue."
-
 #: src/layouts/AppFooter.tsx
 msgid "Guide"
 msgstr "Guide"
@@ -2624,6 +2620,10 @@ msgstr "You'll need to wait {0} before you can unstake your tokens. This cooldow
 msgid "No rewards to claim"
 msgstr "No rewards to claim"
 
+#: src/modules/liquidations/LiquidationsUnavailable.tsx
+msgid "Select a Reental market to back liquidations with your deposits."
+msgstr "Select a Reental market to back liquidations with your deposits."
+
 #: src/modules/liquidations/LiquidationsPositionOverview.tsx
 msgid "Total backing liquidations"
 msgstr "Total backing liquidations"
@@ -3034,6 +3034,7 @@ msgid "An error has occurred fetching the proposal."
 msgstr "An error has occurred fetching the proposal."
 
 #: src/modules/bridge/BridgeForm.tsx
+#: src/modules/liquidations/LiquidationsUnavailable.tsx
 msgid "Back to markets"
 msgstr "Back to markets"
 
@@ -4354,6 +4355,10 @@ msgstr "Disabling keeps your registration, allowance and budgets intact but take
 #: src/components/transactions/Switch/SwitchTxSuccessView.tsx
 msgid "You've successfully swapped tokens."
 msgstr "You've successfully swapped tokens."
+
+#: src/modules/liquidations/LiquidationsUnavailable.tsx
+msgid "Liquidations are not available on {marketTitle}"
+msgstr "Liquidations are not available on {marketTitle}"
 
 #: src/components/ConnectWalletPaper.tsx
 #: src/components/ConnectWalletPaperStaking.tsx

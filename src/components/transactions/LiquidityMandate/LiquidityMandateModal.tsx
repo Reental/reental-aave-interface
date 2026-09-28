@@ -4,6 +4,7 @@ import React from 'react';
 import { MandateStep, ModalContextType, ModalType, useModalContext } from 'src/hooks/useModal';
 
 import { BasicModal } from '../../primitives/BasicModal';
+import { MarketNetworkWarning } from '../Warnings/MarketNetworkWarning';
 import { LiquidityMandateModalContent } from './LiquidityMandateModalContent';
 
 const TITLES: Record<MandateStep, React.ReactElement> = {
@@ -31,6 +32,7 @@ export const LiquidityMandateModal = () => {
       <Typography variant="h2" sx={{ mb: 6 }}>
         {args.revoke && step === 'arm' ? <Trans>Revoke allowance</Trans> : TITLES[step]}
       </Typography>
+      <MarketNetworkWarning funnel="Liquidity mandate modal" />
       <LiquidityMandateModalContent step={step} asset={args.mandateAsset} revoke={args.revoke} />
     </BasicModal>
   );

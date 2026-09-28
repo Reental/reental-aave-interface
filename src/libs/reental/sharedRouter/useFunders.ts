@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ponderRequest } from './ponder/client';
 import { FUNDERS_QUERY } from './ponder/queries';
 import { PonderCollateralOrder, PonderLp, PonderPage } from './ponder/types';
+import { useLiquidationsPonder } from './ponder/useLiquidationsPonder';
 
 /**
  * Which LPs could fund a liquidation of one collateral asset.
@@ -38,14 +39,15 @@ export const useFunders = ({
   collateralAsset?: string;
   limit?: number;
   enabled?: boolean;
-}) =>
-  useQuery({
-    queryKey: ['sharedRouterFunders', collateralAsset?.toLowerCase(), limit],
-    enabled: enabled && !!collateralAsset,
+}) => {
+  const ponder = useLiquidationsPonder();
+  return useQuery({
+    queryKey: ['sharedRouterFunders', ponder.chainId, collateralAsset?.toLowerCase(), limit],
+    enabled: ponder.enabled && enabled && !!collateralAsset,
     staleTime: 15_000,
     retry: 1,
     queryFn: async (): Promise<Funder[]> => {
-      const data = await ponderRequest<FundersResponse>(FUNDERS_QUERY, {
+      const data = await ponderRequest<FundersResponse>(ponder.url, FUNDERS_QUERY, {
         asset: collateralAsset?.toLowerCase(),
         limit,
       });
@@ -73,3 +75,4 @@ export const useFunders = ({
       );
     },
   });
+};

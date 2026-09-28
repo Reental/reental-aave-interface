@@ -1,14 +1,21 @@
 /**
  * Minimal GraphQL client for the liquidation-router Ponder indexer.
  *
- * Deliberately not the shared `gql/client.ts`: that one is pinned to the 2FA indexer and
+ * Deliberately not the shared `gql/client.ts`: that one talks to the 2FA indexer and
  * swallows failures into a console log. Here the difference between "the indexer is down"
  * and "the indexer is up and there is nothing yet" has to survive all the way to the UI —
  * zero LPs is the expected state on a fresh deployment, and rendering that as an error
  * would be wrong.
  */
 
-export const PONDER_URL = process.env.NEXT_PUBLIC_PONDER_LIQUIDATIONS_URL;
+import { MarketDataType } from 'src/ui-config/marketsConfig';
+
+// Local development override (e.g. a ponder on localhost:42069); it applies to every market with
+// liquidations enabled. Deployed builds leave it unset and use each market's own indexer.
+const LOCAL_PONDER_URL_OVERRIDE = process.env.NEXT_PUBLIC_PONDER_LIQUIDATIONS_URL;
+
+export const getLiquidationsPonderUrl = (marketData: MarketDataType) =>
+  LOCAL_PONDER_URL_OVERRIDE || marketData.liquidationsPonderUrl;
 
 /** Thrown when the indexer could not be reached or answered with errors. */
 export class PonderUnavailableError extends Error {
@@ -24,16 +31,17 @@ export class PonderUnavailableError extends Error {
 }
 
 export const ponderRequest = async <T>(
+  url: string | undefined,
   query: string,
   variables: Record<string, unknown> = {}
 ): Promise<T> => {
-  if (!PONDER_URL) {
-    throw new PonderUnavailableError('NEXT_PUBLIC_PONDER_LIQUIDATIONS_URL is not set');
+  if (!url) {
+    throw new PonderUnavailableError('no liquidations indexer configured for this market');
   }
 
   let response: Response;
   try {
-    response = await fetch(PONDER_URL, {
+    response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query, variables }),

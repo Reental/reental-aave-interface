@@ -155,6 +155,8 @@ export const isFeatureEnabled = {
   switch: (data: MarketDataType) => data.enabledFeatures?.switch,
   twoFA: (data: MarketDataType) => data.enabledFeatures?.twoFA,
   metrics: (data: MarketDataType) => data.enabledFeatures?.metrics,
+  liquidations: (data: MarketDataType) =>
+    !!data.enabledFeatures?.liquidations && !!data.addresses.SHARED_LIQUIDATION_ROUTER,
 };
 
 const providers: { [network: string]: ProviderWithSend } = {};
