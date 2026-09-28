@@ -272,28 +272,30 @@ export const BridgeForm = () => {
 
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
         <Box sx={{ border: 1, borderColor: 'divider', borderRadius: '6px', px: 3, py: 2 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-            <Typography variant="description" color="text.secondary">
-              <Trans>From</Trans>
-            </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box sx={{ flex: 1, minWidth: 0 }}>
+              <Typography
+                variant="description"
+                color="text.secondary"
+                sx={{ display: 'block', mb: 1 }}
+              >
+                <Trans>From</Trans>
+              </Typography>
+              <InputBase
+                sx={{ width: '100%', fontSize: '21px' }}
+                placeholder="0.00"
+                value={amount}
+                disabled={isBusy}
+                onChange={(e) => {
+                  if (step === 'submitted') resetResult();
+                  setAmount(e.target.value);
+                }}
+                inputProps={{ 'aria-label': 'amount input' }}
+                // eslint-disable-next-line
+                inputComponent={NumberFormatCustom as any}
+              />
+            </Box>
             <NetworkLabel chainId={fromChainId} />
-          </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <InputBase
-              sx={{ flex: 1, fontSize: '21px' }}
-              placeholder="0.00"
-              value={amount}
-              disabled={isBusy}
-              onChange={(e) => {
-                if (step === 'submitted') resetResult();
-                setAmount(e.target.value);
-              }}
-              inputProps={{ 'aria-label': 'amount input' }}
-              // eslint-disable-next-line
-              inputComponent={NumberFormatCustom as any}
-            />
-            <TokenIcon symbol={tokenIn.symbol} sx={{ fontSize: '24px', mr: 1.5 }} />
-            <Typography variant="main16">{tokenIn.symbol}</Typography>
           </Box>
           {currentAccount && (
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', mt: 1 }}>
@@ -347,26 +349,28 @@ export const BridgeForm = () => {
         </Box>
 
         <Box sx={{ border: 1, borderColor: 'divider', borderRadius: '6px', px: 3, py: 2 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-            <Typography variant="description" color="text.secondary">
-              <Trans>To</Trans>
-            </Typography>
-            <NetworkLabel chainId={toChainId} />
-          </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', minHeight: '28px' }}>
-            <Box sx={{ flex: 1 }}>
-              {quoteQuery.isFetching && !quote ? (
-                <CircularProgress color="inherit" size="16px" />
-              ) : (
-                <FormattedNumber
-                  value={Number(amount) && receiveAmount ? receiveAmount : 0}
-                  variant="main21"
-                  visibleDecimals={2}
-                />
-              )}
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box sx={{ flex: 1, minWidth: 0 }}>
+              <Typography
+                variant="description"
+                color="text.secondary"
+                sx={{ display: 'block', mb: 1 }}
+              >
+                <Trans>To</Trans>
+              </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', minHeight: '28px' }}>
+                {quoteQuery.isFetching && !quote ? (
+                  <CircularProgress color="inherit" size="16px" />
+                ) : (
+                  <FormattedNumber
+                    value={Number(amount) && receiveAmount ? receiveAmount : 0}
+                    variant="main21"
+                    visibleDecimals={2}
+                  />
+                )}
+              </Box>
             </Box>
-            <TokenIcon symbol={tokenOut.symbol} sx={{ fontSize: '24px', mr: 1.5 }} />
-            <Typography variant="main16">{tokenOut.symbol}</Typography>
+            <NetworkLabel chainId={toChainId} />
           </Box>
         </Box>
       </Box>

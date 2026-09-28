@@ -12,47 +12,21 @@ import MarketAssetsList from 'src/modules/markets/MarketAssetsList';
 import { useRootStore } from 'src/store/root';
 import { fetchIconSymbolAndName } from 'src/ui-config/reservePatches';
 import { matchesSearchTerm } from 'src/utils/assetSearch';
-import { GHO_MINTING_MARKETS, GHO_SYMBOL } from 'src/utils/ghoUtilities';
 import { useShallow } from 'zustand/shallow';
 
 import { GENERAL } from '../../utils/events';
 import { isAssetHidden } from '../dashboard/lists/constants';
-import { SavingsGhoBanner } from './Gho/GhoBanner';
-
-function shouldDisplayGhoBanner(marketTitle: string, searchTerm: string): boolean {
-  // GHO banner is only displayed on markets where new GHO is mintable (i.e. Ethereum)
-  // If GHO is listed as a reserve, then it will be displayed in the normal market asset list
-  if (!GHO_MINTING_MARKETS.includes(marketTitle)) {
-    return false;
-  }
-
-  if (!searchTerm) {
-    return true;
-  }
-
-  const normalizedSearchTerm = searchTerm.toLowerCase().trim();
-  return (
-    normalizedSearchTerm.length <= 3 && GHO_SYMBOL.toLowerCase().includes(normalizedSearchTerm)
-  );
-}
 
 export const MarketAssetsListContainer = () => {
   const { reserves, loading } = useAppDataContext();
-  const [trackEvent, currentMarket, currentMarketData, currentNetworkConfig] = useRootStore(
-    useShallow((store) => [
-      store.trackEvent,
-      store.currentMarket,
-      store.currentMarketData,
-      store.currentNetworkConfig,
-    ])
+  const [trackEvent, currentMarketData, currentNetworkConfig] = useRootStore(
+    useShallow((store) => [store.trackEvent, store.currentMarketData, store.currentNetworkConfig])
   );
   const [searchTerm, setSearchTerm] = useState('');
 
   const { breakpoints } = useTheme();
 
   const sm = useMediaQuery(breakpoints.down('sm'));
-
-  const displayGhoBanner = shouldDisplayGhoBanner(currentMarket, searchTerm);
 
   const filteredData = reserves
     // Filter out any non-active reserves
@@ -97,12 +71,6 @@ export const MarketAssetsListContainer = () => {
         placeholder={sm ? t`Search asset` : t`Search asset name, symbol, or address`}
         wrapperSx={{ pt: 2 }}
       />
-      {displayGhoBanner && (
-        <Box mb={4}>
-          <SavingsGhoBanner />
-        </Box>
-      )}
-
       {/* Unfrozen assets list */}
       <MarketAssetsList reserves={unfrozenReserves} loading={loading} />
 
@@ -147,7 +115,7 @@ export const MarketAssetsListContainer = () => {
       )}
 
       {/* Show no search results message if nothing hits in either list */}
-      {!loading && filteredData.length === 0 && !displayGhoBanner && (
+      {!loading && filteredData.length === 0 && (
         <NoSearchResults
           searchTerm={searchTerm}
           subtitle={
