@@ -143,7 +143,9 @@ export const useMandate = ({
           ]);
 
           return {
-            asset,
+            // The router returns checksummed addresses; everything it is joined against
+            // (reserves, deposits) is lowercase, so a strict comparison would never match.
+            asset: asset.toLowerCase(),
             aToken,
             maxDebt: maxDebt.toString(),
             allowance: allowance.toString(),
@@ -167,7 +169,7 @@ export const useMandate = ({
               const effectiveUsd = effective.budgetUsd.toString();
 
               return {
-                asset,
+                asset: asset.toLowerCase(),
                 budget: budget.toString(),
                 remaining: remaining.toString(),
                 effective: effectiveUsd,
