@@ -10,12 +10,9 @@
 
 import { MarketDataType } from 'src/ui-config/marketsConfig';
 
-// Local development override (e.g. a ponder on localhost:42069); it applies to every market with
-// liquidations enabled. Deployed builds leave it unset and use each market's own indexer.
-const LOCAL_PONDER_URL_OVERRIDE = process.env.NEXT_PUBLIC_PONDER_LIQUIDATIONS_URL;
-
+/** Each market with liquidations points at its own liquidation-router indexer. */
 export const getLiquidationsPonderUrl = (marketData: MarketDataType) =>
-  LOCAL_PONDER_URL_OVERRIDE || marketData.liquidationsPonderUrl;
+  marketData.liquidationsPonderUrl;
 
 /** Thrown when the indexer could not be reached or answered with errors. */
 export class PonderUnavailableError extends Error {

@@ -85,6 +85,7 @@ export const marketsData: {
     v3: true,
     legacyUiPoolDataProvider: true,
     reentalPonderUrl: 'https://ponder-pro.reental.eu/graphql',
+    liquidationsPonderUrl: 'https://liquidation-router-ponder-pro.reental.eu/graphql',
     enabledFeatures: {
       liquiditySwap: false,
       incentives: true,
@@ -120,6 +121,7 @@ export const marketsData: {
     logo: '/icons/markets/reental.png',
     legacyUiPoolDataProvider: true,
     reentalPonderUrl: 'https://ponder-int.reental.eu/graphql',
+    liquidationsPonderUrl: 'https://liquidation-router-ponder-int.reental.eu/graphql',
     enabledFeatures: {
       faucet: true,
       twoFA: true,
