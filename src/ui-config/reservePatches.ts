@@ -195,6 +195,66 @@ export function fetchIconSymbolAndName({
       name: 'Wrapped XLP',
       iconSymbol: 'wxlp',
     },
+    '0x1f84a51296691320478c98b8d77f2bbd17d34350': {
+      symbol: 'PT USDe February 5th 2026',
+      name: 'PT USDe February 2026',
+      iconSymbol: 'ptusde',
+    },
+    '0xe8483517077afa11a9b07f849cee2552f040d7b2': {
+      symbol: 'PT sUSDe February 5th 2026',
+      name: 'PT sUSDe February 2026',
+      iconSymbol: 'ptsusde',
+    },
+    '0xaebf0bb9f57e89260d57f31af34eb58657d96ce0': {
+      symbol: 'PT USDe May 7th 2026',
+      name: 'PT USDe May 2026',
+      iconSymbol: 'ptusde',
+    },
+    '0x3de0ff76e8b528c092d47b9dac775931cef80f49': {
+      symbol: 'PT sUSDe May 7th 2026',
+      name: 'PT sUSDe May 2026',
+      iconSymbol: 'ptsusde',
+    },
+    '0x9bf45ab47747f4b4dd09b3c2c73953484b4eb375': {
+      symbol: 'PT srUSDe 2nd 2026',
+      name: 'PT Strata Senior USDe 2nd 2026',
+      iconSymbol: 'srusde',
+    },
+    '0xfafddbb3fc7688494971a79cc65dca3ef82079e7': {
+      symbol: 'USDm',
+      name: 'MegaUSD',
+      iconSymbol: 'megausd',
+    },
+    '0x23b17d3944742ace3d0c71586fcb320d1e4a1ed2': {
+      symbol: 'PT USDe June 18th 2026',
+      name: 'PT USDe June 2026',
+      iconSymbol: 'ptusde',
+    },
+    '0x30559e3d35e33ab69399a3fe9f383d32bd3c016e': {
+      symbol: 'PT sUSDe June 18th 2026',
+      name: 'PT sUSDe June 2026',
+      iconSymbol: 'ptsusde',
+    },
+    '0x619d75e3b790ebc21c289f2805bb7177a7d732e2': {
+      symbol: 'PT Strata Senior USDe June 25th 2026',
+      name: 'PT Strata Senior USDe June 2026',
+      iconSymbol: 'ptsrusde',
+    },
+    '0x9db38d74a0d29380899ad354121dfb521adb0548': {
+      symbol: 'PT USDG 28MAY2026',
+      name: 'PT USDG May 2026',
+      iconSymbol: 'ptusdg',
+    },
+    '0x59bc9fae5d62b19d4f8d07d758047acb9ee19d34': {
+      symbol: 'PT Strata Senior USDe October 22nd 2026',
+      name: 'PT Strata Senior USDe October 2026',
+      iconSymbol: 'ptsrusde',
+    },
+    '0xf7fb83435f455bd970f2d9f943f4eece1941b3e9': {
+      symbol: 'PT sUSDe October 22nd 2026',
+      name: 'PT sUSDe October 2026',
+      iconSymbol: 'ptsusde',
+    },
 
     '0xa693B19d2931d498c5B318dF961919BB4aee87a5': { iconSymbol: 'UST', name: 'UST (Wormhole)' },
     '0x59a19d8c652fa0284f44113d0ff9aba70bd46fb4': { iconSymbol: 'BPT_BAL_WETH' },
@@ -213,6 +273,11 @@ export function fetchIconSymbolAndName({
     '0x004375dff511095cc5a197a54140a24efef3a416': { iconSymbol: 'UNI_BTC_USDC' },
     '0xbb2b8038a1640196fbe3e38816f3e67cba72d940': { iconSymbol: 'UNI_WBTC_WETH' },
     '0x2fdbadf3c4d5a8666bc06645b8358ab803996e28': { iconSymbol: 'UNI_YFI_WETH' },
+    '0xc96de26018a54d51c097160568752c4e3bd6c364': {
+      iconSymbol: 'FBTC',
+      name: 'Function Bitcoin',
+      symbol: 'FBTC',
+    },
   };
 
   const lowerUnderlyingAsset = underlyingAsset.toLowerCase();

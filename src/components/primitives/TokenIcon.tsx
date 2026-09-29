@@ -1,6 +1,8 @@
 import { Badge, Box, Icon, IconProps } from '@mui/material';
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import LazyLoad from 'react-lazy-load';
+import { useRootStore } from 'src/store/root';
+import { DEFAULT_TOKEN_ICON } from 'src/ui-config/marketsConfig';
 import { isReentalSymbol } from 'src/utils/reentalSymbol';
 
 /**
@@ -29,6 +31,10 @@ const REENTAL_MARKET_LOGO = '/icons/markets/reental.png';
 
 export const getTokenIconSrc = (lowercaseSymbol: string) =>
   isReentalSymbol(lowercaseSymbol) ? REENTAL_MARKET_LOGO : `/icons/tokens/${lowercaseSymbol}.svg`;
+
+// Fallback icon for tokens without an svg, each market can brand its own
+export const useDefaultTokenIcon = () =>
+  useRootStore((store) => store.currentMarketData.defaultTokenIcon ?? DEFAULT_TOKEN_ICON);
 
 // Modified Base64Token to support waToken
 export function Base64Token({
@@ -162,11 +168,13 @@ interface TokenIconProps extends IconProps {
 }
 
 function SingleTokenIcon({ symbol, aToken, waToken, ...rest }: TokenIconProps) {
-  const [tokenSymbol, setTokenSymbol] = useState(symbol.toLowerCase());
+  const tokenSymbol = symbol.toLowerCase();
+  const defaultTokenIcon = useDefaultTokenIcon();
+  const [iconError, setIconError] = useState(false);
 
   useEffect(() => {
-    setTokenSymbol(symbol.toLowerCase());
-  }, [symbol]);
+    setIconError(false);
+  }, [tokenSymbol]);
 
   return (
     <Icon
@@ -186,8 +194,8 @@ function SingleTokenIcon({ symbol, aToken, waToken, ...rest }: TokenIconProps) {
         <TokenRing symbol={tokenSymbol} waToken={waToken} />
       ) : (
         <img
-          src={getTokenIconSrc(tokenSymbol)}
-          onError={() => setTokenSymbol('default')}
+          src={iconError ? defaultTokenIcon : getTokenIconSrc(tokenSymbol)}
+          onError={() => setIconError(true)}
           width="100%"
           height="100%"
           alt={`${symbol} icon`}
@@ -218,7 +226,8 @@ export function ExternalTokenIcon({
   width,
   ...rest
 }: ExternalTokenIconProps) {
-  const [tokenSymbol, setTokenSymbol] = useState(symbol.toLowerCase());
+  const defaultTokenIcon = useDefaultTokenIcon();
+  const [iconError, setIconError] = useState(false);
 
   return (
     <Icon
@@ -234,11 +243,11 @@ export function ExternalTokenIcon({
     >
       <LazyLoad height={height ?? '24px'} width={width ?? '24px'}>
         <img
-          src={tokenSymbol === 'default' || !logoURI ? '/icons/tokens/default.svg' : logoURI}
+          src={iconError || !logoURI ? defaultTokenIcon : logoURI}
           width="100%"
           height="100%"
           alt={`${symbol} icon`}
-          onError={() => setTokenSymbol('default')}
+          onError={() => setIconError(true)}
         />
       </LazyLoad>
     </Icon>

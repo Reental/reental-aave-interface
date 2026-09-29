@@ -42,6 +42,8 @@ export type MarketDataType = {
   permissionComponent?: ReactNode;
   subgraphUrl?: string;
   logo?: string;
+  // Icon shown for tokens without their own /icons/tokens/<symbol>.svg (defaults to DEFAULT_TOKEN_ICON)
+  defaultTokenIcon?: string;
   externalUrl?: string; // URL for external markets like Aptos
   addresses: {
     LENDING_POOL_ADDRESS_PROVIDER: string;
@@ -72,6 +74,9 @@ export enum CustomMarket {
   reental_sepolia_v3 = 'reental_sepolia_v3',
   proto_mainnet_v3 = 'proto_mainnet_v3',
 }
+export const DEFAULT_TOKEN_ICON = '/icons/tokens/default.svg';
+const REENTAL_DEFAULT_TOKEN_ICON = '/icons/tokens/reental.svg';
+
 // const apiKey = process.env.NEXT_PUBLIC_SUBGRAPH_API_KEY;
 
 export const marketsData: {
@@ -82,6 +87,7 @@ export const marketsData: {
     market: CustomMarket.reental_polygon_v3,
     chainId: ChainId.polygon,
     logo: '/icons/markets/reental.png',
+    defaultTokenIcon: REENTAL_DEFAULT_TOKEN_ICON,
     v3: true,
     legacyUiPoolDataProvider: true,
     reentalPonderUrl: 'https://ponder-pro.reental.eu/graphql',
@@ -119,6 +125,7 @@ export const marketsData: {
     v3: true,
     chainId: ChainId.sepolia,
     logo: '/icons/markets/reental.png',
+    defaultTokenIcon: REENTAL_DEFAULT_TOKEN_ICON,
     legacyUiPoolDataProvider: true,
     reentalPonderUrl: 'https://ponder-int.reental.eu/graphql',
     liquidationsPonderUrl: 'https://liquidation-router-ponder-int.reental.eu/graphql',
