@@ -98,6 +98,7 @@ msgid "Deposits"
 msgstr "Depósitos"
 
 #: src/components/transactions/Bridge/BridgeModalContent.tsx
+#: src/modules/bridge/BridgeForm.tsx
 msgid "Estimated time"
 msgstr "Tiempo estimado"
 
@@ -145,8 +146,13 @@ msgid "The most you can borrow against this collateral when opening a position."
 msgstr ""
 
 #: src/components/transactions/Bridge/BridgeDestinationInput.tsx
+#: src/modules/bridge/BridgeForm.tsx
 msgid "To"
 msgstr "Hacia"
+
+#: src/modules/bridge/BridgeTopPanel.tsx
+msgid "Move USDC and USDT between Ethereum and Polygon. Borrow stablecoins on the Aave market on Ethereum and bridge them to supply in the Reental market on Polygon, or bridge them back to repay your debt."
+msgstr "Mueve USDC y USDT entre Ethereum y Polygon. Pide prestadas stablecoins en el mercado de Aave en Ethereum y transfiérelas para depositarlas en el mercado de Reental en Polygon, o devuélvelas para pagar tu deuda."
 
 #: src/modules/reserve-overview/Gho/GhoReserveConfiguration.tsx
 #: src/ui-config/menu-items/index.tsx
@@ -156,6 +162,10 @@ msgstr "Preguntas frecuentes"
 #: src/modules/sGho/SavingsGhoCard.tsx
 msgid "Deposit GHO and earn up to <0>{0}%</0> APY"
 msgstr ""
+
+#: src/components/MarketSwitcher.tsx
+msgid "Real estate"
+msgstr "Inmobiliario"
 
 #: src/components/transactions/LiquidityMandate/LiquidityMandateModalContent.tsx
 msgid "Current recipient"
@@ -234,6 +244,10 @@ msgstr "Cambio de garantía"
 #: src/components/infoTooltips/AvailableTooltip.tsx
 msgid "This is the total amount that you are able to supply to in this reserve. You are able to supply your wallet balance up until the supply cap is reached."
 msgstr "Esta es la cantidad total que puedes suministrar en esta reserva. Puedes suministrar el balance de tu cartera hasta que se alcance el límite de suministro."
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Switch to {0}"
+msgstr "Cambiar a {0}"
 
 #: src/components/incentives/EthenaIncentivesTooltipContent.tsx
 msgid "This asset is eligible for {0} Ethena Rewards."
@@ -583,6 +597,14 @@ msgstr "Este activo casi ha alcanzado su límite de suministro. Solo se puede su
 #: src/modules/liquidations/LiquidationsSetup.tsx
 msgid "Review your liquidation setup"
 msgstr "Revisa tu configuración de liquidaciones"
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "The amount is below the minimum that can be bridged."
+msgstr "El importe está por debajo del mínimo que se puede transferir."
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Transaction rejected in your wallet."
+msgstr "Transacción rechazada en tu wallet."
 
 #: src/ui-config/errorMapping.tsx
 msgid "Variable debt supply is not zero"
@@ -1035,6 +1057,10 @@ msgstr "Únete a la discusión de la comunidad"
 msgid "Borrowing power and assets are limited due to Isolation mode."
 msgstr "El poder de préstamo y los activos están limitados debido al Isolation mode."
 
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Waiting for the funds to arrive on {0}..."
+msgstr "Esperando a que los fondos lleguen a {0}..."
+
 #: src/components/infoTooltips/BorrowCapMaxedTooltip.tsx
 msgid "Protocol borrow cap at 100% for this asset. Further borrowing unavailable."
 msgstr "El límite de préstamo del protocolo está al 100% para este activo. No es posible tomar más prestado."
@@ -1106,6 +1132,11 @@ msgstr "Este activo está congelado debido a una decisión de la comunidad de Aa
 msgid "Faucet"
 msgstr "Faucet"
 
+#. js-lingui-explicit-id
+#: src/ui-config/menu-items/index.tsx
+msgid "Bridge"
+msgstr ""
+
 #: src/components/transactions/Bridge/BridgeFeeTokenSelector.tsx
 msgid "The fee includes the gas cost to complete the transaction on the destination chain and the fee paid to Chainlink CCIP service providers. You can chose to pay in the network token or GHO. <0>Learn more</0>"
 msgstr ""
@@ -1141,9 +1172,14 @@ msgstr ""
 
 #: src/components/transactions/AssetInput.tsx
 #: src/components/transactions/Switch/SwitchAssetInput.tsx
+#: src/modules/bridge/BridgeForm.tsx
 #: src/modules/liquidations/LiquidationAmountInput.tsx
 msgid "Max"
 msgstr "Max"
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Bridge transaction sent."
+msgstr "Transacción de bridge enviada."
 
 #: src/libs/reental/sharedRouter/useMandateActivity.ts
 #: src/modules/liquidations/matching/BackstopDiagnostics.tsx
@@ -1213,6 +1249,10 @@ msgstr "Hecho"
 msgid "Supply balance after switch"
 msgstr "Balance del suministro después del cambio"
 
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Approving {0}..."
+msgstr "Aprobando {0}..."
+
 #: src/components/infoTooltips/MigrationDisabledTooltip.tsx
 msgid "Asset cannot be migrated to {marketName} V3 Market due to E-mode restrictions. You can disable or manage E-mode categories in your <0>V3 Dashboard</0>"
 msgstr "Este activo no se puede migrar al mercado V3 de {marketName} debido a las restricciones del E-mode. Puedes deshabilitar o administrar las categorías del E-mode en tu <0>Panel de control V3</0>"
@@ -1272,6 +1312,10 @@ msgstr ""
 #: src/modules/analytics/PositionsList.tsx
 msgid "Showing {0}–{1} of {2}"
 msgstr ""
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Confirm the bridge in your wallet..."
+msgstr "Confirma el bridge en tu wallet..."
 
 #: src/modules/analytics/PositionsList.tsx
 msgid "Position data could not be loaded."
@@ -1467,6 +1511,10 @@ msgstr "{tooltipText}"
 msgid "Rewards can be claimed through"
 msgstr ""
 
+#: src/components/MarketSwitcher.tsx
+msgid "Official Aave V3 Core market on the Ethereum network"
+msgstr "Mercado oficial Aave V3 Core sobre la red Ethereum"
+
 #: src/components/transactions/LiquidityMandate/LiquidityMandateModalContent.tsx
 msgid "You currently accept all collateral from one pooled budget, so this per-asset budget is stored but not spent. It takes effect again if you switch to choosing assets individually."
 msgstr "Actualmente aceptas todas las garantías con un presupuesto común, así que este presupuesto por activo se guarda pero no se gasta. Vuelve a aplicarse si cambias a elegir los activos individualmente."
@@ -1612,6 +1660,11 @@ msgstr "{0}"
 msgid "Funded by {0} backstop positions"
 msgstr "Financiado por {0} posiciones de respaldo"
 
+#: src/layouts/components/NavItems.tsx
+#: src/modules/bridge/BridgeTopPanel.tsx
+msgid "Bridge"
+msgstr "Bridge"
+
 #: src/modules/reserve-overview/ReserveConfiguration.tsx
 msgid "Liquidations book"
 msgstr ""
@@ -1738,8 +1791,8 @@ msgid "What collateral will you take?"
 msgstr "¿Qué garantías aceptarás?"
 
 #: src/modules/liquidations/LiquidationsSetup.tsx
-msgid "Switch to {0} to continue."
-msgstr "Cambia a {0} para continuar."
+#~ msgid "Switch to {0} to continue."
+#~ msgstr "Cambia a {0} para continuar."
 
 #: src/layouts/AppFooter.tsx
 msgid "Guide"
@@ -2013,6 +2066,11 @@ msgstr "Balance de la cartera"
 msgid "Amount claimable"
 msgstr "Cantidad reclamable"
 
+#: src/modules/bridge/BridgeForm.tsx
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Bridge {0}"
+msgstr "Transferir {0}"
+
 #: src/components/incentives/MeritIncentivesTooltipContent.tsx
 msgid "{remainingCustomMessage}"
 msgstr ""
@@ -2237,6 +2295,10 @@ msgstr "Retirando"
 #: src/modules/analytics/RiskParameters.tsx
 msgid "Share of the interest paid by borrowers that goes to the treasury."
 msgstr ""
+
+#: src/components/MarketSwitcher.tsx
+msgid "RNT Protocol"
+msgstr "RNT Protocol"
 
 #: src/components/Reental/TwoFABanner/TwoFABanner.tsx
 msgid "Go to Reental"
@@ -2479,8 +2541,8 @@ msgid "Terms"
 msgstr ""
 
 #: src/modules/bridge/BridgeTopPanel.tsx
-msgid "Bridge history"
-msgstr ""
+#~ msgid "Bridge history"
+#~ msgstr ""
 
 #: src/components/transactions/DebtSwitch/DebtSwitchModalDetails.tsx
 msgid "Borrow balance after switch"
@@ -2530,6 +2592,10 @@ msgstr ""
 msgid "No liquidity provider can fund this liquidation right now. Providers are skipped when their allowance, aToken balance, collateral budget or per-liquidation cap runs out."
 msgstr "Ahora mismo ningún proveedor de liquidez puede financiar esta liquidación. Se omite a un proveedor cuando se agota su autorización, su saldo de aToken, su presupuesto de garantía o su límite por liquidación."
 
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "Search token"
+msgstr "Buscar token"
+
 #: src/modules/liquidations/matching/BackstopDiagnostics.tsx
 msgid "No per-liquidation limit set for {debtSymbol}. The router reads an unset limit as zero, so this provider funds nothing until one is set."
 msgstr "No hay límite por liquidación para {debtSymbol}. El router interpreta un límite sin establecer como cero, así que este proveedor no financia nada hasta que se establezca uno."
@@ -2578,6 +2644,10 @@ msgstr ""
 #: src/components/transactions/StakeRewardClaimRestake/StakeRewardClaimRestakeModalContent.tsx
 msgid "No rewards to claim"
 msgstr "No hay recompensas para reclamar"
+
+#: src/modules/liquidations/LiquidationsUnavailable.tsx
+msgid "Select a Reental market to back liquidations with your deposits."
+msgstr "Selecciona un mercado de Reental para respaldar liquidaciones con tus depósitos."
 
 #: src/modules/liquidations/LiquidationsPositionOverview.tsx
 msgid "Total backing liquidations"
@@ -2747,6 +2817,14 @@ msgstr "Los presupuestos se expresan en USD, no en tokens. Poner 0 significa que
 msgid "Representative smart contract wallet (ie. Safe) addresses on other chains."
 msgstr "Direcciones de cartera de contrato inteligente representativas (Safe) en otras cadenas."
 
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Watch-only mode: connect a wallet to bridge"
+msgstr "Modo solo lectura: conecta una wallet para transferir"
+
+#: src/components/MarketSwitcher.tsx
+msgid "Third-party"
+msgstr "Terceros"
+
 #: src/modules/liquidations/useLiquidationsSetupTx.tsx
 msgid "Update your liquidation settings"
 msgstr "Actualiza tu configuración de liquidaciones"
@@ -2846,6 +2924,10 @@ msgstr "No se cumplieron las condiciones de ajuste de tasas de interés"
 msgid "Add {0} to wallet to track your balance."
 msgstr "Añade {0} a tu cartera para hacer un seguimiento del balance."
 
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Waiting for confirmation..."
+msgstr "Esperando confirmación..."
+
 #: src/modules/analytics/PositionsList.tsx
 msgid "Borrower"
 msgstr ""
@@ -2853,6 +2935,10 @@ msgstr ""
 #: src/modules/liquidations/LiquidationsSetup.tsx
 msgid "Approve"
 msgstr "Aprobar"
+
+#: src/modules/bridge/BridgeTopPanel.tsx
+msgid "Transfers usually arrive in under a minute. Each bridge is quoted and executed by Uniswap and Across, and the fees are shown before you confirm."
+msgstr "Las transferencias suelen llegar en menos de un minuto. Cada bridge lo cotizan y ejecutan Uniswap y Across, y las comisiones se muestran antes de confirmar."
 
 #: src/modules/governance/GovernanceTopPanel.tsx
 msgid "Aave Governance"
@@ -2975,6 +3061,11 @@ msgstr "Tu balance es más bajo que la cantidad seleccionada."
 #: src/modules/governance/proposal/ProposalOverview.tsx
 msgid "An error has occurred fetching the proposal."
 msgstr "Se ha producido un error al recuperar la propuesta."
+
+#: src/modules/bridge/BridgeForm.tsx
+#: src/modules/liquidations/LiquidationsUnavailable.tsx
+msgid "Back to markets"
+msgstr "Volver a mercados"
 
 #: src/libs/reental/sharedRouter/useMandateActivity.ts
 #: src/modules/liquidations/matching/BackstopDiagnostics.tsx
@@ -3236,6 +3327,14 @@ msgstr "Variable"
 msgid "Liquidation"
 msgstr "Liquidación"
 
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Bridging powered by Uniswap and Across."
+msgstr "Bridge operado por Uniswap y Across."
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "View transaction"
+msgstr "Ver transacción"
+
 #: src/modules/reserve-overview/TokenLinkDropdown.tsx
 msgid "Aave debt token"
 msgstr "Token de deuda de Aave"
@@ -3301,6 +3400,10 @@ msgstr "No hay ningún router de liquidación configurado para este mercado."
 msgid "Show assets"
 msgstr ""
 
+#: src/modules/bridge/BridgeForm.tsx
+msgid "From"
+msgstr "Desde"
+
 #: src/modules/governance/FormattedProposalTime.tsx
 msgid "starts"
 msgstr "empieza"
@@ -3333,6 +3436,10 @@ msgstr "Registrado"
 msgid "Borrowed"
 msgstr "Prestado"
 
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Something went wrong. Please try again."
+msgstr "Algo ha fallado. Inténtalo de nuevo."
+
 #: src/components/transactions/Faucet/FaucetModalContent.tsx
 msgid "Received"
 msgstr "Recibido"
@@ -3354,6 +3461,7 @@ msgid "There are no additional RWA markets available on RNT Lend yet."
 msgstr ""
 
 #: src/components/transactions/AssetInput.tsx
+#: src/modules/bridge/BridgeForm.tsx
 #: src/modules/dashboard/lists/BorrowedPositionsList/BorrowedPositionsList.tsx
 #: src/modules/dashboard/lists/SuppliedPositionsList/SuppliedPositionsList.tsx
 msgid "Balance"
@@ -3655,6 +3763,10 @@ msgstr ""
 msgid "Collateral usage is limited because of Isolation mode."
 msgstr "El uso de garantías está limitado debido al Isolation mode."
 
+#: src/modules/bridge/BridgeForm.tsx
+msgid "No bridge route is available for this amount right now."
+msgstr "Ahora mismo no hay ruta de bridge disponible para este importe."
+
 #: src/modules/liquidations/matching/BackstopDiagnostics.tsx
 msgid "No budget covers {collateralSymbol}. The provider must fund it."
 msgstr "Ningún presupuesto cubre {collateralSymbol}. El proveedor debe financiarlo."
@@ -3762,6 +3874,10 @@ msgstr "Seleccionar idioma"
 msgid "<0>Attention:</0> Parameter changes via governance can alter your account health factor and risk of liquidation. Follow the <1>Aave governance forum</1> for updates."
 msgstr "<0>Atención:</0> Los cambios de parámetros a través de la gobernanza pueden alterar el factor de salud de tu cuenta y el riesgo de liquidación. Sigue el <1>foro de gobierno de Aave</1> para mantenerte actualizado."
 
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "No tokens found"
+msgstr "No se encontraron tokens"
+
 #: src/ui-config/errorMapping.tsx
 msgid "You are already registered on the router."
 msgstr ""
@@ -3822,6 +3938,10 @@ msgstr "El límite de suministro se ha sobrepasado"
 #: src/modules/history/HistoryWrapperMobile.tsx
 msgid ".JSON"
 msgstr ".JSON"
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "The bridge could not be completed. Your funds will be refunded."
+msgstr "El bridge no se ha podido completar. Tus fondos serán reembolsados."
 
 #: src/ui-config/errorMapping.tsx
 msgid "Debt ceiling is not zero"
@@ -3887,6 +4007,10 @@ msgstr "Garantía a pagar con"
 #: src/modules/staking/StakingHeader.tsx
 msgid "Total emission per day"
 msgstr "Emisiones totales por día"
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Insufficient {0} balance"
+msgstr "Saldo de {0} insuficiente"
 
 #: src/components/transactions/MigrateV3/MigrateV3ModalContent.tsx
 msgid "Selected borrow assets"
@@ -3994,6 +4118,10 @@ msgstr ""
 #: src/components/transactions/Withdraw/WithdrawError.tsx
 msgid "Assets with zero LTV ({0}) must be withdrawn or disabled as collateral to perform this action"
 msgstr ""
+
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Funds delivered on {0}."
+msgstr "Fondos recibidos en {0}."
 
 #: src/components/transactions/GovDelegation/DelegationTypeSelector.tsx
 msgid "Both"
@@ -4146,6 +4274,10 @@ msgid "{title}"
 msgstr "{title}"
 
 #: src/components/MarketSwitcher.tsx
+msgid "DeFi"
+msgstr "DeFi"
+
+#: src/components/MarketSwitcher.tsx
 msgid "RWA market of real estate tokens issued by Reental over the Sepolia network"
 msgstr "Mercado RWA de tokens inmobiliarios emitidos por Reental sobre la red Sepolia"
 
@@ -4260,6 +4392,10 @@ msgstr "Desactivar mantiene intactos tu registro, tu autorización y tus presupu
 #: src/components/transactions/Switch/SwitchTxSuccessView.tsx
 msgid "You've successfully swapped tokens."
 msgstr ""
+
+#: src/modules/liquidations/LiquidationsUnavailable.tsx
+msgid "Liquidations are not available on {marketTitle}"
+msgstr "Las liquidaciones no están disponibles en {marketTitle}"
 
 #: src/components/ConnectWalletPaper.tsx
 #: src/components/ConnectWalletPaperStaking.tsx
@@ -4645,6 +4781,10 @@ msgstr "Aprobar con"
 msgid "PTs"
 msgstr ""
 
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Bridge fee"
+msgstr "Comisión del bridge"
+
 #: src/layouts/components/LanguageSwitcher.tsx
 msgid "Language"
 msgstr "Idioma"
@@ -4844,6 +4984,10 @@ msgstr ""
 msgid "Migrate"
 msgstr "Migrar"
 
+#: src/modules/bridge/BridgeForm.tsx
+msgid "Network fee"
+msgstr "Comisión de red"
+
 #: src/components/transactions/CollateralChange/CollateralChangeActions.tsx
 msgid "Enable {symbol} as collateral"
 msgstr "Habilitar {symbol} como garantía"
@@ -5030,114 +5174,3 @@ msgstr "Aprende más"
 #: src/components/infoTooltips/MigrationDisabledTooltip.tsx
 msgid "Asset is frozen in {marketName} v3 market, hence this position cannot be migrated."
 msgstr "Este activo está congelado en el mercado v3 de {marketName}, por lo tanto, esta posición no se puede migrar."
-
-
-#: src/components/MarketSwitcher.tsx
-msgid "Official Aave V3 Core market on the Ethereum network"
-msgstr "Mercado oficial Aave V3 Core sobre la red Ethereum"
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "Switch to {0}"
-msgstr "Cambiar a {0}"
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "The amount is below the minimum that can be bridged."
-msgstr "El importe está por debajo del mínimo que se puede transferir."
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "Transaction rejected in your wallet."
-msgstr "Transacción rechazada en tu wallet."
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "Waiting for the funds to arrive on {0}..."
-msgstr "Esperando a que los fondos lleguen a {0}..."
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "Bridge"
-msgstr "Bridge"
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "Bridge transaction sent."
-msgstr "Transacción de bridge enviada."
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "Approving {0}..."
-msgstr "Aprobando {0}..."
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "Confirm the bridge in your wallet..."
-msgstr "Confirma el bridge en tu wallet..."
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "Bridge {0}"
-msgstr "Transferir {0}"
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "Watch-only mode: connect a wallet to bridge"
-msgstr "Modo solo lectura: conecta una wallet para transferir"
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "Waiting for confirmation..."
-msgstr "Esperando confirmación..."
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "Bridging powered by Uniswap and Across."
-msgstr "Bridge operado por Uniswap y Across."
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "View transaction"
-msgstr "Ver transacción"
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "From"
-msgstr "Desde"
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "Something went wrong. Please try again."
-msgstr "Algo ha fallado. Inténtalo de nuevo."
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "No bridge route is available for this amount right now."
-msgstr "Ahora mismo no hay ruta de bridge disponible para este importe."
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "The bridge could not be completed. Your funds will be refunded."
-msgstr "El bridge no se ha podido completar. Tus fondos serán reembolsados."
-
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "Insufficient {0} balance"
-msgstr "Saldo de {0} insuficiente"
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "Funds delivered on {0}."
-msgstr "Fondos recibidos en {0}."
-
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "Bridge fee"
-msgstr "Comisión del bridge"
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "Network fee"
-msgstr "Comisión de red"
-
-#: src/modules/bridge/BridgeTopPanel.tsx
-msgid "Move USDC and USDT between Ethereum and Polygon. Borrow stablecoins on the Aave market on Ethereum and bridge them to supply in the Reental market on Polygon, or bridge them back to repay your debt."
-msgstr "Mueve USDC y USDT entre Ethereum y Polygon. Pide prestadas stablecoins en el mercado de Aave en Ethereum y transfiérelas para depositarlas en el mercado de Reental en Polygon, o devuélvelas para pagar tu deuda."
-
-#: src/modules/bridge/BridgeTopPanel.tsx
-msgid "Transfers usually arrive in under a minute. Each bridge is quoted and executed by Uniswap and Across, and the fees are shown before you confirm."
-msgstr "Las transferencias suelen llegar en menos de un minuto. Cada bridge lo cotizan y ejecutan Uniswap y Across, y las comisiones se muestran antes de confirmar."
-
-#: src/modules/bridge/BridgeForm.tsx
-msgid "Back to markets"
-msgstr "Volver a mercados"
-
-#: src/modules/liquidations/LiquidationsUnavailable.tsx
-msgid "Liquidations are not available on {marketTitle}"
-msgstr "Las liquidaciones no están disponibles en {marketTitle}"
-
-#: src/modules/liquidations/LiquidationsUnavailable.tsx
-msgid "Select a Reental market to back liquidations with your deposits."
-msgstr "Selecciona un mercado de Reental para respaldar liquidaciones con tus depósitos."
