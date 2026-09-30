@@ -169,7 +169,7 @@ const badgeSx = {
   '.MuiChip-label': { px: 1.5 },
 };
 
-/** RWA / non-RWA and RNT Protocol / External classification of a market */
+/** RWA / non-RWA and RNT Protocol / Third-party classification of a market */
 export const MarketBadges = ({ market, sx }: { market: MarketDataType; sx?: BoxProps['sx'] }) => (
   <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1, ...sx }}>
     <Chip
@@ -183,7 +183,7 @@ export const MarketBadges = ({ market, sx }: { market: MarketDataType; sx?: BoxP
       size="small"
       variant="outlined"
       color={market.operator === 'rnt' ? 'primary' : 'default'}
-      label={market.operator === 'rnt' ? <Trans>RNT Protocol</Trans> : <Trans>External</Trans>}
+      label={market.operator === 'rnt' ? <Trans>RNT Protocol</Trans> : <Trans>Third-party</Trans>}
       sx={badgeSx}
     />
   </Box>
@@ -406,8 +406,6 @@ export const MarketSwitcher = () => {
                       </Box>
                     </Box>
 
-                    <MarketBadges market={market} sx={{ mt: 1 }} />
-
                     {marketBlurbs[currentMarket] && (
                       <Typography
                         sx={{
@@ -423,6 +421,8 @@ export const MarketSwitcher = () => {
                         {marketBlurbs[currentMarket]}
                       </Typography>
                     )}
+
+                    <MarketBadges market={market} sx={{ mt: 1 }} />
                   </Box>
                 );
               },

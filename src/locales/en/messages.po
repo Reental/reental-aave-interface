@@ -2804,6 +2804,10 @@ msgstr "Representative smart contract wallet (ie. Safe) addresses on other chain
 msgid "Watch-only mode: connect a wallet to bridge"
 msgstr "Watch-only mode: connect a wallet to bridge"
 
+#: src/components/MarketSwitcher.tsx
+msgid "Third-party"
+msgstr "Third-party"
+
 #: src/modules/liquidations/useLiquidationsSetupTx.tsx
 msgid "Update your liquidation settings"
 msgstr "Update your liquidation settings"
@@ -3095,10 +3099,6 @@ msgstr "Cooldown"
 #: src/modules/umbrella/UmbrellaAssetsDefault.tsx
 msgid "Asset"
 msgstr "Asset"
-
-#: src/components/MarketSwitcher.tsx
-msgid "External"
-msgstr "External"
 
 #: src/modules/governance/proposal/ProposalOverview.tsx
 msgid "Share on twitter"
