@@ -158,6 +158,10 @@ msgstr "FAQ"
 msgid "Deposit GHO and earn up to <0>{0}%</0> APY"
 msgstr "Deposit GHO and earn up to <0>{0}%</0> APY"
 
+#: src/components/MarketSwitcher.tsx
+msgid "Real estate"
+msgstr "Real estate"
+
 #: src/components/transactions/LiquidityMandate/LiquidityMandateModalContent.tsx
 msgid "Current recipient"
 msgstr "Current recipient"
@@ -3726,10 +3730,6 @@ msgstr "Use it to vote for or against active proposals."
 msgid "Amount received"
 msgstr "Amount received"
 
-#: src/components/MarketSwitcher.tsx
-msgid "RWA"
-msgstr "RWA"
-
 #: src/modules/reserve-overview/BorrowInfo.tsx
 msgid "Collector Info"
 msgstr "Collector Info"
@@ -4261,6 +4261,10 @@ msgid "{title}"
 msgstr "{title}"
 
 #: src/components/MarketSwitcher.tsx
+msgid "DeFi"
+msgstr "DeFi"
+
+#: src/components/MarketSwitcher.tsx
 msgid "RWA market of real estate tokens issued by Reental over the Sepolia network"
 msgstr "RWA market of real estate tokens issued by Reental over the Sepolia network"
 
@@ -4775,10 +4779,6 @@ msgstr "Language"
 #: src/modules/liquidations/LiquidationsSetup.tsx
 msgid "Transactions to sign"
 msgstr "Transactions to sign"
-
-#: src/components/MarketSwitcher.tsx
-msgid "Non-RWA"
-msgstr "Non-RWA"
 
 #: src/components/infoTooltips/CollateralSwitchTooltip.tsx
 msgid "Allows you to decide whether to use a supplied asset as collateral. An asset used as collateral will affect your borrowing power and health factor."

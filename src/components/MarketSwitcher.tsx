@@ -5,6 +5,7 @@ import {
   Box,
   BoxProps,
   Chip,
+  ChipProps,
   ClickAwayListener,
   IconButton,
   ListItemText,
@@ -18,6 +19,7 @@ import {
 } from '@mui/material';
 import React, { JSX, useState } from 'react';
 import { useRootStore } from 'src/store/root';
+import { MarketCategory } from 'src/ui-config/marketsConfig';
 import { BaseNetworkConfig } from 'src/ui-config/networksConfig';
 import { DASHBOARD } from 'src/utils/events';
 import { useShallow } from 'zustand/shallow';
@@ -169,14 +171,19 @@ const badgeSx = {
   '.MuiChip-label': { px: 1.5 },
 };
 
-/** RWA / non-RWA and RNT Protocol / Third-party classification of a market */
+const categoryBadges: Record<MarketCategory, { label: JSX.Element; color: ChipProps['color'] }> = {
+  'real-estate': { label: <Trans>Real estate</Trans>, color: 'success' },
+  defi: { label: <Trans>DeFi</Trans>, color: 'info' },
+};
+
+/** Category (Real estate / DeFi) and operator (RNT Protocol / Third-party) of a market */
 export const MarketBadges = ({ market, sx }: { market: MarketDataType; sx?: BoxProps['sx'] }) => (
   <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1, ...sx }}>
     <Chip
       size="small"
       variant="outlined"
-      color={market.rwa ? 'success' : 'default'}
-      label={market.rwa ? <Trans>RWA</Trans> : <Trans>Non-RWA</Trans>}
+      color={categoryBadges[market.category].color}
+      label={categoryBadges[market.category].label}
       sx={badgeSx}
     />
     <Chip
