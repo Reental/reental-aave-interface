@@ -48,6 +48,10 @@ msgstr "Receive (est.)"
 msgid "Save with sGHO"
 msgstr "Save with sGHO"
 
+#: src/layouts/SupportModal.tsx
+msgid "Submission did not work, please try again later or contact contact@rnt.finance"
+msgstr "Submission did not work, please try again later or contact contact@rnt.finance"
+
 #: src/components/incentives/EthenaIncentivesTooltipContent.tsx
 #: src/components/incentives/EtherfiIncentivesTooltipContent.tsx
 #: src/components/incentives/SonicIncentivesTooltipContent.tsx
@@ -5102,10 +5106,6 @@ msgstr "Protocol supply cap is at 100% for this asset. Further supply unavailabl
 #: src/libs/reental/sharedRouter/useMandateActivity.ts
 msgid "Register a recipient on the router."
 msgstr "Register a recipient on the router."
-
-#: src/layouts/SupportModal.tsx
-msgid "Submission did not work, please try again later or contact wecare@avara.xyz"
-msgstr "Submission did not work, please try again later or contact wecare@avara.xyz"
 
 #: src/modules/history/actions/ActionDetails.tsx
 #: src/modules/history/actions/ActionDetails.tsx

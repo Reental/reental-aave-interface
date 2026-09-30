@@ -154,7 +154,7 @@ export const SupportModal = () => {
                 }}
               >
                 <Trans>
-                  Submission did not work, please try again later or contact wecare@avara.xyz
+                  Submission did not work, please try again later or contact contact@rnt.finance
                 </Trans>
               </Typography>
             </Box>

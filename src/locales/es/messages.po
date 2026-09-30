@@ -53,6 +53,10 @@ msgstr "Recibir (est.)"
 msgid "Save with sGHO"
 msgstr "Ahorra con sGHO"
 
+#: src/layouts/SupportModal.tsx
+msgid "Submission did not work, please try again later or contact contact@rnt.finance"
+msgstr "No se pudo enviar, inténtalo de nuevo más tarde o escribe a contact@rnt.finance"
+
 #: src/components/incentives/EthenaIncentivesTooltipContent.tsx
 #: src/components/incentives/EtherfiIncentivesTooltipContent.tsx
 #: src/components/incentives/SonicIncentivesTooltipContent.tsx
@@ -1790,10 +1794,6 @@ msgstr "Aislado"
 msgid "What collateral will you take?"
 msgstr "¿Qué garantías aceptarás?"
 
-#: src/modules/liquidations/LiquidationsSetup.tsx
-#~ msgid "Switch to {0} to continue."
-#~ msgstr "Cambia a {0} para continuar."
-
 #: src/layouts/AppFooter.tsx
 msgid "Guide"
 msgstr "Guía"
@@ -2539,10 +2539,6 @@ msgstr "Cambio de tasa de préstamo"
 #: src/ui-config/menu-items/index.tsx
 msgid "Terms"
 msgstr "Términos"
-
-#: src/modules/bridge/BridgeTopPanel.tsx
-#~ msgid "Bridge history"
-#~ msgstr ""
 
 #: src/components/transactions/DebtSwitch/DebtSwitchModalDetails.tsx
 msgid "Borrow balance after switch"
@@ -5115,10 +5111,6 @@ msgstr "El límite de suministro del protocolo está al 100% para este activo. N
 #: src/libs/reental/sharedRouter/useMandateActivity.ts
 msgid "Register a recipient on the router."
 msgstr "Registra un destinatario en el router."
-
-#: src/layouts/SupportModal.tsx
-msgid "Submission did not work, please try again later or contact wecare@avara.xyz"
-msgstr "No se pudo enviar, inténtalo de nuevo más tarde o escribe a wecare@avara.xyz"
 
 #: src/modules/history/actions/ActionDetails.tsx
 #: src/modules/history/actions/ActionDetails.tsx
