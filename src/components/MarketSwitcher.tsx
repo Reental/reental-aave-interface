@@ -4,6 +4,7 @@ import { Trans } from '@lingui/macro';
 import {
   Box,
   BoxProps,
+  Chip,
   ClickAwayListener,
   IconButton,
   ListItemText,
@@ -160,6 +161,33 @@ export const MarketLogo = ({
     </Box>
   );
 };
+
+const badgeSx = {
+  height: '18px',
+  fontSize: '10px',
+  fontWeight: 600,
+  '.MuiChip-label': { px: 1.5 },
+};
+
+/** RWA / non-RWA and RNT Protocol / External classification of a market */
+export const MarketBadges = ({ market, sx }: { market: MarketDataType; sx?: BoxProps['sx'] }) => (
+  <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1, ...sx }}>
+    <Chip
+      size="small"
+      variant="outlined"
+      color={market.rwa ? 'success' : 'default'}
+      label={market.rwa ? <Trans>RWA</Trans> : <Trans>Non-RWA</Trans>}
+      sx={badgeSx}
+    />
+    <Chip
+      size="small"
+      variant="outlined"
+      color={market.operator === 'rnt' ? 'primary' : 'default'}
+      label={market.operator === 'rnt' ? <Trans>RNT Protocol</Trans> : <Trans>External</Trans>}
+      sx={badgeSx}
+    />
+  </Box>
+);
 
 enum SelectedMarketVersion {
   V2,
@@ -378,6 +406,8 @@ export const MarketSwitcher = () => {
                       </Box>
                     </Box>
 
+                    <MarketBadges market={market} sx={{ mt: 1 }} />
+
                     {marketBlurbs[currentMarket] && (
                       <Typography
                         sx={{
@@ -554,8 +584,11 @@ export const MarketSwitcher = () => {
                       networkName={networkName}
                       testChainName={marketNaming.testChainName}
                     />
-                    <ListItemText sx={{ mr: 0 }}>
-                      {marketNaming.name} {market.isFork ? 'Fork' : ''}
+                    <ListItemText sx={{ mr: 2 }} disableTypography>
+                      <Typography>
+                        {marketNaming.name} {market.isFork ? 'Fork' : ''}
+                      </Typography>
+                      <MarketBadges market={market} sx={{ mt: 0.5 }} />
                     </ListItemText>
                     <ListItemText
                       sx={{

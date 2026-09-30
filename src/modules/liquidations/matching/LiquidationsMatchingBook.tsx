@@ -1,5 +1,14 @@
 import { t, Trans } from '@lingui/macro';
-import { Box, Button, Checkbox, Chip, MenuItem, Select, Typography } from '@mui/material';
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Checkbox,
+  Chip,
+  createFilterOptions,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useMemo, useState } from 'react';
 import { ListColumn } from 'src/components/lists/ListColumn';
 import { ListHeaderTitle } from 'src/components/lists/ListHeaderTitle';
@@ -21,6 +30,11 @@ import {
   maxLiquidatableFactor,
   useLiquidatablePositions,
 } from './useLiquidatablePositions';
+
+// Search the pair selector by symbol or token name (property tokens are easier to find by name)
+const filterReserveOptions = createFilterOptions<ComputedReserveData>({
+  stringify: (option) => `${option.symbol} ${option.name}`,
+});
 
 interface LiquidationsMatchingBookProps {
   reserve: ComputedReserveData;
@@ -177,6 +191,7 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
   };
 
   if (!debtReserve || !collateralReserve || otherSideOptions.length === 0) return null;
+  const otherReserve = isDebtSide ? collateralReserve : debtReserve;
 
   return (
     <Box>
@@ -211,27 +226,54 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
           <Typography variant="caption" color="text.secondary" component="div" sx={{ mb: 1 }}>
             {isDebtSide ? <Trans>Collateral</Trans> : <Trans>Debt token</Trans>}
           </Typography>
-          <Select
-            value={otherAsset}
-            onChange={(e) => setOtherAsset(e.target.value)}
+          <Autocomplete
+            value={otherReserve}
+            onChange={(_, option) => option && setOtherAsset(option.underlyingAsset)}
+            options={otherSideOptions}
+            filterOptions={filterReserveOptions}
+            getOptionLabel={(option) => option.symbol}
+            isOptionEqualToValue={(option, value) =>
+              option.underlyingAsset === value.underlyingAsset
+            }
+            disableClearable
+            autoHighlight
             size="small"
-            sx={{
-              minWidth: '220px',
-              '& .MuiSelect-select': { display: 'flex', gap: 2, py: '8px' },
-            }}
-            MenuProps={{ PaperProps: { sx: { maxHeight: '360px' } } }}
-          >
-            {otherSideOptions.map((option) => (
-              <MenuItem
+            sx={{ minWidth: '260px' }}
+            ListboxProps={{ style: { maxHeight: '360px' } }}
+            noOptionsText={<Trans>No tokens found</Trans>}
+            renderOption={(props, option) => (
+              <Box
+                component="li"
+                {...props}
                 key={option.underlyingAsset}
-                value={option.underlyingAsset}
-                sx={{ display: 'flex', gap: 2 }}
+                sx={{ display: 'flex', alignItems: 'center', gap: 2 }}
               >
                 <TokenIcon symbol={option.iconSymbol} sx={{ fontSize: '24px' }} />
-                <Typography variant="main14">{option.symbol}</Typography>
-              </MenuItem>
-            ))}
-          </Select>
+                <Box sx={{ minWidth: 0 }}>
+                  <Typography variant="main14" noWrap>
+                    {option.symbol}
+                  </Typography>
+                  {option.name !== option.symbol && (
+                    <Typography variant="caption" color="text.secondary" component="div" noWrap>
+                      {option.name}
+                    </Typography>
+                  )}
+                </Box>
+              </Box>
+            )}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                placeholder={t`Search token`}
+                InputProps={{
+                  ...params.InputProps,
+                  startAdornment: (
+                    <TokenIcon symbol={otherReserve.iconSymbol} sx={{ fontSize: '24px', ml: 1 }} />
+                  ),
+                }}
+              />
+            )}
+          />
         </Box>
       </Box>
 

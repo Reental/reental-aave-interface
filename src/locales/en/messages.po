@@ -2283,6 +2283,10 @@ msgstr "Withdrawing"
 msgid "Share of the interest paid by borrowers that goes to the treasury."
 msgstr "Share of the interest paid by borrowers that goes to the treasury."
 
+#: src/components/MarketSwitcher.tsx
+msgid "RNT Protocol"
+msgstr "RNT Protocol"
+
 #: src/components/Reental/TwoFABanner/TwoFABanner.tsx
 msgid "Go to Reental"
 msgstr "Go to Reental"
@@ -2570,6 +2574,10 @@ msgstr "Send cancel"
 #: src/components/transactions/Liquidate/LiquidateModalContent.tsx
 msgid "No liquidity provider can fund this liquidation right now. Providers are skipped when their allowance, aToken balance, collateral budget or per-liquidation cap runs out."
 msgstr "No liquidity provider can fund this liquidation right now. Providers are skipped when their allowance, aToken balance, collateral budget or per-liquidation cap runs out."
+
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "Search token"
+msgstr "Search token"
 
 #: src/modules/liquidations/matching/BackstopDiagnostics.tsx
 msgid "No per-liquidation limit set for {debtSymbol}. The router reads an unset limit as zero, so this provider funds nothing until one is set."
@@ -3087,6 +3095,10 @@ msgstr "Cooldown"
 #: src/modules/umbrella/UmbrellaAssetsDefault.tsx
 msgid "Asset"
 msgstr "Asset"
+
+#: src/components/MarketSwitcher.tsx
+msgid "External"
+msgstr "External"
 
 #: src/modules/governance/proposal/ProposalOverview.tsx
 msgid "Share on twitter"
@@ -3714,6 +3726,10 @@ msgstr "Use it to vote for or against active proposals."
 msgid "Amount received"
 msgstr "Amount received"
 
+#: src/components/MarketSwitcher.tsx
+msgid "RWA"
+msgstr "RWA"
+
 #: src/modules/reserve-overview/BorrowInfo.tsx
 msgid "Collector Info"
 msgstr "Collector Info"
@@ -3844,6 +3860,10 @@ msgstr "Select language"
 #: src/components/transactions/Borrow/ParameterChangewarning.tsx
 msgid "<0>Attention:</0> Parameter changes via governance can alter your account health factor and risk of liquidation. Follow the <1>Aave governance forum</1> for updates."
 msgstr "<0>Attention:</0> Parameter changes via governance can alter your account health factor and risk of liquidation. Follow the <1>Aave governance forum</1> for updates."
+
+#: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
+msgid "No tokens found"
+msgstr "No tokens found"
 
 #: src/ui-config/errorMapping.tsx
 msgid "You are already registered on the router."
@@ -4755,6 +4775,10 @@ msgstr "Language"
 #: src/modules/liquidations/LiquidationsSetup.tsx
 msgid "Transactions to sign"
 msgstr "Transactions to sign"
+
+#: src/components/MarketSwitcher.tsx
+msgid "Non-RWA"
+msgstr "Non-RWA"
 
 #: src/components/infoTooltips/CollateralSwitchTooltip.tsx
 msgid "Allows you to decide whether to use a supplied asset as collateral. An asset used as collateral will affect your borrowing power and health factor."

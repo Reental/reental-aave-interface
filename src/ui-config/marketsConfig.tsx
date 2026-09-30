@@ -12,6 +12,11 @@ export type MarketDataType = {
   market: CustomMarket;
   // the network the market operates on
   chainId: ChainId;
+  // Classification shown as badges in the market switcher:
+  // whether the market lists real world assets, and who operates it
+  // ('rnt' = RNT Protocol, 'external' = third-party market such as the official Aave ones)
+  rwa: boolean;
+  operator: MarketOperator;
   enabledFeatures?: {
     liquiditySwap?: boolean;
     staking?: boolean;
@@ -69,6 +74,8 @@ export type MarketDataType = {
     SHARED_LIQUIDATION_ROUTER?: string;
   };
 };
+export type MarketOperator = 'rnt' | 'external';
+
 export enum CustomMarket {
   reental_polygon_v3 = 'reental_polygon_v3',
   reental_sepolia_v3 = 'reental_sepolia_v3',
@@ -85,6 +92,8 @@ export const marketsData: {
   [CustomMarket.reental_polygon_v3]: {
     marketTitle: 'Reental Polygon',
     market: CustomMarket.reental_polygon_v3,
+    rwa: true,
+    operator: 'rnt',
     chainId: ChainId.polygon,
     logo: '/icons/markets/reental.png',
     defaultTokenIcon: REENTAL_DEFAULT_TOKEN_ICON,
@@ -122,6 +131,8 @@ export const marketsData: {
   [CustomMarket.reental_sepolia_v3]: {
     marketTitle: 'Reental Sepolia',
     market: CustomMarket.reental_sepolia_v3,
+    rwa: true,
+    operator: 'rnt',
     v3: true,
     chainId: ChainId.sepolia,
     logo: '/icons/markets/reental.png',
@@ -150,6 +161,8 @@ export const marketsData: {
   [CustomMarket.proto_mainnet_v3]: {
     marketTitle: 'Aave Ethereum',
     market: CustomMarket.proto_mainnet_v3,
+    rwa: false,
+    operator: 'external',
     chainId: ChainId.mainnet,
     logo: '/icons/tokens/aave.svg',
     v3: true,
