@@ -34,6 +34,9 @@ export type MarketDataType = {
     metrics?: boolean;
     // Shared liquidation router: needs addresses.SHARED_LIQUIDATION_ROUTER and liquidationsPonderUrl
     liquidations?: boolean;
+    // On-chain partner attribution: send the stored `?referral_code=` (see src/utils/referral.ts)
+    // as Aave's `referralCode` on deposits. Off → always '0'
+    referralCode?: boolean;
   };
   permitDisabled?: boolean; // intended to be used for testnets
   // Reental pools run the pre-v3.1 UiPoolDataProvider, official Aave markets use the current one
@@ -111,6 +114,7 @@ export const marketsData: {
       twoFA: true,
       metrics: true,
       liquidations: true,
+      referralCode: true,
     },
     // subgraphUrl: `https://gateway-arbitrum.network.thegraph.com/api/${apiKey}/subgraphs/id/Co2URyXjnxaw8WqxKyVHdirq9Ahhm5vcTs4dMedAq211`,
     addresses: {
@@ -145,6 +149,7 @@ export const marketsData: {
       twoFA: true,
       metrics: true,
       liquidations: true,
+      referralCode: true,
     },
     addresses: {
       LENDING_POOL_ADDRESS_PROVIDER: AaveV3Sepolia.POOL_ADDRESSES_PROVIDER,

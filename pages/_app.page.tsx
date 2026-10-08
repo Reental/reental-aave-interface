@@ -23,6 +23,7 @@ import { Web3ContextProvider } from 'src/libs/web3-data-provider/Web3Provider';
 import { useRootStore } from 'src/store/root';
 import { SharedDependenciesProvider } from 'src/ui-config/SharedDependenciesProvider';
 import { wagmiConfig } from 'src/ui-config/wagmiConfig';
+import { captureReferralCode } from 'src/utils/referral';
 import { WagmiProvider } from 'wagmi';
 import { useShallow } from 'zustand/shallow';
 
@@ -87,6 +88,11 @@ const StakingMigrateModal = dynamic(() =>
 const ReadOnlyModal = dynamic(() =>
   import('src/components/WalletConnection/ReadOnlyModal').then((module) => module.ReadOnlyModal)
 );
+
+// Capture `?referral_code=` before any client-side navigation can strip it from the URL.
+if (typeof window !== 'undefined') {
+  captureReferralCode();
+}
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
