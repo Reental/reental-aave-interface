@@ -48,3 +48,55 @@ La correspondencia entre solidity y la configuracion de AAve V3
   WETH_GATEWAY - "wrappedTokenGateway": "0x4B4EFF8F9DaAaD75aE3aAD52aFB12022aE4Cb79e"
 }
 ```
+
+## Códigos de referido on-chain
+
+Atribuimos depósitos a partners usando el `referralCode` (uint16) de Aave V3, que queda indexado en el evento `Supply` del Pool. Sin servicios de analítica de terceros.
+
+### Añadir un partner
+
+Editar `src/ui-config/referralCodes.json` (slug → número):
+
+```json
+{
+  "merkl": 1,
+  "turtle": 2
+}
+```
+
+- Slugs en minúsculas.
+- Valores enteros entre `1` y `65535` (`0` = sin referido). No reutilizar números de partners antiguos.
+- Para desactivar un partner basta con quitarlo del JSON: los usuarios que ya lo tuvieran guardado vuelven a enviar `0`.
+
+Enlace a compartir con el partner: `https://<app>/?referral_code=<slug>`
+
+### Comportamiento
+
+- Se activa por market con el flag `enabledFeatures.referralCode` en `src/ui-config/marketsConfig.tsx` (activo en `reental_polygon_v3` y `reental_sepolia_v3`). En markets sin el flag (p. ej. Aave Ethereum) se envía siempre `0`. Lo resuelve `getReferralCodeForMarket(marketData)`.
+- `captureReferralCode()` (`src/utils/referral.ts`) se ejecuta al cargar `pages/_app.page.tsx`, lee `referral_code` de la URL y, si el slug está en la whitelist, lo guarda en `localStorage` (`reental_referral_v1`).
+- Last-touch: un nuevo enlace válido sobrescribe el anterior. Slugs desconocidos se ignoran (no borran el existente).
+- Caduca a los 30 días (`REFERRAL_TTL_DAYS`).
+- En markets con el flag, el código se envía en todos los depósitos: `supply`, `supplyWithPermit`, depósito de ETH nativo vía WETH Gateway y tokens envueltos (`TokenWrapperService`).
+
+### Cómo medir
+
+Filtrar los eventos `Supply` del proxy del Pool (`POOL` en `src/ui-config/custom`) por `referralCode` (topic 3, indexado):
+
+```ts
+import { createPublicClient, http, parseAbiItem } from 'viem';
+import { polygon } from 'viem/chains';
+
+const client = createPublicClient({ chain: polygon, transport: http() });
+
+const logs = await client.getLogs({
+  address: POOL_PROXY_ADDRESS,
+  event: parseAbiItem(
+    'event Supply(address indexed reserve, address user, address indexed onBehalfOf, uint256 amount, uint16 indexed referralCode)'
+  ),
+  args: { referralCode: 1 },
+  fromBlock: FROM_BLOCK,
+  toBlock: 'latest',
+});
+```
+
+Limitación: solo se atribuyen los depósitos hechos a través de este front-end; los depósitos directos al contrato o desde otras interfaces llevarán su propio `referralCode` (normalmente `0`).
