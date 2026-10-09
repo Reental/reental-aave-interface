@@ -1,19 +1,21 @@
 import { API_ETH_MOCK_ADDRESS } from '@aave/contract-helpers';
-import { Trans } from '@lingui/macro';
+import { t, Trans } from '@lingui/macro';
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { Fragment, useMemo, useState } from 'react';
 import { ListColumn } from 'src/components/lists/ListColumn';
 import { ListHeaderTitle } from 'src/components/lists/ListHeaderTitle';
 import { ListHeaderWrapper } from 'src/components/lists/ListHeaderWrapper';
+import { ListSearchBar } from 'src/components/lists/ListSearchBar';
+import { NoSearchResults } from 'src/components/NoSearchResults';
 import { AssetCapsProvider } from 'src/hooks/useAssetCaps';
 import { useReentalDataContext } from 'src/libs/reental/ReentalDataProvider';
 import { useRootStore } from 'src/store/root';
 import { fetchIconSymbolAndName } from 'src/ui-config/reservePatches';
+import { matchesSearchTerm } from 'src/utils/assetSearch';
 import { DASHBOARD, GENERAL } from 'src/utils/events';
 
 import { CollateralSwitchTooltip } from '../../../../components/infoTooltips/CollateralSwitchTooltip';
 import { CollateralTooltip } from '../../../../components/infoTooltips/CollateralTooltip';
-import { TotalSupplyAPYTooltip } from '../../../../components/infoTooltips/TotalSupplyAPYTooltip';
 import { ListWrapper } from '../../../../components/lists/ListWrapper';
 import { useAppDataContext } from '../../../../hooks/app-data-provider/useAppDataProvider';
 import {
@@ -76,6 +78,7 @@ export const SuppliedPositionsList = () => {
   const downToXSM = useMediaQuery(theme.breakpoints.down('xsm'));
   const [sortName, setSortName] = useState('');
   const [sortDesc, setSortDesc] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const [tooltipOpen, setTooltipOpen] = useState<boolean>(false);
 
   const localStorageName = 'showSuppliedSmallBalanceAssets';
@@ -143,6 +146,10 @@ export const SuppliedPositionsList = () => {
     preSortedReserves
   );
 
+  const displayedReserves = sortedReserves.filter((item) =>
+    matchesSearchTerm(searchTerm, item.reserve.symbol, item.reserve.name)
+  );
+
   const RenderHeader: React.FC = () => {
     return (
       <ListHeaderWrapper>
@@ -203,24 +210,6 @@ export const SuppliedPositionsList = () => {
           {!!sortedReserves.length && (
             <>
               <ListTopInfoItem
-                title={<Trans>Balance</Trans>}
-                value={user?.totalLiquidityUSD || 0}
-              />
-              <ListTopInfoItem
-                title={<Trans>APY</Trans>}
-                value={user?.earnedAPY || 0}
-                percent
-                tooltip={
-                  <TotalSupplyAPYTooltip
-                    setOpen={setTooltipOpen}
-                    event={{
-                      eventName: GENERAL.TOOL_TIP,
-                      eventParams: { tooltip: 'Total Supplied APY' },
-                    }}
-                  />
-                }
-              />
-              <ListTopInfoItem
                 title={<Trans>Collateral</Trans>}
                 value={user?.totalCollateralUSD || 0}
                 tooltip={
@@ -240,8 +229,14 @@ export const SuppliedPositionsList = () => {
     >
       {sortedReserves.length ? (
         <>
-          {!downToXSM && <RenderHeader />}
-          {sortedReserves.map((item) => (
+          <ListSearchBar
+            onSearchTermChange={setSearchTerm}
+            placeholder={t`Search asset name or symbol`}
+            wrapperSx={{ pt: 2 }}
+          />
+          {!downToXSM && !!displayedReserves.length && <RenderHeader />}
+          {!displayedReserves.length && !!searchTerm && <NoSearchResults searchTerm={searchTerm} />}
+          {displayedReserves.map((item) => (
             <Fragment key={item.underlyingAsset}>
               <AssetCapsProvider asset={item.reserve}>
                 {downToXSM ? (

@@ -1,18 +1,21 @@
 import { API_ETH_MOCK_ADDRESS } from '@aave/contract-helpers';
 import { USD_DECIMALS, valueToBigNumber } from '@aave/math-utils';
-import { Trans } from '@lingui/macro';
+import { t, Trans } from '@lingui/macro';
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { BigNumber } from 'bignumber.js';
 import { Fragment, useState } from 'react';
 import { ListColumn } from 'src/components/lists/ListColumn';
 import { ListHeaderTitle } from 'src/components/lists/ListHeaderTitle';
 import { ListHeaderWrapper } from 'src/components/lists/ListHeaderWrapper';
+import { ListSearchBar } from 'src/components/lists/ListSearchBar';
+import { NoSearchResults } from 'src/components/NoSearchResults';
 import { Warning } from 'src/components/primitives/Warning';
 import { AssetCapsProvider } from 'src/hooks/useAssetCaps';
 import { useWrappedTokens } from 'src/hooks/useWrappedTokens';
 import { useReentalDataContext } from 'src/libs/reental/ReentalDataProvider';
 import { useRootStore } from 'src/store/root';
 import { fetchIconSymbolAndName } from 'src/ui-config/reservePatches';
+import { matchesSearchTerm } from 'src/utils/assetSearch';
 import { DASHBOARD } from 'src/utils/events';
 import { displayGhoForMintableMarket } from 'src/utils/ghoUtilities';
 import { ENABLE_TESTNET, STAGING_ENV } from 'src/utils/marketsAndNetworksConfig';
@@ -68,8 +71,10 @@ export const SupplyAssetsList = () => {
   const theme = useTheme();
   const downToXSM = useMediaQuery(theme.breakpoints.down('xsm'));
 
-  const [sortName, setSortName] = useState('');
+  // Default sort: highest supply APY first (note: sortDesc=false sorts numeric keys descending).
+  const [sortName, setSortName] = useState('supplyAPY');
   const [sortDesc, setSortDesc] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const { bridge, isTestnet, baseAssetSymbol, name: networkName } = currentNetworkConfig;
 
@@ -217,7 +222,7 @@ export const SupplyAssetsList = () => {
     sortName,
     'assets',
     preSortedReserves
-  );
+  ).filter((item) => matchesSearchTerm(searchTerm, item.symbol, item.name));
 
   const RenderHeader: React.FC = () => {
     return (
@@ -328,7 +333,14 @@ export const SupplyAssetsList = () => {
       }
     >
       <>
-        {!downToXSM && !!sortedReserves && !supplyDisabled && <RenderHeader />}
+        {!supplyDisabled && (
+          <ListSearchBar
+            onSearchTermChange={setSearchTerm}
+            placeholder={t`Search asset name or symbol`}
+          />
+        )}
+        {!downToXSM && !!sortedReserves.length && !supplyDisabled && <RenderHeader />}
+        {!sortedReserves.length && !!searchTerm && <NoSearchResults searchTerm={searchTerm} />}
         {sortedReserves.map((item) => (
           <Fragment key={item.underlyingAsset}>
             <AssetCapsProvider asset={item.reserve}>

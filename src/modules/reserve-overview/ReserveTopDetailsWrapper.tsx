@@ -11,8 +11,9 @@ import {
   useTheme,
 } from '@mui/material';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getMarketInfoById, MarketLogo } from 'src/components/MarketSwitcher';
+import { getTokenIconSrc, useDefaultTokenIcon } from 'src/components/primitives/TokenIcon';
 import { useWeb3Context } from 'src/libs/hooks/useWeb3Context';
 import { useRootStore } from 'src/store/root';
 import { displayGhoForMintableMarket } from 'src/utils/ghoUtilities';
@@ -39,7 +40,7 @@ export const ReserveTopDetailsWrapper = ({ underlyingAsset }: ReserveTopDetailsP
   const [currentMarket, currentChainId] = useRootStore(
     useShallow((state) => [state.currentMarket, state.currentChainId])
   );
-  const { market, logo } = getMarketInfoById(currentMarket);
+  const { market, logo, networkLogo, networkName } = getMarketInfoById(currentMarket);
   const {
     addERC20Token,
     switchNetwork,
@@ -54,7 +55,12 @@ export const ReserveTopDetailsWrapper = ({ underlyingAsset }: ReserveTopDetailsP
     (reserve) => reserve.underlyingAsset === underlyingAsset
   ) as ComputedReserveData;
 
-  const [tokenSymbol, setTokenSymbol] = useState(poolReserve.iconSymbol.toLowerCase());
+  const defaultTokenIcon = useDefaultTokenIcon();
+  const [iconError, setIconError] = useState(false);
+
+  useEffect(() => {
+    setIconError(false);
+  }, [poolReserve.iconSymbol]);
 
   const valueTypographyVariant = downToSM ? 'main16' : 'main21';
 
@@ -62,11 +68,18 @@ export const ReserveTopDetailsWrapper = ({ underlyingAsset }: ReserveTopDetailsP
     return (
       <Box mr={3} sx={{ mr: 3, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         {loading ? (
-          <Skeleton variant="circular" width={40} height={40} sx={{ background: '#1F2937' }} />
+          <Skeleton
+            variant="circular"
+            width={40}
+            height={40}
+            sx={{ background: theme.palette.mode === 'dark' ? '#1F2937' : undefined }}
+          />
         ) : (
           <img
-            src={`/icons/tokens/${tokenSymbol}.svg`}
-            onError={() => setTokenSymbol('default')}
+            src={
+              iconError ? defaultTokenIcon : getTokenIconSrc(poolReserve.iconSymbol.toLowerCase())
+            }
+            onError={() => setIconError(true)}
             width="40px"
             height="40px"
             alt=""
@@ -78,7 +91,11 @@ export const ReserveTopDetailsWrapper = ({ underlyingAsset }: ReserveTopDetailsP
 
   const ReserveName = () => {
     return loading ? (
-      <Skeleton width={60} height={28} sx={{ background: '#1F2937' }} />
+      <Skeleton
+        width={60}
+        height={28}
+        sx={{ background: theme.palette.mode === 'dark' ? '#1F2937' : undefined }}
+      />
     ) : (
       <Typography variant={valueTypographyVariant}>{poolReserve.name}</Typography>
     );
@@ -121,8 +138,13 @@ export const ReserveTopDetailsWrapper = ({ underlyingAsset }: ReserveTopDetailsP
             </Button>
 
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <MarketLogo size={20} logo={logo} />
-              <Typography variant="subheader1" sx={{ color: 'common.white' }}>
+              <MarketLogo
+                size={20}
+                logo={logo}
+                networkLogo={networkLogo}
+                networkName={networkName}
+              />
+              <Typography variant="subheader1" sx={{ color: 'text.primary' }}>
                 {market.marketTitle} <Trans>Market</Trans>
               </Typography>
               {market.v3 && (
@@ -153,7 +175,14 @@ export const ReserveTopDetailsWrapper = ({ underlyingAsset }: ReserveTopDetailsP
                 <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
                   <ReserveName />
                   {loading ? (
-                    <Skeleton width={160} height={16} sx={{ ml: 1, background: 'red' }} />
+                    <Skeleton
+                      width={160}
+                      height={16}
+                      sx={{
+                        ml: 1,
+                        background: theme.palette.mode === 'dark' ? '#1F2937' : undefined,
+                      }}
+                    />
                   ) : (
                     <Box sx={{ display: 'flex' }}>
                       <TokenLinkDropdown
@@ -212,11 +241,7 @@ export const ReserveTopDetailsWrapper = ({ underlyingAsset }: ReserveTopDetailsP
               </Box>
             </Box>
           </TopInfoPanelItem>
-          <Divider
-            orientation="vertical"
-            flexItem
-            sx={{ my: 1, borderColor: 'rgba(235, 235, 239, 0.08)' }}
-          />
+          <Divider orientation="vertical" flexItem sx={{ my: 1, borderColor: 'divider' }} />
         </>
       )}
       {isGho ? (

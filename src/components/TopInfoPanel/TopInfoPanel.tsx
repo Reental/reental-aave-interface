@@ -23,13 +23,20 @@ export const TopInfoPanel = ({
 }: TopInfoPanelProps) => {
   return (
     <Box
-      sx={{
-        bgcolor: 'background.header',
-        pt: { xs: 10, md: 12 },
-        pb: { xs: 18, md: 20, lg: '94px', xl: '92px', xxl: '96px' },
-        color: '#F1F1F3',
-        ...wrapperSx,
-      }}
+      sx={[
+        (theme) => ({
+          // Dark: RNT Body Color header band. Light: a light "card" surface so the
+          // band reads as a card instead of keeping the dark header (Manual de Marca).
+          bgcolor:
+            theme.palette.mode === 'dark'
+              ? theme.palette.background.header
+              : theme.palette.background.surface,
+          pt: { xs: 10, md: 12 },
+          pb: { xs: 18, md: 20, lg: '94px', xl: '92px', xxl: '96px' },
+          color: theme.palette.mode === 'dark' ? '#F1F1F3' : theme.palette.text.primary,
+        }),
+        ...(Array.isArray(wrapperSx) ? wrapperSx : [wrapperSx]),
+      ]}
     >
       <Container {...containerProps} sx={{ ...containerProps.sx, pb: 0 }}>
         <Box sx={{ px: { xs: 4, xsm: 6 } }}>

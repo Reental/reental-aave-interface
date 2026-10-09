@@ -55,7 +55,7 @@ export const PageTitle = ({
           <Typography
             variant={downToXSM ? 'h2' : upToLG ? 'display1' : 'h1'}
             sx={{
-              color: withMarketSwitcher ? 'text.muted' : 'text.white',
+              color: withMarketSwitcher ? 'text.muted' : 'text.primary',
               mr: { xs: 5, xsm: 3 },
               mb: { xs: 1, xsm: 0 },
             }}

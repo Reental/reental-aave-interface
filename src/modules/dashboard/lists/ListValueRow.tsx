@@ -26,7 +26,7 @@ export const ListValueRow = ({
           <FormattedNumber
             value={value}
             variant="secondary14"
-            color={disabled ? 'text.disabled' : 'text.primary'}
+            color={disabled ? 'text.disabled' : 'primary.main'}
           />
           {capsComponent}
         </Box>

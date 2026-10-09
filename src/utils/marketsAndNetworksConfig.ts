@@ -24,7 +24,9 @@ export type Pool = {
 export const STAGING_ENV = process.env.NEXT_PUBLIC_ENV === 'staging';
 export const PROD_ENV = !process.env.NEXT_PUBLIC_ENV || process.env.NEXT_PUBLIC_ENV === 'prod';
 export const ENABLE_TESTNET =
-  PROD_ENV && global?.window?.localStorage.getItem('testnetsEnabled') === 'true';
+  PROD_ENV &&
+  (process.env.NEXT_PUBLIC_ENABLE_TESTNET === 'true' ||
+    global?.window?.localStorage.getItem('testnetsEnabled') === 'true');
 
 // determines if forks should be shown
 export const FORK_ENABLED =
@@ -151,6 +153,10 @@ export const isFeatureEnabled = {
   debtSwitch: (data: MarketDataType) => data.enabledFeatures?.debtSwitch,
   withdrawAndSwitch: (data: MarketDataType) => data.enabledFeatures?.withdrawAndSwitch,
   switch: (data: MarketDataType) => data.enabledFeatures?.switch,
+  twoFA: (data: MarketDataType) => data.enabledFeatures?.twoFA,
+  metrics: (data: MarketDataType) => data.enabledFeatures?.metrics,
+  liquidations: (data: MarketDataType) =>
+    !!data.enabledFeatures?.liquidations && !!data.addresses.SHARED_LIQUIDATION_ROUTER,
 };
 
 const providers: { [network: string]: ProviderWithSend } = {};

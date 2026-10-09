@@ -64,7 +64,7 @@ export const DashboardEModeButton = ({ userEmodeCategoryId }: DashboardEModeButt
         variant="outlined"
         sx={(theme) => ({
           ml: 1,
-          borderRadius: '4px',
+          borderRadius: '10px',
           p: 0,
           '&:after': {
             content: "''",
@@ -74,7 +74,7 @@ export const DashboardEModeButton = ({ userEmodeCategoryId }: DashboardEModeButt
             bottom: -1,
             top: -1,
             background: isEModeDisabled ? 'transparent' : theme.palette.gradients.aaveGradient,
-            borderRadius: '4px',
+            borderRadius: '10px',
           },
         })}
       >
@@ -90,7 +90,7 @@ export const DashboardEModeButton = ({ userEmodeCategoryId }: DashboardEModeButt
                 : theme.palette.background.surface
               : theme.palette.background.paper,
             px: '4px',
-            borderRadius: '4px',
+            borderRadius: '9px',
           })}
         >
           <SvgIcon

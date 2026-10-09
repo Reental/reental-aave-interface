@@ -4,6 +4,7 @@ import { Button, List, ListItem, Typography, useMediaQuery, useTheme } from '@mu
 import * as React from 'react';
 import { useRootStore } from 'src/store/root';
 import { NAV_BAR } from 'src/utils/events';
+import { isFeatureEnabled } from 'src/utils/marketsAndNetworksConfig';
 import { useShallow } from 'zustand/shallow';
 
 import { Link, ROUTES } from '../../components/primitives/Link';
@@ -19,11 +20,16 @@ export const NavItems = ({ setOpen }: NavItemsProps) => {
   // const { i18n } = useLingui();
   const { breakpoints } = useTheme();
   const md = useMediaQuery(breakpoints.down('md'));
-  const [trackEvent] = useRootStore(
+  const [trackEvent, currentMarketData] = useRootStore(
     useShallow((store) => [store.trackEvent, store.currentMarketData])
   );
 
-  const navigation = [
+  const navigation: {
+    link: string;
+    title: JSX.Element;
+    dataCy: string;
+    isVisible?: () => boolean;
+  }[] = [
     {
       link: ROUTES.dashboard,
       title: <Trans>Dashboard</Trans>,
@@ -34,6 +40,24 @@ export const NavItems = ({ setOpen }: NavItemsProps) => {
       title: <Trans>Markets</Trans>,
       dataCy: 'menuMarkets',
     },
+    {
+      link: ROUTES.liquidations,
+      title: <Trans>Liquidations</Trans>,
+      dataCy: 'menuLiquidations',
+      // Only markets with a liquidation router (Reental), not the official Aave one
+      isVisible: () => !!isFeatureEnabled.liquidations(currentMarketData),
+    },
+    {
+      link: ROUTES.bridge,
+      title: <Trans>Bridge</Trans>,
+      dataCy: 'menuBridge',
+    },
+    // Hidden for now.
+    // {
+    //   link: ROUTES.analytics,
+    //   title: <Trans>Analytics</Trans>,
+    //   dataCy: 'menuAnalytics',
+    // },
     // {
     //   link: ROUTES.terms,
     //   title: <Trans>Terms</Trans>,
@@ -73,7 +97,7 @@ export const NavItems = ({ setOpen }: NavItemsProps) => {
       disablePadding
     >
       {navigation
-        // .filter((item) => !item.isVisible || item.isVisible(currentMarketData))
+        .filter((item) => !item.isVisible || item.isVisible())
         .map((item, index) => (
           <ListItem
             sx={{
@@ -101,7 +125,7 @@ export const NavItems = ({ setOpen }: NavItemsProps) => {
                 onClick={() => handleClick(item.title.toString(), false)}
                 href={item.link}
                 sx={(theme) => ({
-                  color: '#F1F1F3',
+                  color: 'text.primary',
                   p: '6px 8px',
                   position: 'relative',
                   '.active&:after, &:hover&:after': {

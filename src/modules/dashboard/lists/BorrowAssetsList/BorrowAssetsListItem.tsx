@@ -97,6 +97,7 @@ export const BorrowAssetsListItem = ({
         <Button
           disabled={disableBorrow}
           variant="contained"
+          sx={{ borderRadius: '10px' }}
           onClick={() => {
             openBorrow(underlyingAsset, currentMarket, name, 'dashboard');
           }}
@@ -104,7 +105,8 @@ export const BorrowAssetsListItem = ({
           <Trans>Borrow</Trans>
         </Button>
         <Button
-          variant="outlined"
+          variant="gradient"
+          sx={{ borderRadius: '10px' }}
           component={Link}
           href={ROUTES.reserveOverview(underlyingAsset, currentMarket)}
           onClick={() => {

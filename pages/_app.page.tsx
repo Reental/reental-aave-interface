@@ -1,5 +1,4 @@
 import '/public/fonts/inter/inter.css';
-import '/public/fonts/fustat/index.css';
 import '/src/styles/variables.css';
 
 import { AaveClient, AaveProvider } from '@aave/react';
@@ -17,31 +16,20 @@ import { AddressBlocked } from 'src/components/AddressBlocked';
 import { Meta } from 'src/components/Meta';
 import { TransactionEventHandler } from 'src/components/TransactionEventHandler';
 import { GasStationProvider } from 'src/components/transactions/GasStation/GasStationProvider';
-import { CowOrderToast } from 'src/components/transactions/Switch/cowprotocol/CowOrderToast';
 import { AppDataProvider } from 'src/hooks/app-data-provider/useAppDataProvider';
-import { CowOrderToastProvider } from 'src/hooks/useCowOrderToast';
 import { ModalContextProvider } from 'src/hooks/useModal';
 import { ReentalDataProvider } from 'src/libs/reental/ReentalDataProvider';
 import { Web3ContextProvider } from 'src/libs/web3-data-provider/Web3Provider';
 import { useRootStore } from 'src/store/root';
 import { SharedDependenciesProvider } from 'src/ui-config/SharedDependenciesProvider';
 import { wagmiConfig } from 'src/ui-config/wagmiConfig';
+import { captureReferralCode } from 'src/utils/referral';
 import { WagmiProvider } from 'wagmi';
 import { useShallow } from 'zustand/shallow';
 
 import createEmotionCache from '../src/createEmotionCache';
 import { AppGlobalStyles } from '../src/layouts/AppGlobalStyles';
 import { LanguageProvider } from '../src/libs/LanguageProvider';
-
-const SwitchModal = dynamic(() =>
-  import('src/components/transactions/Switch/SwitchModal').then((module) => module.SwitchModal)
-);
-
-const CollateralSwapModal = dynamic(() =>
-  import('src/components/transactions/Switch/CollateralSwap/CollateralSwapModal').then(
-    (module) => module.CollateralSwapModal
-  )
-);
 
 const BridgeModal = dynamic(() =>
   import('src/components/transactions/Bridge/BridgeModal').then((module) => module.BridgeModal)
@@ -82,19 +70,29 @@ const WithdrawModal = dynamic(() =>
     (module) => module.WithdrawModal
   )
 );
+const LiquidityMandateModal = dynamic(() =>
+  import('src/components/transactions/LiquidityMandate/LiquidityMandateModal').then(
+    (module) => module.LiquidityMandateModal
+  )
+);
+const LiquidateModal = dynamic(() =>
+  import('src/components/transactions/Liquidate/LiquidateModal').then(
+    (module) => module.LiquidateModal
+  )
+);
 const StakingMigrateModal = dynamic(() =>
   import('src/components/transactions/StakingMigrate/StakingMigrateModal').then(
     (module) => module.StakingMigrateModal
   )
 );
-const CancelCowOrderModal = dynamic(() =>
-  import('src/components/transactions/CancelCowOrder/CancelCowOrderModal').then(
-    (module) => module.CancelCowOrderModal
-  )
-);
 const ReadOnlyModal = dynamic(() =>
   import('src/components/WalletConnection/ReadOnlyModal').then((module) => module.ReadOnlyModal)
 );
+
+// Capture `?referral_code=` before any client-side navigation can strip it from the URL.
+if (typeof window !== 'undefined') {
+  captureReferralCode();
+}
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -148,7 +146,10 @@ export default function MyApp(props: MyAppProps) {
         description={
           "Maximize the returns on your real estate investment in Reental using the world's most popular decentralized lending platform."
         }
-        // imageUrl="https://d37o222i0yqhd1.cloudfront.net/images/rntlend_seo.png"
+        imageUrl={`${(process.env.URL || 'https://lend.rnt.finance').replace(
+          /\/$/,
+          ''
+        )}/rntlend_seo.jpg`}
       />
       <NoSsr>
         <AaveProvider client={client}>
@@ -162,36 +163,32 @@ export default function MyApp(props: MyAppProps) {
                   <Web3ContextProvider>
                     <AppGlobalStyles>
                       <AddressBlocked>
-                        <CowOrderToastProvider>
-                          <ModalContextProvider>
-                            <SharedDependenciesProvider>
-                              <AppDataProvider>
-                                <GasStationProvider>
-                                  <ReentalDataProvider>
-                                    {getLayout(<Component {...pageProps} />)}
-                                  </ReentalDataProvider>
-                                  <SupplyModal />
-                                  <WithdrawModal />
-                                  <BorrowModal />
-                                  <RepayModal />
-                                  <CollateralChangeModal />
-                                  <DebtSwitchModal />
-                                  <ClaimRewardsModal />
-                                  <EmodeModal />
-                                  <FaucetModal />
-                                  <TransactionEventHandler />
-                                  <SwitchModal />
-                                  <CollateralSwapModal />
-                                  <StakingMigrateModal />
-                                  <BridgeModal />
-                                  <ReadOnlyModal />
-                                  <CowOrderToast />
-                                  <CancelCowOrderModal />
-                                </GasStationProvider>
-                              </AppDataProvider>
-                            </SharedDependenciesProvider>
-                          </ModalContextProvider>
-                        </CowOrderToastProvider>
+                        <ModalContextProvider>
+                          <SharedDependenciesProvider>
+                            <AppDataProvider>
+                              <GasStationProvider>
+                                <ReentalDataProvider>
+                                  {getLayout(<Component {...pageProps} />)}
+                                </ReentalDataProvider>
+                                <SupplyModal />
+                                <LiquidateModal />
+                                <LiquidityMandateModal />
+                                <WithdrawModal />
+                                <BorrowModal />
+                                <RepayModal />
+                                <CollateralChangeModal />
+                                <DebtSwitchModal />
+                                <ClaimRewardsModal />
+                                <EmodeModal />
+                                <FaucetModal />
+                                <TransactionEventHandler />
+                                <StakingMigrateModal />
+                                <BridgeModal />
+                                <ReadOnlyModal />
+                              </GasStationProvider>
+                            </AppDataProvider>
+                          </SharedDependenciesProvider>
+                        </ModalContextProvider>
                       </AddressBlocked>
                     </AppGlobalStyles>
                   </Web3ContextProvider>

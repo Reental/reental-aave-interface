@@ -2,16 +2,17 @@
   "short_name": "RNT Lend",
   "name": "RNT Lend",
   "description": "Collateralization platform",
-  "iconPath": "reental.svg",
+  "iconPath": "favicon.svg",
   "icons": [
     {
-      "src": "favicon32.png",
-      "sizes": "32x32",
-      "type": "image/png"
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ],
   "start_url": "./index.html",
   "display": "standalone",
-  "theme_color": "#FCA311",
-  "background_color": "#111827"
+  "theme_color": "#0e1201",
+  "background_color": "#0e1201"
 }

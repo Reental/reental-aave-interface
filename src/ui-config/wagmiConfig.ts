@@ -49,7 +49,7 @@ const defaultConfig = {
   appName: 'RNT Lend',
   appDescription: 'Collateralization platform',
   appUrl: 'https://lend.rnt.finance',
-  // appIcon: 'https://avatars.githubusercontent.com/u/47617460?s=200&v=4',
+  appIcon: 'https://lend.rnt.finance/favicon.svg',
 };
 
 const cypressConfig = createConfig(

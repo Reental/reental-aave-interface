@@ -28,16 +28,19 @@ export const CircleIcon = ({ downToSM, tooltipText, children }: CircleIconProps)
         }}
       >
         <Box
-          sx={{
-            bgcolor: '#1F2937',
+          sx={(theme) => ({
+            bgcolor: theme.palette.mode === 'dark' ? '#1F2937' : theme.palette.background.paper,
             width: downToSM ? '18px' : '24px',
             height: downToSM ? '18px' : '24px',
             borderRadius: '50%',
             display: 'flex',
             justifyContent: 'center',
             ml: '8px',
-            border: '0.5px solid rgba(235, 235, 237, 0.12)',
-          }}
+            border:
+              theme.palette.mode === 'dark'
+                ? '0.5px solid rgba(235, 235, 237, 0.12)'
+                : `1px solid ${theme.palette.divider}`,
+          })}
         >
           {children}
         </Box>

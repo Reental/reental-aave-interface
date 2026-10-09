@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { ParentSize } from '@visx/responsive';
 import type { ComputedReserveData } from 'src/hooks/app-data-provider/useAppDataProvider';
 
@@ -17,9 +17,14 @@ export type Fields = { name: Field; color: string; text: string }[];
 export const InterestRateModelGraphContainer = ({
   reserve,
 }: InteresetRateModelGraphContainerProps): JSX.Element => {
+  const theme = useTheme();
   const CHART_HEIGHT = 155;
   const fields: Fields = [
-    { name: 'variableBorrowRate', text: 'Borrow APR, variable', color: '#B6509E' },
+    {
+      name: 'variableBorrowRate',
+      text: 'Borrow APR, variable',
+      color: theme.palette.secondary.main,
+    },
   ];
 
   return (
@@ -32,7 +37,9 @@ export const InterestRateModelGraphContainer = ({
           mb: 4,
         }}
       >
-        <GraphLegend labels={[...fields, { text: 'Utilization Rate', color: '#0062D2' }]} />
+        <GraphLegend
+          labels={[...fields, { text: 'Utilization Rate', color: theme.palette.primary.main }]}
+        />
       </Box>
       <ParentSize>
         {({ width }) => (

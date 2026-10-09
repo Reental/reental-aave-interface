@@ -16,7 +16,7 @@ export const ListItemCanBeCollateral = ({
   const CollateralStates = () => {
     if (usageAsCollateralEnabled && !isIsolated) {
       return (
-        <SvgIcon sx={{ color: 'success.main', fontSize: { xs: '20px', xsm: '24px' } }}>
+        <SvgIcon sx={{ color: 'primary.main', fontSize: { xs: '20px', xsm: '24px' } }}>
           <CheckIcon />
         </SvgIcon>
       );

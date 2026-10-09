@@ -1,6 +1,4 @@
 .container {
-  background-color: #ffffff;
-  border: 1px solid #d1d5db;
   border-radius: 24px;
   display: flex;
   align-items: center;
@@ -24,7 +22,6 @@
   font-size: 14px;
   line-height: 20px;
   font-weight: 600;
-  color: #111827;
 }
 
 .contentButtons {
@@ -40,7 +37,6 @@
 }
 
 .warningIcon {
-  background: #fedaa0;
   width: 32px;
   height: 32px;
   border-radius: 9999px;
@@ -53,14 +49,14 @@
 }
 
 .contentButton {
-  background: #fca311;
-  color: #111827;
+  background: linear-gradient(135deg, #004dff 0%, #97ff38 100%);
+  color: #0e1201;
   font-size: 14px;
   font-weight: 600;
 }
 
 .linkButton {
-  color: #fca311;
+  color: #004dff;
 }
 
 .timeLeft {
@@ -69,7 +65,6 @@
   font-weight: 700;
   width: 60px;
   margin-left: 8px;
-  color: #111827;
 }
 
 .circularProgress {

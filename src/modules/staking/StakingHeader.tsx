@@ -110,7 +110,7 @@ export const StakingHeader: React.FC<StakingHeaderProps> = ({ tvl, stkEmission, 
           symbol="USD"
           variant={valueTypographyVariant}
           symbolsVariant={symbolsTypographyVariant}
-          symbolsColor="#A5A8B6"
+          symbolsColor="primary.main"
           visibleDecimals={2}
         />
       </TopInfoPanelItem>
@@ -121,7 +121,7 @@ export const StakingHeader: React.FC<StakingHeaderProps> = ({ tvl, stkEmission, 
           symbol="AAVE"
           variant={valueTypographyVariant}
           symbolsVariant={symbolsTypographyVariant}
-          symbolsColor="#A5A8B6"
+          symbolsColor="primary.main"
           visibleDecimals={2}
         />
       </TopInfoPanelItem>

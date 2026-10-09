@@ -1,8 +1,8 @@
 export const terms_es = `
 ## 1. ¡Bienvenido a lend.rnt.finance y a la Interfaz!
-Estos Términos de Uso ("Términos") rigen su acceso del sitio web lend.rnt.finance. Los Servicios son proporcionados por Reental DAO ("nosotros", "nos" o "nuestro").
+Estos Términos de Uso ("Términos") rigen su acceso del sitio web lend.rnt.finance. Los Servicios son proporcionados por RNT Finance DAO, LLC ("nosotros", "nos" o "nuestro").
 
-lend.rnt.finance ofrece información y recursos sobre los fundamentos del protocolo de intercambio p2p descentralizado y no custodial llamado Protocolo RNT, compuesto por contratos inteligentes autoejecutables de código abierto desplegados en la blockchain pública Polygon sin permisos. Reental DAO no controla ni opera ninguna versión del Protocolo RNT en ninguna red blockchain.
+lend.rnt.finance ofrece información y recursos sobre los fundamentos del protocolo de intercambio p2p descentralizado y no custodial llamado Protocolo RNT, compuesto por contratos inteligentes autoejecutables de código abierto desplegados en la blockchain pública Polygon sin permisos. RNT Finance DAO, LLC no controla ni opera ninguna versión del Protocolo RNT en ninguna red blockchain.
 
 La Interfaz proporciona una de las aplicaciones disponibles a través de las cuales los usuarios, mediante sus billeteras auto custodiadas, interactúan con el Protocolo RNT.
 
@@ -11,7 +11,6 @@ Está entrando en un acuerdo vinculante.
 AL ACCEDER O UTILIZAR NUESTROS SERVICIOS, QUE INCLUYEN NUESTROS DIVERSOS SITIOS WEB, INCLUYENDO, SIN LIMITACIÓN, lend.rnt.finance (Y CUALQUIER SUBDOMINIO RESPECTIVO); APLICACIONES, Y OTROS SERVICIOS QUE ENLACEN A ESTOS TÉRMINOS, ASÍ COMO CUALQUIER INFORMACIÓN, TEXTO, ENLACES, GRÁFICOS, FOTOS, AUDIO, VIDEO U OTROS MATERIALES ALMACENADOS, RECUPERADOS O QUE APAREZCAN ALLÍ, YA SEA ACCEDIDO A TRAVÉS DEL SITIO O DE OTRA MANERA (COLECTIVAMENTE, LOS "SERVICIOS"), USTED ESTÁ ENTRANDO EN UN ACUERDO VINCULANTE CON NOSOTROS QUE INCLUYE ESTOS TÉRMINOS, LA POLÍTICA DE PRIVACIDAD (QUE SE ENCUENTRA AQUÍ) Y OTRAS POLÍTICAS REFERENCIADAS AQUÍ (COLECTIVAMENTE, EL "ACUERDO").
 
 En la medida en que haya un conflicto entre estos Términos y cualquier término adicional aplicable, estos Términos se controlarán a menos que se indique expresamente lo contrario. Si no está de acuerdo con estos Términos, no debe utilizar los Servicios ni visitar el Sitio ni interactuar con los Servicios.
-
 
 ### Uso de los Servicios.
 
@@ -62,7 +61,7 @@ Reconoces y aceptas que todas las transacciones accesadas a través de las redes
 
 ### Reconoces los riesgos de usar los Servicios.
 
-Asume la responsabilidad de evaluar los Servicios antes de usarlos, y todas las transacciones en la blockchain son irrevocables, finales y sin reembolsos. Los Servicios pueden ser deshabilitados, interrumpidos o afectados negativamente como resultado de ataques cibernéticos sofisticados, aumentos en la actividad, virus informáticos y/u otros desafíos operativos o técnicos, entre otras cosas. Renunciamos a cualquier obligación continua de notificarte sobre todos los posibles riesgos de usar y acceder a nuestros Servicios. Aceptas estos riesgos y aceptas que no buscarás responsabilizar a ninguna Parte Indemnizada de Reental DAO por cualquier pérdida consecuente.
+Asume la responsabilidad de evaluar los Servicios antes de usarlos, y todas las transacciones en la blockchain son irrevocables, finales y sin reembolsos. Los Servicios pueden ser deshabilitados, interrumpidos o afectados negativamente como resultado de ataques cibernéticos sofisticados, aumentos en la actividad, virus informáticos y/u otros desafíos operativos o técnicos, entre otras cosas. Renunciamos a cualquier obligación continua de notificarte sobre todos los posibles riesgos de usar y acceder a nuestros Servicios. Aceptas estos riesgos y aceptas que no buscarás responsabilizar a ninguna Parte Indemnizada de RNT Finance DAO, LLC por cualquier pérdida consecuente.
 
 ### Eres el único responsable de la seguridad de tu cartera auto-custodiada.
 
@@ -125,24 +124,24 @@ Nos reservamos el derecho de investigar y enjuiciar cualquier presunta violació
 
 ### No hacemos representaciones ni garantías.
 
-LOS SERVICIOS SE PROPORCIONAN "TAL CUAL" Y "SEGÚN DISPONIBILIDAD". NOSOTROS Y NUESTRAS MATRICES, SUBSIDIARIAS, AFILIADAS, COMPAÑÍAS RELACIONADAS, DIRECTORES, OFICIALES, EMPLEADOS, AGENTES, REPRESENTANTES, SOCIOS Y LICENCIANTES (COLECTIVAMENTE, LAS “PARTES INDEMNIZADAS DE REENTAL DAO”) NO HACEMOS GARANTÍAS DE NINGÚN TIPO EN RELACIÓN CON LOS SERVICIOS. EN LA MÁXIMA MEDIDA PERMITIDA POR LA LEY APLICABLE, LAS PARTES INDEMNIZADAS DE REENTAL DAO RENUNCIAN A TODAS LAS GARANTÍAS Y CONDICIONES, YA SEAN EXPRESAS O IMPLÍCITAS, DE COMERCIABILIDAD, APTITUD PARA UN PROPÓSITO PARTICULAR O NO INFRACCIÓN, Y RENUNCIAN A TODA RESPONSABILIDAD Y OBLIGACIÓN POR:
+LOS SERVICIOS SE PROPORCIONAN "TAL CUAL" Y "SEGÚN DISPONIBILIDAD". NOSOTROS Y NUESTRAS MATRICES, SUBSIDIARIAS, AFILIADAS, COMPAÑÍAS RELACIONADAS, DIRECTORES, OFICIALES, EMPLEADOS, AGENTES, REPRESENTANTES, SOCIOS Y LICENCIANTES (COLECTIVAMENTE, LAS “PARTES INDEMNIZADAS DE RNT FINANCE DAO, LLC”) NO HACEMOS GARANTÍAS DE NINGÚN TIPO EN RELACIÓN CON LOS SERVICIOS. EN LA MÁXIMA MEDIDA PERMITIDA POR LA LEY APLICABLE, LAS PARTES INDEMNIZADAS DE RNT FINANCE DAO, LLC RENUNCIAN A TODAS LAS GARANTÍAS Y CONDICIONES, YA SEAN EXPRESAS O IMPLÍCITAS, DE COMERCIABILIDAD, APTITUD PARA UN PROPÓSITO PARTICULAR O NO INFRACCIÓN, Y RENUNCIAN A TODA RESPONSABILIDAD Y OBLIGACIÓN POR:
 
 - QUE LOS SERVICIOS SEAN PRECISOS, COMPLETOS, ACTUALES, CONFIABLES, ININTERRUMPIDOS, PUNTUALES, SEGUROS O LIBRES DE ERRORES. LA INFORMACIÓN (INCLUYENDO, SIN LIMITACIÓN, EL VALOR O RESULTADO DE CUALQUIER TRANSACCIÓN) DISPONIBLE A TRAVÉS DEL SERVICIO SE PROPORCIONA SÓLO PARA INFORMACIÓN GENERAL Y NO DEBE CONFIARSE EN ELLA O UTILIZARSE COMO ÚNICA BASE PARA TOMAR DECISIONES. CUALQUIER DEPENDENCIA DE LOS SERVICIOS ES BAJO TU PROPIO RIESGO.
 
-- LESIONES O DAÑOS RESULTANTES DE LOS SERVICIOS. POR EJEMPLO, RECONOCES, ENTIENDES Y ACEPTAS EXPRESAMENTE QUE LOS SERVICIOS PUEDEN CONTENER EFECTOS AUDIOVISUALES, LUCES ESTROBOSCÓPICAS U OTROS MATERIALES QUE PUEDAN AFECTAR TUS SENTIDOS FÍSICOS Y/O CONDICIÓN FÍSICA. ADEMÁS, RECONOCEN EXPRESAMENTE QUE LAS PARTES INDEMNIZADAS DE REENTAL COMPANIES NO SON RESPONSABLES POR LA PÉRDIDA O DAÑO CAUSADO POR LA CONDUCTA DE OTRO USUARIO, ACTORES NO AUTORIZADOS O CUALQUIER ACCESO NO AUTORIZADO A O USO DE LOS SERVICIOS.
+- LESIONES O DAÑOS RESULTANTES DE LOS SERVICIOS. POR EJEMPLO, RECONOCES, ENTIENDES Y ACEPTAS EXPRESAMENTE QUE LOS SERVICIOS PUEDEN CONTENER EFECTOS AUDIOVISUALES, LUCES ESTROBOSCÓPICAS U OTROS MATERIALES QUE PUEDAN AFECTAR TUS SENTIDOS FÍSICOS Y/O CONDICIÓN FÍSICA. ADEMÁS, RECONOCEN EXPRESAMENTE QUE LAS PARTES INDEMNIZADAS DE RNT FINANCE DAO, LLC COMPANIES NO SON RESPONSABLES POR LA PÉRDIDA O DAÑO CAUSADO POR LA CONDUCTA DE OTRO USUARIO, ACTORES NO AUTORIZADOS O CUALQUIER ACCESO NO AUTORIZADO A O USO DE LOS SERVICIOS.
 
 - VIRUS, GUSANOS, CABALLOS DE TROYA, BOMBAS DE TIEMPO, CANCEL BOTS, ARAÑAS, MALWARE U OTRO TIPO DE CÓDIGO MALICIOSO QUE PUEDA SER UTILIZADO DE CUALQUIER MANERA PARA AFECTAR LA FUNCIONALIDAD U OPERACIÓN DE LOS SERVICIOS.
 
 ### Limitación de Responsabilidad.
 
-EN LA MÁXIMA MEDIDA PERMITIDA POR LA LEY, EN NINGÚN CASO NINGUNA PARTE INDEMNIZADA DE REENTAL DAO SERÁ RESPONSABLE ANTE TI POR CUALQUIER PÉRDIDA, DAÑO O LESIÓN DE NINGÚN TIPO, INCLUYENDO CUALQUIER PÉRDIDA O DAÑO DIRECTO, INDIRECTO, ESPECIAL, INCIDENTAL, EJEMPLAR, CONSECUENTE O PUNITIVO, O DAÑOS POR FALLA DEL SISTEMA O MAL FUNCIONAMIENTO O PÉRDIDA DE GANANCIAS, DATOS, USO, NEGOCIO O BUENA VOLUNTAD U OTRAS PÉRDIDAS INTANGIBLES, QUE SURJAN O ESTÉN RELACIONADAS CON:
+EN LA MÁXIMA MEDIDA PERMITIDA POR LA LEY, EN NINGÚN CASO NINGUNA PARTE INDEMNIZADA DE RNT FINANCE DAO, LLC SERÁ RESPONSABLE ANTE TI POR CUALQUIER PÉRDIDA, DAÑO O LESIÓN DE NINGÚN TIPO, INCLUYENDO CUALQUIER PÉRDIDA O DAÑO DIRECTO, INDIRECTO, ESPECIAL, INCIDENTAL, EJEMPLAR, CONSECUENTE O PUNITIVO, O DAÑOS POR FALLA DEL SISTEMA O MAL FUNCIONAMIENTO O PÉRDIDA DE GANANCIAS, DATOS, USO, NEGOCIO O BUENA VOLUNTAD U OTRAS PÉRDIDAS INTANGIBLES, QUE SURJAN O ESTÉN RELACIONADAS CON:
 
 - LOS SERVICIOS O TU INCAPACIDAD PARA USAR O ACCEDER A LOS SERVICIOS
 - MAL USO DE LOS SERVICIOS (INCLUYENDO, SIN LIMITACIÓN, ACCESO NO AUTORIZADO A LOS SERVICIOS)
 - CUALQUIER CONDUCTA DEL USUARIO EN LOS SERVICIOS
 - TERMINACIÓN, SUSPENSIÓN O RESTRICCIÓN DE ACCESO A CUALQUIER SERVICIO
 
-ADEMÁS DE LO ANTERIOR, NINGUNA PARTE INDEMNIZADA DE REENTAL DAO SERÁ RESPONSABLE DE CUALQUIER DAÑO CAUSADO EN SU TOTALIDAD O EN PARTE POR:
+ADEMÁS DE LO ANTERIOR, NINGUNA PARTE INDEMNIZADA DE RNT FINANCE DAO, LLC SERÁ RESPONSABLE DE CUALQUIER DAÑO CAUSADO EN SU TOTALIDAD O EN PARTE POR:
 
 - ERROR DEL USUARIO, COMO CONTRASEÑAS OLVIDADAS O CONTRATOS INTELIGENTES O OTRAS TRANSACCIONES CONSTRUIDAS INCORRECTAMENTE
 - FALLA DEL SERVIDOR O PÉRDIDA DE DATOS
@@ -152,17 +151,17 @@ ADEMÁS DE LO ANTERIOR, NINGUNA PARTE INDEMNIZADA DE REENTAL DAO SERÁ RESPONSAB
 - EVENTOS DE FUERZA MAYOR
 - CUALQUIER TERCERO
 
-ESTA LIMITACIÓN DE RESPONSABILIDAD ESTÁ DESTINADA A APLICARSE SIN IMPORTAR SI OTRAS DISPOSICIONES DE ESTOS TÉRMINOS HAN SIDO VIOLADAS O HAN RESULTADO INEFICACES. LAS LIMITACIONES ESTABLECIDAS EN ESTA SECCIÓN SE APLICARÁN INDEPENDIENTEMENTE DE LA FORMA DE ACCIÓN, YA SEA QUE LA RESPONSABILIDAD O LOS DAÑOS ALEGADOS ESTÉN BASADOS EN CONTRATO, INDEMNIZACIÓN, AGRAVIO, RESPONSABILIDAD ESTRICTA, ESTATUTO O CUALQUIER OTRA TEORÍA LEGAL O EQUITATIVA, Y YA SEA QUE LAS PARTES INDEMNIZADAS DE REENTAL COMPANIES HAYAN SIDO INFORMADAS DE LA POSIBILIDAD DE TALES DAÑOS.
+ESTA LIMITACIÓN DE RESPONSABILIDAD ESTÁ DESTINADA A APLICARSE SIN IMPORTAR SI OTRAS DISPOSICIONES DE ESTOS TÉRMINOS HAN SIDO VIOLADAS O HAN RESULTADO INEFICACES. LAS LIMITACIONES ESTABLECIDAS EN ESTA SECCIÓN SE APLICARÁN INDEPENDIENTEMENTE DE LA FORMA DE ACCIÓN, YA SEA QUE LA RESPONSABILIDAD O LOS DAÑOS ALEGADOS ESTÉN BASADOS EN CONTRATO, INDEMNIZACIÓN, AGRAVIO, RESPONSABILIDAD ESTRICTA, ESTATUTO O CUALQUIER OTRA TEORÍA LEGAL O EQUITATIVA, Y YA SEA QUE LAS PARTES INDEMNIZADAS DE RNT FINANCE DAO, LLC HAYAN SIDO INFORMADAS DE LA POSIBILIDAD DE TALES DAÑOS.
 
-EN NINGÚN CASO LA RESPONSABILIDAD ACUMULATIVA DE LAS PARTES INDEMNIZADAS DE REENTAL DAO HACIA TI O CUALQUIER OTRO USUARIO, DE TODAS LAS CAUSAS DE ACCIÓN Y TODAS LAS TEORÍAS DE RESPONSABILIDAD, EXCEDERÁ MIL DÓLARES ESTADOUNIDENSES (US $1,000.00).
+EN NINGÚN CASO LA RESPONSABILIDAD ACUMULATIVA DE LAS PARTES INDEMNIZADAS DE RNT FINANCE DAO, LLC HACIA TI O CUALQUIER OTRO USUARIO, DE TODAS LAS CAUSAS DE ACCIÓN Y TODAS LAS TEORÍAS DE RESPONSABILIDAD, EXCEDERÁ MIL DÓLARES ESTADOUNIDENSES (US $1,000.00).
 
-EN NINGÚN CASO NINGUNA PARTE INDEMNIZADA DE REENTAL DAO ESTARÁ OBLIGADA A ENTREGARTE NINGUNA MONEDA VIRTUAL COMO DAÑOS, A REALIZAR UNA EJECUCIÓN ESPECÍFICA O CUALQUIER OTRO REMEDIO. SI VAS A BASAR TUS CÁLCULOS DE DAÑOS DE ALGUNA MANERA EN EL VALOR DE LA MONEDA VIRTUAL, TÚ Y NOSOTROS ACEPTAMOS QUE EL CÁLCULO SE BASARÁ EN EL VALOR MÁS BAJO DE LA MONEDA VIRTUAL DURANTE EL PERIODO ENTRE LA ACUMULACIÓN DE LA RECLAMACIÓN Y LA ADJUDICACIÓN DE LOS DAÑOS.
+EN NINGÚN CASO NINGUNA PARTE INDEMNIZADA DE RNT FINANCE DAO, LLC ESTARÁ OBLIGADA A ENTREGARTE NINGUNA MONEDA VIRTUAL COMO DAÑOS, A REALIZAR UNA EJECUCIÓN ESPECÍFICA O CUALQUIER OTRO REMEDIO. SI VAS A BASAR TUS CÁLCULOS DE DAÑOS DE ALGUNA MANERA EN EL VALOR DE LA MONEDA VIRTUAL, TÚ Y NOSOTROS ACEPTAMOS QUE EL CÁLCULO SE BASARÁ EN EL VALOR MÁS BAJO DE LA MONEDA VIRTUAL DURANTE EL PERIODO ENTRE LA ACUMULACIÓN DE LA RECLAMACIÓN Y LA ADJUDICACIÓN DE LOS DAÑOS.
 
-Algunas jurisdicciones no permiten la exclusión o limitación de ciertas garantías y responsabilidades previstas en esta sección; en consecuencia, algunas de las limitaciones y exenciones anteriores pueden no aplicarse a ti. En la medida en que la ley aplicable no permita que las Partes Indemnizadas de Reental Companies renuncien a ciertas garantías o limiten ciertas responsabilidades, la extensión de la responsabilidad de las Partes Indemnizadas de Reental DAO y el alcance de dichas garantías serán según lo permitido por la ley aplicable.
+Algunas jurisdicciones no permiten la exclusión o limitación de ciertas garantías y responsabilidades previstas en esta sección; en consecuencia, algunas de las limitaciones y exenciones anteriores pueden no aplicarse a ti. En la medida en que la ley aplicable no permita que las Partes Indemnizadas de RNT Finance DAO, LLC renuncien a ciertas garantías o limiten ciertas responsabilidades, la extensión de la responsabilidad de las Partes Indemnizadas de RNT Finance DAO, LLC y el alcance de dichas garantías serán según lo permitido por la ley aplicable.
 
 ## 8. Indemnización
 
-Aceptas indemnizar, defender y mantener indemnes a las Partes Indemnizadas de Reental DAO de cualquier reclamación o demanda, incluyendo honorarios razonables de abogados, hecha por cualquier tercero debido a o derivada de: (a) tu incumplimiento o presunto incumplimiento del Acuerdo (incluyendo, sin limitación, estos Términos); (b) cualquier cosa que contribuyas a los Servicios; (c) tu uso indebido de los Servicios, o cualquier contrato inteligente y/o script relacionado con ellos; (d) tu violación de cualquier ley, norma, regulación, código, estatuto, ordenanza u orden de cualquier autoridad gubernamental o cuasi-gubernamental; (e) tu violación de los derechos de cualquier tercero, incluyendo cualquier derecho de propiedad intelectual, publicidad, confidencialidad, propiedad o privacidad; (f) tu uso de un producto, servicio y/o sitio web de terceros; o (g) cualquier tergiversación hecha por ti. Nos reservamos el derecho de asumir, a tu costo, la defensa y control exclusivos de cualquier asunto sujeto a indemnización por tu parte. Aceptas cooperar con nuestra defensa de cualquier reclamación. En ningún caso resolverás ninguna reclamación sin nuestro previo consentimiento por escrito.
+Aceptas indemnizar, defender y mantener indemnes a las Partes Indemnizadas de RNT Finance DAO, LLC de cualquier reclamación o demanda, incluyendo honorarios razonables de abogados, hecha por cualquier tercero debido a o derivada de: (a) tu incumplimiento o presunto incumplimiento del Acuerdo (incluyendo, sin limitación, estos Términos); (b) cualquier cosa que contribuyas a los Servicios; (c) tu uso indebido de los Servicios, o cualquier contrato inteligente y/o script relacionado con ellos; (d) tu violación de cualquier ley, norma, regulación, código, estatuto, ordenanza u orden de cualquier autoridad gubernamental o cuasi-gubernamental; (e) tu violación de los derechos de cualquier tercero, incluyendo cualquier derecho de propiedad intelectual, publicidad, confidencialidad, propiedad o privacidad; (f) tu uso de un producto, servicio y/o sitio web de terceros; o (g) cualquier tergiversación hecha por ti. Nos reservamos el derecho de asumir, a tu costo, la defensa y control exclusivos de cualquier asunto sujeto a indemnización por tu parte. Aceptas cooperar con nuestra defensa de cualquier reclamación. En ningún caso resolverás ninguna reclamación sin nuestro previo consentimiento por escrito.
 
 Nos reservamos el derecho de asumir, a tu costo, la defensa y control exclusivos de cualquier asunto sujeto a indemnización por tu parte. Aceptas cooperar con nuestra defensa de cualquier reclamación. En ningún caso resolverás ninguna reclamación sin nuestro previo consentimiento por escrito.
 
@@ -186,8 +185,7 @@ Al rechazar cualquier cambio a estos Términos, aceptas que arbitrarás cualquie
 
 ## 10. Renuncia a Medidas Cautelares u Otro Tipo de Alivio Equitativo
 
-EN LA MÁXIMA MEDIDA PERMITIDA POR LA LEY, ACEPTAS QUE NO SE TE PERMITIRÁ OBTENER UNA MEDIDA CAUTELAR U OTRO TIPO DE ALIVIO EQUITATIVO DE NINGÚN TIPO, COMO CUALQUIER ACCIÓN JUDICIAL U OTRA ACCIÓN QUE PUEDA INTERFERIR O PREVENIR EL DESARROLLO O EXPLOTACIÓN DE LOS SERVICIOS, O CUALQUIER OTRO SITIO WEB, APLICACIÓN, CONTENIDO, ENVÍO, PRODUCTO, SERVICIO O PROPIEDAD INTELECTUAL QUE POSEA, LICENCIE, USE O CONTROLE CUALQUIER PARTE INDEMNIZADA DE Reental DAO.
-
+EN LA MÁXIMA MEDIDA PERMITIDA POR LA LEY, ACEPTAS QUE NO SE TE PERMITIRÁ OBTENER UNA MEDIDA CAUTELAR U OTRO TIPO DE ALIVIO EQUITATIVO DE NINGÚN TIPO, COMO CUALQUIER ACCIÓN JUDICIAL U OTRA ACCIÓN QUE PUEDA INTERFERIR O PREVENIR EL DESARROLLO O EXPLOTACIÓN DE LOS SERVICIOS, O CUALQUIER OTRO SITIO WEB, APLICACIÓN, CONTENIDO, ENVÍO, PRODUCTO, SERVICIO O PROPIEDAD INTELECTUAL QUE POSEA, LICENCIE, USE O CONTROLE CUALQUIER PARTE INDEMNIZADA DE RNT FINANCE DAO, LLC.
 
 ## 11. Terminación; Cancelación
 
@@ -201,7 +199,7 @@ Si alguna disposición del Acuerdo (incluyendo, sin limitación, estos Términos
 
 ## 13. Cesión
 
-El Acuerdo (incluyendo, sin limitación, estos Términos) puede ser asignado sin tu consentimiento previo a cualquier Parte Indemnizada de Reental DAO, o a sus sucesores en interés de cualquier negocio asociado con los Servicios proporcionados por nosotros. No puedes ceder ni transferir ningún derecho u obligación bajo el Acuerdo sin nuestro consentimiento previo por escrito.
+El Acuerdo (incluyendo, sin limitación, estos Términos) puede ser asignado sin tu consentimiento previo a cualquier Parte Indemnizada de RNT Finance DAO, LLC, o a sus sucesores en interés de cualquier negocio asociado con los Servicios proporcionados por nosotros. No puedes ceder ni transferir ningún derecho u obligación bajo el Acuerdo sin nuestro consentimiento previo por escrito.
 
 ## 14. Acuerdo Completo
 
@@ -213,5 +211,5 @@ Estos Términos y cualquier acuerdo separado por el cual te proporcionamos Servi
 
 ## 16. Contáctanos
 
-Puedes contactarnos con preguntas sobre tu uso de los Servicios en hello@lend.rnt.finance.
+Puedes contactarnos con preguntas sobre tu uso de los Servicios en hello@rnt.finance.
 `;

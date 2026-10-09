@@ -7,6 +7,14 @@ import type {
 } from '@mui/material/Typography/Typography';
 import type { OverridableStringUnion } from '@mui/types';
 import type { ElementType } from 'react';
+import { ENABLE_ORBITRON_DATA_FONT, FONT_DATA } from 'src/utils/theme';
+
+// RNT "Data" style: numeric metrics/KPIs use Orbitron (Manual de Marca V.1)
+// when the flag in theme.tsx is on, the body face otherwise. Regular weight in
+// both cases: the variants' bold weights read too heavy for figures.
+const dataFontSx = ENABLE_ORBITRON_DATA_FONT
+  ? { fontFamily: FONT_DATA, fontWeight: 400 }
+  : { fontWeight: 400 };
 
 interface CompactNumberProps {
   value: string | number;
@@ -114,14 +122,17 @@ export function FormattedNumber({
         flexDirection: 'row',
         alignItems: 'center',
         position: 'relative',
+        ...dataFontSx,
         ...rest.sx,
       }}
       noWrap
     >
+      {/* Symbols ($, %, <) follow the RNT "Data" style too. `&&` bumps specificity
+          so FONT_DATA wins over the symbol variant's own fontFamily. */}
       {isSmallerThanMin && (
         <Typography
           component="span"
-          sx={{ mr: 0.5 }}
+          sx={{ mr: 0.5, '&&': dataFontSx }}
           variant={symbolsVariant || rest.variant}
           color={symbolsColor || 'text.secondary'}
         >
@@ -131,7 +142,7 @@ export function FormattedNumber({
       {symbol?.toLowerCase() === 'usd' && !percent && (
         <Typography
           component="span"
-          sx={{ mr: 0.5 }}
+          sx={{ mr: 0.5, '&&': dataFontSx }}
           variant={symbolsVariant || rest.variant}
           color={symbolsColor || 'text.secondary'}
         >
@@ -153,12 +164,13 @@ export function FormattedNumber({
         />
       )}
 
+      {/* RNT style: the % sign matches the number's color (primary by default). */}
       {percent && (
         <Typography
           component="span"
-          sx={{ ml: 0.5 }}
+          sx={{ ml: 0.5, '&&': dataFontSx }}
           variant={symbolsVariant || rest.variant}
-          color={symbolsColor || 'text.secondary'}
+          color={symbolsColor || rest.color || 'primary.main'}
         >
           %
         </Typography>

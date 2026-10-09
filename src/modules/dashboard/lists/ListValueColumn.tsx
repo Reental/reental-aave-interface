@@ -28,7 +28,7 @@ const Content = ({
           value={value}
           variant="secondary14"
           sx={{ mb: !withTooltip && !!subValue ? '2px' : 0 }}
-          color={disabled ? 'text.disabled' : 'text.main'}
+          color={disabled ? 'text.disabled' : 'primary.main'}
           data-cy={`nativeAmount`}
         />
         {capsComponent}

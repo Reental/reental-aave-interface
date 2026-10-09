@@ -1,9 +1,7 @@
 import { Trans } from '@lingui/macro';
-import { Box, CircularProgress, Paper, PaperProps, Typography } from '@mui/material';
+import { CircularProgress, Paper, PaperProps, Typography } from '@mui/material';
 import { useModal } from 'connectkit';
 import { ReactNode } from 'react';
-
-import LandingGhost from '/public/resting-gho-hat-purple.svg';
 
 import { ConnectWalletButton } from './WalletConnection/ConnectWalletButton';
 
@@ -30,9 +28,6 @@ export const ConnectWalletPaper = ({ description, sx, ...rest }: ConnectWalletPa
         ...sx,
       }}
     >
-      <Box>
-        <LandingGhost />
-      </Box>
       <>
         {open ? (
           <CircularProgress />

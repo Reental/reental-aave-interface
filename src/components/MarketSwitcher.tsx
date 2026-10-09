@@ -4,6 +4,8 @@ import { Trans } from '@lingui/macro';
 import {
   Box,
   BoxProps,
+  Chip,
+  ChipProps,
   ClickAwayListener,
   IconButton,
   ListItemText,
@@ -17,6 +19,7 @@ import {
 } from '@mui/material';
 import React, { JSX, useState } from 'react';
 import { useRootStore } from 'src/store/root';
+import { MarketCategory } from 'src/ui-config/marketsConfig';
 import { BaseNetworkConfig } from 'src/ui-config/networksConfig';
 import { DASHBOARD } from 'src/utils/events';
 import { useShallow } from 'zustand/shallow';
@@ -38,9 +41,13 @@ export const MULTIPLE_MARKET_OPTIONS = ['fork_proto_lido_v3', 'fork_proto_mainne
 export const getMarketInfoById = (marketId: CustomMarket) => {
   const market: MarketDataType = marketsData[marketId as CustomMarket];
   const network: BaseNetworkConfig = networkConfigs[market.chainId];
-  const logo = market.logo || network.networkLogoPath;
+  // Each market has its own logo; markets without one fall back to the RNT Protocol mark.
+  const logo = market.logo || '/rnt-protocol-mark.svg';
+  // Network logo is rendered as a small badge on top of the market logo.
+  const networkLogo = network.networkLogoPath;
+  const networkName = network.name;
 
-  return { market, logo };
+  return { market, logo, networkLogo, networkName };
 };
 
 export const getMarketHelpData = (marketName: string) => {
@@ -75,13 +82,60 @@ type MarketLogoProps = {
   size: number;
   logo: string;
   testChainName?: string;
+  networkLogo?: string;
+  networkName?: string;
   sx?: BoxProps;
 };
 
-export const MarketLogo = ({ size, logo, testChainName, sx }: MarketLogoProps) => {
+export const MarketLogo = ({
+  size,
+  logo,
+  testChainName,
+  networkLogo,
+  networkName,
+  sx,
+}: MarketLogoProps) => {
+  const badgeSize = Math.max(Math.round(size * 0.5), 12);
+
   return (
     <Box sx={{ mr: 2, width: size, height: size, position: 'relative', ...sx }}>
-      <img src={logo} alt="" width="100%" height="100%" />
+      <Box
+        sx={{
+          width: '100%',
+          height: '100%',
+          borderRadius: '50%',
+          overflow: 'hidden',
+          bgcolor: 'background.default',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <img src={logo} alt="" width="100%" height="100%" />
+      </Box>
+
+      {networkLogo && !testChainName && (
+        <Tooltip title={networkName || ''} arrow>
+          <Box
+            sx={{
+              width: `${badgeSize}px`,
+              height: `${badgeSize}px`,
+              borderRadius: '50%',
+              overflow: 'hidden',
+              position: 'absolute',
+              right: '-2px',
+              bottom: '-2px',
+              bgcolor: 'background.default',
+              border: (theme) => `1.5px solid ${theme.palette.background.default}`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <img src={networkLogo} alt="" width="100%" height="100%" />
+          </Box>
+        </Tooltip>
+      )}
 
       {testChainName && (
         <Tooltip title={testChainName} arrow>
@@ -110,6 +164,38 @@ export const MarketLogo = ({ size, logo, testChainName, sx }: MarketLogoProps) =
   );
 };
 
+const badgeSx = {
+  height: '18px',
+  fontSize: '10px',
+  fontWeight: 600,
+  '.MuiChip-label': { px: 1.5 },
+};
+
+const categoryBadges: Record<MarketCategory, { label: JSX.Element; color: ChipProps['color'] }> = {
+  'real-estate': { label: <Trans>Real estate</Trans>, color: 'success' },
+  defi: { label: <Trans>DeFi</Trans>, color: 'info' },
+};
+
+/** Category (Real estate / DeFi) and operator (RNT Protocol / Third-party) of a market */
+export const MarketBadges = ({ market, sx }: { market: MarketDataType; sx?: BoxProps['sx'] }) => (
+  <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1, ...sx }}>
+    <Chip
+      size="small"
+      variant="outlined"
+      color={categoryBadges[market.category].color}
+      label={categoryBadges[market.category].label}
+      sx={badgeSx}
+    />
+    <Chip
+      size="small"
+      variant="outlined"
+      color={market.operator === 'rnt' ? 'primary' : 'default'}
+      label={market.operator === 'rnt' ? <Trans>RNT Protocol</Trans> : <Trans>Third-party</Trans>}
+      sx={badgeSx}
+    />
+  </Box>
+);
+
 enum SelectedMarketVersion {
   V2,
   V3,
@@ -117,6 +203,9 @@ enum SelectedMarketVersion {
 
 // Custom market order requested by BD - TODO: move logic to the backend base on TVL
 const MARKET_ORDER_BY_TITLE: { [title: string]: number } = {
+  'Reental Polygon': -3,
+  'Reental Sepolia': -2,
+  'Aave Ethereum': -1,
   Core: 0,
   Prime: 1,
   Plasma: 2,
@@ -161,6 +250,12 @@ export const MarketSwitcher = () => {
   // Subscribe to favoriteMarkets to trigger re-renders when favorites change
   useRootStore((store) => store.favoriteMarkets);
 
+  // With a single market the switcher is locked and a tooltip explains why
+  const hasMultipleMarkets = availableMarkets.length > 1;
+  const isV2MarketsAvailable = availableMarkets.some(
+    (marketId) => !getMarketInfoById(marketId).market.v3
+  );
+
   const isV3MarketsAvailable = availableMarkets
     .map((marketId: CustomMarket) => {
       const { market } = getMarketInfoById(marketId);
@@ -193,14 +288,19 @@ export const MarketSwitcher = () => {
   };
 
   const marketBlurbs: { [key: string]: JSX.Element } = {
-    reental_polygon_v3: <Trans>RWA market focused on real estate assets.</Trans>,
-    reental_sepolia_v3: <Trans>RWA market focused on real estate assets.</Trans>,
+    reental_polygon_v3: (
+      <Trans>RWA market of real estate tokens issued by Reental over the Polygon network</Trans>
+    ),
+    reental_sepolia_v3: (
+      <Trans>RWA market of real estate tokens issued by Reental over the Sepolia network</Trans>
+    ),
+    proto_mainnet_v3: <Trans>Official Aave V3 Core market on the Ethereum network</Trans>,
   };
 
   return (
     <ClickAwayListener onClickAway={() => setIsUnavailableMarketsTooltipOpen(false)}>
       <Tooltip
-        open={isUnavailableMarketsTooltipOpen}
+        open={!hasMultipleMarkets && isUnavailableMarketsTooltipOpen}
         onClose={() => setIsUnavailableMarketsTooltipOpen(false)}
         disableFocusListener
         disableHoverListener
@@ -209,12 +309,12 @@ export const MarketSwitcher = () => {
         arrow
       >
         <Box
-          onClick={handleUnavailableMarketsClick}
-          role="button"
-          aria-label="show unavailable markets message"
-          aria-disabled="true"
+          onClick={hasMultipleMarkets ? undefined : handleUnavailableMarketsClick}
+          role={hasMultipleMarkets ? undefined : 'button'}
+          aria-label={hasMultipleMarkets ? undefined : 'show unavailable markets message'}
+          aria-disabled={!hasMultipleMarkets}
           sx={{
-            cursor: 'not-allowed',
+            cursor: hasMultipleMarkets ? 'pointer' : 'not-allowed',
             width: 'fit-content',
             display: 'inline-flex',
           }}
@@ -227,7 +327,7 @@ export const MarketSwitcher = () => {
             onChange={handleMarketSelect}
             sx={{
               width: 'fit-content',
-              pointerEvents: 'none',
+              pointerEvents: hasMultipleMarkets ? 'auto' : 'none',
               '& .MuiOutlinedInput-notchedOutline': {
                 border: 'none',
               },
@@ -240,11 +340,13 @@ export const MarketSwitcher = () => {
             }}
             SelectProps={{
               native: false,
-              open: false,
+              ...(hasMultipleMarkets ? {} : { open: false }),
               className: 'MarketSwitcher__select',
               IconComponent: () => null,
               renderValue: (marketId) => {
-                const { market, logo } = getMarketInfoById(marketId as CustomMarket);
+                const { market, logo, networkLogo, networkName } = getMarketInfoById(
+                  marketId as CustomMarket
+                );
 
                 return (
                   <Box>
@@ -253,6 +355,8 @@ export const MarketSwitcher = () => {
                       <MarketLogo
                         size={upToLG ? 32 : 28}
                         logo={logo}
+                        networkLogo={networkLogo}
+                        networkName={networkName}
                         testChainName={getMarketHelpData(market.marketTitle).testChainName}
                       />
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -260,32 +364,22 @@ export const MarketSwitcher = () => {
                           variant={upToLG ? 'display1' : 'h1'}
                           sx={{
                             fontSize: downToXSM ? '1.55rem' : undefined,
-                            color: 'common.white',
+                            // Slightly lighter than the theme's 700 so the switcher isn't so heavy.
+                            fontWeight: 600,
+                            // Header band is dark in dark mode and a light card in light mode.
+                            color: 'text.primary',
                             mr: 1,
                           }}
                         >
-                          {getMarketHelpData(market.marketTitle).name} {market.isFork ? 'Fork' : ''}{' '}
-                          Market
+                          {market.marketTitle} {market.isFork ? 'Fork' : ''} Market
                         </Typography>
                         {market.v3 ? (
                           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            <Box
-                              sx={{
-                                color: '#fff',
-                                px: 2,
-                                borderRadius: '12px',
-                                background: (theme) => theme.palette.gradients.aaveGradient,
-                                display: 'flex',
-                                alignItems: 'center',
-                              }}
-                            >
-                              <Typography variant="subheader2">V3</Typography>
-                            </Box>
                             <SvgIcon
                               fontSize="medium"
                               sx={{
                                 ml: 1,
-                                color: '#F1F1F3',
+                                color: 'text.primary',
                               }}
                             >
                               <ChevronDownIcon />
@@ -309,7 +403,7 @@ export const MarketSwitcher = () => {
                               fontSize="medium"
                               sx={{
                                 ml: 1,
-                                color: '#F1F1F3',
+                                color: 'text.primary',
                               }}
                             >
                               <ChevronDownIcon />
@@ -322,7 +416,7 @@ export const MarketSwitcher = () => {
                     {marketBlurbs[currentMarket] && (
                       <Typography
                         sx={{
-                          color: 'common.white',
+                          color: 'text.secondary',
                           mt: 0.5,
                           fontSize: '0.85rem',
                           wordWrap: 'break-word',
@@ -334,6 +428,8 @@ export const MarketSwitcher = () => {
                         {marketBlurbs[currentMarket]}
                       </Typography>
                     )}
+
+                    <MarketBadges market={market} sx={{ mt: 1 }} />
                   </Box>
                 );
               },
@@ -368,13 +464,11 @@ export const MarketSwitcher = () => {
             <Box>
               <Typography variant="subheader2" color="text.secondary" sx={{ px: 4, pt: 2 }}>
                 <Trans>
-                  {ENABLE_TESTNET || STAGING_ENV
-                    ? 'Select Reental Testnet Market'
-                    : 'Select Reental Market'}
+                  {ENABLE_TESTNET || STAGING_ENV ? 'Select Testnet Market' : 'Select Market'}
                 </Trans>
               </Typography>
             </Box>
-            {isV3MarketsAvailable && (
+            {isV3MarketsAvailable && isV2MarketsAvailable && (
               <Box sx={{ mx: '18px', display: 'flex', justifyContent: 'center' }}>
                 <StyledToggleButtonGroup
                   value={selectedMarketVersion}
@@ -473,7 +567,7 @@ export const MarketSwitcher = () => {
                 return aIsFavorite ? -1 : 1;
               })
               .map((marketId: CustomMarket) => {
-                const { market, logo } = getMarketInfoById(marketId);
+                const { market, logo, networkLogo, networkName } = getMarketInfoById(marketId);
                 const marketNaming = getMarketHelpData(market.marketTitle);
                 const isFavorite = isFavoriteMarket(marketId);
                 return (
@@ -490,9 +584,18 @@ export const MarketSwitcher = () => {
                           : 'flex',
                     }}
                   >
-                    <MarketLogo size={32} logo={logo} testChainName={marketNaming.testChainName} />
-                    <ListItemText sx={{ mr: 0 }}>
-                      {marketNaming.name} {market.isFork ? 'Fork' : ''}
+                    <MarketLogo
+                      size={32}
+                      logo={logo}
+                      networkLogo={networkLogo}
+                      networkName={networkName}
+                      testChainName={marketNaming.testChainName}
+                    />
+                    <ListItemText sx={{ mr: 2 }} disableTypography>
+                      <Typography>
+                        {marketNaming.name} {market.isFork ? 'Fork' : ''}
+                      </Typography>
+                      <MarketBadges market={market} sx={{ mt: 0.5 }} />
                     </ListItemText>
                     <ListItemText
                       sx={{

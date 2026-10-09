@@ -24,6 +24,7 @@ import { useAppDataContext } from 'src/hooks/app-data-provider/useAppDataProvide
 import { HISTORICAL_MARKET_CHAIN_IDS } from 'src/libs/reental/aave/history';
 import { GraphLegend } from 'src/modules/reserve-overview/graphs/GraphLegend';
 import { useRootStore } from 'src/store/root';
+import { FONT_LABEL } from 'src/utils/theme';
 import { useShallow } from 'zustand/shallow';
 
 import { isAssetHidden } from '../dashboard/lists/constants';
@@ -49,7 +50,7 @@ type StatProps = {
   loading: boolean;
   valueVariant: 'main16' | 'main21';
   symbolVariant: 'secondary16' | 'secondary21';
-  labelVariant: 'caption' | 'description';
+  labelVariant: 'helperText' | 'subheader2';
 };
 
 const Stat = ({
@@ -61,56 +62,85 @@ const Stat = ({
   symbolVariant,
   labelVariant,
 }: StatProps) => (
-  <TopInfoPanelItem
-    title={
-      <Typography variant={labelVariant} component="span">
-        {label}
-      </Typography>
-    }
-    titleIcon={
-      <Tooltip
-        arrow
-        placement="top"
-        PopperComponent={PopperComponent}
-        title={
-          <Box
-            sx={{
-              py: 4,
-              px: 6,
-              fontSize: '12px',
-              lineHeight: '16px',
-            }}
-          >
-            {tooltip}
-          </Box>
-        }
-      >
-        <SvgIcon
+  <Box
+    sx={(theme) => ({
+      width: { xs: 'calc(50% - 12px)', xsm: 'unset' },
+      bgcolor: 'background.surface',
+      border: '1px solid',
+      borderColor: 'divider',
+      borderRadius: '14px',
+      px: { xs: 3, sm: 4 },
+      py: { xs: 2.5, sm: 3 },
+      ...(theme.palette.mode === 'dark' && {
+        boxShadow: '0 0 24px rgba(151,255,56,.12)',
+      }),
+    })}
+  >
+    <TopInfoPanelItem
+      sx={{ width: '100%' }}
+      title={
+        <Typography
+          variant={labelVariant}
+          component="span"
           sx={{
-            fontSize: 14,
-            ml: 0.5,
-            color: 'text.muted',
-            cursor: 'pointer',
-            '&:hover': { color: 'info.main' },
+            // RNT "Label" style: Orbitron, uppercase, tracked out (Manual de Marca V.1).
+            // `&&` bumps specificity so it wins over the Typography variant's own
+            // fontFamily/letterSpacing (which otherwise take precedence over sx here).
+            '&&': {
+              fontFamily: FONT_LABEL,
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
+            },
           }}
         >
-          <InformationCircleIcon />
-        </SvgIcon>
-      </Tooltip>
-    }
-    loading={loading}
-    hideIcon
-  >
-    <FormattedNumber
-      value={value}
-      symbol="USD"
-      variant={valueVariant}
-      symbolsVariant={symbolVariant}
-      visibleDecimals={2}
-      compact
-      symbolsColor="#A5A8B6"
-    />
-  </TopInfoPanelItem>
+          {label}
+        </Typography>
+      }
+      titleIcon={
+        <Tooltip
+          arrow
+          placement="top"
+          PopperComponent={PopperComponent}
+          title={
+            <Box
+              sx={{
+                py: 4,
+                px: 6,
+                fontSize: '12px',
+                lineHeight: '16px',
+              }}
+            >
+              {tooltip}
+            </Box>
+          }
+        >
+          <SvgIcon
+            sx={{
+              fontSize: 14,
+              ml: 0.5,
+              color: 'text.muted',
+              cursor: 'pointer',
+              '&:hover': { color: 'info.main' },
+            }}
+          >
+            <InformationCircleIcon />
+          </SvgIcon>
+        </Tooltip>
+      }
+      loading={loading}
+      hideIcon
+    >
+      <FormattedNumber
+        value={value}
+        symbol="USD"
+        variant={valueVariant}
+        symbolsVariant={symbolVariant}
+        visibleDecimals={2}
+        compact
+        symbolsColor="primary.main"
+      />
+    </TopInfoPanelItem>
+  </Box>
 );
 
 type MarketsTopPanelProps = {
@@ -177,7 +207,7 @@ export const MarketsTopPanel = ({
       {
         key: 'totalSupplied',
         label: i18n._(t`Total market size`),
-        color: seriesColors.totalSupplied,
+        color: theme.palette.primary.main,
       },
       {
         key: 'tvl',
@@ -187,15 +217,17 @@ export const MarketsTopPanel = ({
       {
         key: 'totalBorrowed',
         label: i18n._(t`Total borrowed`),
-        color: seriesColors.totalBorrowed,
+        color: theme.palette.secondary.main,
       },
     ],
-    [i18n]
+    [i18n, theme.palette.primary.main, theme.palette.secondary.main]
   );
 
   const valueVariant = downToSM ? 'main16' : 'main21';
   const symbolVariant = downToSM ? 'secondary16' : 'secondary21';
-  const labelVariant = downToSM ? 'caption' : 'description';
+  // Match TopInfoPanelItem's label sizing (subheader2 ≥ sm, helperText < sm) so the
+  // Markets stats look identical to the dashboard panel labels.
+  const labelVariant = downToSM ? 'helperText' : 'subheader2';
   const historyLoading = historyQuery.isLoading || historyQuery.isFetching;
   const unsupportedChain = !HISTORICAL_MARKET_CHAIN_IDS.includes(currentMarketData.chainId);
   const metricsTextColor = theme.palette.text.secondary;

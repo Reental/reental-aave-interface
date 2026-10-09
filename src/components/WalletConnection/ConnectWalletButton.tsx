@@ -1,6 +1,5 @@
-import { Identify, identify, setUserId } from '@amplitude/analytics-browser';
 import { Trans } from '@lingui/macro';
-import { Button } from '@mui/material';
+import { Button, ButtonProps } from '@mui/material';
 import { ConnectKitButton } from 'connectkit';
 import { useEffect, useRef, useState } from 'react';
 import { useRootStore } from 'src/store/root';
@@ -8,15 +7,31 @@ import { AUTH } from 'src/utils/events';
 import { useShallow } from 'zustand/shallow';
 
 import { AvatarSize } from '../Avatar';
+import { WalletIcon } from '../icons/WalletIcon';
 import { UserDisplay } from '../UserDisplay';
+
+// Amplitude is loaded on demand so the SDK stays out of the initial bundle. It
+// is only fetched when a wallet event fires and an API key is configured.
+const AMPLITUDE_API_KEY = process.env.NEXT_PUBLIC_AMPLITUDE_API_KEY || '';
+const withAmplitude = (fn: (module: typeof import('@amplitude/analytics-browser')) => void) => {
+  if (!AMPLITUDE_API_KEY) return;
+  import('@amplitude/analytics-browser').then(fn).catch(() => undefined);
+};
 
 export interface ConnectWalletProps {
   funnel?: string;
   onIsConnecting?: (isConnecting: boolean) => void;
   onClick?: () => void;
+  fullWidth?: boolean;
+  size?: ButtonProps['size'];
 }
 
-export const ConnectWalletButton: React.FC<ConnectWalletProps> = ({ funnel, onClick }) => {
+export const ConnectWalletButton: React.FC<ConnectWalletProps> = ({
+  funnel,
+  onClick,
+  fullWidth,
+  size,
+}) => {
   const [trackEvent, walletType, account] = useRootStore(
     useShallow((store) => [store.trackEvent, store.walletType, store.account])
   );
@@ -48,13 +63,15 @@ export const ConnectWalletButton: React.FC<ConnectWalletProps> = ({ funnel, onCl
 
       const walletAddress = account;
       if (walletAddress) {
-        setUserId(walletAddress);
+        withAmplitude(({ Identify, identify, setUserId }) => {
+          setUserId(walletAddress);
 
-        const identifyObj = new Identify()
-          .set('wallet_connected', true)
-          .set('wallet_type', walletType || 'unknown');
+          const identifyObj = new Identify()
+            .set('wallet_connected', true)
+            .set('wallet_type', walletType || 'unknown');
 
-        identify(identifyObj);
+          identify(identifyObj);
+        });
       }
 
       if (isConnectedRef.current) {
@@ -80,9 +97,11 @@ export const ConnectWalletButton: React.FC<ConnectWalletProps> = ({ funnel, onCl
   useEffect(() => {
     if (!account && walletType === undefined) {
       // Wallet disconnected - clear identity
-      const identifyObj = new Identify().set('wallet_connected', false).unset('wallet_type');
+      withAmplitude(({ Identify, identify }) => {
+        const identifyObj = new Identify().set('wallet_connected', false).unset('wallet_type');
 
-      identify(identifyObj);
+        identify(identifyObj);
+      });
 
       trackEvent(AUTH.DISCONNECT_WALLET, {
         funnel,
@@ -101,6 +120,9 @@ export const ConnectWalletButton: React.FC<ConnectWalletProps> = ({ funnel, onCl
           return (
             <Button
               variant={isConnected ? 'surface' : 'gradient'}
+              sx={{ borderRadius: '10px' }}
+              fullWidth={fullWidth}
+              size={size}
               onClick={() => {
                 // Track initial button click
                 trackEvent(AUTH.CONNECT_WALLET, {
@@ -120,7 +142,10 @@ export const ConnectWalletButton: React.FC<ConnectWalletProps> = ({ funnel, onCl
                   titleProps={{ variant: 'buttonM' }}
                 />
               ) : (
-                <Trans>Connect wallet</Trans>
+                <>
+                  <Trans>Connect wallet</Trans>
+                  <WalletIcon sx={{ ml: 2, fontSize: 18, stroke: 'currentColor' }} />
+                </>
               )}
             </Button>
           );

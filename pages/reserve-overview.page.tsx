@@ -11,6 +11,7 @@ import {
 } from 'src/hooks/app-data-provider/useAppDataProvider';
 import { AssetCapsProvider } from 'src/hooks/useAssetCaps';
 import { MainLayout } from 'src/layouts/MainLayout';
+import { MarketTwoFAGate } from 'src/libs/reental/ReentalDataProvider';
 import { ReserveActions } from 'src/modules/reserve-overview/ReserveActions';
 import { ReserveConfigurationWrapper } from 'src/modules/reserve-overview/ReserveConfigurationWrapper';
 import { ReserveTopDetailsWrapper } from 'src/modules/reserve-overview/ReserveTopDetailsWrapper';
@@ -74,55 +75,57 @@ export default function ReserveOverview() {
       <ReserveTopDetailsWrapper underlyingAsset={underlyingAsset} />
 
       <ContentContainer wrapperSx={{ mt: { xs: 4, md: 6 } }}>
-        <Box
-          sx={{
-            display: { xs: 'flex', lg: 'none' },
-            justifyContent: { xs: 'center', xsm: 'flex-start' },
-            mb: { xs: 3, xsm: 4 },
-          }}
-        >
-          <StyledToggleButtonGroup
-            color="primary"
-            value={mode}
-            exclusive
-            onChange={(_, value) => setMode(value)}
-            sx={{ width: { xs: '100%', xsm: '359px' }, height: '44px' }}
-          >
-            <StyledToggleButton value="overview" disabled={mode === 'overview'}>
-              <Typography variant="subheader1">
-                <Trans>Overview</Trans>
-              </Typography>
-            </StyledToggleButton>
-            <StyledToggleButton value="actions" disabled={mode === 'actions'}>
-              <Typography variant="subheader1">
-                <Trans>Your info</Trans>
-              </Typography>
-            </StyledToggleButton>
-          </StyledToggleButtonGroup>
-        </Box>
-
-        <Box sx={{ display: 'flex' }}>
-          {/** Main status and configuration panel*/}
+        <MarketTwoFAGate>
           <Box
             sx={{
-              display: { xs: !isOverview ? 'none' : 'block', lg: 'block' },
-              width: { xs: '100%', lg: 'calc(100% - 432px)' },
-              mr: { xs: 0, lg: 4 },
+              display: { xs: 'flex', lg: 'none' },
+              justifyContent: { xs: 'center', xsm: 'flex-start' },
+              mb: { xs: 3, xsm: 4 },
             }}
           >
-            <ReserveConfigurationWrapper reserve={reserve} />
+            <StyledToggleButtonGroup
+              color="primary"
+              value={mode}
+              exclusive
+              onChange={(_, value) => setMode(value)}
+              sx={{ width: { xs: '100%', xsm: '359px' }, height: '44px' }}
+            >
+              <StyledToggleButton value="overview" disabled={mode === 'overview'}>
+                <Typography variant="subheader1">
+                  <Trans>Overview</Trans>
+                </Typography>
+              </StyledToggleButton>
+              <StyledToggleButton value="actions" disabled={mode === 'actions'}>
+                <Typography variant="subheader1">
+                  <Trans>Your info</Trans>
+                </Typography>
+              </StyledToggleButton>
+            </StyledToggleButtonGroup>
           </Box>
 
-          {/** Right panel with actions*/}
-          <Box
-            sx={{
-              display: { xs: isOverview ? 'none' : 'block', lg: 'block' },
-              width: { xs: '100%', lg: '416px' },
-            }}
-          >
-            <ReserveActions reserve={reserve} />
+          <Box sx={{ display: 'flex' }}>
+            {/** Main status and configuration panel*/}
+            <Box
+              sx={{
+                display: { xs: !isOverview ? 'none' : 'block', lg: 'block' },
+                width: { xs: '100%', lg: 'calc(100% - 432px)' },
+                mr: { xs: 0, lg: 4 },
+              }}
+            >
+              <ReserveConfigurationWrapper reserve={reserve} />
+            </Box>
+
+            {/** Right panel with actions*/}
+            <Box
+              sx={{
+                display: { xs: isOverview ? 'none' : 'block', lg: 'block' },
+                width: { xs: '100%', lg: '416px' },
+              }}
+            >
+              <ReserveActions reserve={reserve} />
+            </Box>
           </Box>
-        </Box>
+        </MarketTwoFAGate>
       </ContentContainer>
     </AssetCapsProvider>
   );

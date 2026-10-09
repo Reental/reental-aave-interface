@@ -34,11 +34,12 @@ export const ReserveTopDetails = ({ underlyingAsset }: ReserveTopDetailsProps) =
   const valueTypographyVariant = downToSM ? 'main16' : 'main21';
   const symbolsTypographyVariant = downToSM ? 'secondary16' : 'secondary21';
 
+  const isDarkMode = theme.palette.mode === 'dark';
   const iconStyling = {
     display: 'inline-flex',
     alignItems: 'center',
-    color: '#A5A8B6',
-    '&:hover': { color: '#F1F1F3' },
+    color: isDarkMode ? '#A5A8B6' : '#62677B',
+    '&:hover': { color: isDarkMode ? '#F1F1F3' : '#0e1201' },
     cursor: 'pointer',
   };
 
@@ -50,7 +51,7 @@ export const ReserveTopDetails = ({ underlyingAsset }: ReserveTopDetailsProps) =
           symbol="USD"
           variant={valueTypographyVariant}
           symbolsVariant={symbolsTypographyVariant}
-          symbolsColor="#A5A8B6"
+          symbolsColor="primary.main"
         />
       </TopInfoPanelItem>
 
@@ -60,7 +61,7 @@ export const ReserveTopDetails = ({ underlyingAsset }: ReserveTopDetailsProps) =
           symbol="USD"
           variant={valueTypographyVariant}
           symbolsVariant={symbolsTypographyVariant}
-          symbolsColor="#A5A8B6"
+          symbolsColor="primary.main"
         />
       </TopInfoPanelItem>
 
@@ -70,7 +71,7 @@ export const ReserveTopDetails = ({ underlyingAsset }: ReserveTopDetailsProps) =
           percent
           variant={valueTypographyVariant}
           symbolsVariant={symbolsTypographyVariant}
-          symbolsColor="#A5A8B6"
+          symbolsColor="primary.main"
         />
       </TopInfoPanelItem>
 
@@ -81,10 +82,14 @@ export const ReserveTopDetails = ({ underlyingAsset }: ReserveTopDetailsProps) =
             symbol="USD"
             variant={valueTypographyVariant}
             symbolsVariant={symbolsTypographyVariant}
-            symbolsColor="#A5A8B6"
+            symbolsColor="primary.main"
           />
           {loading ? (
-            <Skeleton width={16} height={16} sx={{ ml: 1, background: '#1F2937' }} />
+            <Skeleton
+              width={16}
+              height={16}
+              sx={{ ml: 1, background: isDarkMode ? '#1F2937' : undefined }}
+            />
           ) : (
             <CircleIcon tooltipText="View oracle contract" downToSM={downToSM}>
               <Link
