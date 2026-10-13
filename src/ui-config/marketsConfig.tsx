@@ -52,6 +52,8 @@ export type MarketDataType = {
   // Icon shown for tokens without their own /icons/tokens/<symbol>.svg (defaults to DEFAULT_TOKEN_ICON)
   defaultTokenIcon?: string;
   externalUrl?: string; // URL for external markets like Aptos
+  /** App Reental dashboard base URL for WalletConnect. No trailing slash. */
+  reentalWalletConnectBaseUrl?: string;
   addresses: {
     LENDING_POOL_ADDRESS_PROVIDER: string;
     LENDING_POOL: string;
@@ -89,6 +91,14 @@ const REENTAL_DEFAULT_TOKEN_ICON = '/icons/tokens/reental.svg';
 
 // const apiKey = process.env.NEXT_PUBLIC_SUBGRAPH_API_KEY;
 
+const trimUrl = (url: string | undefined) => url?.replace(/\/$/, '') || undefined;
+
+/** Same Reental app dashboard for all markets. Override: NEXT_PUBLIC_REENTAL_WC_URL */
+const reentalWalletConnectBaseUrl =
+  trimUrl(process.env.NEXT_PUBLIC_REENTAL_WC_URL) ||
+  trimUrl(process.env.NEXT_PUBLIC_REENTAL_WALLET_CONNECT_URL) ||
+  'https://app.reental.co/dashboard';
+
 export const marketsData: {
   [key in keyof typeof CustomMarket]: MarketDataType;
 } = {
@@ -101,8 +111,11 @@ export const marketsData: {
     logo: '/icons/markets/reental.png',
     defaultTokenIcon: REENTAL_DEFAULT_TOKEN_ICON,
     v3: true,
+    reentalWalletConnectBaseUrl,
     legacyUiPoolDataProvider: true,
-    reentalPonderUrl: 'https://ponder-pro.reental.eu/graphql',
+    reentalPonderUrl:
+      trimUrl(process.env.NEXT_PUBLIC_REENTAL_PONDER_URL_POLYGON) ||
+      'https://ponder-pro.reental.eu/graphql',
     liquidationsPonderUrl: 'https://liquidation-router-ponder-pro.reental.eu/graphql',
     enabledFeatures: {
       liquiditySwap: false,
@@ -141,8 +154,11 @@ export const marketsData: {
     chainId: ChainId.sepolia,
     logo: '/icons/markets/reental.png',
     defaultTokenIcon: REENTAL_DEFAULT_TOKEN_ICON,
+    reentalWalletConnectBaseUrl,
     legacyUiPoolDataProvider: true,
-    reentalPonderUrl: 'https://ponder-int.reental.eu/graphql',
+    reentalPonderUrl:
+      trimUrl(process.env.NEXT_PUBLIC_REENTAL_PONDER_URL_SEPOLIA) ||
+      'https://ponder-int.reental.eu/graphql',
     liquidationsPonderUrl: 'https://liquidation-router-ponder-int.reental.eu/graphql',
     enabledFeatures: {
       faucet: true,

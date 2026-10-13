@@ -464,7 +464,9 @@ export const MarketSwitcher = () => {
             <Box>
               <Typography variant="subheader2" color="text.secondary" sx={{ px: 4, pt: 2 }}>
                 <Trans>
-                  {ENABLE_TESTNET || STAGING_ENV ? 'Select Testnet Market' : 'Select Market'}
+                  {ENABLE_TESTNET || STAGING_ENV
+                    ? 'Select Reental Testnet Market'
+                    : 'Select Reental Market'}
                 </Trans>
               </Typography>
             </Box>
