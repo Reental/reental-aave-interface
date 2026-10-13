@@ -11,8 +11,9 @@ import {
   useTheme,
 } from '@mui/material';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getMarketInfoById, MarketLogo } from 'src/components/MarketSwitcher';
+import { getTokenIconSrc, useDefaultTokenIcon } from 'src/components/primitives/TokenIcon';
 import { useWeb3Context } from 'src/libs/hooks/useWeb3Context';
 import { useRootStore } from 'src/store/root';
 import { displayGhoForMintableMarket } from 'src/utils/ghoUtilities';
@@ -54,7 +55,12 @@ export const ReserveTopDetailsWrapper = ({ underlyingAsset }: ReserveTopDetailsP
     (reserve) => reserve.underlyingAsset === underlyingAsset
   ) as ComputedReserveData;
 
-  const [tokenSymbol, setTokenSymbol] = useState(poolReserve.iconSymbol.toLowerCase());
+  const defaultTokenIcon = useDefaultTokenIcon();
+  const [iconError, setIconError] = useState(false);
+
+  useEffect(() => {
+    setIconError(false);
+  }, [poolReserve.iconSymbol]);
 
   const valueTypographyVariant = downToSM ? 'main16' : 'main21';
 
@@ -70,8 +76,10 @@ export const ReserveTopDetailsWrapper = ({ underlyingAsset }: ReserveTopDetailsP
           />
         ) : (
           <img
-            src={`/icons/tokens/${tokenSymbol}.svg`}
-            onError={() => setTokenSymbol('default')}
+            src={
+              iconError ? defaultTokenIcon : getTokenIconSrc(poolReserve.iconSymbol.toLowerCase())
+            }
+            onError={() => setIconError(true)}
             width="40px"
             height="40px"
             alt=""

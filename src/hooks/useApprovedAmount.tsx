@@ -8,16 +8,19 @@ export const useApprovedAmount = ({
   chainId,
   token,
   spender,
+  enabled = true,
 }: {
   chainId: number;
   token: string;
   spender: string;
+  enabled?: boolean;
 }) => {
   const { approvedAmountService } = useSharedDependencies();
   const user = useRootStore((store) => store.account);
   return useQuery({
     queryFn: () => approvedAmountService.getApprovedAmount(chainId, user, token, spender),
     queryKey: queryKeysFactory.approvedAmount(user, token, spender, chainId),
+    enabled,
   });
 };
 

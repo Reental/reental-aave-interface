@@ -4,25 +4,25 @@ import { request } from '../gql/client';
 import { GetTwoFaAccountDocument } from '../gql/types/graphql';
 
 export function use2FA({
+  url,
   chainId,
   asset,
   user,
-  endpoint,
   enabled = true,
 }: {
+  url?: string;
   chainId: number;
   asset: string;
   user: string;
-  endpoint?: string;
   enabled?: boolean;
 }) {
   return useQuery({
-    queryKey: ['2fa', endpoint, chainId, asset, user],
-    queryFn: () => request(GetTwoFaAccountDocument, { chainId, asset, user }, endpoint as string),
+    queryKey: ['2fa', url, chainId, asset, user],
+    enabled: enabled && !!url && Boolean(user),
+    queryFn: () => request(url as string, GetTwoFaAccountDocument, { chainId, asset, user }),
     select: (data) => data,
     retry: (failureCount) => failureCount < 3,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 15_000),
-    enabled: enabled && Boolean(endpoint) && Boolean(user),
     refetchOnWindowFocus: 'always',
     refetchInterval: (query) => {
       if (

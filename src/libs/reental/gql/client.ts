@@ -4,12 +4,12 @@ import { GraphQLClient } from 'graphql-request';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const request = async <T = any, S = any>(
+  url: string,
   query: DocumentNode<T, S>,
-  variables: S & { [key: string]: unknown },
-  endpoint: string
+  variables: S & { [key: string]: unknown }
 ): Promise<T> => {
   try {
-    const client = new GraphQLClient(endpoint, {
+    const client = new GraphQLClient(url, {
       headers: {
         'Content-Type': 'application/json',
       },

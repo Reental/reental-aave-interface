@@ -16,6 +16,7 @@ import { useRootStore } from 'src/store/root';
 import { getErrorTextFromError, TxAction } from 'src/ui-config/errorMapping';
 import { queryKeysFactory } from 'src/ui-config/queries';
 import { useSharedDependencies } from 'src/ui-config/SharedDependenciesProvider';
+import { getReferralCodeForMarket } from 'src/utils/referral';
 import { useShallow } from 'zustand/shallow';
 
 import { TxActionsWrapper } from '../TxActionsWrapper';
@@ -146,7 +147,8 @@ export const SupplyWrappedTokenActions = ({
           tokenWrapperAddress,
           user,
           signatureParams.deadline,
-          signatureParams.signature
+          signatureParams.signature,
+          getReferralCodeForMarket(marketData)
         );
 
         signedSupplyWithPermitTxData = await estimateGasLimit(signedSupplyWithPermitTxData);
@@ -158,7 +160,8 @@ export const SupplyWrappedTokenActions = ({
         let supplyTxData = await tokenWrapperService.supplyWrappedToken(
           parseUnits(amountToSupply, decimals).toString(),
           tokenWrapperAddress,
-          user
+          user,
+          getReferralCodeForMarket(marketData)
         );
         supplyTxData = await estimateGasLimit(supplyTxData);
         response = await sendTx(supplyTxData);

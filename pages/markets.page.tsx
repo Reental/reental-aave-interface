@@ -4,9 +4,11 @@ import { GradientBackground } from 'src/components/GradientBackground';
 import { MarketSwitcher } from 'src/components/MarketSwitcher';
 import { TopInfoPanel } from 'src/components/TopInfoPanel/TopInfoPanel';
 import { MainLayout } from 'src/layouts/MainLayout';
+import { MarketTwoFAGate } from 'src/libs/reental/ReentalDataProvider';
 import { MarketAssetsListContainer } from 'src/modules/markets/MarketAssetsListContainer';
 import { MarketsTopPanel } from 'src/modules/markets/MarketsTopPanel';
 import { useRootStore } from 'src/store/root';
+import { isFeatureEnabled } from 'src/utils/marketsAndNetworksConfig';
 
 interface MarketContainerProps {
   children: ReactNode;
@@ -42,6 +44,7 @@ export const MarketContainer = ({ children }: MarketContainerProps) => {
 
 export default function Markets() {
   const trackEvent = useRootStore((store) => store.trackEvent);
+  const currentMarketData = useRootStore((store) => store.currentMarketData);
 
   useEffect(() => {
     trackEvent('Page Viewed', {
@@ -72,10 +75,14 @@ export default function Markets() {
         }}
       >
         <MarketContainer>
-          <Box sx={{ mb: 4 }}>
-            <MarketsTopPanel showSummary={false} />
-          </Box>
-          <MarketAssetsListContainer />
+          <MarketTwoFAGate>
+            {isFeatureEnabled.metrics(currentMarketData) && (
+              <Box sx={{ mb: 4 }}>
+                <MarketsTopPanel showSummary={false} />
+              </Box>
+            )}
+            <MarketAssetsListContainer />
+          </MarketTwoFAGate>
         </MarketContainer>
       </Box>
     </>

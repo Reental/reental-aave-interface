@@ -13,6 +13,7 @@ import { useRootStore } from 'src/store/root';
 import { CustomMarket } from 'src/ui-config/marketsConfig';
 import { DASHBOARD_LIST_COLUMN_WIDTHS } from 'src/utils/dashboardSortUtils';
 import { DASHBOARD } from 'src/utils/events';
+import { stripReentalPrefix } from 'src/utils/reentalSymbol';
 import { ExternalIncentivesTooltipsConfig } from 'src/utils/utils';
 
 import { AMPLToolTip } from '../../../components/infoTooltips/AMPLToolTip';
@@ -38,8 +39,6 @@ interface ListItemWrapperProps {
   showDebtCeilingTooltips?: boolean;
   showExternalIncentivesTooltips?: ExternalIncentivesTooltipsConfig;
 }
-
-const REENTAL_PREFIX = 'Reental-';
 
 export const ListItemWrapper = ({
   symbol,
@@ -96,7 +95,7 @@ export const ListItemWrapper = ({
               noWrap
               data-cy={`assetName`}
             >
-              {symbol.startsWith(REENTAL_PREFIX) ? symbol.slice(REENTAL_PREFIX.length) : symbol}
+              {stripReentalPrefix(symbol)}
             </Typography>
           </Tooltip>
         </Link>

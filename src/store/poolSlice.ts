@@ -53,6 +53,7 @@ import { WithdrawAndSwitchActionProps } from 'src/components/transactions/Withdr
 import { Approval } from 'src/helpers/useTransactionHandler';
 import { FormattedReservesAndIncentives } from 'src/hooks/pool/usePoolFormattedReserves';
 import { rwaAssetDomains } from 'src/ui-config/permitConfig';
+import { getReferralCodeForMarket } from 'src/utils/referral';
 import { minBaseTokenRemainingByNetwork, optimizedPath } from 'src/utils/utils';
 import { StateCreator } from 'zustand';
 
@@ -204,6 +205,7 @@ export const createPoolSlice: StateCreator<
           user: currentAccount,
           reserve: args.reserve,
           amount: args.amount,
+          referralCode: getReferralCodeForMarket(get().currentMarketData),
           useOptimizedPath: get().useOptimizedPath(),
         });
       } else {
@@ -212,6 +214,7 @@ export const createPoolSlice: StateCreator<
           user: currentAccount,
           reserve: args.reserve,
           amount: args.amount,
+          referralCode: getReferralCodeForMarket(get().currentMarketData),
         });
       }
     },
@@ -224,6 +227,7 @@ export const createPoolSlice: StateCreator<
         amount: args.amount,
         user,
         deadline: args.deadline,
+        referralCode: getReferralCodeForMarket(get().currentMarketData),
         useOptimizedPath: get().useOptimizedPath(),
         signature,
       });

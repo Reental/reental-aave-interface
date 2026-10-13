@@ -4,6 +4,8 @@ import { Trans } from '@lingui/macro';
 import {
   Box,
   BoxProps,
+  Chip,
+  ChipProps,
   ClickAwayListener,
   IconButton,
   ListItemText,
@@ -17,6 +19,7 @@ import {
 } from '@mui/material';
 import React, { JSX, useState } from 'react';
 import { useRootStore } from 'src/store/root';
+import { MarketCategory } from 'src/ui-config/marketsConfig';
 import { BaseNetworkConfig } from 'src/ui-config/networksConfig';
 import { DASHBOARD } from 'src/utils/events';
 import { useShallow } from 'zustand/shallow';
@@ -161,6 +164,38 @@ export const MarketLogo = ({
   );
 };
 
+const badgeSx = {
+  height: '18px',
+  fontSize: '10px',
+  fontWeight: 600,
+  '.MuiChip-label': { px: 1.5 },
+};
+
+const categoryBadges: Record<MarketCategory, { label: JSX.Element; color: ChipProps['color'] }> = {
+  'real-estate': { label: <Trans>Real estate</Trans>, color: 'success' },
+  defi: { label: <Trans>DeFi</Trans>, color: 'info' },
+};
+
+/** Category (Real estate / DeFi) and operator (RNT Protocol / Third-party) of a market */
+export const MarketBadges = ({ market, sx }: { market: MarketDataType; sx?: BoxProps['sx'] }) => (
+  <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1, ...sx }}>
+    <Chip
+      size="small"
+      variant="outlined"
+      color={categoryBadges[market.category].color}
+      label={categoryBadges[market.category].label}
+      sx={badgeSx}
+    />
+    <Chip
+      size="small"
+      variant="outlined"
+      color={market.operator === 'rnt' ? 'primary' : 'default'}
+      label={market.operator === 'rnt' ? <Trans>RNT Protocol</Trans> : <Trans>Third-party</Trans>}
+      sx={badgeSx}
+    />
+  </Box>
+);
+
 enum SelectedMarketVersion {
   V2,
   V3,
@@ -168,6 +203,9 @@ enum SelectedMarketVersion {
 
 // Custom market order requested by BD - TODO: move logic to the backend base on TVL
 const MARKET_ORDER_BY_TITLE: { [title: string]: number } = {
+  'Reental Polygon': -3,
+  'Reental Sepolia': -2,
+  'Aave Ethereum': -1,
   Core: 0,
   Prime: 1,
   Plasma: 2,
@@ -212,6 +250,12 @@ export const MarketSwitcher = () => {
   // Subscribe to favoriteMarkets to trigger re-renders when favorites change
   useRootStore((store) => store.favoriteMarkets);
 
+  // With a single market the switcher is locked and a tooltip explains why
+  const hasMultipleMarkets = availableMarkets.length > 1;
+  const isV2MarketsAvailable = availableMarkets.some(
+    (marketId) => !getMarketInfoById(marketId).market.v3
+  );
+
   const isV3MarketsAvailable = availableMarkets
     .map((marketId: CustomMarket) => {
       const { market } = getMarketInfoById(marketId);
@@ -250,61 +294,63 @@ export const MarketSwitcher = () => {
     reental_sepolia_v3: (
       <Trans>RWA market of real estate tokens issued by Reental over the Sepolia network</Trans>
     ),
+    proto_mainnet_v3: <Trans>Official Aave V3 Core market on the Ethereum network</Trans>,
   };
 
   return (
     <ClickAwayListener onClickAway={() => setIsUnavailableMarketsTooltipOpen(false)}>
-      <Box>
-        <Tooltip
-          open={isUnavailableMarketsTooltipOpen}
-          onClose={() => setIsUnavailableMarketsTooltipOpen(false)}
-          disableFocusListener
-          disableHoverListener
-          disableTouchListener
-          title={<Trans>There are no additional RWA markets available on RNT Lend yet.</Trans>}
-          arrow
+      <Tooltip
+        open={!hasMultipleMarkets && isUnavailableMarketsTooltipOpen}
+        onClose={() => setIsUnavailableMarketsTooltipOpen(false)}
+        disableFocusListener
+        disableHoverListener
+        disableTouchListener
+        title={<Trans>There are no additional RWA markets available on RNT Lend yet.</Trans>}
+        arrow
+      >
+        <Box
+          onClick={hasMultipleMarkets ? undefined : handleUnavailableMarketsClick}
+          role={hasMultipleMarkets ? undefined : 'button'}
+          aria-label={hasMultipleMarkets ? undefined : 'show unavailable markets message'}
+          aria-disabled={!hasMultipleMarkets}
+          sx={{
+            cursor: hasMultipleMarkets ? 'pointer' : 'not-allowed',
+            width: 'fit-content',
+            display: 'inline-flex',
+          }}
         >
-          <Box
-            onClick={handleUnavailableMarketsClick}
-            role="button"
-            aria-label="show unavailable markets message"
-            aria-disabled="true"
+          <TextField
+            select
+            aria-label="select market"
+            data-cy="marketSelector"
+            value={currentMarket}
+            onChange={handleMarketSelect}
             sx={{
-              cursor: 'not-allowed',
               width: 'fit-content',
-              display: 'inline-flex',
-            }}
-          >
-            <TextField
-              select
-              aria-label="select market"
-              data-cy="marketSelector"
-              value={currentMarket}
-              onChange={handleMarketSelect}
-              sx={{
+              pointerEvents: hasMultipleMarkets ? 'auto' : 'none',
+              '& .MuiOutlinedInput-notchedOutline': {
+                border: 'none',
+              },
+              '& .MuiInputBase-root': {
                 width: 'fit-content',
-                pointerEvents: 'none',
-                '& .MuiOutlinedInput-notchedOutline': {
-                  border: 'none',
-                },
-                '& .MuiInputBase-root': {
-                  width: 'fit-content',
-                },
-                '& .MuiSelect-select': {
-                  width: 'fit-content',
-                },
-              }}
-              SelectProps={{
-                native: false,
-                open: false,
-                className: 'MarketSwitcher__select',
-                IconComponent: () => null,
-                renderValue: (marketId) => {
-                  const { market, logo, networkLogo, networkName } = getMarketInfoById(
-                    marketId as CustomMarket
-                  );
+              },
+              '& .MuiSelect-select': {
+                width: 'fit-content',
+              },
+            }}
+            SelectProps={{
+              native: false,
+              ...(hasMultipleMarkets ? {} : { open: false }),
+              className: 'MarketSwitcher__select',
+              IconComponent: () => null,
+              renderValue: (marketId) => {
+                const { market, logo, networkLogo, networkName } = getMarketInfoById(
+                  marketId as CustomMarket
+                );
 
-                  return (
+                return (
+                  <Box>
+                    {/* Main Row with Market Name */}
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <MarketLogo
                         size={upToLG ? 32 : 28}
@@ -318,7 +364,9 @@ export const MarketSwitcher = () => {
                           variant={upToLG ? 'display1' : 'h1'}
                           sx={{
                             fontSize: downToXSM ? '1.55rem' : undefined,
+                            // Slightly lighter than the theme's 700 so the switcher isn't so heavy.
                             fontWeight: 600,
+                            // Header band is dark in dark mode and a light card in light mode.
                             color: 'text.primary',
                             mr: 1,
                           }}
@@ -364,244 +412,248 @@ export const MarketSwitcher = () => {
                         )}
                       </Box>
                     </Box>
-                  );
-                },
 
-                sx: {
-                  '&.MarketSwitcher__select .MuiSelect-outlined': {
-                    pl: 0,
-                    py: 0,
-                    backgroundColor: 'transparent !important',
-                  },
-                  '.MuiSelect-icon': { color: '#F1F1F3' },
-                },
-                MenuProps: {
-                  anchorOrigin: {
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                  },
-                  transformOrigin: {
-                    vertical: 'top',
-                    horizontal: 'right',
-                  },
-                  PaperProps: {
-                    style: {
-                      minWidth: 240,
-                    },
-                    variant: 'outlined',
-                    elevation: 0,
-                  },
-                },
-              }}
-            >
-              <Box>
-                <Typography variant="subheader2" color="text.secondary" sx={{ px: 4, pt: 2 }}>
-                  <Trans>
-                    {ENABLE_TESTNET || STAGING_ENV
-                      ? 'Select Reental Testnet Market'
-                      : 'Select Reental Market'}
-                  </Trans>
-                </Typography>
-              </Box>
-              {isV3MarketsAvailable && (
-                <Box sx={{ mx: '18px', display: 'flex', justifyContent: 'center' }}>
-                  <StyledToggleButtonGroup
-                    value={selectedMarketVersion}
-                    exclusive
-                    onChange={(_, value) => {
-                      if (value !== null) {
-                        setSelectedMarketVersion(value);
-                      }
-                    }}
-                    sx={{
-                      width: '100%',
-                      height: '36px',
-                      background: theme.palette.primary.main,
-                      border: `1px solid ${
-                        theme.palette.mode === 'dark' ? 'rgba(235, 235, 237, 0.12)' : '#1B2030'
-                      }`,
-                      borderRadius: '6px',
-                      marginTop: '16px',
-                      marginBottom: '12px',
-                      padding: '2px',
-                    }}
-                  >
-                    <StyledToggleButton
-                      value={SelectedMarketVersion.V3}
-                      data-cy={`markets_switch_button_v3`}
-                      sx={{
-                        backgroundColor: theme.palette.mode === 'dark' ? '#EAEBEF' : '#1F2937',
-                        '&.Mui-selected, &.Mui-selected:hover': {
-                          backgroundColor: theme.palette.mode === 'dark' ? '#292E41' : '#FFFFFF',
-                          boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.05)',
-                        },
-                        borderRadius: '4px',
-                      }}
-                    >
+                    {marketBlurbs[currentMarket] && (
                       <Typography
-                        variant="buttonM"
-                        sx={
-                          selectedMarketVersion === SelectedMarketVersion.V3
-                            ? {
-                                backgroundImage: (theme) => theme.palette.gradients.aaveGradient,
-                                backgroundClip: 'text',
-                                color: 'transparent',
-                              }
-                            : {
-                                color: theme.palette.mode === 'dark' ? '#0F121D' : '#FFFFFF',
-                              }
-                        }
-                      >
-                        <Trans>Version 3</Trans>
-                      </Typography>
-                    </StyledToggleButton>
-                    <StyledToggleButton
-                      value={SelectedMarketVersion.V2}
-                      data-cy={`markets_switch_button_v2`}
-                      sx={{
-                        backgroundColor: theme.palette.mode === 'dark' ? '#EAEBEF' : '#1F2937',
-                        '&.Mui-selected, &.Mui-selected:hover': {
-                          backgroundColor: theme.palette.mode === 'dark' ? '#292E41' : '#FFFFFF',
-                          boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.05)',
-                        },
-                        borderRadius: '4px',
-                      }}
-                    >
-                      <Typography
-                        variant="buttonM"
-                        sx={
-                          selectedMarketVersion === SelectedMarketVersion.V2
-                            ? {
-                                backgroundImage: (theme) => theme.palette.gradients.aaveGradient,
-                                backgroundClip: 'text',
-                                color: 'transparent',
-                              }
-                            : {
-                                color: theme.palette.mode === 'dark' ? '#0F121D' : '#FFFFFF',
-                              }
-                        }
-                      >
-                        <Trans>Version 2</Trans>
-                      </Typography>
-                    </StyledToggleButton>
-                  </StyledToggleButtonGroup>
-                </Box>
-              )}
-              {availableMarkets
-                .slice() // Create a copy to avoid mutating the original array
-                .sort((a, b) => {
-                  const aIsFavorite = isFavoriteMarket(a);
-                  const bIsFavorite = isFavoriteMarket(b);
-
-                  // If both are favorites or both are not favorites, maintain custom order
-                  if (aIsFavorite === bIsFavorite) {
-                    return getMarketOrder(a) - getMarketOrder(b);
-                  }
-
-                  // Otherwise, favorites come first
-                  return aIsFavorite ? -1 : 1;
-                })
-                .map((marketId: CustomMarket) => {
-                  const { market, logo, networkLogo, networkName } = getMarketInfoById(marketId);
-                  const marketNaming = getMarketHelpData(market.marketTitle);
-                  const isFavorite = isFavoriteMarket(marketId);
-                  return (
-                    <MenuItem
-                      key={marketId}
-                      data-cy={`marketSelector_${marketId}`}
-                      value={marketId}
-                      sx={{
-                        '.MuiListItemIcon-root': { minWidth: 'unset' },
-                        display:
-                          (market.v3 && selectedMarketVersion === SelectedMarketVersion.V2) ||
-                          (!market.v3 && selectedMarketVersion === SelectedMarketVersion.V3)
-                            ? 'none'
-                            : 'flex',
-                      }}
-                    >
-                      <MarketLogo
-                        size={32}
-                        logo={logo}
-                        networkLogo={networkLogo}
-                        networkName={networkName}
-                        testChainName={marketNaming.testChainName}
-                      />
-                      <ListItemText sx={{ mr: 0 }}>
-                        {marketNaming.name} {market.isFork ? 'Fork' : ''}
-                      </ListItemText>
-                      <ListItemText
                         sx={{
-                          textAlign: 'right',
-                          display: 'flex',
-                          alignItems: 'center',
-                          flexDirection: 'row-reverse',
-                          gap: 1,
+                          color: 'text.secondary',
+                          mt: 0.5,
+                          fontSize: '0.85rem',
+                          wordWrap: 'break-word',
+                          whiteSpace: 'normal',
+                          lineHeight: 1.3,
+                          maxWidth: '100%',
                         }}
                       >
-                        <Typography color="text.muted" variant="description">
-                          {marketNaming.testChainName}
-                        </Typography>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                          {market.externalUrl && (
+                        {marketBlurbs[currentMarket]}
+                      </Typography>
+                    )}
+
+                    <MarketBadges market={market} sx={{ mt: 1 }} />
+                  </Box>
+                );
+              },
+
+              sx: {
+                '&.MarketSwitcher__select .MuiSelect-outlined': {
+                  pl: 0,
+                  py: 0,
+                  backgroundColor: 'transparent !important',
+                },
+                '.MuiSelect-icon': { color: '#F1F1F3' },
+              },
+              MenuProps: {
+                anchorOrigin: {
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                },
+                transformOrigin: {
+                  vertical: 'top',
+                  horizontal: 'right',
+                },
+                PaperProps: {
+                  style: {
+                    minWidth: 240,
+                  },
+                  variant: 'outlined',
+                  elevation: 0,
+                },
+              },
+            }}
+          >
+            <Box>
+              <Typography variant="subheader2" color="text.secondary" sx={{ px: 4, pt: 2 }}>
+                <Trans>
+                  {ENABLE_TESTNET || STAGING_ENV
+                    ? 'Select Reental Testnet Market'
+                    : 'Select Reental Market'}
+                </Trans>
+              </Typography>
+            </Box>
+            {isV3MarketsAvailable && isV2MarketsAvailable && (
+              <Box sx={{ mx: '18px', display: 'flex', justifyContent: 'center' }}>
+                <StyledToggleButtonGroup
+                  value={selectedMarketVersion}
+                  exclusive
+                  onChange={(_, value) => {
+                    if (value !== null) {
+                      setSelectedMarketVersion(value);
+                    }
+                  }}
+                  sx={{
+                    width: '100%',
+                    height: '36px',
+                    background: theme.palette.primary.main,
+                    border: `1px solid ${
+                      theme.palette.mode === 'dark' ? 'rgba(235, 235, 237, 0.12)' : '#1B2030'
+                    }`,
+                    borderRadius: '6px',
+                    marginTop: '16px',
+                    marginBottom: '12px',
+                    padding: '2px',
+                  }}
+                >
+                  <StyledToggleButton
+                    value={SelectedMarketVersion.V3}
+                    data-cy={`markets_switch_button_v3`}
+                    sx={{
+                      backgroundColor: theme.palette.mode === 'dark' ? '#EAEBEF' : '#1F2937',
+                      '&.Mui-selected, &.Mui-selected:hover': {
+                        backgroundColor: theme.palette.mode === 'dark' ? '#292E41' : '#FFFFFF',
+                        boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.05)',
+                      },
+                      borderRadius: '4px',
+                    }}
+                  >
+                    <Typography
+                      variant="buttonM"
+                      sx={
+                        selectedMarketVersion === SelectedMarketVersion.V3
+                          ? {
+                              backgroundImage: (theme) => theme.palette.gradients.aaveGradient,
+                              backgroundClip: 'text',
+                              color: 'transparent',
+                            }
+                          : {
+                              color: theme.palette.mode === 'dark' ? '#0F121D' : '#FFFFFF',
+                            }
+                      }
+                    >
+                      <Trans>Version 3</Trans>
+                    </Typography>
+                  </StyledToggleButton>
+                  <StyledToggleButton
+                    value={SelectedMarketVersion.V2}
+                    data-cy={`markets_switch_button_v2`}
+                    sx={{
+                      backgroundColor: theme.palette.mode === 'dark' ? '#EAEBEF' : '#1F2937',
+                      '&.Mui-selected, &.Mui-selected:hover': {
+                        backgroundColor: theme.palette.mode === 'dark' ? '#292E41' : '#FFFFFF',
+                        boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.05)',
+                      },
+                      borderRadius: '4px',
+                    }}
+                  >
+                    <Typography
+                      variant="buttonM"
+                      sx={
+                        selectedMarketVersion === SelectedMarketVersion.V2
+                          ? {
+                              backgroundImage: (theme) => theme.palette.gradients.aaveGradient,
+                              backgroundClip: 'text',
+                              color: 'transparent',
+                            }
+                          : {
+                              color: theme.palette.mode === 'dark' ? '#0F121D' : '#FFFFFF',
+                            }
+                      }
+                    >
+                      <Trans>Version 2</Trans>
+                    </Typography>
+                  </StyledToggleButton>
+                </StyledToggleButtonGroup>
+              </Box>
+            )}
+            {availableMarkets
+              .slice() // Create a copy to avoid mutating the original array
+              .sort((a, b) => {
+                const aIsFavorite = isFavoriteMarket(a);
+                const bIsFavorite = isFavoriteMarket(b);
+
+                // If both are favorites or both are not favorites, maintain custom order
+                if (aIsFavorite === bIsFavorite) {
+                  return getMarketOrder(a) - getMarketOrder(b);
+                }
+
+                // Otherwise, favorites come first
+                return aIsFavorite ? -1 : 1;
+              })
+              .map((marketId: CustomMarket) => {
+                const { market, logo, networkLogo, networkName } = getMarketInfoById(marketId);
+                const marketNaming = getMarketHelpData(market.marketTitle);
+                const isFavorite = isFavoriteMarket(marketId);
+                return (
+                  <MenuItem
+                    key={marketId}
+                    data-cy={`marketSelector_${marketId}`}
+                    value={marketId}
+                    sx={{
+                      '.MuiListItemIcon-root': { minWidth: 'unset' },
+                      display:
+                        (market.v3 && selectedMarketVersion === SelectedMarketVersion.V2) ||
+                        (!market.v3 && selectedMarketVersion === SelectedMarketVersion.V3)
+                          ? 'none'
+                          : 'flex',
+                    }}
+                  >
+                    <MarketLogo
+                      size={32}
+                      logo={logo}
+                      networkLogo={networkLogo}
+                      networkName={networkName}
+                      testChainName={marketNaming.testChainName}
+                    />
+                    <ListItemText sx={{ mr: 2 }} disableTypography>
+                      <Typography>
+                        {marketNaming.name} {market.isFork ? 'Fork' : ''}
+                      </Typography>
+                      <MarketBadges market={market} sx={{ mt: 0.5 }} />
+                    </ListItemText>
+                    <ListItemText
+                      sx={{
+                        textAlign: 'right',
+                        display: 'flex',
+                        alignItems: 'center',
+                        flexDirection: 'row-reverse',
+                        gap: 1,
+                      }}
+                    >
+                      <Typography color="text.muted" variant="description">
+                        {marketNaming.testChainName}
+                      </Typography>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                        {market.externalUrl && (
+                          <SvgIcon
+                            sx={{
+                              fontSize: '16px',
+                              color: 'text.muted',
+                            }}
+                          >
+                            <ExternalLinkIcon />
+                          </SvgIcon>
+                        )}
+                        <Tooltip title={isFavorite ? 'Remove from favorites' : 'Add to favorites'}>
+                          <IconButton
+                            size="small"
+                            onClick={(e) => handleStarClick(e, marketId)}
+                            sx={{
+                              padding: '2px',
+                              '&:hover': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                              },
+                            }}
+                          >
                             <SvgIcon
                               sx={{
-                                fontSize: '16px',
-                                color: 'text.muted',
-                              }}
-                            >
-                              <ExternalLinkIcon />
-                            </SvgIcon>
-                          )}
-                          <Tooltip
-                            title={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-                          >
-                            <IconButton
-                              size="small"
-                              onClick={(e) => handleStarClick(e, marketId)}
-                              sx={{
-                                padding: '2px',
+                                fontSize: '18px',
+                                color: isFavorite ? '#FBCC5F' : 'text.disabled',
                                 '&:hover': {
-                                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                  color: isFavorite ? '#FBCC5F' : 'text.secondary',
                                 },
                               }}
                             >
-                              <SvgIcon
-                                sx={{
-                                  fontSize: '18px',
-                                  color: isFavorite ? '#FBCC5F' : 'text.disabled',
-                                  '&:hover': {
-                                    color: isFavorite ? '#FBCC5F' : 'text.secondary',
-                                  },
-                                }}
-                              >
-                                <StarIcon />
-                              </SvgIcon>
-                            </IconButton>
-                          </Tooltip>
-                        </Box>
-                      </ListItemText>
-                    </MenuItem>
-                  );
-                })}
-            </TextField>
-          </Box>
-        </Tooltip>
-        {marketBlurbs[currentMarket] && (
-          <Typography
-            sx={{
-              color: 'text.secondary',
-              mt: 0.5,
-              fontSize: '0.85rem',
-              wordWrap: 'break-word',
-              whiteSpace: 'normal',
-              lineHeight: 1.3,
-              maxWidth: { xs: '100%', md: 560 },
-            }}
-          >
-            {marketBlurbs[currentMarket]}
-          </Typography>
-        )}
-      </Box>
+                              <StarIcon />
+                            </SvgIcon>
+                          </IconButton>
+                        </Tooltip>
+                      </Box>
+                    </ListItemText>
+                  </MenuItem>
+                );
+              })}
+          </TextField>
+        </Box>
+      </Tooltip>
     </ClickAwayListener>
   );
 };

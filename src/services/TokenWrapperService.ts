@@ -40,9 +40,14 @@ export class TokenWrapperService {
     return service.getTokenOutForTokenIn(amount);
   }
 
-  public async supplyWrappedToken(amount: string, tokenWrapperAddress: string, user: string) {
+  public async supplyWrappedToken(
+    amount: string,
+    tokenWrapperAddress: string,
+    user: string,
+    referralCode = '0'
+  ) {
     const service = await this.getService(tokenWrapperAddress);
-    return service.supplyToken(amount, user, '0');
+    return service.supplyToken(amount, user, referralCode);
   }
 
   public async supplyWrappedTokenWithPermit(
@@ -50,13 +55,14 @@ export class TokenWrapperService {
     tokenWrapperAddress: string,
     user: string,
     deadline: string,
-    signature: SignatureLike
+    signature: SignatureLike,
+    referralCode = '0'
   ) {
     const service = await this.getService(tokenWrapperAddress);
     return service.supplyTokenWithPermit({
       amount,
       onBehalfOf: user,
-      referralCode: '0',
+      referralCode,
       deadline,
       signature,
     });

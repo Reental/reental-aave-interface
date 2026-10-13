@@ -70,7 +70,7 @@ export type NetworkConfig = {
 
 export type BaseNetworkConfig = Omit<NetworkConfig, 'explorerLinkBuilder'>;
 
-/** TEMP demo: avoid viem/wagmi default sepolia.drpc.org (free plan 400). */
+/** Avoid viem/wagmi default sepolia.drpc.org (free plan 400). */
 const SEPOLIA_PUBLIC_RPCS = [
   'https://ethereum-sepolia-rpc.publicnode.com',
   'https://rpc.sepolia.org',
@@ -204,9 +204,7 @@ export const prodNetworkConfig: Record<string, BaseNetworkConfig> = {
   [ChainId.polygon]: {
     name: 'Polygon POS',
     displayName: 'Polygon',
-    publicJsonRPCUrl: [
-      `https://polygon-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`,
-    ],
+    publicJsonRPCUrl: ['https://polygon.drpc.org'],
     baseAssetSymbol: 'POL',
     wrappedBaseAssetSymbol: 'WPOL',
     baseAssetDecimals: 18,
@@ -215,7 +213,8 @@ export const prodNetworkConfig: Record<string, BaseNetworkConfig> = {
     bridge: {
       icon: '/icons/bridge/polygon.svg',
       name: 'Polygon PoS Bridge',
-      url: 'https://wallet.polygon.technology/polygon/bridge',
+      // In-app USDC/USDT bridge between Aave (Ethereum) and Reental (Polygon)
+      url: '/bridge',
     },
     wagmiChain: polygon,
   },
