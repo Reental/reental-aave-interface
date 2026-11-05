@@ -5,6 +5,10 @@ import { useCallback, useState } from 'react';
 import { ComputedReserveData } from 'src/hooks/app-data-provider/useAppDataProvider';
 import { useWeb3Context } from 'src/libs/hooks/useWeb3Context';
 import { SHARED_LIQUIDATION_ROUTER_ABI } from 'src/libs/reental/sharedRouter/abi';
+import {
+  fetchDebtToCover,
+  simulateLiquidate,
+} from 'src/libs/reental/sharedRouter/fetchDebtToCover';
 import { useRootStore } from 'src/store/root';
 import { getErrorTextFromError, TxAction } from 'src/ui-config/errorMapping';
 import { useShallow } from 'zustand/shallow';
@@ -47,26 +51,88 @@ export const useExecuteLiquidations = () => {
       setError(undefined);
       const iface = new ethers.utils.Interface(SHARED_LIQUIDATION_ROUTER_ABI);
       const debtPrice = Number(debtReserve.priceInUSD) || 1;
+      const provider = useRootStore.getState().jsonRpcProvider(currentMarketData.chainId);
+      const candidates = (row: BookRow) => row.slices.map((slice) => slice.owner);
 
       for (const row of rows) {
         setStatuses((prev) => ({ ...prev, [row.position.user]: 'pending' }));
 
         try {
-          // The book works in USD; the contract wants debt-asset base units. Rounding down
-          // keeps the call inside the close factor rather than a hair over it.
-          const debtToCover = parseUnits(
+          // Backstop capacity for this borrower, in debt base units. It caps debtToCover from
+          // below; Aave's close-factor and collateral limits cap it from above. The book works
+          // in USD, so convert and round down to stay inside the close factor.
+          const capacity = parseUnits(
             (Math.floor((row.matchableUSD / debtPrice) * 10 ** 6) / 10 ** 6).toFixed(
               Math.min(debtReserve.decimals, 6)
             ),
             debtReserve.decimals
-          ).toString();
+          ).toBigInt();
+
+          // Size debtToCover to exactly what Aave will repay. The router pulls LP aTokens for
+          // the full amount and never refunds the allowance it overspends, so asking for more
+          // than Aave repays permanently burns an LP's approval.
+          // eslint-disable-next-line no-await-in-loop
+          const sizing = await fetchDebtToCover({
+            provider,
+            router,
+            borrower: row.position.user,
+            collateralAsset: collateralReserve.underlyingAsset,
+            debtAsset: debtReserve.underlyingAsset,
+            fallbackPool: currentMarketData.addresses.LENDING_POOL,
+            userAmount: capacity,
+          });
+
+          if (!sizing.liquidatable) {
+            setStatuses((prev) => ({ ...prev, [row.position.user]: 'failed' }));
+            setError('This borrower is no longer liquidatable (health factor is at or above 1).');
+            continue;
+          }
+          if (sizing.usedFallback) {
+            // eslint-disable-next-line no-console
+            console.warn(
+              `[liquidations] unexpected pool revision; using full-debt debtToCover for ${row.position.user}`
+            );
+          }
+          if (sizing.debtToCover === BigInt(0)) {
+            setStatuses((prev) => ({ ...prev, [row.position.user]: 'failed' }));
+            setError('Nothing to liquidate for this borrower at the current price.');
+            continue;
+          }
+
+          let debtToCover = sizing.debtToCover;
+
+          // Dry-run before broadcasting: surface the revert reason instead of burning gas, and
+          // adopt the exact repay amount the router reports when it gives one back.
+          // eslint-disable-next-line no-await-in-loop
+          const sim = await simulateLiquidate({
+            provider,
+            router,
+            from: user as string,
+            borrower: row.position.user,
+            collateralAsset: collateralReserve.underlyingAsset,
+            debtAsset: debtReserve.underlyingAsset,
+            debtToCover,
+            candidates: candidates(row),
+          });
+          if (!sim.ok) {
+            setStatuses((prev) => ({ ...prev, [row.position.user]: 'failed' }));
+            setError(sim.reason);
+            break;
+          }
+          if (
+            sim.debtCovered !== undefined &&
+            sim.debtCovered > BigInt(0) &&
+            sim.debtCovered <= debtToCover
+          ) {
+            debtToCover = sim.debtCovered;
+          }
 
           const data = iface.encodeFunctionData('liquidate', [
             row.position.user,
             collateralReserve.underlyingAsset,
             debtReserve.underlyingAsset,
-            debtToCover,
-            row.slices.map((slice) => slice.owner),
+            debtToCover.toString(),
+            candidates(row),
           ]);
 
           // eslint-disable-next-line no-await-in-loop
@@ -95,7 +161,15 @@ export const useExecuteLiquidations = () => {
 
       return true;
     },
-    [router, estimateGasLimit, sendTx, user, currentMarketData.chainId, queryClient]
+    [
+      router,
+      estimateGasLimit,
+      sendTx,
+      user,
+      currentMarketData.chainId,
+      currentMarketData.addresses.LENDING_POOL,
+      queryClient,
+    ]
   );
 
   return { execute, statuses, error, router };

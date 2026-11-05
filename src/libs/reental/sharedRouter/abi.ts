@@ -62,6 +62,9 @@ export const SHARED_LIQUIDATION_ROUTER_ABI = [
   'function remainingBudget(address lp, address collateralAsset) view returns (uint256)',
   'function maxDebtPerLiquidation(address lp, address debtAsset) view returns (uint256)',
   'function aTokenOf(address debtAsset) view returns (address)',
+  // The Aave pool this router liquidates against. Read it rather than hardcoding: on some
+  // chains the liquidation pool is not the same address as the yield pool.
+  'function liquidationPool() view returns (address)',
   'function getLps() view returns (address[])',
   'function getDebtAssets() view returns (address[])',
   'function whitelist() view returns (address)',
@@ -137,6 +140,44 @@ export const ATOKEN_ABI = [
   'function allowance(address owner, address spender) view returns (uint256)',
   'function balanceOf(address owner) view returns (uint256)',
 ];
+
+/**
+ * Enough of the Aave V3 pool to size `debtToCover` exactly as LiquidationLogic will. Read right
+ * before sending so accrued interest does not move the numbers between read and liquidation.
+ *
+ * `getReserveData` returns the full ReserveData struct; we read only the debt-token addresses
+ * (for the borrower's debt balance) and the collateral aToken. `getConfiguration` returns the
+ * packed ReserveConfigurationMap as a single uint256 — liquidation bonus at bits 32..47 and
+ * decimals at bits 48..55.
+ */
+export const AAVE_POOL_LIQUIDATION_ABI = [
+  'function getReserveData(address asset) view returns ((uint256 data) configuration, uint128 liquidityIndex, uint128 currentLiquidityRate, uint128 variableBorrowIndex, uint128 currentVariableBorrowRate, uint128 currentStableBorrowRate, uint40 lastUpdateTimestamp, uint16 id, address aTokenAddress, address stableDebtTokenAddress, address variableDebtTokenAddress, address interestRateStrategyAddress, uint128 accruedToTreasury, uint128 unbacked, uint128 isolationModeTotalDebt)',
+  'function getUserAccountData(address user) view returns (uint256 totalCollateralBase, uint256 totalDebtBase, uint256 availableBorrowsBase, uint256 currentLiquidationThreshold, uint256 ltv, uint256 healthFactor)',
+  'function getConfiguration(address asset) view returns (uint256)',
+  'function ADDRESSES_PROVIDER() view returns (address)',
+  'function POOL_REVISION() view returns (uint256)',
+];
+
+/** The addresses provider only needs to hand us the price oracle. */
+export const POOL_ADDRESSES_PROVIDER_ABI = ['function getPriceOracle() view returns (address)'];
+
+/** The Aave price oracle: one asset price at a time, shared base currency. */
+export const PRICE_ORACLE_ABI = ['function getAssetPrice(address asset) view returns (uint256)'];
+
+/**
+ * `liquidate` declared WITH its return values, for simulation only (`callStatic`). The encoding
+ * selector is identical to the void-returning fragment above, so this never affects the real
+ * send — it just lets us decode `(debtCovered, collateralSeized)` from an eth_call.
+ */
+export const SHARED_LIQUIDATION_ROUTER_SIMULATE_ABI = [
+  'function liquidate(address borrower, address collateralAsset, address debtAsset, uint256 debtToCover, address[] candidates) returns (uint256 debtCovered, uint256 collateralSeized)',
+];
+
+/** ReserveConfigurationMap bit layout we read (Aave V3). */
+export const LIQUIDATION_BONUS_BIT_OFFSET = BigInt(32);
+export const LIQUIDATION_BONUS_MASK = BigInt(0xffff);
+export const RESERVE_DECIMALS_BIT_OFFSET = BigInt(48);
+export const RESERVE_DECIMALS_MASK = BigInt(0xff);
 
 /** Collateral budgets are denominated in USD with 8 decimals, not in token decimals. */
 export const BUDGET_USD_DECIMALS = 8;
