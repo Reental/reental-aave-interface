@@ -14,8 +14,10 @@ import { ListColumn } from 'src/components/lists/ListColumn';
 import { ListHeaderTitle } from 'src/components/lists/ListHeaderTitle';
 import { ListHeaderWrapper } from 'src/components/lists/ListHeaderWrapper';
 import { FormattedNumber } from 'src/components/primitives/FormattedNumber';
+import { Link, ROUTES } from 'src/components/primitives/Link';
 import { TokenIcon } from 'src/components/primitives/TokenIcon';
 import { Warning } from 'src/components/primitives/Warning';
+import { TextWithTooltip } from 'src/components/TextWithTooltip';
 import {
   ComputedReserveData,
   useAppDataContext,
@@ -35,6 +37,12 @@ import {
 const filterReserveOptions = createFilterOptions<ComputedReserveData>({
   stringify: (option) => `${option.symbol} ${option.name}`,
 });
+
+/**
+ * Of the collateral's liquidation bonus, the liquidity provider keeps this share and the
+ * protocol takes the rest. Used only to simulate a provider's take in the empty-state preview.
+ */
+const PROVIDER_BONUS_SHARE = 0.9;
 
 interface LiquidationsMatchingBookProps {
   reserve: ComputedReserveData;
@@ -94,11 +102,10 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
   const debtReserve = isDebtSide ? reserve : selectedOther;
   const collateralReserve = isDebtSide ? selectedOther : reserve;
 
-  const {
-    positions: backstopPositions,
-    liquidity: backstop,
-    quoteError,
-  } = useBackstopLiquidity({ debtReserve, collateralReserve });
+  const { positions: backstopPositions, quoteError } = useBackstopLiquidity({
+    debtReserve,
+    collateralReserve,
+  });
 
   const { execute, statuses: executionStatuses, error: executionError } = useExecuteLiquidations();
 
@@ -173,10 +180,7 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
   }, [positions, debtReserve, collateralReserve, backstopPositions]);
 
   const executableRows = rows.filter((r) => r.executable);
-  const liquidatableUSD = executableRows.reduce((acc, r) => acc + r.demandUSD, 0);
   const matchableUSD = executableRows.reduce((acc, r) => acc + r.matchableUSD, 0);
-  const backstopPositionsUsed = new Set(executableRows.flatMap((r) => r.slices.map((s) => s.owner)))
-    .size;
 
   const batchableRows = executableRows.filter((r) => r.matchableUSD > 0);
   const selectedRows = batchableRows.filter((r) => selected[r.position.user]);
@@ -192,6 +196,7 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
 
   if (!debtReserve || !collateralReserve || otherSideOptions.length === 0) return null;
   const otherReserve = isDebtSide ? collateralReserve : debtReserve;
+  const liquidationBonus = Number(collateralReserve.formattedReserveLiquidationBonus) || 0;
 
   return (
     <Box>
@@ -277,45 +282,17 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
         </Box>
       </Box>
 
-      {/* Pair summary */}
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: { xs: 4, sm: 10 }, mb: 5 }}>
-        <Box>
-          <Typography variant="caption" color="text.secondary" component="div">
-            <Trans>Liquidatable debt</Trans>
-          </Typography>
-          <FormattedNumber value={liquidatableUSD} symbol="USD" variant="main16" />
-        </Box>
-        <Box>
-          <Typography variant="caption" color="text.secondary" component="div">
-            <Trans>Backstop for this pair</Trans>
-          </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 2 }}>
-            <FormattedNumber value={backstop.availableUSD} symbol="USD" variant="main16" />
-            {backstop.depositors > 0 && (
-              <Typography variant="helperText" color="text.muted">
-                {backstop.depositors} <Trans>depositors</Trans>
-              </Typography>
-            )}
-          </Box>
-        </Box>
-        <Box>
-          <Typography variant="caption" color="text.secondary" component="div">
-            <Trans>Matchable now</Trans>
-          </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 2 }}>
-            <FormattedNumber
-              value={matchableUSD}
-              symbol="USD"
-              variant="main16"
-              color={matchableUSD > 0 ? 'success.main' : 'text.primary'}
-            />
-            {backstopPositionsUsed > 0 && (
-              <Typography variant="helperText" color="text.muted">
-                <Trans>using {backstopPositionsUsed} backstop positions</Trans>
-              </Typography>
-            )}
-          </Box>
-        </Box>
+      {/* Pair summary: the only figure a liquidator acts on — what can be liquidated right now. */}
+      <Box sx={{ mb: 5 }}>
+        <Typography variant="caption" color="text.secondary" component="div">
+          <Trans>Available to liquidate</Trans>
+        </Typography>
+        <FormattedNumber
+          value={matchableUSD}
+          symbol="USD"
+          variant="main16"
+          color={matchableUSD > 0 ? 'success.main' : 'text.primary'}
+        />
       </Box>
 
       {quoteError ? (
@@ -323,15 +300,19 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
           <Trans>The router cannot price this pair: {quoteError}.</Trans>
         </Warning>
       ) : (
-        backstop.availableUSD === 0 && (
-          <Warning severity="warning" sx={{ mb: 4 }}>
-            <Trans>No backstop deposits accept this pair yet, so nothing can be matched.</Trans>
+        executableRows.length > 0 &&
+        matchableUSD === 0 && (
+          <Warning severity="info" sx={{ mb: 4 }}>
+            <Trans>
+              No liquidity is funding {collateralReserve.symbol} / {debtReserve.symbol} right now,
+              so these positions can&apos;t be matched yet.
+            </Trans>
           </Warning>
         )
       )}
 
-      {/* Names the gate blocking each provider, which the totals above cannot. */}
-      <BackstopDiagnostics debtReserve={debtReserve} collateralReserve={collateralReserve} />
+      {/* Surfaces only the hard blocker the matchable figure cannot: a router barred from the token. */}
+      <BackstopDiagnostics collateralReserve={collateralReserve} />
 
       {executionError && (
         <Warning severity="error" sx={{ mb: 4 }}>
@@ -339,10 +320,163 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
         </Warning>
       )}
 
-      {rows.length === 0 ? (
-        <Warning severity="info" sx={{ mb: 0 }}>
-          <Trans>No liquidatable positions for this pair right now.</Trans>
-        </Warning>
+      {executableRows.length === 0 ? (
+        <Box sx={{ py: 6, textAlign: 'center' }}>
+          <Typography variant="secondary14" sx={{ mb: 1 }}>
+            <Trans>No liquidatable positions for this pair right now.</Trans>
+          </Typography>
+          <Typography
+            variant="helperText"
+            color="text.secondary"
+            sx={{ display: 'block', mb: 3, maxWidth: '380px', mx: 'auto' }}
+          >
+            <Trans>
+              Provide liquidity to liquidate {collateralReserve.symbol} positions when they turn
+              unhealthy, and earn the supply rate in the meantime.
+            </Trans>
+          </Typography>
+          <Button component={Link} href={ROUTES.liquidations} variant="outlined" size="small">
+            <Trans>Provide liquidity</Trans>
+          </Button>
+
+          {/* The positions nearest to liquidation for this pair, dimmed — a preview of the
+              demand that providing liquidity would be positioned to capture. The tooltip
+              simulates the provider's take if the position crossed into liquidatable. */}
+          {rows.length > 0 && (
+            <Box sx={{ mt: 6, mx: 'auto', maxWidth: '360px' }}>
+              <Typography
+                variant="helperText"
+                color="text.secondary"
+                sx={{ display: 'block', textAlign: 'left', mb: 1, opacity: 0.6 }}
+              >
+                <Trans>Approaching liquidation</Trans>
+              </Typography>
+              {rows.slice(0, 5).map((row) => {
+                // What a provider would take if this position became liquidatable. They fund
+                // the repayment in the debt token and are paid in the collateral token: their
+                // repayment back plus the liquidation bonus, of which the protocol takes a cut.
+                const repayUSD = Math.min(
+                  row.debtUSD * row.factor,
+                  row.collateralUSD / (1 + liquidationBonus)
+                );
+                const grossBonusUSD = repayUSD * liquidationBonus;
+                const providerBonusUSD = grossBonusUSD * PROVIDER_BONUS_SHARE;
+                const protocolBonusUSD = grossBonusUSD - providerBonusUSD;
+                // Collateral the provider walks away with: repayment + their share of the bonus.
+                const providerReceiveUSD = repayUSD + providerBonusUSD;
+
+                return (
+                  <Box
+                    key={row.position.user}
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      py: 1,
+                      borderTop: 1,
+                      borderColor: 'divider',
+                    }}
+                  >
+                    <Typography variant="secondary12" sx={{ opacity: 0.55 }}>
+                      {`${row.position.user.slice(0, 6)}...${row.position.user.slice(-4)}`}
+                    </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Typography variant="secondary12" color="warning.main" sx={{ opacity: 0.7 }}>
+                        <Trans>HF {row.position.healthFactor.toFixed(3)}</Trans>
+                      </Typography>
+                      <TextWithTooltip iconSize={14} iconColor="text.secondary">
+                        <Box sx={{ minWidth: '220px' }}>
+                          <Typography variant="subheader2" sx={{ mb: 2 }}>
+                            <Trans>Your take if liquidated</Trans>
+                          </Typography>
+                          <Typography
+                            variant="caption"
+                            color="text.secondary"
+                            sx={{ display: 'block', mb: 3 }}
+                          >
+                            <Trans>
+                              If this position turns unhealthy, you repay its {debtReserve.symbol}{' '}
+                              debt and are paid in {collateralReserve.symbol} — your repayment back
+                              plus a {(liquidationBonus * 100).toFixed(1)}% bonus. You keep{' '}
+                              {(PROVIDER_BONUS_SHARE * 100).toFixed(0)}% of that bonus; the rest
+                              goes to the protocol.
+                            </Trans>
+                          </Typography>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              alignItems: 'center',
+                              mb: 1,
+                            }}
+                          >
+                            <Typography variant="caption" color="text.secondary">
+                              <Trans>You pay ({debtReserve.symbol})</Trans>
+                            </Typography>
+                            <FormattedNumber value={repayUSD} symbol="USD" variant="caption" />
+                          </Box>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              alignItems: 'baseline',
+                              mb: 1,
+                            }}
+                          >
+                            <Typography variant="caption" color="success.main">
+                              <Trans>You keep ({collateralReserve.symbol})</Trans>
+                            </Typography>
+                            <Box sx={{ textAlign: 'right' }}>
+                              <FormattedNumber
+                                value={providerReceiveUSD}
+                                symbol="USD"
+                                variant="secondary12"
+                                color="success.main"
+                              />
+                              <Typography
+                                variant="helperText"
+                                color="text.secondary"
+                                sx={{ display: 'block' }}
+                              >
+                                <Trans>
+                                  incl.{' '}
+                                  <FormattedNumber
+                                    value={providerBonusUSD}
+                                    symbol="USD"
+                                    variant="helperText"
+                                    sx={{ display: 'inline-flex' }}
+                                  />{' '}
+                                  bonus
+                                </Trans>
+                              </Typography>
+                            </Box>
+                          </Box>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              alignItems: 'center',
+                            }}
+                          >
+                            <Typography variant="caption" color="text.secondary">
+                              <Trans>Protocol bonus cut</Trans>
+                            </Typography>
+                            <FormattedNumber
+                              value={protocolBonusUSD}
+                              symbol="USD"
+                              variant="caption"
+                              color="text.secondary"
+                            />
+                          </Box>
+                        </Box>
+                      </TextWithTooltip>
+                    </Box>
+                  </Box>
+                );
+              })}
+            </Box>
+          )}
+        </Box>
       ) : (
         <Box sx={{ border: 1, borderColor: 'divider', borderRadius: '6px', overflowX: 'auto' }}>
           <Box sx={{ minWidth: '560px' }}>
@@ -391,17 +525,16 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
               </ListColumn>
             </ListHeaderWrapper>
 
-            {rows.map((row) => (
+            {executableRows.map((row) => (
               <Box
                 key={row.position.user}
                 sx={{
-                  opacity: row.executable ? 1 : 0.45,
                   '&:not(:last-child)': { borderBottom: '1px solid', borderColor: 'divider' },
                 }}
               >
                 <Box sx={{ display: 'flex', alignItems: 'center', minHeight: '56px', px: 4 }}>
                   <ListColumn maxWidth={40} minWidth={40} align="center">
-                    {row.executable && row.matchableUSD > 0 && (
+                    {row.matchableUSD > 0 && (
                       <Checkbox
                         size="small"
                         checked={!!selected[row.position.user]}
@@ -424,25 +557,17 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
                   <ListColumn align="left" minWidth={80}>
                     <Typography
                       variant="main14"
-                      color={
-                        !row.executable
-                          ? 'text.muted'
-                          : row.position.healthFactor < 0.95
-                          ? 'error.main'
-                          : 'warning.main'
-                      }
+                      color={row.position.healthFactor < 0.95 ? 'error.main' : 'warning.main'}
                     >
                       {row.position.healthFactor.toFixed(3)}
                     </Typography>
-                    {row.executable && (
-                      <Typography variant="helperText" color="text.secondary">
-                        {row.factor === 1 ? (
-                          <Trans>100% liquidatable</Trans>
-                        ) : (
-                          <Trans>up to 50%</Trans>
-                        )}
-                      </Typography>
-                    )}
+                    <Typography variant="helperText" color="text.secondary">
+                      {row.factor === 1 ? (
+                        <Trans>100% liquidatable</Trans>
+                      ) : (
+                        <Trans>up to 50%</Trans>
+                      )}
+                    </Typography>
                   </ListColumn>
                   <ListColumn align="right" minWidth={100}>
                     <FormattedNumber value={row.debtAmount} variant="secondary14" />
@@ -454,34 +579,22 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
                     />
                   </ListColumn>
                   <ListColumn align="right" minWidth={110}>
-                    {row.executable ? (
-                      <>
-                        <FormattedNumber
-                          value={row.matchableUSD}
-                          symbol="USD"
-                          variant="secondary14"
-                          color={row.matchableUSD > 0 ? 'success.main' : 'text.muted'}
-                        />
-                        {row.coverage !== 'none' && (
-                          <Chip
-                            label={
-                              row.coverage === 'total' ? (
-                                <Trans>Total</Trans>
-                              ) : (
-                                <Trans>Partial</Trans>
-                              )
-                            }
-                            size="small"
-                            variant="outlined"
-                            color={row.coverage === 'total' ? 'success' : 'warning'}
-                            sx={{ mt: 1, height: '20px', fontSize: '11px' }}
-                          />
-                        )}
-                      </>
-                    ) : (
-                      <Typography variant="helperText" color="text.muted">
-                        <Trans>HF above 1</Trans>
-                      </Typography>
+                    <FormattedNumber
+                      value={row.matchableUSD}
+                      symbol="USD"
+                      variant="secondary14"
+                      color={row.matchableUSD > 0 ? 'success.main' : 'text.muted'}
+                    />
+                    {row.coverage !== 'none' && (
+                      <Chip
+                        label={
+                          row.coverage === 'total' ? <Trans>Total</Trans> : <Trans>Partial</Trans>
+                        }
+                        size="small"
+                        variant="outlined"
+                        color={row.coverage === 'total' ? 'success' : 'warning'}
+                        sx={{ mt: 1, height: '20px', fontSize: '11px' }}
+                      />
                     )}
                   </ListColumn>
                   <ListColumn maxWidth={110} minWidth={100} align="right">
@@ -489,7 +602,6 @@ export const LiquidationsMatchingBook = ({ reserve }: LiquidationsMatchingBookPr
                       variant="contained"
                       size="small"
                       disabled={
-                        !row.executable ||
                         row.matchableUSD === 0 ||
                         executionStatuses[row.position.user] === 'pending' ||
                         executionStatuses[row.position.user] === 'done'
