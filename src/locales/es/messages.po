@@ -328,6 +328,10 @@ msgstr "El suministro de activos está limitado a una cierta cantidad para reduc
 msgid "Cancellation submited"
 msgstr "Cancelación enviada"
 
+#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
+msgid "Understood ({secondsLeft}s)"
+msgstr "Entendido ({secondsLeft}s)"
+
 #: src/components/transactions/LiquidityMandate/LiquidityMandateModalContent.tsx
 msgid "Set limit"
 msgstr "Establecer límite"
@@ -1942,6 +1946,10 @@ msgstr "Tip: Intenta aumentar el deslizamiento o reduce la cantidad de entrada"
 msgid "Your recipient is not whitelisted for {0}. Budgets on those assets are accepted but never filled."
 msgstr "Tu destinatario no está en la lista blanca de {0}. Los presupuestos en esos activos se aceptan pero nunca se ejecutan."
 
+#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
+msgid "We are organizing everything to return the liquidity. We will keep you informed."
+msgstr "Estamos organizando todo para devolver la liquidez. Te mantendremos informado."
+
 #: src/components/transactions/Liquidate/LiquidateModalContent.tsx
 msgid "Liquidated"
 msgstr "Liquidado"
@@ -3303,6 +3311,10 @@ msgstr "Activos a tomar prestado"
 msgid "Data couldn't be loaded."
 msgstr "No se pudieron cargar los datos."
 
+#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
+msgid "Understood"
+msgstr "Entendido"
+
 #: src/components/Warnings/BorrowDisabledWarning.tsx
 msgid "Borrowing is disabled due to an Aave community decision. <0>More details</0>"
 msgstr "Tomar prestado está deshabilitado debido a una decisión de la comunidad de Aave. <0>Más información</0>"
@@ -4363,6 +4375,10 @@ msgstr "Suministrar APY"
 #: src/layouts/SettingsMenu.tsx
 msgid "Global settings"
 msgstr "Configuración global"
+
+#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
+msgid "Important notice"
+msgstr "Aviso importante"
 
 #: src/components/transactions/Withdraw/WithdrawAndSwitchSuccess.tsx
 msgid "You've successfully withdrew & swapped tokens."

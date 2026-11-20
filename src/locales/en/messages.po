@@ -323,6 +323,10 @@ msgstr "Asset supply is limited to a certain amount to reduce protocol exposure 
 msgid "Cancellation submited"
 msgstr "Cancellation submited"
 
+#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
+msgid "Understood ({secondsLeft}s)"
+msgstr "Understood ({secondsLeft}s)"
+
 #: src/components/transactions/LiquidityMandate/LiquidityMandateModalContent.tsx
 msgid "Set limit"
 msgstr "Set limit"
@@ -1937,6 +1941,10 @@ msgstr "Tip: Try increasing slippage or reduce input amount"
 msgid "Your recipient is not whitelisted for {0}. Budgets on those assets are accepted but never filled."
 msgstr "Your recipient is not whitelisted for {0}. Budgets on those assets are accepted but never filled."
 
+#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
+msgid "We are organizing everything to return the liquidity. We will keep you informed."
+msgstr "We are organizing everything to return the liquidity. We will keep you informed."
+
 #: src/components/transactions/Liquidate/LiquidateModalContent.tsx
 msgid "Liquidated"
 msgstr "Liquidated"
@@ -3298,6 +3306,10 @@ msgstr "Assets to borrow"
 msgid "Data couldn't be loaded."
 msgstr "Data couldn't be loaded."
 
+#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
+msgid "Understood"
+msgstr "Understood"
+
 #: src/components/Warnings/BorrowDisabledWarning.tsx
 msgid "Borrowing is disabled due to an Aave community decision. <0>More details</0>"
 msgstr "Borrowing is disabled due to an Aave community decision. <0>More details</0>"
@@ -4358,6 +4370,10 @@ msgstr "Supply APY"
 #: src/layouts/SettingsMenu.tsx
 msgid "Global settings"
 msgstr "Global settings"
+
+#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
+msgid "Important notice"
+msgstr "Important notice"
 
 #: src/components/transactions/Withdraw/WithdrawAndSwitchSuccess.tsx
 msgid "You've successfully withdrew & swapped tokens."
