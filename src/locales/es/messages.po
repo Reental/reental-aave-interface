@@ -1946,10 +1946,6 @@ msgstr "Tip: Intenta aumentar el deslizamiento o reduce la cantidad de entrada"
 msgid "Your recipient is not whitelisted for {0}. Budgets on those assets are accepted but never filled."
 msgstr "Tu destinatario no está en la lista blanca de {0}. Los presupuestos en esos activos se aceptan pero nunca se ejecutan."
 
-#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
-msgid "We are organizing everything to return the liquidity. We will keep you informed."
-msgstr "Estamos organizando todo para devolver la liquidez. Te mantendremos informado."
-
 #: src/components/transactions/Liquidate/LiquidateModalContent.tsx
 msgid "Liquidated"
 msgstr "Liquidado"
@@ -4911,6 +4907,10 @@ msgstr "Con la testnet Faucet puedes obtener activos gratuitos para probar el Pr
 #: src/modules/staking/GetABPTokenModal.tsx
 msgid "Get ABP v2 Token"
 msgstr "Obtener Token ABP v2"
+
+#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
+msgid "We are working to return the funds. We will keep you informed of every step."
+msgstr "Estamos trabajando para devolver los fondos. Te mantendremos informado de cada paso."
 
 #: src/components/incentives/SonicIncentivesTooltipContent.tsx
 msgid "This asset is eligible for {0} Sonic Rewards."

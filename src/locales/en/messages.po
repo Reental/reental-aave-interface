@@ -1941,10 +1941,6 @@ msgstr "Tip: Try increasing slippage or reduce input amount"
 msgid "Your recipient is not whitelisted for {0}. Budgets on those assets are accepted but never filled."
 msgstr "Your recipient is not whitelisted for {0}. Budgets on those assets are accepted but never filled."
 
-#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
-msgid "We are organizing everything to return the liquidity. We will keep you informed."
-msgstr "We are organizing everything to return the liquidity. We will keep you informed."
-
 #: src/components/transactions/Liquidate/LiquidateModalContent.tsx
 msgid "Liquidated"
 msgstr "Liquidated"
@@ -4906,6 +4902,10 @@ msgstr "With testnet Faucet you can get free assets to test the Aave Protocol. M
 #: src/modules/staking/GetABPTokenModal.tsx
 msgid "Get ABP v2 Token"
 msgstr "Get ABP v2 Token"
+
+#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
+msgid "We are working to return the funds. We will keep you informed of every step."
+msgstr "We are working to return the funds. We will keep you informed of every step."
 
 #: src/components/incentives/SonicIncentivesTooltipContent.tsx
 msgid "This asset is eligible for {0} Sonic Rewards."

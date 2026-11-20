@@ -8,7 +8,7 @@ import { BasicModal } from 'src/components/primitives/BasicModal';
 export const LIQUIDITY_NOTICE_LOCK_SECONDS = 10;
 
 /**
- * Blocking notice shown on every app load while the liquidity return is being organized.
+ * Blocking notice shown on every app load while the team works on returning the funds.
  *
  * For the first LIQUIDITY_NOTICE_LOCK_SECONDS it cannot be dismissed: there is no close
  * button and backdrop clicks / Escape are ignored. After that, the button, the close icon,
@@ -51,7 +51,7 @@ export const LiquidityNoticeModal = () => {
         </Typography>
         <Typography variant="description" sx={{ mb: 6 }}>
           <Trans>
-            We are organizing everything to return the liquidity. We will keep you informed.
+            We are working to return the funds. We will keep you informed of every step.
           </Trans>
         </Typography>
         <Button
