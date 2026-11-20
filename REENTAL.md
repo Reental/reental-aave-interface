@@ -101,7 +101,7 @@ const logs = await client.getLogs({
 
 Limitación: solo se atribuyen los depósitos hechos a través de este front-end; los depósitos directos al contrato o desde otras interfaces llevarán su propio `referralCode` (normalmente `0`).
 
-## Aviso de devolución de fondos
+## Aviso de respaldo de saldos (incidente del 18/11)
 
 Popup bloqueante que sale en cada carga de la app (`src/components/Reental/LiquidityNoticeModal`, montado en `pages/_app.page.tsx`). No se puede cerrar durante los primeros 10 segundos.
 

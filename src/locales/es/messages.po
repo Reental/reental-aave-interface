@@ -2949,6 +2949,10 @@ msgstr "Gobierno de Aave"
 msgid "Execute"
 msgstr "Ejecutar"
 
+#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
+msgid "Your RNTLend balance is 100% backed"
+msgstr "Tu saldo en RNTLend está respaldado al 100 %"
+
 #: src/modules/governance/proposal/ProposalOverview.tsx
 msgid "Raw-Ipfs"
 msgstr "Raw-Ipfs"
@@ -2992,6 +2996,10 @@ msgstr "Antes de suministrar"
 #: src/modules/umbrella/UmbrellaAssetsDefault.tsx
 msgid "Assets to stake"
 msgstr "Activos para stakear"
+
+#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
+msgid "Reental is covering, with its own position, the amount affected by the November 18 incident."
+msgstr "Reental cubre con su propia posición el importe afectado por el incidente del 18 de noviembre."
 
 #: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
 msgid "No liquidatable positions for this pair right now."
@@ -4372,10 +4380,6 @@ msgstr "Suministrar APY"
 msgid "Global settings"
 msgstr "Configuración global"
 
-#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
-msgid "Important notice"
-msgstr "Aviso importante"
-
 #: src/components/transactions/Withdraw/WithdrawAndSwitchSuccess.tsx
 msgid "You've successfully withdrew & swapped tokens."
 msgstr "Has retirado y hecho swap de los tokens correctamente."
@@ -4907,10 +4911,6 @@ msgstr "Con la testnet Faucet puedes obtener activos gratuitos para probar el Pr
 #: src/modules/staking/GetABPTokenModal.tsx
 msgid "Get ABP v2 Token"
 msgstr "Obtener Token ABP v2"
-
-#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
-msgid "We are working to return the funds. We will keep you informed of every step."
-msgstr "Estamos trabajando para devolver los fondos. Te mantendremos informado de cada paso."
 
 #: src/components/incentives/SonicIncentivesTooltipContent.tsx
 msgid "This asset is eligible for {0} Sonic Rewards."

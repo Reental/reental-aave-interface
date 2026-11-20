@@ -1,4 +1,4 @@
-import { ExclamationCircleIcon } from '@heroicons/react/outline';
+import { ShieldCheckIcon } from '@heroicons/react/outline';
 import { Trans } from '@lingui/macro';
 import { Box, Button, SvgIcon, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
@@ -26,15 +26,16 @@ export const LiquidityNoticeModal = () => {
       <Box
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}
       >
-        <SvgIcon sx={{ fontSize: '32px', color: 'warning.main', mb: 3 }}>
-          <ExclamationCircleIcon />
+        <SvgIcon sx={{ fontSize: '32px', color: 'success.main', mb: 3 }}>
+          <ShieldCheckIcon />
         </SvgIcon>
         <Typography variant="h2" sx={{ mb: 4 }}>
-          <Trans>Important notice</Trans>
+          <Trans>Your RNTLend balance is 100% backed</Trans>
         </Typography>
         <Typography variant="description" sx={{ mb: 6 }}>
           <Trans>
-            We are working to return the funds. We will keep you informed of every step.
+            Reental is covering, with its own position, the amount affected by the November 18
+            incident.
           </Trans>
         </Typography>
         <Button variant="contained" fullWidth disabled={!canClose} onClick={() => setOpen(false)}>
