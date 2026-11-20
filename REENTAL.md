@@ -101,27 +101,9 @@ const logs = await client.getLogs({
 
 Limitación: solo se atribuyen los depósitos hechos a través de este front-end; los depósitos directos al contrato o desde otras interfaces llevarán su propio `referralCode` (normalmente `0`).
 
-## Aviso de devolución de fondos (popup bloqueante)
+## Aviso de devolución de fondos
 
-Popup que aparece en cada carga de la app mientras se organiza la devolución de los fondos tras el incidente del 18/11/2026.
+Popup bloqueante que sale en cada carga de la app (`src/components/Reental/LiquidityNoticeModal`, montado en `pages/_app.page.tsx`). No se puede cerrar durante los primeros 10 segundos.
 
-- Componente: `src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx`. Reutiliza la primitiva `BasicModal`, con el mismo patrón de modal no cerrable que `AddressBlockedModal`.
-- Se monta en `pages/_app.page.tsx`, dentro de `AppGlobalStyles` y fuera de `AddressBlocked`. Por eso sale en todas las rutas, también con una wallet bloqueada.
-- Durante `LIQUIDITY_NOTICE_LOCK_SECONDS` (10 s) no se puede cerrar: el botón está deshabilitado con cuenta atrás, no hay X, y el clic fuera y Escape se ignoran. Después lo cierran el botón, la X, el clic fuera o Escape.
-- No guarda estado: vuelve a salir en cada recarga.
-
-### Cambiar el texto
-
-1. Editar los `<Trans>` del componente. El texto fuente está en inglés.
-2. `yarn i18n` (extrae y compila los catálogos).
-3. Rellenar el `msgstr` del texto nuevo en `src/locales/es/messages.po`, borrar las entradas obsoletas (`#~`) y volver a compilar con `yarn i18n:compile`.
-
-### Retirarlo
-
-Quitar `<LiquidityNoticeModal />` y su import de `pages/_app.page.tsx`, o revertir el PR que lo añadió, y volver a ejecutar `yarn i18n`.
-
-### Tests
-
-`yarn test:ci src/components/Reental/LiquidityNoticeModal`. El test mockea `@lingui/macro`, porque next/jest compila con SWC y no ejecuta la macro, y configura `testIdAttribute: 'data-cy'`.
-
-> Usar Node 24 (`.nvmrc`): `nvm use`. Con otra versión, `yarn` y el hook de pre-commit fallan por el `engines` del `package.json`.
+- Cambiar el texto: editar los `<Trans>` del componente, ejecutar `yarn i18n` y traducir el `msgstr` en `src/locales/es/messages.po`.
+- Retirarlo: quitar `<LiquidityNoticeModal />` de `_app` o revertir el PR que lo añadió.
