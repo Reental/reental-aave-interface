@@ -32,10 +32,16 @@ export const LiquidityNoticeModal = () => {
         <Typography variant="h2" sx={{ mb: 4 }}>
           <Trans>Your RNTLend balance is 100% backed</Trans>
         </Typography>
-        <Typography variant="description" sx={{ mb: 6 }}>
+        <Typography variant="description" sx={{ mb: 3 }}>
           <Trans>
             Reental is covering, with its own position, the amount affected by the November 18
             incident.
+          </Trans>
+        </Typography>
+        <Typography variant="description" sx={{ mb: 6 }}>
+          <Trans>
+            When RNTLend is reactivated, you will have a 7-day grace period without liquidations to
+            adjust your positions.
           </Trans>
         </Typography>
         <Button variant="contained" fullWidth disabled={!canClose} onClick={() => setOpen(false)}>

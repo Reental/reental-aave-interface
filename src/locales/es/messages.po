@@ -3577,6 +3577,10 @@ msgstr ".CSV"
 msgid "This is the cost of settling your order on-chain, including gas and any LP fees."
 msgstr "Es el coste de liquidar tu orden on-chain, incluido el gas y las comisiones de LP."
 
+#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
+msgid "When RNTLend is reactivated, you will have a 7-day grace period without liquidations to adjust your positions."
+msgstr "Cuando RNTLend se reactive, tendrás un periodo de gracia de 7 días sin liquidaciones para ajustar tus posiciones."
+
 #: src/components/transactions/SavingsGho/SavingsGhoWithdrawActions.tsx
 #: src/components/transactions/StakeCooldown/StakeCooldownActions.tsx
 #: src/components/transactions/StakeCooldown/StakeCooldownActions.tsx
