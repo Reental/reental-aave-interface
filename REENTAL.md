@@ -103,7 +103,7 @@ Limitación: solo se atribuyen los depósitos hechos a través de este front-end
 
 ## Aviso de respaldo de saldos (incidente del 18/11)
 
-Popup bloqueante que sale en cada carga de la app (`src/components/Reental/LiquidityNoticeModal`, montado en `pages/_app.page.tsx`). No se puede cerrar durante los primeros 10 segundos.
+Popup bloqueante (`src/components/Reental/LiquidityNoticeModal`, montado en `pages/_app.page.tsx`). No se puede cerrar durante los primeros 10 segundos y sale una sola vez por navegador: al cerrarlo se guarda `reental_lend_incident_notice_v1` en `localStorage`. Para volver a mostrarlo a todos, subir la versión de la clave (`_v2`).
 
 - Cambiar la fecha sin liquidaciones: constante `NO_LIQUIDATIONS_UNTIL` del componente (se muestra en hora de Madrid).
 - Cambiar el texto: editar los `<Trans>` del componente, ejecutar `yarn i18n` y traducir el `msgstr` en `src/locales/es/messages.po`.
