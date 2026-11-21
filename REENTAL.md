@@ -105,5 +105,6 @@ Limitación: solo se atribuyen los depósitos hechos a través de este front-end
 
 Popup bloqueante que sale en cada carga de la app (`src/components/Reental/LiquidityNoticeModal`, montado en `pages/_app.page.tsx`). No se puede cerrar durante los primeros 10 segundos.
 
+- Cambiar la fecha sin liquidaciones: constante `NO_LIQUIDATIONS_UNTIL` del componente (se muestra en hora de Madrid).
 - Cambiar el texto: editar los `<Trans>` del componente, ejecutar `yarn i18n` y traducir el `msgstr` en `src/locales/es/messages.po`.
 - Retirarlo: quitar `<LiquidityNoticeModal />` de `_app` o revertir el PR que lo añadió.
