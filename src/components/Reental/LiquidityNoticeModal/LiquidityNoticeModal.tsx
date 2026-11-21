@@ -1,12 +1,16 @@
 import { ShieldCheckIcon } from '@heroicons/react/outline';
 import { Trans } from '@lingui/macro';
-import { Box, Button, SvgIcon, Typography } from '@mui/material';
+import { useLingui } from '@lingui/react';
+import { Box, Button, LinearProgress, SvgIcon, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { BasicModal } from 'src/components/primitives/BasicModal';
 
 const LOCK_SECONDS = 10;
+const NO_LIQUIDATIONS_UNTIL = new Date('2026-11-28T18:00:00+01:00');
+const TIME_ZONE = 'Europe/Madrid';
 
 export const LiquidityNoticeModal = () => {
+  const { i18n } = useLingui();
   const [open, setOpen] = useState(true);
   const [secondsLeft, setSecondsLeft] = useState(LOCK_SECONDS);
   const canClose = secondsLeft === 0;
@@ -16,6 +20,18 @@ export const LiquidityNoticeModal = () => {
     const timer = setTimeout(() => setSecondsLeft(secondsLeft - 1), 1000);
     return () => clearTimeout(timer);
   }, [secondsLeft, canClose]);
+
+  const day = i18n.date(NO_LIQUIDATIONS_UNTIL, {
+    day: 'numeric',
+    month: 'long',
+    timeZone: TIME_ZONE,
+  });
+  const time = i18n.date(NO_LIQUIDATIONS_UNTIL, {
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: TIME_ZONE,
+    timeZoneName: 'short',
+  });
 
   return (
     <BasicModal
@@ -34,16 +50,23 @@ export const LiquidityNoticeModal = () => {
         </Typography>
         <Typography variant="description" sx={{ mb: 3 }}>
           <Trans>
-            Reental is covering, with its own position, the amount affected by the November 18
+            Reental has covered, with its own funds, the amount affected by the November 18
             incident.
           </Trans>
         </Typography>
         <Typography variant="description" sx={{ mb: 6 }}>
           <Trans>
-            When RNTLend is reactivated, you will have a 7-day grace period without liquidations to
-            adjust your positions.
+            There will be no liquidations until {day} at {time}, so you can review and adjust your
+            positions with peace of mind.
           </Trans>
         </Typography>
+        {!canClose && (
+          <LinearProgress
+            variant="determinate"
+            value={((LOCK_SECONDS - secondsLeft) / LOCK_SECONDS) * 100}
+            sx={{ width: '100%', mb: 3 }}
+          />
+        )}
         <Button variant="contained" fullWidth disabled={!canClose} onClick={() => setOpen(false)}>
           {canClose ? <Trans>Understood</Trans> : <Trans>Understood ({secondsLeft}s)</Trans>}
         </Button>

@@ -2278,6 +2278,10 @@ msgstr "usando {backstopPositionsUsed} posiciones de respaldo"
 msgid "View TX"
 msgstr "Ver TX"
 
+#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
+msgid "There will be no liquidations until {day} at {time}, so you can review and adjust your positions with peace of mind."
+msgstr "Hasta el {day} a las {time} no habrá liquidaciones, para que puedas revisar y ajustar tus posiciones con tranquilidad."
+
 #: src/modules/staking/GetABPTokenModal.tsx
 msgid "The Aave Balancer Pool Token (ABPT) is a liquidity pool token. You can receive ABPT by depositing a combination of AAVE + wstETH in the Balancer liquidity pool. You can then stake your BPT in the Safety Module to secure the protocol and earn Safety Incentives."
 msgstr "El Aave Balancer Pool Token (ABPT) es un token de pool de liquidez. Puedes recibir ABPT depositando una combinación de AAVE + wstETH en el pool de liquidez de Balancer. Luego puedes stakear tu BPT en el módulo de seguridad para asegurar el protocolo y ganar incentivos de seguridad."
@@ -2997,10 +3001,6 @@ msgstr "Antes de suministrar"
 msgid "Assets to stake"
 msgstr "Activos para stakear"
 
-#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
-msgid "Reental is covering, with its own position, the amount affected by the November 18 incident."
-msgstr "Reental cubre con su propia posición el importe afectado por el incidente del 18 de noviembre."
-
 #: src/modules/liquidations/matching/LiquidationsMatchingBook.tsx
 msgid "No liquidatable positions for this pair right now."
 msgstr "Ahora mismo no hay posiciones liquidables para este par."
@@ -3198,6 +3198,10 @@ msgstr "No puedes retirar esta cantidad porque causará una liquidación"
 #: src/components/infoTooltips/AvailableTooltip.tsx
 msgid "This is the total amount available for you to borrow. You can borrow based on your collateral and until the borrow cap is reached."
 msgstr "Esta es la cantidad total disponible que puedes tomar prestada. Puedes tomar prestado basado en tu garantía y hasta que el límite de préstamo se alcance."
+
+#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
+msgid "Reental has covered, with its own funds, the amount affected by the November 18 incident."
+msgstr "Reental ha asumido con sus propios fondos el importe afectado por el incidente del 18 de noviembre."
 
 #: src/modules/governance/VotingPowerInfoPanel.tsx
 msgid "Your voting power is based on your AAVE/stkAAVE balance and received delegations."
@@ -3576,10 +3580,6 @@ msgstr ".CSV"
 #: src/components/infoTooltips/NetworkCostTooltip.tsx
 msgid "This is the cost of settling your order on-chain, including gas and any LP fees."
 msgstr "Es el coste de liquidar tu orden on-chain, incluido el gas y las comisiones de LP."
-
-#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
-msgid "When RNTLend is reactivated, you will have a 7-day grace period without liquidations to adjust your positions."
-msgstr "Cuando RNTLend se reactive, tendrás un periodo de gracia de 7 días sin liquidaciones para ajustar tus posiciones."
 
 #: src/components/transactions/SavingsGho/SavingsGhoWithdrawActions.tsx
 #: src/components/transactions/StakeCooldown/StakeCooldownActions.tsx
