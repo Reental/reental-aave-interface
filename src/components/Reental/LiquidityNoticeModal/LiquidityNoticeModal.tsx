@@ -1,13 +1,18 @@
 import { ShieldCheckIcon } from '@heroicons/react/outline';
 import { Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import { Box, Button, LinearProgress, SvgIcon, Typography } from '@mui/material';
+import { Box, Button, keyframes, LinearProgress, SvgIcon, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { BasicModal } from 'src/components/primitives/BasicModal';
 
 const LOCK_SECONDS = 10;
 const NO_LIQUIDATIONS_UNTIL = new Date('2026-11-28T18:00:00+01:00');
 const TIME_ZONE = 'Europe/Madrid';
+
+const fill = keyframes`
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+`;
 
 export const LiquidityNoticeModal = () => {
   const { i18n } = useLingui();
@@ -63,8 +68,12 @@ export const LiquidityNoticeModal = () => {
         {!canClose && (
           <LinearProgress
             variant="determinate"
-            value={((LOCK_SECONDS - secondsLeft) / LOCK_SECONDS) * 100}
-            sx={{ width: '100%', mb: 3 }}
+            value={0}
+            sx={{
+              width: '100%',
+              mb: 3,
+              '& .MuiLinearProgress-bar': { animation: `${fill} ${LOCK_SECONDS}s linear forwards` },
+            }}
           />
         )}
         <Button variant="contained" fullWidth disabled={!canClose} onClick={() => setOpen(false)}>
