@@ -328,6 +328,10 @@ msgstr "El suministro de activos está limitado a una cierta cantidad para reduc
 msgid "Cancellation submited"
 msgstr "Cancelación enviada"
 
+#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
+msgid "Understood ({secondsLeft}s)"
+msgstr "Entendido ({secondsLeft}s)"
+
 #: src/components/transactions/LiquidityMandate/LiquidityMandateModalContent.tsx
 msgid "Set limit"
 msgstr "Establecer límite"
@@ -2274,6 +2278,10 @@ msgstr "usando {backstopPositionsUsed} posiciones de respaldo"
 msgid "View TX"
 msgstr "Ver TX"
 
+#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
+msgid "There will be no liquidations until {day} at {time}, so you can review and adjust your positions with peace of mind."
+msgstr "Hasta el {day} a las {time} no habrá liquidaciones, para que puedas revisar y ajustar tus posiciones con tranquilidad."
+
 #: src/modules/staking/GetABPTokenModal.tsx
 msgid "The Aave Balancer Pool Token (ABPT) is a liquidity pool token. You can receive ABPT by depositing a combination of AAVE + wstETH in the Balancer liquidity pool. You can then stake your BPT in the Safety Module to secure the protocol and earn Safety Incentives."
 msgstr "El Aave Balancer Pool Token (ABPT) es un token de pool de liquidez. Puedes recibir ABPT depositando una combinación de AAVE + wstETH en el pool de liquidez de Balancer. Luego puedes stakear tu BPT en el módulo de seguridad para asegurar el protocolo y ganar incentivos de seguridad."
@@ -2945,6 +2953,10 @@ msgstr "Gobierno de Aave"
 msgid "Execute"
 msgstr "Ejecutar"
 
+#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
+msgid "Your RNTLend balance is 100% backed"
+msgstr "Tu saldo en RNTLend está respaldado al 100 %"
+
 #: src/modules/governance/proposal/ProposalOverview.tsx
 msgid "Raw-Ipfs"
 msgstr "Raw-Ipfs"
@@ -3187,6 +3199,10 @@ msgstr "No puedes retirar esta cantidad porque causará una liquidación"
 msgid "This is the total amount available for you to borrow. You can borrow based on your collateral and until the borrow cap is reached."
 msgstr "Esta es la cantidad total disponible que puedes tomar prestada. Puedes tomar prestado basado en tu garantía y hasta que el límite de préstamo se alcance."
 
+#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
+msgid "Reental has covered, with its own funds, the amount affected by the November 18 incident."
+msgstr "Reental ha asumido con sus propios fondos el importe afectado por el incidente del 18 de noviembre."
+
 #: src/modules/governance/VotingPowerInfoPanel.tsx
 msgid "Your voting power is based on your AAVE/stkAAVE balance and received delegations."
 msgstr "Tu poder de voto se basa en tu balance de AAVE/stkAAVE y delegaciones recibidas."
@@ -3302,6 +3318,10 @@ msgstr "Activos a tomar prestado"
 #: src/modules/reserve-overview/graphs/ApyGraphContainer.tsx
 msgid "Data couldn't be loaded."
 msgstr "No se pudieron cargar los datos."
+
+#: src/components/Reental/LiquidityNoticeModal/LiquidityNoticeModal.tsx
+msgid "Understood"
+msgstr "Entendido"
 
 #: src/components/Warnings/BorrowDisabledWarning.tsx
 msgid "Borrowing is disabled due to an Aave community decision. <0>More details</0>"
