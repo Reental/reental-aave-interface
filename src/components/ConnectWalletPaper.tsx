@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro';
-import { CircularProgress, Paper, PaperProps, Typography } from '@mui/material';
+import { Box, CircularProgress, Paper, PaperProps, Typography } from '@mui/material';
 import { useModal } from 'connectkit';
 import { ReactNode } from 'react';
 
@@ -43,7 +43,18 @@ export const ConnectWalletPaper = ({ description, sx, ...rest }: ConnectWalletPa
                 </Trans>
               )}
             </Typography>
-            <ConnectWalletButton />
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: { xs: 'column', xsm: 'row' },
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 2,
+                flexWrap: 'wrap',
+              }}
+            >
+              <ConnectWalletButton funnel="connect_wallet_paper" />
+            </Box>
           </>
         )}
       </>

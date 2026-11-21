@@ -9,6 +9,7 @@ import { getMarketInfoById } from 'src/components/MarketSwitcher';
 import { FormattedNumber } from 'src/components/primitives/FormattedNumber';
 import { ROUTES } from 'src/components/primitives/Link';
 import { PageTitle } from 'src/components/TopInfoPanel/PageTitle';
+import { ConnectReentalButton } from 'src/components/WalletConnection/ConnectReentalButton';
 import { useWeb3Context } from 'src/libs/hooks/useWeb3Context';
 import { useRootStore } from 'src/store/root';
 import { selectIsMigrationAvailable } from 'src/store/v3MigrationSelectors';
@@ -170,6 +171,20 @@ export const DashboardTopPanel = () => {
             )}
           </TopInfoPanelItem>
         </DashboardMetricCard>
+
+        {!currentAccount && (
+          <Box
+            sx={{
+              alignSelf: 'center',
+              width: { xs: '100%', xsm: 'auto' },
+              display: 'flex',
+              justifyContent: { xs: 'stretch', xsm: 'flex-start' },
+              '& > *': { width: { xs: '100%', xsm: 'auto' } },
+            }}
+          >
+            <ConnectReentalButton funnel="dashboard_top_panel" />
+          </Box>
+        )}
 
         {currentAccount && user?.healthFactor !== '-1' && (
           <DashboardMetricCard>

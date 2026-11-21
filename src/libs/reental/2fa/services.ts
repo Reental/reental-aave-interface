@@ -18,7 +18,7 @@ export function use2FA({
 }) {
   return useQuery({
     queryKey: ['2fa', url, chainId, asset, user],
-    enabled: enabled && !!url,
+    enabled: enabled && !!url && Boolean(user),
     queryFn: () => request(url as string, GetTwoFaAccountDocument, { chainId, asset, user }),
     select: (data) => data,
     retry: (failureCount) => failureCount < 3,

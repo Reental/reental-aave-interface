@@ -57,6 +57,10 @@ docs/ds-resources/
 docs/Feedback*
 docs/Reental_RNTLend_WalletConnect*
 *.zip
+.docs/
+.pdf*
+.cursor/
 .cursor
+*.pdf
 *.md
 docs/
